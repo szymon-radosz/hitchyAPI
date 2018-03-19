@@ -13,8 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+/*Route::group(['middleware' => ['api','cors']], function () {
+    Route::post('auth/register', 'Auth\RegisterController@create');
+});*/
+
+Route::post('register', 'API\PassportController@register');
+Route::post('login', 'API\PassportController@login');
+
+Route::group(['middleware' => 'auth:api'], function(){
+	Route::post('get-details', 'API\PassportController@getDetails');
 });
 
 //points list
@@ -28,3 +39,6 @@ Route::post('point', 'PointController@store');
 
 //delete point
 Route::delete('point/{id}', 'PointController@destroy');
+
+//users list
+Route::get('users', 'UserController@index');

@@ -2,14 +2,19 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Resources\Json\Resource;
-use Illuminate\Support\Facades\URL;
 
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        'App\Model' => 'App\Policies\ModelPolicy',
+    ];
     /**
      * Bootstrap any application services.
      *
@@ -21,9 +26,8 @@ class AppServiceProvider extends ServiceProvider
 
         Resource::withoutWrapping();
 
-        if ($this->app->environment() == 'production') {
-            URL::forceScheme('https');
-        }
+        $this->registerPolicies();
+        Passport::routes();
     }
 
     /**
