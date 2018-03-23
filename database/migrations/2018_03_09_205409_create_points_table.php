@@ -17,8 +17,8 @@ class CreatePointsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->float('lattitude');
-            $table->float('longitude');
+            $table->double('lattitude');
+            $table->double('longitude');
             $table->integer('ratingNumVotes');
             $table->integer('safetyNumVotes');
             $table->integer('ratingSumVotes');
