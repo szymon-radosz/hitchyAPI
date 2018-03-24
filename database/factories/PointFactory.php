@@ -12,6 +12,7 @@ $factory->define(App\Point::class, function (Faker $faker) {
         'safetyNumVotes' => $faker->numberBetween(30,30),
         'ratingSumVotes' => $faker->randomFloat(2,1,150),
         'safetySumVotes' => $faker->randomFloat(2,1,150),
-        'submittedByAdmin' => $faker->boolean()
+        'submittedByAdmin' => $faker->boolean(),
+        'author' => $faker->text(10),
     ];
 });

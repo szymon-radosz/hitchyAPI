@@ -50,6 +50,7 @@ class PointController extends Controller
         $point->safetySumVotes = $request->input('safetySumVotes');
         $point->ratingSumVotes = $request->input('ratingSumVotes');
         $point->submittedByAdmin = false;
+        $point->author = $request->author;
 
         if($point->save()){
             return new PointResource($point);

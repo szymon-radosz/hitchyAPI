@@ -24,7 +24,8 @@ class Point extends JsonResource
             'safetyNumVotes' => $this->safetyNumVotes,
             'ratingSumVotes' => $this->ratingSumVotes,
             'safetySumVotes' => $this->safetySumVotes,
-            'submittedByAdmin' => $this->submittedByAdmin
+            'submittedByAdmin' => $this->submittedByAdmin,
+            'author' => $this->author
         ];
     }
 }
