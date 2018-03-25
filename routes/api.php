@@ -42,3 +42,6 @@ Route::delete('point/{id}', 'PointController@destroy');
 
 //users list
 Route::get('users', 'UserController@index');
+
+//send request to api to sumit post with id
+Route::post('/adminSubmit/{id}', ['uses' =>'AdminController@submitPoint']);
