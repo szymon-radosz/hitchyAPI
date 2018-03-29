@@ -45,3 +45,5 @@ Route::get('users', 'UserController@index');
 
 //send request to api to sumit post with id
 Route::post('/adminSubmit/{id}', ['uses' =>'AdminController@submitPoint']);
+
+Route::post('comment', 'CommentController@store');
