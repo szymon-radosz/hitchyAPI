@@ -47,3 +47,5 @@ Route::get('users', 'UserController@index');
 Route::post('/adminSubmit/{id}', ['uses' =>'AdminController@submitPoint']);
 
 Route::post('comment', 'CommentController@store');
+
+Route::get('comments', 'CommentController@index');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use DB;
 
 class PassportController extends Controller
 {
@@ -22,7 +23,11 @@ class PassportController extends Controller
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
             $success['token'] =  $user->createToken('MyApp')->accessToken;
-            return response()->json(['success' => $success, 'email' => request('email')], $this->successStatus);
+
+            //send user id to use is in session and match to user_id when user want create a comment
+            $userID = DB::table('users')->where('email', request('email'))->value('id');
+
+            return response()->json(['success' => $success, 'email' => request('email'), 'userID' => $userID], $this->successStatus);
         }
         else{
             return response()->json(['error'=>'Unauthorised'], 401);
