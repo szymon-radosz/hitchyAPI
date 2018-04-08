@@ -40,4 +40,11 @@ class EventController extends Controller
 
         $event->save();
     }
+
+    //return single event
+    public function show($id){
+        $event = Event::find($id);
+
+        return $event;
+    }
 }
