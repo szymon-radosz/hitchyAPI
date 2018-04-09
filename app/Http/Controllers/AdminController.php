@@ -14,4 +14,12 @@ class AdminController extends Controller
              ->where('id','=', $id)
              ->increment('submittedByAdmin');
     }
+
+    public function submitEvent($id)
+    {
+        //update sumbittedByAdmin column of points table
+        $updatedPost = DB::table('events')
+             ->where('id','=', $id)
+             ->increment('submittedByAdmin');
+    }
 }

@@ -43,8 +43,11 @@ Route::delete('point/{id}', 'PointController@destroy');
 //users list
 Route::get('users', 'UserController@index');
 
-//send request to api to sumit post with id
+//send request to api to submit post with id
 Route::post('/adminSubmit/{id}', ['uses' =>'AdminController@submitPoint']);
+
+//send request to api to submit event with id
+Route::post('/adminEventSubmit/{id}', ['uses' =>'AdminController@submitEvent']);
 
 Route::post('comment', 'CommentController@store');
 Route::get('comments', 'CommentController@index');
@@ -54,3 +57,7 @@ Route::post('events', 'EventController@store');
 Route::get('allEvents', 'EventController@allEvents');
 
 Route::get('events/{id}', array('uses' => 'EventController@show'));
+
+Route::post('eventComments', 'EventCommentsController@store');
+Route::get('eventComments', 'EventCommentsController@index');
+Route::get('eventComments/{id}', array('uses' => 'EventCommentsController@commentsForID'));

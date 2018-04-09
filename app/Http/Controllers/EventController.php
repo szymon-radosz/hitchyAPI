@@ -16,6 +16,7 @@ class EventController extends Controller
         return $events;
     }
 
+    //return all events
     public function allEvents(){
 
         $events = DB::table('events')->get();
@@ -23,6 +24,7 @@ class EventController extends Controller
         return $events;
     }
 
+    //save event
     public function store(Request $request)
     {
         $event = new Event;
