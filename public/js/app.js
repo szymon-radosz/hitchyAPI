@@ -26365,314 +26365,309 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var Menu = function (_Component) {
-    _inherits(Menu, _Component);
+  _inherits(Menu, _Component);
 
-    function Menu(props) {
-        _classCallCheck(this, Menu);
+  function Menu(props) {
+    _classCallCheck(this, Menu);
 
-        var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
-        _this.state = {
-            userIsLoggedIn: false,
-            loggedInUserEmail: "",
-            loggedInUserNickName: "",
-            searchInLocation: ""
-        };
+    _this.state = {
+      userIsLoggedIn: false,
+      loggedInUserEmail: "",
+      loggedInUserNickName: "",
+      searchInLocation: ""
+    };
 
-        _this.loginUser = _this.loginUser.bind(_this);
-        _this.logout = _this.logout.bind(_this);
-        _this.changeStateOfSearchInLocation = _this.changeStateOfSearchInLocation.bind(_this);
-        _this.cleanStateOfSearchInLocation = _this.cleanStateOfSearchInLocation.bind(_this);
-        return _this;
-    }
+    _this.loginUser = _this.loginUser.bind(_this);
+    _this.logout = _this.logout.bind(_this);
+    _this.changeStateOfSearchInLocation = _this.changeStateOfSearchInLocation.bind(_this);
+    _this.cleanStateOfSearchInLocation = _this.cleanStateOfSearchInLocation.bind(_this);
+    return _this;
+  }
 
-    _createClass(Menu, [{
-        key: "componentDidMount",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var getUser;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                if (!sessionStorage.getItem("userId")) {
-                                    _context.next = 7;
-                                    break;
-                                }
+  _createClass(Menu, [{
+    key: "componentDidMount",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var getUser;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!sessionStorage.getItem("userId")) {
+                  _context.next = 7;
+                  break;
+                }
 
-                                this.setState({ userIsLoggedIn: true });
+                this.setState({ userIsLoggedIn: true });
 
-                                _context.next = 4;
-                                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
+                _context.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
 
-                            case 4:
-                                getUser = _context.sent;
+              case 4:
+                getUser = _context.sent;
 
 
-                                this.setState({ loggedInUserEmail: getUser.data[0].email });
-                                this.setState({ loggedInUserNickName: getUser.data[0].nickName });
+                this.setState({ loggedInUserEmail: getUser.data[0].email });
+                this.setState({ loggedInUserNickName: getUser.data[0].nickName });
 
-                            case 7:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function componentDidMount() {
-                return _ref.apply(this, arguments);
+              case 7:
+              case "end":
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
 
-            return componentDidMount;
-        }()
-    }, {
-        key: "loginUser",
-        value: function loginUser(nickName) {
-            this.setState({ userIsLoggedIn: true });
-            this.setState({ loggedInUserNickName: nickName });
-        }
-    }, {
-        key: "logout",
-        value: function logout() {
-            sessionStorage.setItem("userId", "");
-            sessionStorage.setItem("userNickName", "");
-            this.props.showAlertSuccess("You're sucessfully logout");
-            this.setState({ userIsLoggedIn: false });
-            this.setState({ loggedInUserNickName: "" });
-        }
-    }, {
-        key: "changeStateOfSearchInLocation",
-        value: function changeStateOfSearchInLocation(value) {
-            this.setState({
-                searchInLocation: value
-            });
-        }
-    }, {
-        key: "cleanStateOfSearchInLocation",
-        value: function cleanStateOfSearchInLocation() {
-            this.setState({
-                searchInLocation: ""
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
 
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* BrowserRouter */],
-                null,
+      return componentDidMount;
+    }()
+  }, {
+    key: "loginUser",
+    value: function loginUser(nickName) {
+      this.setState({ userIsLoggedIn: true });
+      this.setState({ loggedInUserNickName: nickName });
+    }
+  }, {
+    key: "logout",
+    value: function logout() {
+      sessionStorage.setItem("userId", "");
+      sessionStorage.setItem("userNickName", "");
+      this.props.showAlertSuccess("You're sucessfully logout");
+      this.setState({ userIsLoggedIn: false });
+      this.setState({ loggedInUserNickName: "" });
+    }
+  }, {
+    key: "changeStateOfSearchInLocation",
+    value: function changeStateOfSearchInLocation(value) {
+      this.setState({
+        searchInLocation: value
+      });
+    }
+  }, {
+    key: "cleanStateOfSearchInLocation",
+    value: function cleanStateOfSearchInLocation() {
+      this.setState({
+        searchInLocation: ""
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* BrowserRouter */],
+        null,
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          null,
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "nav",
+            { className: "navbar navbar-default" },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "container-fluid" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "div",
+                { className: "navbar-header" },
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "div",
+                  "button",
+                  {
+                    type: "button",
+                    className: "navbar-toggle collapsed",
+                    "data-toggle": "collapse",
+                    "data-target": "#navbar",
+                    "aria-expanded": "false",
+                    "aria-controls": "navbar"
+                  },
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "span",
+                    { className: "sr-only" },
+                    "Toggle navigation"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" }),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" }),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" })
+                ),
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                  {
+                    to: "/",
+                    className: "navbar-brand",
+                    onClick: this.cleanStateOfSearchInLocation
+                  },
+                  "Hitchy"
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "div",
+                { id: "navbar", className: "navbar-collapse collapse" },
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "ul",
+                  { className: "nav navbar-nav navbar-right" },
+                  this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "li",
                     null,
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "nav",
-                        { className: "navbar navbar-default" },
+                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                      {
+                        to: "/meetings",
+                        onClick: this.cleanStateOfSearchInLocation
+                      },
+                      "Meetings"
+                    )
+                  ) : "",
+                  this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "li",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                      {
+                        to: "/add-meeting",
+                        onClick: this.cleanStateOfSearchInLocation
+                      },
+                      "Add meetings"
+                    )
+                  ) : "",
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "li",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                      {
+                        to: "/login",
+                        onClick: this.cleanStateOfSearchInLocation
+                      },
+                      "Login"
+                    )
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "li",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                      {
+                        to: "/register",
+                        onClick: this.cleanStateOfSearchInLocation
+                      },
+                      "Register"
+                    )
+                  ),
+                  this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "li",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "div",
+                      { className: "dropdown" },
+                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                        "button",
+                        {
+                          className: "btn btn-secondary dropdown-toggle",
+                          type: "button",
+                          id: "dropdownMenuButton",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        },
+                        "Account"
+                      ),
+                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                        "div",
+                        {
+                          className: "dropdown-menu",
+                          "aria-labelledby": "dropdownMenuButton"
+                        },
                         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "container-fluid" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "div",
-                                { className: "navbar-header" },
-                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                    "button",
-                                    {
-                                        type: "button",
-                                        className: "navbar-toggle collapsed",
-                                        "data-toggle": "collapse",
-                                        "data-target": "#navbar",
-                                        "aria-expanded": "false",
-                                        "aria-controls": "navbar"
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "span",
-                                        { className: "sr-only" },
-                                        "Toggle navigation"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" }),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" }),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" })
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                    {
-                                        to: "/",
-                                        className: "navbar-brand",
-                                        onClick: this.cleanStateOfSearchInLocation
-                                    },
-                                    "Home"
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "div",
-                                {
-                                    id: "navbar",
-                                    className: "navbar-collapse collapse"
-                                },
-                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                    "ul",
-                                    { className: "nav navbar-nav navbar-right" },
-                                    this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "li",
-                                        null,
-                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                            {
-                                                to: "/meetings",
-                                                onClick: this.cleanStateOfSearchInLocation
-                                            },
-                                            "Meetings"
-                                        )
-                                    ) : "",
-                                    this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "li",
-                                        null,
-                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                            {
-                                                to: "/add-meeting",
-                                                onClick: this.cleanStateOfSearchInLocation
-                                            },
-                                            "Add meetings"
-                                        )
-                                    ) : "",
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "li",
-                                        null,
-                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                            {
-                                                to: "/login",
-                                                onClick: this.cleanStateOfSearchInLocation
-                                            },
-                                            "Login"
-                                        )
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "li",
-                                        null,
-                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                            {
-                                                to: "/register",
-                                                onClick: this.cleanStateOfSearchInLocation
-                                            },
-                                            "Register"
-                                        )
-                                    ),
-                                    this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "li",
-                                        null,
-                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                            "div",
-                                            { className: "dropdown" },
-                                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                                "button",
-                                                {
-                                                    className: "btn btn-secondary dropdown-toggle",
-                                                    type: "button",
-                                                    id: "dropdownMenuButton",
-                                                    "data-toggle": "dropdown",
-                                                    "aria-haspopup": "true",
-                                                    "aria-expanded": "false"
-                                                },
-                                                "Account"
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                                "div",
-                                                {
-                                                    className: "dropdown-menu",
-                                                    "aria-labelledby": "dropdownMenuButton"
-                                                },
-                                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                                    "a",
-                                                    { onClick: this.logout },
-                                                    "Sign Out"
-                                                ),
-                                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                                    {
-                                                        to: "/profile/" + this.state.loggedInUserNickName,
-                                                        onClick: this.cleanStateOfSearchInLocation
-                                                    },
-                                                    "My profile"
-                                                )
-                                            )
-                                        )
-                                    ) : ""
-                                )
-                            )
+                          "a",
+                          { onClick: this.logout },
+                          "Sign Out"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                          {
+                            to: "/profile/" + this.state.loggedInUserNickName,
+                            onClick: this.cleanStateOfSearchInLocation
+                          },
+                          "My profile"
                         )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
-                        exact: true,
-                        path: "/",
-                        render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__LandingPage_js__["a" /* default */], {
-                                searchInLocation: _this2.state.searchInLocation,
-                                changeStateOfSearchInLocation: _this2.changeStateOfSearchInLocation
-                            });
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
-                        exact: true,
-                        path: "/login",
-                        render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Login_js__["a" /* default */], {
-                                loginUser: _this2.loginUser,
-                                showAlertSuccess: _this2.props.showAlertSuccess,
-                                showAlertWarning: _this2.props.showAlertWarning
-                            });
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
-                        exact: true,
-                        path: "/register",
-                        render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Account_Register_js__["a" /* default */], {
-                                loginUser: _this2.loginUser,
-                                showAlertSuccess: _this2.props.showAlertSuccess,
-                                showAlertWarning: _this2.props.showAlertWarning
-                            });
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
-                        exact: true,
-                        path: "/meetings",
-                        render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__["a" /* default */], {
-                                searchInLocation: _this2.state.searchInLocation
-                            });
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
-                        exact: true,
-                        path: "/meeting/:id",
-                        render: function render(props) {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__["a" /* default */], _extends({}, props, {
-                                showAlertSuccess: _this2.props.showAlertSuccess,
-                                showAlertWarning: _this2.props.showAlertWarning
-                            }));
-                        }
-                    }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: "/profile/:nickname", component: __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
-                        exact: true,
-                        path: "/add-meeting",
-                        render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
-                                showAlertSuccess: _this2.props.showAlertSuccess,
-                                showAlertWarning: _this2.props.showAlertWarning
-                            });
-                        }
-                    })
+                      )
+                    )
+                  ) : ""
                 )
-            );
-        }
-    }]);
+              )
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+            exact: true,
+            path: "/",
+            render: function render() {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__LandingPage_js__["a" /* default */], {
+                searchInLocation: _this2.state.searchInLocation,
+                changeStateOfSearchInLocation: _this2.changeStateOfSearchInLocation
+              });
+            }
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+            exact: true,
+            path: "/login",
+            render: function render() {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Login_js__["a" /* default */], {
+                loginUser: _this2.loginUser,
+                showAlertSuccess: _this2.props.showAlertSuccess,
+                showAlertWarning: _this2.props.showAlertWarning
+              });
+            }
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+            exact: true,
+            path: "/register",
+            render: function render() {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Account_Register_js__["a" /* default */], {
+                loginUser: _this2.loginUser,
+                showAlertSuccess: _this2.props.showAlertSuccess,
+                showAlertWarning: _this2.props.showAlertWarning
+              });
+            }
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+            exact: true,
+            path: "/meetings",
+            render: function render() {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__["a" /* default */], { searchInLocation: _this2.state.searchInLocation });
+            }
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+            exact: true,
+            path: "/meeting/:id",
+            render: function render(props) {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__["a" /* default */], _extends({}, props, {
+                showAlertSuccess: _this2.props.showAlertSuccess,
+                showAlertWarning: _this2.props.showAlertWarning
+              }));
+            }
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: "/profile/:nickname", component: __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__["a" /* default */] }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+            exact: true,
+            path: "/add-meeting",
+            render: function render() {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
+                showAlertSuccess: _this2.props.showAlertSuccess,
+                showAlertWarning: _this2.props.showAlertWarning
+              });
+            }
+          })
+        )
+      );
+    }
+  }]);
 
-    return Menu;
+  return Menu;
 }(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Menu);
@@ -33113,334 +33108,353 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var Register = function (_Component) {
-    _inherits(Register, _Component);
+  _inherits(Register, _Component);
 
-    function Register(props) {
-        _classCallCheck(this, Register);
+  function Register(props) {
+    _classCallCheck(this, Register);
 
-        var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
 
-        _this.state = {
-            firstName: "",
-            lastName: "",
-            age: "",
-            email: "",
-            description: "",
-            nickName: "",
-            location: "",
-            password: "",
-            passwordConfirmation: ""
-        };
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.handleSubmit = _this.handleSubmit.bind(_this);
-        return _this;
+    _this.state = {
+      firstName: "",
+      lastName: "",
+      city: "",
+      country: "",
+      about: "",
+      age: "",
+      email: "",
+      nickName: "",
+      password: "",
+      passwordConfirmation: ""
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(Register, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
+
+      this.setState(_defineProperty({}, name, value));
     }
+  }, {
+    key: "handleSubmit",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
+        var uniqueEmail, uniqueNickname, allUsers, i, savedUser;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
 
-    _createClass(Register, [{
-        key: "handleChange",
-        value: function handleChange(event) {
-            var _event$target = event.target,
-                name = _event$target.name,
-                value = _event$target.value;
+                if (!__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(this.state.nickName, " ")) {
+                  _context.next = 5;
+                  break;
+                }
 
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: "handleSubmit",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
-                var uniqueEmail, uniqueNickname, allUsers, i, savedUser;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                event.preventDefault();
+                this.props.showAlertWarning("You can't use whitespace in your nickname");
+                _context.next = 27;
+                break;
 
-                                if (!__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(this.state.nickName, " ")) {
-                                    _context.next = 5;
-                                    break;
-                                }
+              case 5:
+                uniqueEmail = true;
+                uniqueNickname = true;
 
-                                this.props.showAlertWarning("You can't use whitespace in your nickname");
-                                _context.next = 27;
-                                break;
+                if (!(this.state.password === this.state.passwordConfirmation)) {
+                  _context.next = 26;
+                  break;
+                }
 
-                            case 5:
-                                uniqueEmail = true;
-                                uniqueNickname = true;
+                _context.next = 10;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
 
-                                if (!(this.state.password === this.state.passwordConfirmation)) {
-                                    _context.next = 26;
-                                    break;
-                                }
-
-                                _context.next = 10;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
-
-                            case 10:
-                                allUsers = _context.sent;
+              case 10:
+                allUsers = _context.sent;
 
 
-                                for (i = 0; i < allUsers.data.length; i++) {
-                                    if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], this.state.email)) {
-                                        uniqueEmail = false;
-                                    } else if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], this.state.nickName)) {
-                                        uniqueNickname = false;
-                                    }
-                                }
+                for (i = 0; i < allUsers.data.length; i++) {
+                  if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], this.state.email)) {
+                    uniqueEmail = false;
+                  } else if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], this.state.nickName)) {
+                    uniqueNickname = false;
+                  }
+                }
 
-                                if (!(uniqueEmail === false)) {
-                                    _context.next = 16;
-                                    break;
-                                }
+                if (!(uniqueEmail === false)) {
+                  _context.next = 16;
+                  break;
+                }
 
-                                this.props.showAlertWarning("user with email " + this.state.email + " already exists");
-                                _context.next = 24;
-                                break;
+                this.props.showAlertWarning("user with email " + this.state.email + " already exists");
+                _context.next = 24;
+                break;
 
-                            case 16:
-                                if (!(uniqueNickname === false)) {
-                                    _context.next = 20;
-                                    break;
-                                }
+              case 16:
+                if (!(uniqueNickname === false)) {
+                  _context.next = 20;
+                  break;
+                }
 
-                                this.props.showAlertWarning("user with nickname " + this.state.nickName + " already exists");
-                                _context.next = 24;
-                                break;
+                this.props.showAlertWarning("user with nickname " + this.state.nickName + " already exists");
+                _context.next = 24;
+                break;
 
-                            case 20:
-                                _context.next = 22;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/user", {
-                                    firstName: this.state.firstName,
-                                    lastName: this.state.lastName,
-                                    age: this.state.age,
-                                    email: this.state.email,
-                                    description: this.state.description,
-                                    nickName: this.state.nickName,
-                                    location: this.state.location,
-                                    password: this.state.password,
-                                    passwordConfirmation: this.state.passwordConfirmation
-                                });
+              case 20:
+                _context.next = 22;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/user", {
+                  firstName: this.state.firstName,
+                  lastName: this.state.lastName,
+                  city: this.state.city,
+                  email: this.state.email,
+                  country: this.state.country,
+                  nickName: this.state.nickName,
+                  about: this.state.about,
+                  age: this.state.age,
+                  password: this.state.password,
+                  passwordConfirmation: this.state.passwordConfirmation
+                });
 
-                            case 22:
-                                savedUser = _context.sent;
+              case 22:
+                savedUser = _context.sent;
 
 
-                                if (savedUser.status == "200") {
-                                    sessionStorage.setItem("userId", "");
-                                    sessionStorage.setItem("userNickName", "");
-                                    sessionStorage.setItem("userId", savedUser.data.userId);
-                                    sessionStorage.setItem("userNickName", savedUser.data.userNickName);
-                                    this.props.loginUser(savedUser.data.userNickName);
-                                    this.props.showAlertSuccess("Thank you. You created an account");
-                                } else {
-                                    this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
-                                }
+                if (savedUser.status == "200") {
+                  sessionStorage.setItem("userId", "");
+                  sessionStorage.setItem("userNickName", "");
+                  sessionStorage.setItem("userId", savedUser.data.userId);
+                  sessionStorage.setItem("userNickName", savedUser.data.userNickName);
+                  this.props.loginUser(savedUser.data.userNickName);
+                  this.props.showAlertSuccess("Thank you. You created an account");
+                } else {
+                  this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
+                }
 
-                            case 24:
-                                _context.next = 27;
-                                break;
+              case 24:
+                _context.next = 27;
+                break;
 
-                            case 26:
-                                this.props.showAlertWarning("Sorry password and confirmation doesn't match ");
+              case 26:
+                this.props.showAlertWarning("Sorry password and confirmation doesn't match ");
 
-                            case 27:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function handleSubmit(_x) {
-                return _ref.apply(this, arguments);
+              case 27:
+              case "end":
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
 
-            return handleSubmit;
-        }()
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                { className: "register row registerRow" },
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "div",
-                    { className: "col-sm-6 col-sm-offset-3 registerCol" },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "h2",
-                        null,
-                        "Register"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "form",
-                        { onSubmit: this.handleSubmit },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "firstName" },
-                                "First Name:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "firstName",
-                                name: "firstName",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "lastName" },
-                                "Last Name:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "lastName",
-                                name: "lastName",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "email" },
-                                "Email:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "email",
-                                className: "form-control",
-                                id: "email",
-                                name: "email",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "nickName" },
-                                "Nick name:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "nickName",
-                                name: "nickName",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "age" },
-                                "Age:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "number",
-                                className: "form-control",
-                                id: "age",
-                                name: "age",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "description" },
-                                "Description of myself:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "description",
-                                name: "description",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "location" },
-                                "Location:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "location",
-                                name: "location",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "password" },
-                                "Password:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "password",
-                                className: "form-control",
-                                id: "password",
-                                name: "password",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "passwordConfirmation" },
-                                "Password confirmation:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "password",
-                                className: "form-control",
-                                id: "passwordConfirmation",
-                                name: "passwordConfirmation",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                            type: "submit",
-                            className: "btn btn-default",
-                            id: "registerBtn",
-                            value: "Register"
-                        })
-                    )
-                )
-            );
-        }
-    }]);
+      function handleSubmit(_x) {
+        return _ref.apply(this, arguments);
+      }
 
-    return Register;
+      return handleSubmit;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        { className: "register row registerRow" },
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          { className: "col-sm-6 col-sm-offset-3 registerCol" },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "h2",
+            null,
+            "Register"
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "form",
+            { onSubmit: this.handleSubmit },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "firstName" },
+                "First Name:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "firstName",
+                name: "firstName",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "lastName" },
+                "Last Name:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "lastName",
+                name: "lastName",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "nickName" },
+                "Nick:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "nickName",
+                name: "nickName",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "age" },
+                "age:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "number",
+                className: "form-control",
+                id: "age",
+                name: "age",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "city" },
+                "city:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "city",
+                name: "city",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "country" },
+                "country:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "country",
+                name: "country",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "about" },
+                "about:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "about",
+                name: "about",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "email" },
+                "email:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "email",
+                className: "form-control",
+                id: "email",
+                name: "email",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "password" },
+                "Password:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "password",
+                className: "form-control",
+                id: "password",
+                name: "password",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "passwordConfirmation" },
+                "Password confirmation:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "password",
+                className: "form-control",
+                id: "passwordConfirmation",
+                name: "passwordConfirmation",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+              type: "submit",
+              className: "btn btn-default",
+              id: "registerBtn",
+              value: "Register"
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return Register;
 }(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Register);

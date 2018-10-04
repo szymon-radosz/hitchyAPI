@@ -5,84 +5,61 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
-use App\Http\Resources\User as UserResource;
+use Response;
+use DB;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //return all point 127.0.0.1:8000/api/users
-        return UserResource::collection(User::all());
+        $allUsers = DB::table('users')->get();
+        return $allUsers;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function login(Request $request){
+        $nickName = $request->input('emailOrNickname');
+        $password = $request->input('password');
+
+        $user = DB::table('users')->where('nickName', $nickName)->orWhere('email', $nickName)->where('password', $password)->first();
+
+        if($user){
+            $userId = $user->id;
+            $userNickName = $user->nickName;
+        }else{
+            $userId = null;
+            $userNickName = null;
+        }
+
+        $userInfo = (object) ['userId' => $userId, 'userNickName' => $nickName];
+
+        return Response::json($userInfo);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-      
+        $user = new User;
+
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->about = $request->about;
+        $user->age = $request->age;
+        $user->nickName = $request->nickName;
+        $user->city = $request->city;
+        $user->country = $request->country;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->passwordConfirmation = $request->passwordConfirmation;
+
+        $user->save();
+
+        $userInfo = (object) ['userId' => $user->id, 'userNickName' => $user->nickName];
+
+        return Response::json($userInfo);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function findById($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $singleUser = DB::table('users')->where('id', $id)->get();
+        return $singleUser;
     }
 }

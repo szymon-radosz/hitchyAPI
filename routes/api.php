@@ -21,12 +21,19 @@ use Illuminate\Http\Request;
     Route::post('auth/register', 'Auth\RegisterController@create');
 });*/
 
-Route::post('register', 'API\PassportController@register');
-Route::post('login', 'API\PassportController@login');
+//Route::post('register', 'API\PassportController@register');
+//Route::post('login', 'API\PassportController@login');
 
-Route::group(['middleware' => 'auth:api'], function(){
+/*Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('get-details', 'API\PassportController@getDetails');
-});
+});*/
+
+Route::get('users','UserController@index');
+Route::post('login', 'UserController@login');
+Route::get('user/{id}','UserController@findById');
+Route::delete('user/{id}','UserController@destroy');
+Route::put('user','UserController@store');
+Route::post('user','UserController@store');
 
 //points list
 Route::get('points', 'PointController@index');
