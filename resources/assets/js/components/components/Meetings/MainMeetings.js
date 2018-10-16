@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SingleMeetingOnList from "./MeetingsListComponents/SingleMeetingOnList.js";
-import MapComponent from "./MapComponent.js";
+import LeafletMapComponent from "./LeafletMapComponent.js";
 
 class MainMeetings extends Component {
     constructor(props) {
@@ -76,7 +76,7 @@ class MainMeetings extends Component {
                                 );
                             })}
                         </div>
-                        <div
+                        {/*<div
                             className="col-sm-6 mainMeetingsMap"
                             style={{ height: "calc(100vh - 60px)" }}
                         >
@@ -85,7 +85,11 @@ class MainMeetings extends Component {
                                 latCenter={this.state.lat}
                                 lngCenter={this.state.lng}
                             />
-                        </div>{" "}
+                        </div>{" "}*/}
+
+                        <div className="col-sm-6">
+                            <LeafletMapComponent />
+                        </div>
                     </div>
                 )}
             </div>

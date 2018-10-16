@@ -1,7 +1,12 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);.navbar-laravel {
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.css);.navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.leaflet-container {
+  height: 90vh;
+  width: 100%;
 }
 
 .landing {
