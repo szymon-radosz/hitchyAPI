@@ -20876,7 +20876,7 @@ module.exports = Cancel;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__ = __webpack_require__(185);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LeafletMapComponent_js__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MapComponent_js__ = __webpack_require__(119);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20897,127 +20897,128 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var MainMeetings = function (_Component) {
-    _inherits(MainMeetings, _Component);
+  _inherits(MainMeetings, _Component);
 
-    function MainMeetings(props) {
-        _classCallCheck(this, MainMeetings);
+  function MainMeetings(props) {
+    _classCallCheck(this, MainMeetings);
 
-        var _this = _possibleConstructorReturn(this, (MainMeetings.__proto__ || Object.getPrototypeOf(MainMeetings)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MainMeetings.__proto__ || Object.getPrototypeOf(MainMeetings)).call(this, props));
 
-        _this.state = {
-            meetingsData: [],
-            lat: "",
-            lng: ""
-        };
+    _this.state = {
+      meetingsData: [],
+      lat: 40.73061,
+      lng: -73.935242
+    };
 
-        _this.setCoordinates = _this.setCoordinates.bind(_this);
-        return _this;
-    }
+    _this.setCoordinates = _this.setCoordinates.bind(_this);
+    return _this;
+  }
 
-    _createClass(MainMeetings, [{
-        key: "componentDidMount",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var _this2 = this;
+  _createClass(MainMeetings, [{
+    key: "componentDidMount",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var _this2 = this;
 
-                var allMeetings;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _context.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/meetings");
+        var allMeetings;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/meetings");
 
-                            case 2:
-                                allMeetings = _context.sent;
+              case 2:
+                allMeetings = _context.sent;
 
 
-                                allMeetings.data.map(function (item, i) {
-                                    var meetingObject = {
-                                        id: item.id,
-                                        title: item.title,
-                                        description: item.description,
-                                        author: item.author,
-                                        lattitude: item.lattitude,
-                                        longitude: item.longitude,
-                                        category: item.category,
-                                        limit: item.limit,
-                                        date: item.date,
-                                        time: item.time
-                                    };
+                allMeetings.data.map(function (item, i) {
+                  var meetingObject = {
+                    id: item.id,
+                    title: item.title,
+                    description: item.description,
+                    author: item.author,
+                    lattitude: item.lattitude,
+                    longitude: item.longitude,
+                    limit: item.limit,
+                    date: item.date,
+                    time: item.time
+                  };
 
-                                    _this2.setState(function (prevState) {
-                                        return {
-                                            meetingsData: [].concat(_toConsumableArray(prevState.meetingsData), [meetingObject])
-                                        };
-                                    });
-                                });
+                  _this2.setState(function (prevState) {
+                    return {
+                      meetingsData: [].concat(_toConsumableArray(prevState.meetingsData), [meetingObject])
+                    };
+                  });
+                });
 
-                            case 4:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function componentDidMount() {
-                return _ref.apply(this, arguments);
+              case 4:
+              case "end":
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
 
-            return componentDidMount;
-        }()
-    }, {
-        key: "setCoordinates",
-        value: function setCoordinates(childLat, childLng) {
-            this.setState({
-                lat: childLat,
-                lng: childLng
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this3 = this;
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
 
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                { className: "row listOfMeetingsRow" },
-                this.props.searchInLocation ? "searchInLocation istnieje" : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "div",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "div",
-                        { className: "col-sm-6 listOfMeetingsCol" },
-                        this.state.meetingsData.map(function (item, i) {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__["a" /* default */], {
-                                key: i,
-                                changeMarker: _this3.changeMarker,
-                                id: item.id,
-                                title: item.title,
-                                description: item.description,
-                                author: item.author,
-                                lattitude: item.lattitude,
-                                longitude: item.longitude,
-                                category: item.category,
-                                limit: item.limit,
-                                date: item.date,
-                                time: item.time,
-                                setCoordinates: _this3.setCoordinates
-                            });
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "div",
-                        { className: "col-sm-6" },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__LeafletMapComponent_js__["a" /* default */], null)
-                    )
-                )
-            );
-        }
-    }]);
+      return componentDidMount;
+    }()
+  }, {
+    key: "setCoordinates",
+    value: function setCoordinates(childLat, childLng) {
+      this.setState({
+        lat: childLat,
+        lng: childLng
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
 
-    return MainMeetings;
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        { className: "row listOfMeetingsRow" },
+        this.props.searchInLocation ? "searchInLocation istnieje" : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          null,
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "col-sm-6 listOfMeetingsCol" },
+            this.state.meetingsData.map(function (item, i) {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__["a" /* default */], {
+                key: i,
+                changeMarker: _this3.changeMarker,
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                author: item.author,
+                lattitude: item.lattitude,
+                longitude: item.longitude,
+                limit: item.limit,
+                date: item.date,
+                time: item.time,
+                setCoordinates: _this3.setCoordinates
+              });
+            })
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "col-sm-6" },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__MapComponent_js__["a" /* default */], {
+              latCenter: this.state.lat,
+              lngCenter: this.state.lng
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return MainMeetings;
 }(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (MainMeetings);
@@ -22008,12 +22009,13 @@ function matchesStrictComparable(key, srcValue) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pigeon_maps__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pigeon_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_pigeon_maps__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_pigeon_marker__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_pigeon_marker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_pigeon_marker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_leaflet__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_leaflet_dist_leaflet_css__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_leaflet_dist_leaflet_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_leaflet_dist_leaflet_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_leaflet__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22027,53 +22029,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var MapComponent = function (_Component) {
-    _inherits(MapComponent, _Component);
 
-    function MapComponent(props) {
-        _classCallCheck(this, MapComponent);
+delete __WEBPACK_IMPORTED_MODULE_4_leaflet___default.a.Icon.Default.prototype._getIconUrl;
 
-        var _this = _possibleConstructorReturn(this, (MapComponent.__proto__ || Object.getPrototypeOf(MapComponent)).call(this, props));
+__WEBPACK_IMPORTED_MODULE_4_leaflet___default.a.Icon.Default.mergeOptions({
+  iconRetinaUrl: __webpack_require__(355),
+  iconUrl: __webpack_require__(350),
+  shadowUrl: __webpack_require__(356)
+});
 
-        _this.state = {
-            mouseEvents: true,
-            touchEvents: true,
-            defaultZoom: 12
-        };
-        return _this;
+var LeafletMapComponent = function (_Component) {
+  _inherits(LeafletMapComponent, _Component);
+
+  function LeafletMapComponent(props) {
+    _classCallCheck(this, LeafletMapComponent);
+
+    var _this = _possibleConstructorReturn(this, (LeafletMapComponent.__proto__ || Object.getPrototypeOf(LeafletMapComponent)).call(this, props));
+
+    _this.state = {
+      position: [props.latCenter, props.lngCenter],
+      allowDragableMarker: false
+    };
+
+    _this.moveMarker = _this.moveMarker.bind(_this);
+    return _this;
+  }
+
+  _createClass(LeafletMapComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        allowDragableMarker: this.props.allowDragableMarker ? this.props.allowDragableMarker : false
+      });
     }
+  }, {
+    key: "moveMarker",
+    value: function moveMarker(event) {
+      this.props.setNewCoords(event.target._latlng.lat, event.target._latlng.lng);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
+          { center: this.state.position, zoom: 13 },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["d" /* TileLayer */], {
+            attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
+            url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */],
+            {
+              position: this.state.position,
+              draggable: this.state.allowDragableMarker,
+              onDragend: this.moveMarker
+            },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["c" /* Popup */],
+              null,
+              "A pretty CSS3 popup.",
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null),
+              "Easily customizable."
+            )
+          )
+        )
+      );
+    }
+  }]);
 
-    _createClass(MapComponent, [{
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_pigeon_maps___default.a,
-                {
-                    center: this.props.center ? this.props.center : [this.props.latCenter, this.props.lngCenter],
-                    defaultZoom: this.state.defaultZoom,
-                    onBoundsChanged: this.props.handleBoundsChange ? this.props.handleBoundsChange : "",
-                    mouseEvents: this.state.mouseEvents,
-                    touchEvents: this.state.touchEvents
-                },
-                this.props.meetingsData ? this.props.meetingsData.map(function (meeting, i) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_pigeon_marker___default.a, {
-                        key: i,
-                        anchor: [parseFloat(meeting.lattitude), parseFloat(meeting.longitude)],
-                        payload: 1
-                    });
-                }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_pigeon_marker___default.a, {
-                    key: this.props.latCenter ? this.props.latCenter : 1,
-                    anchor: this.props.center ? this.props.center : [parseFloat(this.props.latCenter), parseFloat(this.props.lngCenter)],
-                    payload: 1
-                })
-            );
-        }
-    }]);
-
-    return MapComponent;
+  return LeafletMapComponent;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (MapComponent);
+/* harmony default export */ __webpack_exports__["a"] = (LeafletMapComponent);
 
 /***/ }),
 /* 120 */
@@ -43278,6 +43308,7 @@ module.exports = "/images/main.jpg?320ead4abdd9dc1ecebc3487b9678142";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Account_Register_js__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(346);
 
@@ -43597,7 +43628,7 @@ var Menu = function (_Component) {
             exact: true,
             path: "/add-meeting",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["default"], {
                 showAlertSuccess: _this2.props.showAlertSuccess,
                 showAlertWarning: _this2.props.showAlertWarning
               });
@@ -48201,90 +48232,7 @@ var LocateOnMapBtn = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (LocateOnMapBtn);
 
 /***/ }),
-/* 187 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_leaflet__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_leaflet_dist_leaflet_css__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_leaflet_dist_leaflet_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_leaflet_dist_leaflet_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_leaflet__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-delete __WEBPACK_IMPORTED_MODULE_4_leaflet___default.a.Icon.Default.prototype._getIconUrl;
-
-__WEBPACK_IMPORTED_MODULE_4_leaflet___default.a.Icon.Default.mergeOptions({
-  iconRetinaUrl: __webpack_require__(355),
-  iconUrl: __webpack_require__(350),
-  shadowUrl: __webpack_require__(356)
-});
-
-var LeafletMapComponent = function (_Component) {
-  _inherits(LeafletMapComponent, _Component);
-
-  function LeafletMapComponent(props) {
-    _classCallCheck(this, LeafletMapComponent);
-
-    var _this = _possibleConstructorReturn(this, (LeafletMapComponent.__proto__ || Object.getPrototypeOf(LeafletMapComponent)).call(this, props));
-
-    _this.state = {
-      position: [51.505, -0.09]
-    };
-    return _this;
-  }
-
-  _createClass(LeafletMapComponent, [{
-    key: "render",
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
-          { center: this.state.position, zoom: 13 },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["d" /* TileLayer */], {
-            attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
-            url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-          }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */],
-            { position: this.state.position },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["c" /* Popup */],
-              null,
-              "A pretty CSS3 popup.",
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null),
-              "Easily customizable."
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return LeafletMapComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (LeafletMapComponent);
-
-/***/ }),
+/* 187 */,
 /* 188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55190,1985 +55138,23 @@ var Register = function (_Component) {
 
 /***/ }),
 /* 330 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_underscore__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MapComponent_js__ = __webpack_require__(119);
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-var AddNewMeeting = function (_Component) {
-    _inherits(AddNewMeeting, _Component);
-
-    function AddNewMeeting(props) {
-        _classCallCheck(this, AddNewMeeting);
-
-        var _this = _possibleConstructorReturn(this, (AddNewMeeting.__proto__ || Object.getPrototypeOf(AddNewMeeting)).call(this, props));
-
-        _this.state = {
-            title: "",
-            description: "",
-            author: "",
-            lattitude: "",
-            longitude: "",
-            category: "Select",
-            limit: "Select",
-            date: "",
-            center: [40.73061, -73.935242]
-        };
-
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.handleSubmit = _this.handleSubmit.bind(_this);
-        _this.handleBoundsChange = _this.handleBoundsChange.bind(_this);
-        return _this;
-    }
-
-    _createClass(AddNewMeeting, [{
-        key: "handleChange",
-        value: function handleChange(event) {
-            var _event$target = event.target,
-                name = _event$target.name,
-                value = _event$target.value;
-
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: "handleSubmit",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
-                var getUser, savedMeeting, savedMatchUserWithMeeting;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                event.preventDefault();
-
-                                if (!(this.state.limit == "Select")) {
-                                    _context.next = 5;
-                                    break;
-                                }
-
-                                this.props.showAlertWarning("Please choose the limit of users.");
-                                _context.next = 23;
-                                break;
-
-                            case 5:
-                                if (!(this.state.category == "Select")) {
-                                    _context.next = 9;
-                                    break;
-                                }
-
-                                this.props.showAlertWarning("Please choose the category.");
-                                _context.next = 23;
-                                break;
-
-                            case 9:
-                                _context.next = 11;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
-
-                            case 11:
-                                getUser = _context.sent;
-                                _context.next = 14;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/meeting", {
-                                    title: this.state.title,
-                                    description: this.state.description,
-                                    author: "test",
-                                    lattitude: this.state.lattitude,
-                                    longitude: this.state.longitude,
-                                    category: this.state.category,
-                                    limit: this.state.limit,
-                                    date: this.state.date
-                                });
-
-                            case 14:
-                                savedMeeting = _context.sent;
-
-                                if (!(savedMeeting.status == "201")) {
-                                    _context.next = 22;
-                                    break;
-                                }
-
-                                _context.next = 18;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
-                                    userId: sessionStorage.getItem("userId"),
-                                    meetingId: savedMeeting.data.id
-                                });
-
-                            case 18:
-                                savedMatchUserWithMeeting = _context.sent;
-
-
-                                if (savedMatchUserWithMeeting.status == "200") {
-                                    this.props.showAlertSuccess("You added new meeting");
-                                } else {
-                                    this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
-                                }
-                                _context.next = 23;
-                                break;
-
-                            case 22:
-                                this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
-
-                            case 23:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function handleSubmit(_x) {
-                return _ref.apply(this, arguments);
-            }
-
-            return handleSubmit;
-        }()
-    }, {
-        key: "handleBoundsChange",
-        value: function handleBoundsChange(centerCoordinates) {
-            console.log(centerCoordinates.center);
-            this.setState({
-                center: centerCoordinates.center,
-                lattitude: centerCoordinates.center[0],
-                longitude: centerCoordinates.center[1]
-            });
-        }
-    }, {
-        key: "handleMarkerClick",
-        value: function handleMarkerClick(event, payload, anchor) {
-            console.log("Marker #" + payload + " clicked at: ", anchor);
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                { className: "addNewMeeting row addNewMeetingRow" },
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "div",
-                    { className: "col-sm-6 addNewMeetingCol" },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "h2",
-                        null,
-                        "Add new meeting"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "form",
-                        { onSubmit: this.handleSubmit },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "title" },
-                                "Title:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "title",
-                                name: "title",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "description" },
-                                "Description:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "description",
-                                name: "description",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "lattitude" },
-                                "Lattitude:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "lattitude",
-                                name: "lattitude",
-                                value: this.state.center[0],
-                                onChange: this.handleChange,
-                                disabled: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "longitude" },
-                                "Longitude:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "text",
-                                className: "form-control",
-                                id: "longitude",
-                                name: "longitude",
-                                value: this.state.center[1],
-                                onChange: this.handleChange,
-                                disabled: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "category" },
-                                "Category:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "div",
-                                { className: "form-group" },
-                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                    "select",
-                                    {
-                                        className: "form-control",
-                                        name: "category",
-                                        id: "category",
-                                        onChange: this.handleChange,
-                                        required: true
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "Select"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "Party"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "Lifestyle"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "Sport"
-                                    )
-                                )
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "limit" },
-                                "Limit:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "div",
-                                { className: "form-group" },
-                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                    "select",
-                                    {
-                                        className: "form-control",
-                                        name: "limit",
-                                        id: "limit",
-                                        onChange: this.handleChange,
-                                        required: true
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "Select"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "3"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "5"
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                        "option",
-                                        null,
-                                        "No limit"
-                                    )
-                                )
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "label",
-                                { htmlFor: "date" },
-                                "Date:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                                type: "date",
-                                className: "form-control",
-                                id: "date",
-                                name: "date",
-                                onChange: this.handleChange,
-                                required: true
-                            })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                            type: "submit",
-                            className: "btn btn-default",
-                            id: "addNewMeetingBtn",
-                            value: "Add new meeting"
-                        })
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "div",
-                    {
-                        className: "col-sm-6 mainMeetingsMap",
-                        style: { height: "calc(100vh - 60px)" }
-                    },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__MapComponent_js__["a" /* default */], {
-                        handleBoundsChange: this.handleBoundsChange,
-                        center: this.state.center
-                    })
-                )
-            );
-        }
-    }]);
-
-    return AddNewMeeting;
-}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (AddNewMeeting);
+throw new Error("Module build failed: SyntaxError: C:/xampp/htdocs/projects/hitchyAPI/resources/assets/js/components/components/Meetings/AddNewMeeting.js: Unexpected token, expected , (53:10)\n\n\u001b[0m \u001b[90m 51 | \u001b[39m          lattitude\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mlattitude\u001b[33m,\u001b[39m\n \u001b[90m 52 | \u001b[39m          longitude\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mlongitude\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 53 | \u001b[39m          limit\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mlimit\u001b[33m,\u001b[39m\n \u001b[90m    | \u001b[39m          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 54 | \u001b[39m          date\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mdate\n \u001b[90m 55 | \u001b[39m        }\n \u001b[90m 56 | \u001b[39m      )\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
-/* 331 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-var _infact = __webpack_require__(332);
-
-var _propTypes = __webpack_require__(4);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _parentPosition = __webpack_require__(333);
-
-var _parentPosition2 = _interopRequireDefault(_parentPosition);
-
-var _parentHasClass = __webpack_require__(334);
-
-var _parentHasClass2 = _interopRequireDefault(_parentHasClass);
-
-var _debounce = __webpack_require__(335);
-
-var _debounce2 = _interopRequireDefault(_debounce);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _toConsumableArray(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }return arr2;
-  } else {
-    return Array.from(arr);
-  }
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && (typeof call === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var ANIMATION_TIME = 300;
-var DIAGONAL_THROW_TIME = 1500;
-var SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150;
-var MIN_DRAG_FOR_THROW = 40;
-var CLICK_TOLERANCE = 2;
-var DOUBLE_CLICK_DELAY = 300;
-var DEBOUNCE_DELAY = 60;
-var PINCH_RELEASE_THROW_DELAY = 300;
-var WARNING_DISPLAY_TIMEOUT = 300;
-
-var NOOP = function () {};
-
-function wikimedia(x, y, z) {
-  var retina = typeof window !== 'undefined' && window.devicePixelRatio >= 2;
-  return 'https://maps.wikimedia.org/osm-intl/' + z + '/' + x + '/' + y + (retina ? '@2x' : '') + '.png';
-}
-
-// https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
-var lng2tile = function (lon, zoom) {
-  return (lon + 180) / 360 * Math.pow(2, zoom);
-};
-var lat2tile = function (lat, zoom) {
-  return (1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom);
-};
-
-function tile2lng(x, z) {
-  return x / Math.pow(2, z) * 360 - 180;
-}
-
-function tile2lat(y, z) {
-  var n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
-  return 180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
-}
-
-function getMousePixel(dom, event) {
-  var parent = (0, _parentPosition2.default)(dom);
-  return [event.clientX - parent.x, event.clientY - parent.y];
-}
-
-function easeOutQuad(t) {
-  return t * (2 - t);
-}
-
-var minLng = tile2lng(0, 10);
-var minLat = tile2lat(Math.pow(2, 10), 10);
-
-var maxLng = tile2lng(Math.pow(2, 10), 10);
-var maxLat = tile2lat(0, 10);
-
-var performanceNow = typeof window !== 'undefined' && window.performance && window.performance.now ? function () {
-  return window.performance.now();
-} : function () {
-  var timeStart = new Date().getTime();
-  return function () {
-    return new Date().getTime() - timeStart;
-  };
-}();
-
-var Map = function (_Component) {
-  _inherits(Map, _Component);
-
-  function Map(props) {
-    _classCallCheck(this, Map);
-
-    var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
-
-    _this.updateWidthHeight = function () {
-      if (_this._containerRef) {
-        var rect = _this._containerRef.getBoundingClientRect();
-
-        _this.setState({
-          width: rect.width,
-          height: rect.height
-        });
-      }
-    };
-
-    _this.wa = function (e, t, o) {
-      return window.addEventListener(e, t, o);
-    };
-
-    _this.wr = function (e, t) {
-      return window.removeEventListener(e, t);
-    };
-
-    _this.bindMouseEvents = function () {
-      _this.wa('mousedown', _this.handleMouseDown);
-      _this.wa('mouseup', _this.handleMouseUp);
-      _this.wa('mousemove', _this.handleMouseMove);
-    };
-
-    _this.bindTouchEvents = function () {
-      _this.wa('touchstart', _this.handleTouchStart, { passive: false });
-      _this.wa('touchmove', _this.handleTouchMove, { passive: false });
-      _this.wa('touchend', _this.handleTouchEnd, { passive: false });
-    };
-
-    _this.unbindMouseEvents = function () {
-      _this.wr('mousedown', _this.handleMouseDown);
-      _this.wr('mouseup', _this.handleMouseUp);
-      _this.wr('mousemove', _this.handleMouseMove);
-    };
-
-    _this.unbindTouchEvents = function () {
-      _this.wr('touchstart', _this.handleTouchStart);
-      _this.wr('touchmove', _this.handleTouchMove);
-      _this.wr('touchend', _this.handleTouchEnd);
-    };
-
-    _this.bindResizeEvent = function () {
-      _this.wa('resize', _this.updateWidthHeight);
-    };
-
-    _this.unbindResizeEvent = function () {
-      _this.wr('resize', _this.updateWidthHeight);
-    };
-
-    _this.setCenterZoomTarget = function (center, zoom, fromProps) {
-      var zoomAround = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-      var animationDuration = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : ANIMATION_TIME;
-
-      // TODO: if center diff is more than N screens, no animation
-      if (_this.props.animate && (!fromProps || _this.distanceInScreens(center, zoom, _this.state.center, _this.state.zoom) <= _this.props.animateMaxScreens)) {
-        if (_this._isAnimating) {
-          window.cancelAnimationFrame(_this._animFrame);
-
-          var _this$animationStep = _this.animationStep(performanceNow()),
-              centerStep = _this$animationStep.centerStep,
-              zoomStep = _this$animationStep.zoomStep;
-
-          _this._centerStart = centerStep;
-          _this._zoomStart = zoomStep;
-        } else {
-          _this._isAnimating = true;
-          _this._centerStart = _this.limitCenterAtZoom([_this._lastCenter[0], _this._lastCenter[1]], _this._lastZoom);
-          _this._zoomStart = _this._lastZoom;
-          _this.onAnimationStart();
-        }
-
-        _this._animationStart = performanceNow();
-        _this._animationEnd = _this._animationStart + animationDuration;
-
-        if (zoomAround) {
-          _this._zoomAround = zoomAround;
-          _this._centerTarget = _this.calculateZoomCenter(_this._lastCenter, zoomAround, _this._lastZoom, zoom);
-        } else {
-          _this._zoomAround = null;
-          _this._centerTarget = center;
-        }
-        _this._zoomTarget = zoom;
-
-        _this._animFrame = window.requestAnimationFrame(_this.animate);
-      } else {
-        if (zoomAround) {
-          var _center = _this.calculateZoomCenter(_this._lastCenter, zoomAround, _this._lastZoom, zoom);
-          _this.setCenterZoom(_center, zoom, fromProps);
-        } else {
-          _this.setCenterZoom(center, zoom, fromProps);
-        }
-      }
-    };
-
-    _this.distanceInScreens = function (centerTarget, zoomTarget, center, zoom) {
-      var _this$state = _this.state,
-          width = _this$state.width,
-          height = _this$state.height;
-
-      // distance in pixels at the current zoom level
-
-      var l1 = _this.latLngToPixel(center, center, zoom);
-      var l2 = _this.latLngToPixel(centerTarget, center, zoom);
-
-      // distance in pixels at the target zoom level (could be the same)
-      var z1 = _this.latLngToPixel(center, center, zoomTarget);
-      var z2 = _this.latLngToPixel(centerTarget, center, zoomTarget);
-
-      // take the average between the two and divide by width or height to get the distance multiplier in screens
-      var w = (Math.abs(l1[0] - l2[0]) + Math.abs(z1[0] - z2[0])) / 2 / width;
-      var h = (Math.abs(l1[1] - l2[1]) + Math.abs(z1[1] - z2[1])) / 2 / height;
-
-      // return the distance
-      return Math.sqrt(w * w + h * h);
-    };
-
-    _this.animationStep = function (timestamp) {
-      var length = _this._animationEnd - _this._animationStart;
-      var progress = Math.max(timestamp - _this._animationStart, 0);
-      var percentage = easeOutQuad(progress / length);
-
-      var zoomDiff = (_this._zoomTarget - _this._zoomStart) * percentage;
-      var zoomStep = _this._zoomStart + zoomDiff;
-
-      if (_this._zoomAround) {
-        var centerStep = _this.calculateZoomCenter(_this._centerStart, _this._zoomAround, _this._zoomStart, zoomStep);
-
-        return { centerStep: centerStep, zoomStep: zoomStep };
-      } else {
-        var _centerStep = [_this._centerStart[0] + (_this._centerTarget[0] - _this._centerStart[0]) * percentage, _this._centerStart[1] + (_this._centerTarget[1] - _this._centerStart[1]) * percentage];
-
-        return { centerStep: _centerStep, zoomStep: zoomStep };
-      }
-    };
-
-    _this.animate = function (timestamp) {
-      if (timestamp >= _this._animationEnd) {
-        _this._isAnimating = false;
-        _this.setCenterZoom(_this._centerTarget, _this._zoomTarget, true);
-        _this.onAnimationStop();
-      } else {
-        var _this$animationStep2 = _this.animationStep(timestamp),
-            centerStep = _this$animationStep2.centerStep,
-            zoomStep = _this$animationStep2.zoomStep;
-
-        _this.setCenterZoom(centerStep, zoomStep);
-        _this._animFrame = window.requestAnimationFrame(_this.animate);
-      }
-    };
-
-    _this.stopAnimating = function () {
-      if (_this._isAnimating) {
-        _this._isAnimating = false;
-        _this.onAnimationStop();
-        window.cancelAnimationFrame(_this._animFrame);
-      }
-    };
-
-    _this.limitCenterAtZoom = function (center) {
-      // TODO: use zoom to hide the gray area of the map - adjust the center
-      return [Math.max(Math.min(isNaN(center[0]) ? _this.state.center[0] : center[0], maxLat), minLat), Math.max(Math.min(isNaN(center[1]) ? _this.state.center[1] : center[1], maxLng), minLng)];
-    };
-
-    _this.onAnimationStart = function () {
-      _this.props.onAnimationStart && _this.props.onAnimationStart();
-    };
-
-    _this.onAnimationStop = function () {
-      _this.props.onAnimationStop && _this.props.onAnimationStop();
-    };
-
-    _this.setCenterZoom = function (center, zoom) {
-      var animationEnded = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      var limitedCenter = _this.limitCenterAtZoom(center, zoom);
-
-      if (Math.round(_this.state.zoom) !== Math.round(zoom)) {
-        var tileValues = _this.tileValues(_this.state);
-        var nextValues = _this.tileValues({ center: limitedCenter, zoom: zoom, width: _this.state.width, height: _this.state.height });
-        var oldTiles = _this.state.oldTiles;
-
-        _this.setState({
-          oldTiles: oldTiles.filter(function (o) {
-            return o.roundedZoom !== tileValues.roundedZoom;
-          }).concat(tileValues)
-        }, NOOP);
-
-        var loadTracker = {};
-
-        for (var x = nextValues.tileMinX; x <= nextValues.tileMaxX; x++) {
-          for (var y = nextValues.tileMinY; y <= nextValues.tileMaxY; y++) {
-            var key = x + '-' + y + '-' + nextValues.roundedZoom;
-            loadTracker[key] = false;
-          }
-        }
-
-        _this._loadTracker = loadTracker;
-      }
-
-      _this.setState({ center: limitedCenter, zoom: zoom }, NOOP);
-
-      var maybeZoom = _this.props.zoom ? _this.props.zoom : _this._lastZoom;
-      var maybeCenter = _this.props.center ? _this.props.center : _this._lastCenter;
-      if (animationEnded || Math.abs(maybeZoom - zoom) > 0.001 || Math.abs(maybeCenter[0] - limitedCenter[0]) > 0.00001 || Math.abs(maybeCenter[1] - limitedCenter[1]) > 0.00001) {
-        _this._lastZoom = zoom;
-        _this._lastCenter = [].concat(_toConsumableArray(limitedCenter));
-        _this.syncToProps(limitedCenter, zoom);
-      }
-    };
-
-    _this.imageLoaded = function (key) {
-      if (_this._loadTracker && key in _this._loadTracker) {
-        _this._loadTracker[key] = true;
-
-        var unloadedCount = Object.keys(_this._loadTracker).filter(function (k) {
-          return !_this._loadTracker[k];
-        }).length;
-
-        if (unloadedCount === 0) {
-          _this.setState({ oldTiles: [] }, NOOP);
-        }
-      }
-    };
-
-    _this.handleTouchStart = function (event) {
-      if (event.touches.length === 1) {
-        var touch = event.touches[0];
-        var pixel = getMousePixel(_this._containerRef, touch);
-
-        if (_this.coordsInside(pixel)) {
-          _this._touchStartPixel = [pixel];
-
-          if (!_this.props.twoFingerDrag) {
-            _this.stopAnimating();
-
-            if (_this._lastTap && performanceNow() - _this._lastTap < DOUBLE_CLICK_DELAY) {
-              event.preventDefault();
-              var latLngNow = _this.pixelToLatLng(_this._touchStartPixel[0]);
-              _this.setCenterZoomTarget(null, Math.max(_this.props.minZoom, Math.min(_this.state.zoom + 1, _this.props.maxZoom)), false, latLngNow);
-            } else {
-              _this._lastTap = performanceNow();
-              _this.trackMoveEvents(pixel);
-            }
-          }
-        }
-        // added second finger and first one was in the area
-      } else if (event.touches.length === 2 && _this._touchStartPixel) {
-        event.preventDefault();
-
-        _this.stopTrackingMoveEvents();
-
-        if (_this.state.pixelDelta || _this.state.zoomDelta) {
-          _this.sendDeltaChange();
-        }
-
-        var t1 = getMousePixel(_this._containerRef, event.touches[0]);
-        var t2 = getMousePixel(_this._containerRef, event.touches[1]);
-
-        _this._touchStartPixel = [t1, t2];
-        _this._touchStartMidPoint = [(t1[0] + t2[0]) / 2, (t1[1] + t2[1]) / 2];
-        _this._touchStartDistance = Math.sqrt(Math.pow(t1[0] - t2[0], 2) + Math.pow(t1[1] - t2[1], 2));
-      }
-    };
-
-    _this.handleTouchMove = function (event) {
-      if (event.touches.length === 1 && _this._touchStartPixel) {
-        var touch = event.touches[0];
-        var pixel = getMousePixel(_this._containerRef, touch);
-
-        if (_this.props.twoFingerDrag) {
-          if (_this.coordsInside(pixel)) {
-            _this.showWarning('fingers');
-          }
-        } else {
-          event.preventDefault();
-          _this.trackMoveEvents(pixel);
-
-          _this.setState({
-            pixelDelta: [pixel[0] - _this._touchStartPixel[0][0], pixel[1] - _this._touchStartPixel[0][1]]
-          }, NOOP);
-        }
-      } else if (event.touches.length === 2 && _this._touchStartPixel) {
-        var _this$state2 = _this.state,
-            width = _this$state2.width,
-            height = _this$state2.height,
-            zoom = _this$state2.zoom;
-
-        event.preventDefault();
-
-        var t1 = getMousePixel(_this._containerRef, event.touches[0]);
-        var t2 = getMousePixel(_this._containerRef, event.touches[1]);
-
-        var midPoint = [(t1[0] + t2[0]) / 2, (t1[1] + t2[1]) / 2];
-        var midPointDiff = [midPoint[0] - _this._touchStartMidPoint[0], midPoint[1] - _this._touchStartMidPoint[1]];
-
-        var distance = Math.sqrt(Math.pow(t1[0] - t2[0], 2) + Math.pow(t1[1] - t2[1], 2));
-
-        var zoomDelta = Math.max(_this.props.minZoom, Math.min(_this.props.maxZoom, zoom + Math.log2(distance / _this._touchStartDistance))) - zoom;
-        var scale = Math.pow(2, zoomDelta);
-
-        var centerDiffDiff = [(width / 2 - midPoint[0]) * (scale - 1), (height / 2 - midPoint[1]) * (scale - 1)];
-
-        _this.setState({
-          zoomDelta: zoomDelta,
-          pixelDelta: [centerDiffDiff[0] + midPointDiff[0] * scale, centerDiffDiff[1] + midPointDiff[1] * scale]
-        }, NOOP);
-      }
-    };
-
-    _this.handleTouchEnd = function (event) {
-      if (_this._touchStartPixel) {
-        var _this$props = _this.props,
-            zoomSnap = _this$props.zoomSnap,
-            twoFingerDrag = _this$props.twoFingerDrag,
-            minZoom = _this$props.minZoom,
-            maxZoom = _this$props.maxZoom;
-        var zoomDelta = _this.state.zoomDelta;
-
-        var _this$sendDeltaChange = _this.sendDeltaChange(),
-            center = _this$sendDeltaChange.center,
-            zoom = _this$sendDeltaChange.zoom;
-
-        if (event.touches.length === 0) {
-          if (twoFingerDrag) {
-            _this.clearWarning();
-          } else {
-            // if the click started and ended at about
-            // the same place we can view it as a click
-            // and not prevent default behavior.
-            var oldTouchPixel = _this._touchStartPixel[0];
-            var newTouchPixel = getMousePixel(_this._containerRef, event.changedTouches[0]);
-
-            if (Math.abs(oldTouchPixel[0] - newTouchPixel[0]) > CLICK_TOLERANCE || Math.abs(oldTouchPixel[1] - newTouchPixel[1]) > CLICK_TOLERANCE) {
-              // don't throw immediately after releasing the second finger
-              if (!_this._secondTouchEnd || performanceNow() - _this._secondTouchEnd > PINCH_RELEASE_THROW_DELAY) {
-                event.preventDefault();
-                _this.throwAfterMoving(newTouchPixel, center, zoom);
-              }
-            }
-
-            _this._touchStartPixel = null;
-            _this._secondTouchEnd = null;
-          }
-        } else if (event.touches.length === 1) {
-          event.preventDefault();
-          var touch = getMousePixel(_this._containerRef, event.touches[0]);
-
-          _this._secondTouchEnd = performanceNow();
-          _this._touchStartPixel = [touch];
-          _this.trackMoveEvents(touch);
-
-          if (zoomSnap) {
-            // if somehow we have no midpoint for the two finger touch, just take the center of the map
-            var latLng = _this._touchStartMidPoint ? _this.pixelToLatLng(_this._touchStartMidPoint) : _this.state.center;
-
-            var zoomTarget = void 0;
-
-            // do not zoom up/down if we must drag with 2 fingers and didn't change the zoom level
-            if (twoFingerDrag && Math.round(_this.state.zoom) === Math.round(_this.state.zoom + zoomDelta)) {
-              zoomTarget = Math.round(_this.state.zoom);
-            } else {
-              zoomTarget = zoomDelta > 0 ? Math.ceil(_this.state.zoom) : Math.floor(_this.state.zoom);
-            }
-            var _zoom = Math.max(minZoom, Math.min(zoomTarget, maxZoom));
-
-            _this.setCenterZoomTarget(latLng, _zoom, false, latLng);
-          }
-        }
-      }
-    };
-
-    _this.handleMouseDown = function (event) {
-      var pixel = getMousePixel(_this._containerRef, event);
-
-      if (event.button === 0 && (!event.target || !(0, _parentHasClass2.default)(event.target, 'pigeon-drag-block')) && _this.coordsInside(pixel)) {
-        _this.stopAnimating();
-        event.preventDefault();
-
-        if (_this._lastClick && performanceNow() - _this._lastClick < DOUBLE_CLICK_DELAY) {
-          var latLngNow = _this.pixelToLatLng(_this._mousePosition || pixel);
-          _this.setCenterZoomTarget(null, Math.max(_this.props.minZoom, Math.min(_this.state.zoom + 1, _this.props.maxZoom)), false, latLngNow);
-        } else {
-          _this._lastClick = performanceNow();
-
-          _this._mouseDown = true;
-          _this._dragStart = pixel;
-          _this.trackMoveEvents(pixel);
-        }
-      }
-    };
-
-    _this.handleMouseMove = function (event) {
-      _this._mousePosition = getMousePixel(_this._containerRef, event);
-
-      if (_this._mouseDown && _this._dragStart) {
-        _this.trackMoveEvents(_this._mousePosition);
-        _this.setState({
-          pixelDelta: [_this._mousePosition[0] - _this._dragStart[0], _this._mousePosition[1] - _this._dragStart[1]]
-        }, NOOP);
-      }
-    };
-
-    _this.handleMouseUp = function (event) {
-      var pixelDelta = _this.state.pixelDelta;
-
-      if (_this._mouseDown) {
-        _this._mouseDown = false;
-
-        var pixel = getMousePixel(_this._containerRef, event);
-
-        if (_this.props.onClick && (!event.target || !(0, _parentHasClass2.default)(event.target, 'pigeon-click-block')) && (!pixelDelta || Math.abs(pixelDelta[0]) + Math.abs(pixelDelta[1]) <= CLICK_TOLERANCE)) {
-          var latLng = _this.pixelToLatLng(pixel);
-          _this.props.onClick({ event: event, latLng: latLng, pixel: pixel });
-          _this.setState({ pixelDelta: null }, NOOP);
-        } else {
-          var _this$sendDeltaChange2 = _this.sendDeltaChange(),
-              center = _this$sendDeltaChange2.center,
-              zoom = _this$sendDeltaChange2.zoom;
-
-          _this.throwAfterMoving(pixel, center, zoom);
-        }
-      }
-    };
-
-    _this.stopTrackingMoveEvents = function () {
-      _this._moveEvents = [];
-    };
-
-    _this.trackMoveEvents = function (coords) {
-      var timestamp = performanceNow();
-
-      if (_this._moveEvents.length === 0 || timestamp - _this._moveEvents[_this._moveEvents.length - 1].timestamp > 40) {
-        _this._moveEvents.push({ timestamp: timestamp, coords: coords });
-        if (_this._moveEvents.length > 2) {
-          _this._moveEvents.shift();
-        }
-      }
-    };
-
-    _this.throwAfterMoving = function (coords, center, zoom) {
-      var _this$state3 = _this.state,
-          width = _this$state3.width,
-          height = _this$state3.height;
-      var animate = _this.props.animate;
-
-      var timestamp = performanceNow();
-      var lastEvent = _this._moveEvents.shift();
-
-      if (lastEvent && animate) {
-        var deltaMs = Math.max(timestamp - lastEvent.timestamp, 1);
-
-        var delta = [(coords[0] - lastEvent.coords[0]) / deltaMs * 120, (coords[1] - lastEvent.coords[1]) / deltaMs * 120];
-
-        var distance = Math.sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
-
-        if (distance > MIN_DRAG_FOR_THROW) {
-          var diagonal = Math.sqrt(width * width + height * height);
-
-          var lng = tile2lng(lng2tile(center[1], zoom) - delta[0] / 256.0, zoom);
-          var lat = tile2lat(lat2tile(center[0], zoom) - delta[1] / 256.0, zoom);
-
-          _this.setCenterZoomTarget([lat, lng], zoom, false, null, DIAGONAL_THROW_TIME * distance / diagonal);
-        }
-      }
-
-      _this.stopTrackingMoveEvents();
-    };
-
-    _this.sendDeltaChange = function () {
-      var _this$state4 = _this.state,
-          center = _this$state4.center,
-          zoom = _this$state4.zoom,
-          pixelDelta = _this$state4.pixelDelta,
-          zoomDelta = _this$state4.zoomDelta;
-
-      var lat = center[0];
-      var lng = center[1];
-
-      if (pixelDelta || zoomDelta !== 0) {
-        lng = tile2lng(lng2tile(center[1], zoom + zoomDelta) - (pixelDelta ? pixelDelta[0] / 256.0 : 0), zoom + zoomDelta);
-        lat = tile2lat(lat2tile(center[0], zoom + zoomDelta) - (pixelDelta ? pixelDelta[1] / 256.0 : 0), zoom + zoomDelta);
-        _this.setCenterZoom([lat, lng], zoom + zoomDelta);
-      }
-
-      _this.setState({
-        pixelDelta: null,
-        zoomDelta: 0
-      }, NOOP);
-
-      return {
-        center: _this.limitCenterAtZoom([lat, lng], zoom + zoomDelta),
-        zoom: zoom + zoomDelta
-      };
-    };
-
-    _this.getBounds = function () {
-      var center = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.state.center;
-      var zoom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.zoomPlusDelta();
-      var _this$state5 = _this.state,
-          width = _this$state5.width,
-          height = _this$state5.height;
-
-      return {
-        ne: _this.pixelToLatLng([width - 1, 0], center, zoom),
-        sw: _this.pixelToLatLng([0, height - 1], center, zoom)
-      };
-    };
-
-    _this.syncToProps = function () {
-      var center = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.state.center;
-      var zoom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.state.zoom;
-      var onBoundsChanged = _this.props.onBoundsChanged;
-
-      if (onBoundsChanged) {
-        var bounds = _this.getBounds(center, zoom);
-
-        onBoundsChanged({ center: center, zoom: zoom, bounds: bounds, initial: !_this._boundsSynced });
-
-        _this._boundsSynced = true;
-      }
-    };
-
-    _this.handleWheel = function (event) {
-      var _this$props2 = _this.props,
-          mouseEvents = _this$props2.mouseEvents,
-          metaWheelZoom = _this$props2.metaWheelZoom,
-          zoomSnap = _this$props2.zoomSnap,
-          animate = _this$props2.animate;
-
-      if (!mouseEvents) {
-        return;
-      }
-
-      if (!metaWheelZoom || event.metaKey) {
-        event.preventDefault();
-
-        var addToZoom = -event.deltaY / SCROLL_PIXELS_FOR_ZOOM_LEVEL;
-
-        if (!zoomSnap && _this._zoomTarget) {
-          var stillToAdd = _this._zoomTarget - _this.state.zoom;
-          _this.zoomAroundMouse(addToZoom + stillToAdd, zoomSnap);
-        } else {
-          if (animate) {
-            _this.zoomAroundMouse(addToZoom, zoomSnap);
-          } else {
-            if (!_this._lastWheel || performanceNow() - _this._lastWheel > ANIMATION_TIME) {
-              _this._lastWheel = performanceNow();
-              _this.zoomAroundMouse(addToZoom, zoomSnap);
-            }
-          }
-        }
-      } else {
-        _this.showWarning('wheel');
-      }
-    };
-
-    _this.showWarning = function (warningType) {
-      if (!_this.state.showWarning || _this.state.warningType !== warningType) {
-        _this.setState({ showWarning: true, warningType: warningType });
-      }
-
-      if (_this._warningClearTimeout) {
-        window.clearTimeout(_this._warningClearTimeout);
-      }
-      _this._warningClearTimeout = window.setTimeout(_this.clearWarning, WARNING_DISPLAY_TIMEOUT);
-    };
-
-    _this.clearWarning = function () {
-      if (_this.state.showWarning) {
-        _this.setState({ showWarning: false });
-      }
-    };
-
-    _this.zoomAroundMouse = function (zoomDiff) {
-      var zoomSnap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var zoom = _this.state.zoom;
-      var _this$props3 = _this.props,
-          minZoom = _this$props3.minZoom,
-          maxZoom = _this$props3.maxZoom;
-
-      if (!_this._mousePosition || zoom === minZoom && zoomDiff < 0 || zoom === maxZoom && zoomDiff > 0) {
-        return;
-      }
-
-      var latLngNow = _this.pixelToLatLng(_this._mousePosition);
-
-      var zoomTarget = zoom + zoomDiff;
-      if (zoomSnap) {
-        zoomTarget = zoomDiff < 0 ? Math.floor(zoomTarget) : Math.ceil(zoomTarget);
-      }
-      zoomTarget = Math.max(minZoom, Math.min(zoomTarget, maxZoom));
-
-      _this.setCenterZoomTarget(null, zoomTarget, false, latLngNow);
-    };
-
-    _this.zoomPlusDelta = function () {
-      return _this.state.zoom + _this.state.zoomDelta;
-    };
-
-    _this.pixelToLatLng = function (pixel) {
-      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.state.center;
-      var zoom = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _this.zoomPlusDelta();
-      var _this$state6 = _this.state,
-          width = _this$state6.width,
-          height = _this$state6.height,
-          pixelDelta = _this$state6.pixelDelta;
-
-      var pointDiff = [(pixel[0] - width / 2 - (pixelDelta ? pixelDelta[0] : 0)) / 256.0, (pixel[1] - height / 2 - (pixelDelta ? pixelDelta[1] : 0)) / 256.0];
-
-      var tileX = lng2tile(center[1], zoom) + pointDiff[0];
-      var tileY = lat2tile(center[0], zoom) + pointDiff[1];
-
-      return _this.limitCenterAtZoom([tile2lat(tileY, zoom), tile2lng(tileX, zoom)], zoom);
-    };
-
-    _this.latLngToPixel = function (latLng) {
-      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.state.center;
-      var zoom = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _this.zoomPlusDelta();
-      var _this$state7 = _this.state,
-          width = _this$state7.width,
-          height = _this$state7.height,
-          pixelDelta = _this$state7.pixelDelta;
-
-      var limitedCenter = _this.limitCenterAtZoom(center);
-
-      var tileCenterX = lng2tile(limitedCenter[1], zoom);
-      var tileCenterY = lat2tile(limitedCenter[0], zoom);
-
-      var tileX = lng2tile(latLng[1], zoom);
-      var tileY = lat2tile(latLng[0], zoom);
-
-      return [(tileX - tileCenterX) * 256.0 + width / 2 + (pixelDelta ? pixelDelta[0] : 0), (tileY - tileCenterY) * 256.0 + height / 2 + (pixelDelta ? pixelDelta[1] : 0)];
-    };
-
-    _this.calculateZoomCenter = function (center, coords, oldZoom, newZoom) {
-      var _this$state8 = _this.state,
-          width = _this$state8.width,
-          height = _this$state8.height;
-
-      var pixelBefore = _this.latLngToPixel(coords, center, oldZoom);
-      var pixelAfter = _this.latLngToPixel(coords, center, newZoom);
-
-      var newCenter = _this.pixelToLatLng([width / 2 + pixelAfter[0] - pixelBefore[0], height / 2 + pixelAfter[1] - pixelBefore[1]], center, newZoom);
-
-      return _this.limitCenterAtZoom(newCenter, newZoom);
-    };
-
-    _this.setRef = function (dom) {
-      _this._containerRef = dom;
-    };
-
-    _this.syncToProps = (0, _debounce2.default)(_this.syncToProps, DEBOUNCE_DELAY);
-
-    _this._mousePosition = null;
-    _this._dragStart = null;
-    _this._mouseDown = false;
-    _this._moveEvents = [];
-    _this._lastClick = null;
-    _this._lastTap = null;
-    _this._touchStartPixel = null;
-
-    _this._isAnimating = false;
-    _this._animationStart = null;
-    _this._animationEnd = null;
-    _this._centerTarget = null;
-    _this._zoomTarget = null;
-
-    // When users are using uncontrolled components we have to keep this
-    // so we can know if we should call onBoundsChanged
-    _this._lastZoom = props.defaultZoom ? props.defaultZoom : props.zoom;
-    _this._lastCenter = props.defaultCenter ? props.defaultCenter : props.center;
-    _this._boundsSynced = false;
-
-    _this.state = {
-      zoom: _this._lastZoom,
-      center: _this._lastCenter,
-      width: props.width || props.defaultWidth,
-      height: props.height || props.defaultHeight,
-      zoomDelta: 0,
-      pixelDelta: null,
-      oldTiles: [],
-      showWarning: false,
-      warningType: null
-    };
-    return _this;
-  }
-
-  _createClass(Map, [{
-    key: 'componentDidMount',
-    value: function () {
-      this.props.mouseEvents && this.bindMouseEvents();
-      this.props.touchEvents && this.bindTouchEvents();
-
-      if (!this.props.width || !this.props.height) {
-        this.updateWidthHeight();
-        this.bindResizeEvent();
-      }
-
-      this.syncToProps();
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function () {
-      this.props.mouseEvents && this.unbindMouseEvents();
-      this.props.touchEvents && this.unbindTouchEvents();
-
-      if (!this.props.width || !this.props.height) {
-        this.unbindResizeEvent();
-      }
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function (nextProps) {
-      if (nextProps.mouseEvents !== this.props.mouseEvents) {
-        nextProps.mouseEvents ? this.bindMouseEvents() : this.unbindMouseEvents();
-      }
-
-      if (nextProps.touchEvents !== this.props.touchEvents) {
-        nextProps.touchEvents ? this.bindTouchEvents() : this.unbindTouchEvents();
-      }
-
-      if (nextProps.width && nextProps.width !== this.props.width) {
-        this.setState({ width: nextProps.width });
-      }
-
-      if (nextProps.height && nextProps.height !== this.props.height) {
-        this.setState({ height: nextProps.height });
-      }
-
-      if (!nextProps.center && !nextProps.zoom) {
-        // if the user isn't controlling neither zoom nor center we don't have to update.
-        return;
-      }
-      if ((!nextProps.center || nextProps.center[0] === this.props.center[0] && nextProps.center[1] === this.props.center[1]) && nextProps.zoom === this.props.zoom) {
-        // if the user is controlling either zoom or center but nothing changed
-        // we don't have to update aswell
-        return;
-      }
-      var maybeCenter = nextProps.center ? nextProps.center : this.state.center;
-      var maybeZoom = nextProps.zoom ? nextProps.zoom : this.state.zoom;
-      if (Math.abs(maybeZoom - this.state.zoom) > 0.001 || Math.abs(maybeCenter[0] - this.state.center[0]) > 0.0001 || Math.abs(maybeCenter[1] - this.state.center[1]) > 0.0001) {
-        this.setCenterZoomTarget(maybeCenter, maybeZoom, true);
-      }
-    }
-
-    // main logic when changing coordinates
-
-  }, {
-    key: 'coordsInside',
-    value: function (pixel) {
-      var _state = this.state,
-          width = _state.width,
-          height = _state.height;
-
-      if (pixel[0] < 0 || pixel[1] < 0 || pixel[0] >= width || pixel[1] >= height) {
-        return false;
-      }
-
-      var parent = this._containerRef;
-      var pos = (0, _parentPosition2.default)(parent);
-      var element = document.elementFromPoint(pixel[0] + pos.x, pixel[1] + pos.y);
-
-      return parent === element || parent.contains(element);
-    }
-
-    // https://www.bennadel.com/blog/1856-using-jquery-s-animate-step-callback-function-to-create-custom-animations.htm
-
-
-    // tools
-
-    // ref
-
-  }, {
-    key: 'tileValues',
-
-    // data to display the tiles
-
-    value: function (state) {
-      var center = state.center,
-          zoom = state.zoom,
-          pixelDelta = state.pixelDelta,
-          zoomDelta = state.zoomDelta,
-          width = state.width,
-          height = state.height;
-
-      var roundedZoom = Math.round(zoom + (zoomDelta || 0));
-
-
-      var scale = Math.pow(2, zoom + (zoomDelta || 0) - roundedZoom);
-      var scaleWidth = width / scale;
-      var scaleHeight = height / scale;
-
-      var tileCenterX = lng2tile(center[1], roundedZoom) - (pixelDelta ? pixelDelta[0] / 256.0 / scale : 0);
-      var tileCenterY = lat2tile(center[0], roundedZoom) - (pixelDelta ? pixelDelta[1] / 256.0 / scale : 0);
-
-      var halfWidth = scaleWidth / 2 / 256.0;
-      var halfHeight = scaleHeight / 2 / 256.0;
-
-      var tileMinX = Math.floor(tileCenterX - halfWidth);
-      var tileMaxX = Math.floor(tileCenterX + halfWidth);
-
-      var tileMinY = Math.floor(tileCenterY - halfHeight);
-      var tileMaxY = Math.floor(tileCenterY + halfHeight);
-
-      return {
-        tileMinX: tileMinX,
-        tileMaxX: tileMaxX,
-        tileMinY: tileMinY,
-        tileMaxY: tileMaxY,
-        tileCenterX: tileCenterX,
-        tileCenterY: tileCenterY,
-        roundedZoom: roundedZoom,
-        zoomDelta: zoomDelta || 0,
-        scaleWidth: scaleWidth,
-        scaleHeight: scaleHeight,
-        scale: scale
-      };
-    }
-
-    // display the tiles
-
-  }, {
-    key: 'renderTiles',
-    value: function () {
-      var _this2 = this;
-
-      var oldTiles = this.state.oldTiles;
-
-      var mapUrl = this.props.provider || wikimedia;
-
-      var _tileValues = this.tileValues(this.state),
-          tileMinX = _tileValues.tileMinX,
-          tileMaxX = _tileValues.tileMaxX,
-          tileMinY = _tileValues.tileMinY,
-          tileMaxY = _tileValues.tileMaxY,
-          tileCenterX = _tileValues.tileCenterX,
-          tileCenterY = _tileValues.tileCenterY,
-          roundedZoom = _tileValues.roundedZoom,
-          scaleWidth = _tileValues.scaleWidth,
-          scaleHeight = _tileValues.scaleHeight,
-          scale = _tileValues.scale;
-
-      var tiles = [];
-
-      for (var i = 0; i < oldTiles.length; i++) {
-        var old = oldTiles[i];
-        var zoomDiff = old.roundedZoom - roundedZoom;
-
-        if (Math.abs(zoomDiff) > 4 || zoomDiff === 0) {
-          continue;
-        }
-
-        var pow = 1 / Math.pow(2, zoomDiff);
-        var xDiff = -(tileMinX - old.tileMinX * pow) * 256;
-        var yDiff = -(tileMinY - old.tileMinY * pow) * 256;
-
-        var _xMin = Math.max(old.tileMinX, 0);
-        var _yMin = Math.max(old.tileMinY, 0);
-        var _xMax = Math.min(old.tileMaxX, Math.pow(2, old.roundedZoom) - 1);
-        var _yMax = Math.min(old.tileMaxY, Math.pow(2, old.roundedZoom) - 1);
-
-        for (var x = _xMin; x <= _xMax; x++) {
-          for (var y = _yMin; y <= _yMax; y++) {
-            tiles.push({
-              key: x + '-' + y + '-' + old.roundedZoom,
-              url: mapUrl(x, y, old.roundedZoom),
-              left: xDiff + (x - old.tileMinX) * 256 * pow,
-              top: yDiff + (y - old.tileMinY) * 256 * pow,
-              width: 256 * pow,
-              height: 256 * pow,
-              active: false
-            });
-          }
-        }
-      }
-
-      var xMin = Math.max(tileMinX, 0);
-      var yMin = Math.max(tileMinY, 0);
-      var xMax = Math.min(tileMaxX, Math.pow(2, roundedZoom) - 1);
-      var yMax = Math.min(tileMaxY, Math.pow(2, roundedZoom) - 1);
-
-      for (var _x13 = xMin; _x13 <= xMax; _x13++) {
-        for (var _y = yMin; _y <= yMax; _y++) {
-          tiles.push({
-            key: _x13 + '-' + _y + '-' + roundedZoom,
-            url: mapUrl(_x13, _y, roundedZoom),
-            left: (_x13 - tileMinX) * 256,
-            top: (_y - tileMinY) * 256,
-            width: 256,
-            height: 256,
-            active: true
-          });
-        }
-      }
-
-      return _infact.React.createElement('div', { style: {
-          width: scaleWidth,
-          height: scaleHeight,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          overflow: 'hidden',
-          willChange: 'transform',
-          transform: 'scale(' + scale + ', ' + scale + ')',
-          transformOrigin: 'top left'
-        } }, _infact.React.createElement('div', { style: {
-          position: 'absolute',
-          width: (tileMaxX - tileMinX + 1) * 256,
-          height: (tileMaxY - tileMinY + 1) * 256,
-          willChange: 'transform',
-          transform: 'translate(' + -((tileCenterX - tileMinX) * 256 - scaleWidth / 2) + 'px, ' + -((tileCenterY - tileMinY) * 256 - scaleHeight / 2) + 'px)'
-        } }, tiles.map(function (tile) {
-        return _infact.React.createElement('img', {
-          key: tile.key,
-          src: tile.url,
-          width: tile.width,
-          height: tile.height,
-          onLoad: function () {
-            return _this2.imageLoaded(tile.key);
-          },
-          style: { position: 'absolute', left: tile.left, top: tile.top, willChange: 'transform', transform: tile.transform, transformOrigin: 'top left', opacity: 1 } });
-      })));
-    }
-  }, {
-    key: 'renderOverlays',
-    value: function () {
-      var _this3 = this;
-
-      var _state2 = this.state,
-          width = _state2.width,
-          height = _state2.height,
-          center = _state2.center;
-
-      var mapState = {
-        bounds: this.getBounds(),
-        zoom: this.zoomPlusDelta(),
-        center: center,
-        width: width,
-        height: height
-      };
-
-      var childrenWithProps = void 0;
-
-      childrenWithProps = _infact.React.Children.map(this.props.children, function (child) {
-        if (!child) {
-          return null;
-        }
-
-        if (typeof child.type === 'string') {
-          return child;
-        }
-
-        var _child$props = child.props,
-            anchor = _child$props.anchor,
-            position = _child$props.position,
-            offset = _child$props.offset;
-
-        var c = _this3.latLngToPixel(anchor || position || center);
-
-        return _infact.React.cloneElement(child, {
-          left: c[0] - (offset ? offset[0] : 0),
-          top: c[1] - (offset ? offset[1] : 0),
-          latLngToPixel: _this3.latLngToPixel,
-          pixelToLatLng: _this3.pixelToLatLng,
-          mapState: mapState
-        });
-      });
-
-
-      return _infact.React.createElement('div', { style: {
-          position: 'absolute',
-          width: width,
-          height: height,
-          top: 0,
-          left: 0
-        } }, childrenWithProps);
-    }
-  }, {
-    key: 'renderAttribution',
-    value: function () {
-      var _props = this.props,
-          attribution = _props.attribution,
-          attributionPrefix = _props.attributionPrefix;
-
-      if (attribution === false) {
-        return null;
-      }
-
-      var linkStyle = {
-        color: '#0078A8',
-        textDecoration: 'none'
-      };
-
-      return _infact.React.createElement('div', { key: 'attr', className: 'pigeon-attribution', style: {
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          fontSize: '11px',
-          padding: '2px 5px',
-          background: 'rgba(255, 255, 255, 0.7)',
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-          color: '#333'
-        } }, attributionPrefix === false ? null : _infact.React.createElement('span', null, attributionPrefix || _infact.React.createElement('a', { href: 'https://github.com/mariusandra/pigeon-maps', style: linkStyle }, 'Pigeon'), ' | '), attribution || _infact.React.createElement('span', null, ' © ', _infact.React.createElement('a', { href: 'https://www.openstreetmap.org/copyright', style: linkStyle }, 'OpenStreetMap'), ' contributors'));
-    }
-  }, {
-    key: 'renderWarning',
-    value: function () {
-      var _props2 = this.props,
-          metaWheelZoom = _props2.metaWheelZoom,
-          metaWheelZoomWarning = _props2.metaWheelZoomWarning,
-          twoFingerDrag = _props2.twoFingerDrag,
-          twoFingerDragWarning = _props2.twoFingerDragWarning,
-          warningZIndex = _props2.warningZIndex;
-      var _state3 = this.state,
-          showWarning = _state3.showWarning,
-          warningType = _state3.warningType,
-          width = _state3.width,
-          height = _state3.height;
-
-      if (metaWheelZoom && metaWheelZoomWarning || twoFingerDrag && twoFingerDragWarning) {
-        var style = {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: width,
-          height: height,
-          overflow: 'hidden',
-          pointerEvents: 'none',
-          opacity: showWarning ? 100 : 0,
-          transition: 'opacity 300ms',
-          background: 'rgba(0,0,0,0.5)',
-          color: '#fff',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 22,
-          fontFamily: '"Arial", sans-serif',
-          textAlign: 'center',
-          zIndex: warningZIndex
-        };
-
-        var meta = typeof window !== 'undefined' && window.navigator && window.navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? '⌘' : '⊞';
-
-        var warningText = warningType === 'fingers' ? twoFingerDragWarning : metaWheelZoomWarning;
-
-        return _infact.React.createElement('div', { style: style }, warningText.replace('META', meta));
-      } else {
-        return null;
-      }
-    }
-  }, {
-    key: 'render',
-    value: function () {
-      var _props3 = this.props,
-          touchEvents = _props3.touchEvents,
-          twoFingerDrag = _props3.twoFingerDrag;
-      var _state4 = this.state,
-          width = _state4.width,
-          height = _state4.height;
-
-      var containerStyle = {
-        width: this.props.width ? width : '100%',
-        height: this.props.height ? height : '100%',
-        position: 'relative',
-        display: 'inline-block',
-        overflow: 'hidden',
-        background: '#dddddd',
-        touchAction: touchEvents ? twoFingerDrag ? 'pan-x pan-y' : 'none' : 'auto'
-      };
-
-      return _infact.React.createElement('div', { style: containerStyle, ref: this.setRef, onWheel: this.handleWheel }, width && height && this.renderTiles(), width && height && this.renderOverlays(), width && height && this.renderAttribution(), width && height && this.renderWarning());
-    }
-  }]);
-
-  return Map;
-}(_infact.Component);
-
-Map.propTypes = {
-  center: _propTypes2.default.array,
-  defaultCenter: _propTypes2.default.array,
-
-  zoom: _propTypes2.default.number,
-  defaultZoom: _propTypes2.default.number,
-
-  width: _propTypes2.default.number,
-  defaultWidth: _propTypes2.default.number,
-
-  height: _propTypes2.default.number,
-  defaultHeight: _propTypes2.default.number,
-
-  provider: _propTypes2.default.func,
-  children: _propTypes2.default.node,
-
-  animate: _propTypes2.default.bool,
-  animateMaxScreens: _propTypes2.default.number,
-
-  minZoom: _propTypes2.default.number,
-  maxZoom: _propTypes2.default.number,
-
-  metaWheelZoom: _propTypes2.default.bool,
-  metaWheelZoomWarning: _propTypes2.default.string,
-  twoFingerDrag: _propTypes2.default.bool,
-  twoFingerDragWarning: _propTypes2.default.string,
-  warningZIndex: _propTypes2.default.number,
-
-  attribution: _propTypes2.default.any,
-  attributionPrefix: _propTypes2.default.any,
-
-  zoomSnap: _propTypes2.default.bool,
-  mouseEvents: _propTypes2.default.bool,
-  touchEvents: _propTypes2.default.bool,
-
-  onClick: _propTypes2.default.func,
-  onBoundsChanged: _propTypes2.default.func,
-  onAnimationStart: _propTypes2.default.func,
-  onAnimationStop: _propTypes2.default.func
-};
-Map.defaultProps = {
-  animate: true,
-  metaWheelZoom: false,
-  metaWheelZoomWarning: 'Use META+wheel to zoom!',
-  twoFingerDrag: false,
-  twoFingerDragWarning: 'Use two fingers to move the map',
-  zoomSnap: true,
-  mouseEvents: true,
-  touchEvents: true,
-  warningZIndex: 100,
-  animateMaxScreens: 5,
-  minZoom: 1,
-  maxZoom: 18
-};
-exports.default = Map;
-
-/***/ }),
-/* 332 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// // infact = inferno + react
-
-exports.React = __webpack_require__(0);
-exports.ReactDOM = __webpack_require__(30);
-exports.Component = exports.React.Component;
-
-/***/ }),
-/* 333 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = parentPosition;
-function parentPosition(element) {
-  var rect = element.getBoundingClientRect();
-  return { x: rect.left, y: rect.top };
-}
-
-/***/ }),
-/* 334 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = parentHasClass;
-function parentHasClass(element, className) {
-  while (element) {
-    if (element.classList && element.classList.contains(className)) {
-      return true;
-    }
-    element = element.offsetParent;
-  }
-
-  return false;
-}
-
-/***/ }),
-/* 335 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = debounce;
-function debounce(func, wait) {
-  var timeout = void 0;
-  return function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      return func.apply(context, args);
-    }, wait);
-  };
-}
-
-/***/ }),
-/* 336 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-  };
-}();
-
-var _infact = __webpack_require__(337);
-
-var _propTypes = __webpack_require__(4);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _pin = __webpack_require__(338);
-
-var _pin2 = _interopRequireDefault(_pin);
-
-var _pin2x = __webpack_require__(339);
-
-var _pin2x2 = _interopRequireDefault(_pin2x);
-
-var _pinHover = __webpack_require__(340);
-
-var _pinHover2 = _interopRequireDefault(_pinHover);
-
-var _pinHover2x = __webpack_require__(341);
-
-var _pinHover2x2 = _interopRequireDefault(_pinHover2x);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }return call && (typeof call === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var imageOffset = {
-  left: 15,
-  top: 31
-};
-
-var Marker = function (_Component) {
-  _inherits(Marker, _Component);
-
-  function Marker(props) {
-    _classCallCheck(this, Marker);
-
-    var _this = _possibleConstructorReturn(this, (Marker.__proto__ || Object.getPrototypeOf(Marker)).call(this, props));
-
-    _this.eventParameters = function (event) {
-      return {
-        event: event,
-        anchor: _this.props.anchor,
-        payload: _this.props.payload
-      };
-    };
-
-    _this.handleClick = function () {
-      _this.props.onClick && _this.props.onClick(_this.eventParameters());
-    };
-
-    _this.handleContextMenu = function () {
-      _this.props.onContextMenu && _this.props.onContextMenu(_this.eventParameters());
-    };
-
-    _this.handleMouseOver = function () {
-      _this.props.onMouseOver && _this.props.onMouseOver(_this.eventParameters());
-      _this.setState({ hover: true });
-    };
-
-    _this.handleMouseOut = function () {
-      _this.props.onMouseOut && _this.props.onMouseOut(_this.eventParameters());
-      _this.setState({ hover: false });
-    };
-
-    _this.state = {
-      hover: false
-    };
-    return _this;
-  }
-
-  // what do you expect to get back with the event
-
-
-  _createClass(Marker, [{
-    key: 'isRetina',
-
-    // controls
-    value: function () {
-      return typeof window !== 'undefined' && window.devicePixelRatio >= 2;
-    }
-
-    // modifiers
-
-  }, {
-    key: 'isHover',
-    value: function () {
-      return typeof this.props.hover === 'boolean' ? this.props.hover : this.state.hover;
-    }
-  }, {
-    key: 'image',
-    value: function () {
-      return this.isRetina() ? this.isHover() ? _pinHover2x2.default : _pin2x2.default : this.isHover() ? _pinHover2.default : _pin2.default;
-    }
-
-    // lifecycle
-
-  }, {
-    key: 'componentDidMount',
-    value: function () {
-      var images = this.isRetina() ? [_pin2x2.default, _pinHover2x2.default] : [_pin2.default, _pinHover2.default];
-
-      images.forEach(function (image) {
-        var img = new window.Image();
-        img.src = image;
-      });
-    }
-
-    // delegators
-
-  }, {
-    key: 'render',
-
-    // render
-
-    value: function () {
-      var _props = this.props,
-          left = _props.left,
-          top = _props.top,
-          onClick = _props.onClick;
-
-      var style = {
-        position: 'absolute',
-        transform: 'translate(' + (left - imageOffset.left) + 'px, ' + (top - imageOffset.top) + 'px)',
-        cursor: onClick ? 'pointer' : 'default'
-      };
-
-      return _infact.React.createElement('div', { style: style,
-        className: 'pigeon-click-block',
-        onClick: this.handleClick,
-        onContextMenu: this.handleContextMenu,
-        onMouseOver: this.handleMouseOver,
-        onMouseOut: this.handleMouseOut }, _infact.React.createElement('img', { src: this.image(), width: 29, height: 34, alt: '' }));
-    }
-  }]);
-
-  return Marker;
-}(_infact.Component);
-
-Marker.propTypes = {
-  // input, passed to events
-  anchor: _propTypes2.default.array.isRequired,
-  payload: _propTypes2.default.any,
-
-  // optional modifiers
-  hover: _propTypes2.default.bool,
-
-  // callbacks
-  onClick: _propTypes2.default.func,
-  onContextMenu: _propTypes2.default.func,
-  onMouseOver: _propTypes2.default.func,
-  onMouseOut: _propTypes2.default.func,
-
-  // pigeon variables
-  left: _propTypes2.default.number,
-  top: _propTypes2.default.number,
-
-  // pigeon functions
-  latLngToPixel: _propTypes2.default.func,
-  pixelToLatLng: _propTypes2.default.func
-};
-exports.default = Marker;
-
-/***/ }),
-/* 337 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// // infact = inferno + react
-
-exports.React = __webpack_require__(0);
-exports.ReactDOM = __webpack_require__(30);
-exports.Component = exports.React.Component;
-
-/***/ }),
-/* 338 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/vendor/pigeon-marker/lib/react/pin.png?da99a19403171aa2a457b868e4c15078";
-
-/***/ }),
-/* 339 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/vendor/pigeon-marker/lib/react/pin@2x.png?6e793efea1542835f7e2708621c6d99f";
-
-/***/ }),
-/* 340 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/vendor/pigeon-marker/lib/react/pin-hover.png?801225da8ca75965e36147e6c33165ed";
-
-/***/ }),
-/* 341 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/vendor/pigeon-marker/lib/react/pin-hover@2x.png?4739dd1480f35a1a43d1704a1c04d56f";
-
-/***/ }),
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
 /* 342 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -57199,105 +55185,103 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var MeetingDetails = function (_Component) {
-    _inherits(MeetingDetails, _Component);
+  _inherits(MeetingDetails, _Component);
 
-    function MeetingDetails(props) {
-        _classCallCheck(this, MeetingDetails);
+  function MeetingDetails(props) {
+    _classCallCheck(this, MeetingDetails);
 
-        var _this = _possibleConstructorReturn(this, (MeetingDetails.__proto__ || Object.getPrototypeOf(MeetingDetails)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MeetingDetails.__proto__ || Object.getPrototypeOf(MeetingDetails)).call(this, props));
 
-        _this.state = {
-            meetingData: [],
-            meetingID: ""
-        };
-        return _this;
-    }
+    _this.state = {
+      meetingData: [],
+      meetingID: ""
+    };
+    return _this;
+  }
 
-    _createClass(MeetingDetails, [{
-        key: "componentDidMount",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var meetingId, getMeeting, meeting, meetingObject;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                meetingId = this.props.match.params.id;
-
-
-                                this.setState({ meetingID: meetingId });
-
-                                _context.next = 4;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/meeting/" + meetingId);
-
-                            case 4:
-                                getMeeting = _context.sent;
-                                meeting = getMeeting.data[0];
-                                meetingObject = {
-                                    id: meeting.id,
-                                    title: meeting.title,
-                                    description: meeting.description,
-                                    author: meeting.author,
-                                    lattitude: meeting.lattitude,
-                                    longitude: meeting.longitude,
-                                    category: meeting.category,
-                                    limit: meeting.limit,
-                                    date: meeting.date,
-                                    time: meeting.time
-                                };
+  _createClass(MeetingDetails, [{
+    key: "componentDidMount",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var meetingId, getMeeting, meeting, meetingObject;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                meetingId = this.props.match.params.id;
 
 
-                                this.setState(function (prevState) {
-                                    return {
-                                        meetingData: [].concat(_toConsumableArray(prevState.meetingData), [meetingObject])
-                                    };
-                                });
+                this.setState({ meetingID: meetingId });
 
-                            case 8:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
+                _context.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/meeting/" + meetingId);
 
-            function componentDidMount() {
-                return _ref.apply(this, arguments);
+              case 4:
+                getMeeting = _context.sent;
+                meeting = getMeeting.data[0];
+                meetingObject = {
+                  id: meeting.id,
+                  title: meeting.title,
+                  description: meeting.description,
+                  author: meeting.author,
+                  lattitude: meeting.lattitude,
+                  longitude: meeting.longitude,
+                  limit: meeting.limit,
+                  date: meeting.date,
+                  time: meeting.time
+                };
+
+
+                this.setState(function (prevState) {
+                  return {
+                    meetingData: [].concat(_toConsumableArray(prevState.meetingData), [meetingObject])
+                  };
+                });
+
+              case 8:
+              case "end":
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
 
-            return componentDidMount;
-        }()
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
 
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                null,
-                this.state.meetingData.map(function (item, i) {
-                    return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleMeetingDetails_js__["a" /* default */], {
-                        key: i,
-                        id: item.id,
-                        title: item.title,
-                        description: item.description,
-                        author: item.author,
-                        lattitude: item.lattitude,
-                        longitude: item.longitude,
-                        category: item.category,
-                        limit: item.limit,
-                        date: item.date,
-                        time: item.time,
-                        meetingId: _this2.state.meetingID,
-                        showAlertSuccess: _this2.props.showAlertSuccess,
-                        showAlertWarning: _this2.props.showAlertWarning
-                    });
-                })
-            );
-        }
-    }]);
+      return componentDidMount;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
 
-    return MeetingDetails;
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        null,
+        this.state.meetingData.map(function (item, i) {
+          return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleMeetingDetails_js__["a" /* default */], {
+            key: i,
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            author: item.author,
+            lattitude: item.lattitude,
+            longitude: item.longitude,
+            limit: item.limit,
+            date: item.date,
+            time: item.time,
+            meetingId: _this2.state.meetingID,
+            showAlertSuccess: _this2.props.showAlertSuccess,
+            showAlertWarning: _this2.props.showAlertWarning
+          });
+        })
+      );
+    }
+  }]);
+
+  return MeetingDetails;
 }(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (MeetingDetails);
