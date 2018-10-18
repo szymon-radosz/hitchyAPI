@@ -18,10 +18,12 @@ class LeafletMapComponent extends Component {
 
     this.state = {
       position: [props.latCenter, props.lngCenter],
+      secondPosition: [props.secondLatCenter, props.secondLngCenter],
       allowDragableMarker: false
     };
 
     this.moveMarker = this.moveMarker.bind(this);
+    this.moveSecondMarker = this.moveSecondMarker.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,13 @@ class LeafletMapComponent extends Component {
     this.props.setNewCoords(event.target._latlng.lat, event.target._latlng.lng);
   }
 
+  moveSecondMarker(event) {
+    this.props.setNewSecondCoords(
+      event.target._latlng.lat,
+      event.target._latlng.lng
+    );
+  }
+
   render() {
     return (
       <div>
@@ -48,13 +57,17 @@ class LeafletMapComponent extends Component {
             position={this.state.position}
             draggable={this.state.allowDragableMarker}
             onDragend={this.moveMarker}
-          >
-            <Popup>
-              A pretty CSS3 popup.
-              <br />
-              Easily customizable.
-            </Popup>
-          </Marker>
+          />
+          {this.props.displaySecondMarker ? (
+            <Marker
+              position={this.state.secondPosition}
+              draggable={this.state.allowDragableMarker}
+              onDragend={this.moveSecondMarker}
+            />
+          ) : (
+            ""
+          )}
+          }
         </Map>
       </div>
     );

@@ -22048,10 +22048,12 @@ var LeafletMapComponent = function (_Component) {
 
     _this.state = {
       position: [props.latCenter, props.lngCenter],
+      secondPosition: [props.secondLatCenter, props.secondLngCenter],
       allowDragableMarker: false
     };
 
     _this.moveMarker = _this.moveMarker.bind(_this);
+    _this.moveSecondMarker = _this.moveSecondMarker.bind(_this);
     return _this;
   }
 
@@ -22068,6 +22070,11 @@ var LeafletMapComponent = function (_Component) {
       this.props.setNewCoords(event.target._latlng.lat, event.target._latlng.lng);
     }
   }, {
+    key: "moveSecondMarker",
+    value: function moveSecondMarker(event) {
+      this.props.setNewSecondCoords(event.target._latlng.lat, event.target._latlng.lng);
+    }
+  }, {
     key: "render",
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -22076,25 +22083,21 @@ var LeafletMapComponent = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
           { center: this.state.position, zoom: 13 },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["d" /* TileLayer */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["c" /* TileLayer */], {
             attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
             url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
           }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */],
-            {
-              position: this.state.position,
-              draggable: this.state.allowDragableMarker,
-              onDragend: this.moveMarker
-            },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["c" /* Popup */],
-              null,
-              "A pretty CSS3 popup.",
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null),
-              "Easily customizable."
-            )
-          )
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */], {
+            position: this.state.position,
+            draggable: this.state.allowDragableMarker,
+            onDragend: this.moveMarker
+          }),
+          this.props.displaySecondMarker ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */], {
+            position: this.state.secondPosition,
+            draggable: this.state.allowDragableMarker,
+            onDragend: this.moveSecondMarker
+          }) : "",
+          "}"
         )
       );
     }
@@ -43308,7 +43311,6 @@ module.exports = "/images/main.jpg?320ead4abdd9dc1ecebc3487b9678142";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Account_Register_js__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(346);
 
@@ -43628,7 +43630,7 @@ var Menu = function (_Component) {
             exact: true,
             path: "/add-meeting",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["default"], {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
                 showAlertSuccess: _this2.props.showAlertSuccess,
                 showAlertWarning: _this2.props.showAlertWarning
               });
@@ -48283,13 +48285,13 @@ var LocateOnMapBtn = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__Polyline__ = __webpack_require__(306);
 /* unused harmony reexport Polyline */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__Popup__ = __webpack_require__(307);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_21__Popup__["a"]; });
+/* unused harmony reexport Popup */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Rectangle__ = __webpack_require__(308);
 /* unused harmony reexport Rectangle */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ScaleControl__ = __webpack_require__(309);
 /* unused harmony reexport ScaleControl */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__TileLayer__ = __webpack_require__(310);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_24__TileLayer__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_24__TileLayer__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__Tooltip__ = __webpack_require__(311);
 /* unused harmony reexport Tooltip */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__VideoOverlay__ = __webpack_require__(312);
@@ -53652,7 +53654,7 @@ __WEBPACK_IMPORTED_MODULE_3__babel_runtime_helpers_defineProperty___default()(Po
   pane: 'popupPane'
 });
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_5__context__["b" /* withLeaflet */])(Popup));
+/* unused harmony default export */ var _unused_webpack_default_export = (Object(__WEBPACK_IMPORTED_MODULE_5__context__["b" /* withLeaflet */])(Popup));
 
 /***/ }),
 /* 308 */
@@ -55138,10 +55140,404 @@ var Register = function (_Component) {
 
 /***/ }),
 /* 330 */
-/***/ (function(module, __webpack_exports__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: C:/xampp/htdocs/projects/hitchyAPI/resources/assets/js/components/components/Meetings/AddNewMeeting.js: Unexpected token, expected , (53:10)\n\n\u001b[0m \u001b[90m 51 | \u001b[39m          lattitude\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mlattitude\u001b[33m,\u001b[39m\n \u001b[90m 52 | \u001b[39m          longitude\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mlongitude\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 53 | \u001b[39m          limit\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mlimit\u001b[33m,\u001b[39m\n \u001b[90m    | \u001b[39m          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 54 | \u001b[39m          date\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mdate\n \u001b[90m 55 | \u001b[39m        }\n \u001b[90m 56 | \u001b[39m      )\u001b[33m;\u001b[39m\u001b[0m\n");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_underscore__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MapComponent_js__ = __webpack_require__(119);
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var AddNewMeeting = function (_Component) {
+  _inherits(AddNewMeeting, _Component);
+
+  function AddNewMeeting(props) {
+    _classCallCheck(this, AddNewMeeting);
+
+    var _this = _possibleConstructorReturn(this, (AddNewMeeting.__proto__ || Object.getPrototypeOf(AddNewMeeting)).call(this, props));
+
+    _this.state = {
+      title: "",
+      description: "",
+      author: "",
+      lattitude: "",
+      longitude: "",
+      stopLat: "",
+      stopLng: "",
+      limit: "Select",
+      date: "",
+      lat: 40.73061,
+      lng: -73.935242,
+      secondLat: 40.8,
+      secondLng: -73.99
+    };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.setNewCoords = _this.setNewCoords.bind(_this);
+    _this.setNewSecondCoords = _this.setNewSecondCoords.bind(_this);
+    return _this;
+  }
+
+  _createClass(AddNewMeeting, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
+
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
+        var getUser, savedMeeting, savedMatchUserWithMeeting;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+
+                if (!(this.state.limit == "Select")) {
+                  _context.next = 5;
+                  break;
+                }
+
+                this.props.showAlertWarning("Please choose the limit of users.");
+                _context.next = 23;
+                break;
+
+              case 5:
+                if (!(this.state.category == "Select")) {
+                  _context.next = 9;
+                  break;
+                }
+
+                this.props.showAlertWarning("Please choose the category.");
+                _context.next = 23;
+                break;
+
+              case 9:
+                _context.next = 11;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
+
+              case 11:
+                getUser = _context.sent;
+                _context.next = 14;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/meeting", {
+                  title: this.state.title,
+                  description: this.state.description,
+                  author: "test",
+                  lattitude: this.state.lattitude,
+                  longitude: this.state.longitude,
+                  limit: this.state.limit,
+                  date: this.state.date
+                });
+
+              case 14:
+                savedMeeting = _context.sent;
+
+                if (!(savedMeeting.status == "201")) {
+                  _context.next = 22;
+                  break;
+                }
+
+                _context.next = 18;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
+                  userId: sessionStorage.getItem("userId"),
+                  meetingId: savedMeeting.data.id
+                });
+
+              case 18:
+                savedMatchUserWithMeeting = _context.sent;
+
+
+                if (savedMatchUserWithMeeting.status == "200") {
+                  this.props.showAlertSuccess("You added new meeting");
+                } else {
+                  this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
+                }
+                _context.next = 23;
+                break;
+
+              case 22:
+                this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
+
+              case 23:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleSubmit(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
+  }, {
+    key: "setNewCoords",
+    value: function setNewCoords(newLat, newLng) {
+      this.setState({
+        lat: newLat,
+        lng: newLng
+      });
+    }
+  }, {
+    key: "setNewSecondCoords",
+    value: function setNewSecondCoords(newLat, newLng) {
+      this.setState({
+        secondLat: newLat,
+        secondLng: newLng
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        { className: "addNewMeeting row addNewMeetingRow" },
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          { className: "col-sm-6 addNewMeetingCol" },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "h2",
+            null,
+            "Add new meeting"
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "form",
+            { onSubmit: this.handleSubmit },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "title" },
+                "Title:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "title",
+                name: "title",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "description" },
+                "Description:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "description",
+                name: "description",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "lattitude" },
+                "Start lattitude:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "lattitude",
+                name: "lattitude",
+                value: this.state.lat,
+                onChange: this.handleChange,
+                disabled: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "longitude" },
+                "Start longitude:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "longitude",
+                name: "longitude",
+                value: this.state.lng,
+                onChange: this.handleChange,
+                disabled: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "lattitude" },
+                "Stop lattitude:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "stopLat",
+                name: "stopLat",
+                value: this.state.secondLat,
+                onChange: this.handleChange,
+                disabled: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "longitude" },
+                "Stop longitude:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "text",
+                className: "form-control",
+                id: "stopLng",
+                name: "stopLng",
+                value: this.state.secondLng,
+                onChange: this.handleChange,
+                disabled: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "limit" },
+                "Limit:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "div",
+                { className: "form-group" },
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "select",
+                  {
+                    className: "form-control",
+                    name: "limit",
+                    id: "limit",
+                    onChange: this.handleChange,
+                    required: true
+                  },
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "option",
+                    null,
+                    "Select"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "option",
+                    null,
+                    "2"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "option",
+                    null,
+                    "3"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "option",
+                    null,
+                    "4"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "option",
+                    null,
+                    "No limit"
+                  )
+                )
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "form-group" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "label",
+                { htmlFor: "date" },
+                "Date:"
+              ),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                type: "date",
+                className: "form-control",
+                id: "date",
+                name: "date",
+                onChange: this.handleChange,
+                required: true
+              })
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+              type: "submit",
+              className: "btn btn-default",
+              id: "addNewMeetingBtn",
+              value: "Add new meeting"
+            })
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          {
+            className: "col-sm-6 mainMeetingsMap",
+            style: { height: "calc(100vh - 60px)" }
+          },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__MapComponent_js__["a" /* default */], {
+            latCenter: this.state.lat,
+            lngCenter: this.state.lng,
+            allowDragableMarker: true,
+            setNewCoords: this.setNewCoords,
+            displaySecondMarker: true,
+            secondLatCenter: this.state.secondLat,
+            secondLngCenter: this.state.secondLng,
+            setNewSecondCoords: this.setNewSecondCoords
+          })
+        )
+      );
+    }
+  }]);
+
+  return AddNewMeeting;
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddNewMeeting);
 
 /***/ }),
 /* 331 */,

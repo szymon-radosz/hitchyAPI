@@ -13,16 +13,20 @@ class AddNewMeeting extends Component {
       author: "",
       lattitude: "",
       longitude: "",
+      stopLat: "",
+      stopLng: "",
       limit: "Select",
       date: "",
       lat: 40.73061,
-      lng: -73.935242
+      lng: -73.935242,
+      secondLat: 40.8,
+      secondLng: -73.99
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleBoundsChange = this.handleBoundsChange.bind(this);
     this.setNewCoords = this.setNewCoords.bind(this);
+    this.setNewSecondCoords = this.setNewSecondCoords.bind(this);
   }
 
   handleChange(event) {
@@ -49,7 +53,7 @@ class AddNewMeeting extends Component {
           description: this.state.description,
           author: "test",
           lattitude: this.state.lattitude,
-          longitude: this.state.longitude
+          longitude: this.state.longitude,
           limit: this.state.limit,
           date: this.state.date
         }
@@ -86,6 +90,13 @@ class AddNewMeeting extends Component {
     });
   }
 
+  setNewSecondCoords(newLat, newLng) {
+    this.setState({
+      secondLat: newLat,
+      secondLng: newLng
+    });
+  }
+
   render() {
     return (
       <div className="addNewMeeting row addNewMeetingRow">
@@ -116,7 +127,7 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="lattitude">Lattitude:</label>
+              <label htmlFor="lattitude">Start lattitude:</label>
               <input
                 type="text"
                 className="form-control"
@@ -128,13 +139,37 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="longitude">Longitude:</label>
+              <label htmlFor="longitude">Start longitude:</label>
               <input
                 type="text"
                 className="form-control"
                 id="longitude"
                 name="longitude"
                 value={this.state.lng}
+                onChange={this.handleChange}
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="lattitude">Stop lattitude:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="stopLat"
+                name="stopLat"
+                value={this.state.secondLat}
+                onChange={this.handleChange}
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="longitude">Stop longitude:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="stopLng"
+                name="stopLng"
+                value={this.state.secondLng}
                 onChange={this.handleChange}
                 disabled
               />
@@ -187,6 +222,10 @@ class AddNewMeeting extends Component {
             lngCenter={this.state.lng}
             allowDragableMarker={true}
             setNewCoords={this.setNewCoords}
+            displaySecondMarker={true}
+            secondLatCenter={this.state.secondLat}
+            secondLngCenter={this.state.secondLng}
+            setNewSecondCoords={this.setNewSecondCoords}
           />
         </div>
       </div>
