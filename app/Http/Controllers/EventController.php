@@ -11,9 +11,17 @@ class EventController extends Controller
     public function index(){
 
         //return only unique events when author of event and joined user are the same, e.g. events creted by user
-        $events = DB::table('events')->whereColumn('author', 'joinedUser')->get();
+        //$events = DB::table('events')->whereColumn('author', 'joinedUser')->get();
+
+        $events = DB::table('events')->get();
 
         return $events;
+    }
+
+    public function showEventById($id){
+        $event = DB::table('events')->where('id', $id)->get();
+
+        return $event;
     }
 
     //return all events
@@ -29,18 +37,23 @@ class EventController extends Controller
     {
         $event = new Event;
 
-        $event->name = $request->input('name');
-        $event->description = $request->input('description');
-        $event->startPlaceLattitude = $request->input('startPlaceLattitude');
-        $event->startPlaceLongitude = $request->input('startPlaceLongitude');
-        $event->stopPlaceLattitude = $request->input('stopPlaceLattitude');
-        $event->stopPlaceLongitude = $request->input('stopPlaceLongitude');
-        $event->startDate = $request->input('startDate');
-        $event->author = $request->author;
-        $event->joinedUser = $request->joinedUser;
-        $event->submittedByAdmin = false;
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->startPlaceLattitude = $request->startPlaceLattitude;
+        $event->startPlaceLongitude = $request->startPlaceLongitude;
+        $event->stopPlaceLattitude = $request->stopPlaceLattitude;
+        $event->stopPlaceLongitude = $request->stopPlaceLongitude;
+        $event->startDate = $request->startDate;
+        $event->authorNickName = $request->authorNickName;
+        $event->limit = $request->limit;
 
         $event->save();
+
+        return $event;
+    }
+
+    public function matchUserWithMeeting(Request $request){
+
     }
 
     //return single event

@@ -17,25 +17,30 @@ class MainMeetings extends Component {
   }
 
   async componentDidMount() {
-    const allMeetings = await axios.get(`http://127.0.0.1:8000/api/meetings`);
+    try {
+      const allMeetings = await axios.get(`http://127.0.0.1:8000/api/events`);
 
-    allMeetings.data.map((item, i) => {
-      let meetingObject = {
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        author: item.author,
-        lattitude: item.lattitude,
-        longitude: item.longitude,
-        limit: item.limit,
-        date: item.date,
-        time: item.time
-      };
+      await allMeetings.data.map((item, i) => {
+        let meetingObject = {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          author: item.authorNickName,
+          startPlaceLattitude: item.startPlaceLattitude,
+          startPlaceLongitude: item.startPlaceLongitude,
+          stopPlaceLattitude: item.stopPlaceLattitude,
+          stopPlaceLongitude: item.stopPlaceLongitude,
+          limit: item.limit,
+          date: item.startDate
+        };
 
-      this.setState(prevState => ({
-        meetingsData: [...prevState.meetingsData, meetingObject]
-      }));
-    });
+        this.setState(prevState => ({
+          meetingsData: [...prevState.meetingsData, meetingObject]
+        }));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   setCoordinates(childLat, childLng) {

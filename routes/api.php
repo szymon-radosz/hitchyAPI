@@ -30,9 +30,11 @@ Route::get('comments', 'CommentController@index');
 Route::get('events', 'EventController@index');
 Route::post('events', 'EventController@store');
 Route::get('allEvents', 'EventController@allEvents');
-
-Route::get('events/{id}', array('uses' => 'EventController@show'));
+Route::get('events/{id}', 'EventController@showEventById');
 
 Route::post('eventComments', 'EventCommentsController@store');
 Route::get('eventComments', 'EventCommentsController@index');
 Route::get('eventComments/{id}', array('uses' => 'EventCommentsController@commentsForID'));
+
+Route::post('matchUserWithMeeting', 'MatchUserWithMeetingController@store');
+

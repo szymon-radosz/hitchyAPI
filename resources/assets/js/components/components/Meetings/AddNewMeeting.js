@@ -36,49 +36,60 @@ class AddNewMeeting extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    let savedMeeting;
+    let savedMatchUserWithMeeting;
+    let savedMeetingId;
 
     if (this.state.limit == "Select") {
       this.props.showAlertWarning("Please choose the limit of users.");
-    } else if (this.state.category == "Select") {
-      this.props.showAlertWarning("Please choose the category.");
     } else {
-      const getUser = await axios.get(
-        `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
-      );
-
-      const savedMeeting = await axios.post(
-        `http://127.0.0.1:8000/api/meeting`,
-        {
-          title: this.state.title,
-          description: this.state.description,
-          author: "test",
-          lattitude: this.state.lattitude,
-          longitude: this.state.longitude,
-          limit: this.state.limit,
-          date: this.state.date
-        }
-      );
-
-      if (savedMeeting.status == "201") {
-        const savedMatchUserWithMeeting = await axios.post(
-          `http://127.0.0.1:8000/api/matchUserWithMeeting`,
+      try {
+        savedMeeting = await axios.post(
+          `http://127.0.0.1:8000/api/events`,
           {
-            userId: sessionStorage.getItem("userId"),
-            meetingId: savedMeeting.data.id
+            title: this.state.title,
+            description: this.state.description,
+            authorNickName: sessionStorage.getItem("userNickName"),
+            startPlaceLattitude: this.state.lat,
+            startPlaceLongitude: this.state.lng,
+            stopPlaceLattitude: this.state.secondLat,
+            stopPlaceLongitude: this.state.secondLng,
+            limit: this.state.limit,
+            startDate: this.state.date
+          },
+          {
+            headers: {
+              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            }
           }
         );
+      } catch (error) {
+        console.log(error);
+      }
+
+      console.log(savedMeeting);
+
+      if (savedMeeting.status == "201") {
+        try {
+          savedMatchUserWithMeeting = await axios.post(
+            `http://127.0.0.1:8000/api/matchUserWithMeeting`,
+            {
+              userId: sessionStorage.getItem("userId"),
+              eventId: savedMeeting.data.id
+            }
+          );
+        } catch (error) {
+          console.log(error);
+          this.props.showAlertWarning("Nie udało się zapisać spotkania.");
+        }
 
         if (savedMatchUserWithMeeting.status == "200") {
           this.props.showAlertSuccess("You added new meeting");
         } else {
-          this.props.showAlertWarning(
-            "Sorry we can't handle that. Please repeat for a while."
-          );
+          this.props.showAlertWarning("Nie udało się zapisać spotkania.");
         }
       } else {
-        this.props.showAlertWarning(
-          "Sorry we can't handle that. Please repeat for a while."
-        );
+        this.props.showAlertWarning("Nie udało się zapisać spotkania.");
       }
     }
   }

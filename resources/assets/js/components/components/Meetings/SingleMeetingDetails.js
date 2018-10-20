@@ -6,31 +6,31 @@ import CommentForm from "./SingleMeetingComponents/CommentForm";
 import MapComponent from "./MapComponent.js";
 
 class SingleMeetingDetails extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            usersEmails: [],
-            resignedUsersEmails: [],
-            loggedInUserEmail: "",
-            loggedInUserNickname: "",
-            displayTakPartBtn: false,
-            displayResignBtn: false,
-            displayCommentsContainer: false,
-            comments: [],
-            commentBody: ""
-        };
+    this.state = {
+      usersEmails: [],
+      resignedUsersEmails: [],
+      loggedInUserEmail: "",
+      loggedInUserNickname: "",
+      displayTakPartBtn: false,
+      displayResignBtn: false,
+      displayCommentsContainer: false,
+      comments: [],
+      commentBody: ""
+    };
 
-        this.takePartClick = this.takePartClick.bind(this);
-        this.resignClick = this.resignClick.bind(this);
-        this.addCommentToState = this.addCommentToState.bind(this);
-    }
+    /*this.takePartClick = this.takePartClick.bind(this);
+    this.resignClick = this.resignClick.bind(this);
+    this.addCommentToState = this.addCommentToState.bind(this);*/
+  }
 
-    handleChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
-
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+  /*
     async componentDidMount() {
         console.log(this.props.meetingId);
         const getUser = await axios.get(
@@ -284,35 +284,34 @@ class SingleMeetingDetails extends Component {
         this.setState(prevState => ({
             comments: [...prevState.comments, commentObject]
         }));
-    }
+    }*/
 
-    render() {
-        return (
-            <div className="register row singleMeetingDetailsDataRow">
-                <div className="col-sm-8 singleMeetingDetailsDataCol">
-                    <h2>
-                        {this.props.title} - {this.props.date} {this.props.time}{" "}
-                        - {this.props.category}
-                    </h2>
+  render() {
+    return (
+      <div className="register row singleMeetingDetailsDataRow">
+        <div className="col-sm-6 singleMeetingDetailsDataCol">
+          <h2>
+            {this.props.title} - {this.props.date}{" "}
+          </h2>
 
-                    <p>Description: {this.props.description}</p>
-                    <p>Created by: {this.props.author}</p>
-                    <p>
-                        Limit: {this.props.limit} (
-                        {this.state.usersEmails.length}/{this.props.limit})
-                    </p>
+          <p>Description: {this.props.description}</p>
+          <p>Created by: {this.props.author}</p>
+          <p>
+            Limit: {this.props.limit} (
+            {/*{this.state.usersEmails.length}/{this.props.limit})*/}
+          </p>
 
-                    <p>
-                        <strong>Users take part:</strong>
-                    </p>
-                    {this.state.usersEmails.map((user, i) => {
+          <p>
+            <strong>Users take part:</strong>
+          </p>
+          {/*{this.state.usersEmails.map((user, i) => {
                         return <p key={i}>{user.email}</p>;
-                    })}
+                    })}*/}
 
-                    <p>
-                        <strong>Users which resigned in the past:</strong>
-                    </p>
-                    {this.state.resignedUsersEmails.map((user, i) => {
+          <p>
+            <strong>Users which resigned in the past:</strong>
+          </p>
+          {/*{this.state.resignedUsersEmails.map((user, i) => {
                         return <p key={i}>{user.email}</p>;
                     })}
 
@@ -340,10 +339,10 @@ class SingleMeetingDetails extends Component {
 
                     <p>
                         <strong>Comments</strong>
-                    </p>
+                    </p>*/}
 
-                    {/* in db comments are stored from the oldest to the newest, render reverse*/}
-                    {this.state.displayCommentsContainer
+          {/* in db comments are stored from the oldest to the newest, render reverse*/}
+          {/*{this.state.displayCommentsContainer
                         ? this.state.comments
                               .slice(0)
                               .reverse()
@@ -374,20 +373,24 @@ class SingleMeetingDetails extends Component {
                         />
                     ) : (
                         ""
-                    )}
-                </div>
+                    )}*/}
+        </div>
 
-                <div
-                    className="col-sm-4 mainMeetingsMap"
-                    style={{ height: "calc(100vh - 60px)" }}
-                >
-                    <MapComponent
-                        latCenter={this.props.lattitude}
-                        lngCenter={this.props.longitude}
-                    />
-                </div>
-            </div>
-        );
-    }
+        <div
+          className="col-sm-6 mainMeetingsMap"
+          style={{ height: "calc(100vh - 60px)" }}
+        >
+          <MapComponent
+            latCenter={this.props.startPlaceLattitude}
+            lngCenter={this.props.startPlaceLongitude}
+            allowDragableMarker={false}
+            displaySecondMarker={true}
+            secondLatCenter={this.props.stopPlaceLattitude}
+            secondLngCenter={this.props.stopPlaceLongitude}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 export default SingleMeetingDetails;

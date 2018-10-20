@@ -18,8 +18,10 @@ class MeetingDetails extends Component {
     this.setState({ meetingID: meetingId });
 
     const getMeeting = await axios.get(
-      `http://127.0.0.1:8000/api/meeting/${meetingId}`
+      `http://127.0.0.1:8000/api/events/${meetingId}`
     );
+
+    console.log(getMeeting);
 
     const meeting = getMeeting.data[0];
 
@@ -27,12 +29,13 @@ class MeetingDetails extends Component {
       id: meeting.id,
       title: meeting.title,
       description: meeting.description,
-      author: meeting.author,
-      lattitude: meeting.lattitude,
-      longitude: meeting.longitude,
+      author: meeting.authorNickName,
+      startPlaceLattitude: meeting.startPlaceLattitude,
+      startPlaceLongitude: meeting.startPlaceLongitude,
+      stopPlaceLattitude: meeting.stopPlaceLattitude,
+      stopPlaceLongitude: meeting.stopPlaceLongitude,
       limit: meeting.limit,
-      date: meeting.date,
-      time: meeting.time
+      date: meeting.startDate
     };
 
     this.setState(prevState => ({
@@ -51,11 +54,12 @@ class MeetingDetails extends Component {
               title={item.title}
               description={item.description}
               author={item.author}
-              lattitude={item.lattitude}
-              longitude={item.longitude}
+              startPlaceLattitude={item.startPlaceLattitude}
+              startPlaceLongitude={item.startPlaceLongitude}
+              stopPlaceLattitude={item.stopPlaceLattitude}
+              stopPlaceLongitude={item.stopPlaceLongitude}
               limit={item.limit}
               date={item.date}
-              time={item.time}
               meetingId={this.state.meetingID}
               showAlertSuccess={this.props.showAlertSuccess}
               showAlertWarning={this.props.showAlertWarning}

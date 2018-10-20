@@ -15,16 +15,15 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('title');
             $table->text('description');
             $table->double('startPlaceLattitude');
             $table->double('startPlaceLongitude');
             $table->double('stopPlaceLattitude');
             $table->double('stopPlaceLongitude');
             $table->date('startDate');
-            $table->string('author');
-            $table->string('joinedUser');
-            $table->boolean('submittedByAdmin');
+            $table->string('limit');
+            $table->string('authorNickName');
             $table->timestamps();
         });
     }
