@@ -8,6 +8,8 @@ import MainMeetings from "./../Meetings/MainMeetings.js";
 import AddNewMeeting from "./../Meetings/AddNewMeeting.js";
 import MeetingDetails from "./../Meetings/MeetingDetails.js";
 import MainProfile from "./../Profile/MainProfile.js";
+import MainPoints from "./../Points/MainPoints.js";
+import AddNewPoint from "./../Points/AddNewPoint";
 
 class Menu extends Component {
   constructor(props) {
@@ -110,6 +112,33 @@ class Menu extends Component {
                   ) : (
                     ""
                   )}
+
+                  {this.state.userIsLoggedIn ? (
+                    <li>
+                      <Link
+                        to="/points"
+                        onClick={this.cleanStateOfSearchInLocation}
+                      >
+                        Spots
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+
+                  {this.state.userIsLoggedIn ? (
+                    <li>
+                      <Link
+                        to="/add-point"
+                        onClick={this.cleanStateOfSearchInLocation}
+                      >
+                        Add Spot
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+
                   {this.state.userIsLoggedIn ? (
                     <li>
                       <Link
@@ -226,6 +255,16 @@ class Menu extends Component {
 
           <Route
             exact
+            path="/points"
+            render={() => {
+              return (
+                <MainPoints searchInLocation={this.state.searchInLocation} />
+              );
+            }}
+          />
+
+          <Route
+            exact
             path="/events/:id"
             render={props => {
               return (
@@ -245,6 +284,19 @@ class Menu extends Component {
             render={() => {
               return (
                 <AddNewMeeting
+                  showAlertSuccess={this.props.showAlertSuccess}
+                  showAlertWarning={this.props.showAlertWarning}
+                />
+              );
+            }}
+          />
+
+          <Route
+            exact
+            path="/add-point"
+            render={() => {
+              return (
+                <AddNewPoint
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                 />

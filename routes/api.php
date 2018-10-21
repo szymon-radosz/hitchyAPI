@@ -9,20 +9,10 @@ Route::delete('user/{id}','UserController@destroy');
 Route::put('user','UserController@store');
 Route::post('user','UserController@store');
 
-//points list
 Route::get('points', 'PointController@index');
-
-//single point
 Route::get('point/{id}', 'PointController@show');
-
-//create new point
 Route::post('point', 'PointController@store');
-
-//delete point
 Route::delete('point/{id}', 'PointController@destroy');
-
-//users list
-Route::get('users', 'UserController@index');
 
 Route::post('comment', 'CommentController@store');
 Route::get('comments', 'CommentController@index');

@@ -19,11 +19,7 @@ class CreatePointsTable extends Migration
             $table->text('description');
             $table->double('lattitude');
             $table->double('longitude');
-            $table->integer('ratingNumVotes');
-            $table->integer('safetyNumVotes');
-            $table->integer('ratingSumVotes');
-            $table->integer('safetySumVotes');
-            $table->boolean('submittedByAdmin');
+            $table->string('authorNickName');
             $table->timestamps();
         });
     }

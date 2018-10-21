@@ -19,21 +19,15 @@ class PointController extends Controller
     {
         $point = new Point;
 
-        $point->id = $request->input('point_id');
-        $point->name = $request->input('name');
-        $point->description = $request->input('description');
-        $point->lattitude = $request->input('lattitude');
-        $point->longitude = $request->input('longitude');
-        $point->ratingNumVotes = 1;
-        $point->safetyNumVotes = 1;
-        $point->safetySumVotes = $request->input('safetySumVotes');
-        $point->ratingSumVotes = $request->input('ratingSumVotes');
-        $point->submittedByAdmin = false;
-        $point->author = $request->author;
+        $point->name = $request->name;
+        $point->description = $request->description;
+        $point->lattitude = $request->lattitude;
+        $point->longitude = $request->longitude;
+        $point->authorNickName = $request->authorNickName;
 
-        if($point->save()){
-            return new PointResource($point);
-        }
+        $point->save();
+
+        return $point;
     }
 
     public function show($id)
