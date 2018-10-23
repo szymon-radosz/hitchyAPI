@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Point;
+use DB;
 use App\Http\Resources\Point as PointResource;
 
 class PointController extends Controller
@@ -12,7 +13,11 @@ class PointController extends Controller
     public function index()
     {
         //return all point 127.0.0.1:8000/api/points
-        return PointResource::collection(Point::all());
+        //return PointResource::collection(Point::all());
+
+        $points = DB::table('points')->get();
+
+        return $points;
     }
 
     public function store(Request $request)

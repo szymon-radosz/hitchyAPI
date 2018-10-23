@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import MapComponent from "./../Meetings/MapComponent.js";
-import SinglePointOnList from "./../Meetings/MapComponent.js";
+import MapComponent from "./../Map/MapComponent.js";
+import SinglePointOnList from "./PointsListComponent/SinglePointOnList";
 
 class MainMeetings extends Component {
   constructor(props) {
@@ -12,22 +12,23 @@ class MainMeetings extends Component {
       lat: 40.73061,
       lng: -73.935242
     };
-
-    this.setCoordinates = this.setCoordinates.bind(this);
   }
 
   async componentDidMount() {
     try {
       const allPoints = await axios.get(`http://127.0.0.1:8000/api/points`);
 
+      console.log(allPoints);
+
       await allPoints.data.map((item, i) => {
         let pointObject = {
           id: item.id,
-          title: item.title,
+          title: item.name,
           description: item.description,
           author: item.authorNickName,
           lattitude: item.lattitude,
-          longitude: item.longitude
+          longitude: item.longitude,
+          date: item.created_at
         };
 
         this.setState(prevState => ({
@@ -37,13 +38,6 @@ class MainMeetings extends Component {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  setCoordinates(childLat, childLng) {
-    this.setState({
-      lat: childLat,
-      lng: childLng
-    });
   }
 
   render() {
@@ -61,7 +55,7 @@ class MainMeetings extends Component {
                 author={item.author}
                 lattitude={item.lattitude}
                 longitude={item.longitude}
-                setCoordinates={this.setCoordinates}
+                date={item.date}
               />
             );
           })}

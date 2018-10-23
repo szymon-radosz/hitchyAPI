@@ -3,7 +3,7 @@ import axios from "axios";
 import _ from "underscore";
 import Comment from "./SingleMeetingComponents/Comment";
 import CommentForm from "./SingleMeetingComponents/CommentForm";
-import MapComponent from "./MapComponent.js";
+import MapComponent from "./../Map/MapComponent.js";
 
 class SingleMeetingDetails extends Component {
   constructor(props) {

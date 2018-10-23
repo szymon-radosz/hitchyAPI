@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import _ from "underscore";
-import MapComponent from "./MapComponent.js";
+import MapComponent from "./../Map/MapComponent.js";
 
 class AddNewMeeting extends Component {
   constructor(props) {

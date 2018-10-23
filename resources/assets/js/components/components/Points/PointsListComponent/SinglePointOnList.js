@@ -11,14 +11,6 @@ class SingleMeetingOnList extends Component {
       lat: "",
       lng: ""
     };
-
-    this.sendCoordinatesToMainMeetings = this.sendCoordinatesToMainMeetings.bind(
-      this
-    );
-  }
-
-  sendCoordinatesToMainMeetings() {
-    this.props.setCoordinates(this.props.lattitude, this.props.longitude);
   }
 
   render() {
@@ -31,6 +23,7 @@ class SingleMeetingOnList extends Component {
           <div className="panel-body">
             <p>
               <span className="bold">Date: </span>
+              {this.props.date}
             </p>
             <p>
               <span className="bold">Description: </span>
