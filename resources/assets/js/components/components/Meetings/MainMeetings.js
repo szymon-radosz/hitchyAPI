@@ -9,6 +9,7 @@ class MainMeetings extends Component {
 
     this.state = {
       meetingsData: [],
+      markersData: [],
       lat: 40.73061,
       lng: -73.935242
     };
@@ -34,8 +35,15 @@ class MainMeetings extends Component {
           date: item.startDate
         };
 
+        let singleMarkerData = {
+          key: item.title,
+          position: [item.startPlaceLattitude, item.stopPlaceLattitude],
+          text: item.title
+        };
+
         this.setState(prevState => ({
-          meetingsData: [...prevState.meetingsData, meetingObject]
+          meetingsData: [...prevState.meetingsData, meetingObject],
+          markersData: [...prevState.markersData, singleMarkerData]
         }));
       });
     } catch (error) {
@@ -82,6 +90,8 @@ class MainMeetings extends Component {
               <MapComponent
                 latCenter={this.state.lat}
                 lngCenter={this.state.lng}
+                markersData={this.state.markersData}
+                displayFirstMarker={false}
               />
             </div>
           </div>

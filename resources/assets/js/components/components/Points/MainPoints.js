@@ -3,12 +3,13 @@ import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import SinglePointOnList from "./PointsListComponent/SinglePointOnList";
 
-class MainMeetings extends Component {
+class MainPoints extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       pointsData: [],
+      markersData: [],
       lat: 40.73061,
       lng: -73.935242
     };
@@ -31,8 +32,15 @@ class MainMeetings extends Component {
           date: item.created_at
         };
 
+        let singleMarkerData = {
+          key: item.name,
+          position: [item.lattitude, item.longitude],
+          text: item.name
+        };
+
         this.setState(prevState => ({
-          pointsData: [...prevState.pointsData, pointObject]
+          pointsData: [...prevState.pointsData, pointObject],
+          markersData: [...prevState.markersData, singleMarkerData]
         }));
       });
     } catch (error) {
@@ -62,11 +70,16 @@ class MainMeetings extends Component {
         </div>
 
         <div className="col-sm-6">
-          <MapComponent latCenter={this.state.lat} lngCenter={this.state.lng} />
+          <MapComponent
+            latCenter={this.state.lat}
+            lngCenter={this.state.lng}
+            markersData={this.state.markersData}
+            displayFirstMarker={false}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default MainMeetings;
+export default MainPoints;

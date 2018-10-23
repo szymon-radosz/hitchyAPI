@@ -56,6 +56,9 @@ class AddNewMeeting extends Component {
 
     if (savedPoint.status == "201") {
       console.log("zapisano punkt");
+      this.props.showAlertSuccess("Zapisałeś punkt.");
+    } else {
+      this.props.showAlertWarning("Nie udało się zapisać punktu.");
     }
   }
 
@@ -138,6 +141,7 @@ class AddNewMeeting extends Component {
             lngCenter={this.state.lng}
             allowDragableMarker={true}
             setNewCoords={this.setNewCoords}
+            displayFirstMarker={true}
             displaySecondMarker={false}
           />
         </div>

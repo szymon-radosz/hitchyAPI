@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 /*import LocateOnMapBtn from "./LocateOnMapBtn";*/
 import axios from "axios";
 
-class SingleMeetingOnList extends Component {
+class SinglePointOnList extends Component {
   constructor(props) {
     super(props);
 
@@ -46,4 +46,4 @@ class SingleMeetingOnList extends Component {
     );
   }
 }
-export default SingleMeetingOnList;
+export default SinglePointOnList;

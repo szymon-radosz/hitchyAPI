@@ -233,6 +233,7 @@ class AddNewMeeting extends Component {
             lngCenter={this.state.lng}
             allowDragableMarker={true}
             setNewCoords={this.setNewCoords}
+            displayFirstMarker={true}
             displaySecondMarker={true}
             secondLatCenter={this.state.secondLat}
             secondLngCenter={this.state.secondLng}

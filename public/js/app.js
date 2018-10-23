@@ -20929,6 +20929,7 @@ var MainMeetings = function (_Component) {
 
     _this.state = {
       meetingsData: [],
+      markersData: [],
       lat: 40.73061,
       lng: -73.935242
     };
@@ -20969,9 +20970,16 @@ var MainMeetings = function (_Component) {
                     date: item.startDate
                   };
 
+                  var singleMarkerData = {
+                    key: item.title,
+                    position: [item.startPlaceLattitude, item.stopPlaceLattitude],
+                    text: item.title
+                  };
+
                   _this2.setState(function (prevState) {
                     return {
-                      meetingsData: [].concat(_toConsumableArray(prevState.meetingsData), [meetingObject])
+                      meetingsData: [].concat(_toConsumableArray(prevState.meetingsData), [meetingObject]),
+                      markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
                     };
                   });
                 });
@@ -21044,7 +21052,9 @@ var MainMeetings = function (_Component) {
             { className: "col-sm-6" },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Map_MapComponent_js__["a" /* default */], {
               latCenter: this.state.lat,
-              lngCenter: this.state.lng
+              lngCenter: this.state.lng,
+              markersData: this.state.markersData,
+              displayFirstMarker: false
             })
           )
         )
@@ -48240,13 +48250,13 @@ var LocateOnMapBtn = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__Polyline__ = __webpack_require__(306);
 /* unused harmony reexport Polyline */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__Popup__ = __webpack_require__(307);
-/* unused harmony reexport Popup */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_21__Popup__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Rectangle__ = __webpack_require__(308);
 /* unused harmony reexport Rectangle */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ScaleControl__ = __webpack_require__(309);
 /* unused harmony reexport ScaleControl */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__TileLayer__ = __webpack_require__(310);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_24__TileLayer__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_24__TileLayer__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__Tooltip__ = __webpack_require__(311);
 /* unused harmony reexport Tooltip */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__VideoOverlay__ = __webpack_require__(312);
@@ -53609,7 +53619,7 @@ __WEBPACK_IMPORTED_MODULE_3__babel_runtime_helpers_defineProperty___default()(Po
   pane: 'popupPane'
 });
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Object(__WEBPACK_IMPORTED_MODULE_5__context__["b" /* withLeaflet */])(Popup));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_5__context__["b" /* withLeaflet */])(Popup));
 
 /***/ }),
 /* 308 */
@@ -55568,6 +55578,7 @@ var AddNewMeeting = function (_Component) {
             lngCenter: this.state.lng,
             allowDragableMarker: true,
             setNewCoords: this.setNewCoords,
+            displayFirstMarker: true,
             displaySecondMarker: true,
             secondLatCenter: this.state.secondLat,
             secondLngCenter: this.state.secondLng,
@@ -56627,23 +56638,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var MainMeetings = function (_Component) {
-  _inherits(MainMeetings, _Component);
+var MainPoints = function (_Component) {
+  _inherits(MainPoints, _Component);
 
-  function MainMeetings(props) {
-    _classCallCheck(this, MainMeetings);
+  function MainPoints(props) {
+    _classCallCheck(this, MainPoints);
 
-    var _this = _possibleConstructorReturn(this, (MainMeetings.__proto__ || Object.getPrototypeOf(MainMeetings)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MainPoints.__proto__ || Object.getPrototypeOf(MainPoints)).call(this, props));
 
     _this.state = {
       pointsData: [],
+      markersData: [],
       lat: 40.73061,
       lng: -73.935242
     };
     return _this;
   }
 
-  _createClass(MainMeetings, [{
+  _createClass(MainPoints, [{
     key: "componentDidMount",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -56676,9 +56688,16 @@ var MainMeetings = function (_Component) {
                     date: item.created_at
                   };
 
+                  var singleMarkerData = {
+                    key: item.name,
+                    position: [item.lattitude, item.longitude],
+                    text: item.name
+                  };
+
                   _this2.setState(function (prevState) {
                     return {
-                      pointsData: [].concat(_toConsumableArray(prevState.pointsData), [pointObject])
+                      pointsData: [].concat(_toConsumableArray(prevState.pointsData), [pointObject]),
+                      markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
                     };
                   });
                 });
@@ -56735,16 +56754,21 @@ var MainMeetings = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
           { className: "col-sm-6" },
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], { latCenter: this.state.lat, lngCenter: this.state.lng })
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
+            latCenter: this.state.lat,
+            lngCenter: this.state.lng,
+            markersData: this.state.markersData,
+            displayFirstMarker: false
+          })
         )
       );
     }
   }]);
 
-  return MainMeetings;
+  return MainPoints;
 }(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (MainMeetings);
+/* harmony default export */ __webpack_exports__["a"] = (MainPoints);
 
 /***/ }),
 /* 346 */
@@ -56853,6 +56877,9 @@ var AddNewMeeting = function (_Component) {
 
                 if (savedPoint.status == "201") {
                   console.log("zapisano punkt");
+                  this.props.showAlertSuccess("Zapisałeś punkt.");
+                } else {
+                  this.props.showAlertWarning("Nie udało się zapisać punktu.");
                 }
 
               case 13:
@@ -56983,6 +57010,7 @@ var AddNewMeeting = function (_Component) {
             lngCenter: this.state.lng,
             allowDragableMarker: true,
             setNewCoords: this.setNewCoords,
+            displayFirstMarker: true,
             displaySecondMarker: false
           })
         )
@@ -57018,13 +57046,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /*import LocateOnMapBtn from "./LocateOnMapBtn";*/
 
 
-var SingleMeetingOnList = function (_Component) {
-  _inherits(SingleMeetingOnList, _Component);
+var SinglePointOnList = function (_Component) {
+  _inherits(SinglePointOnList, _Component);
 
-  function SingleMeetingOnList(props) {
-    _classCallCheck(this, SingleMeetingOnList);
+  function SinglePointOnList(props) {
+    _classCallCheck(this, SinglePointOnList);
 
-    var _this = _possibleConstructorReturn(this, (SingleMeetingOnList.__proto__ || Object.getPrototypeOf(SingleMeetingOnList)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SinglePointOnList.__proto__ || Object.getPrototypeOf(SinglePointOnList)).call(this, props));
 
     _this.state = {
       lat: "",
@@ -57033,7 +57061,7 @@ var SingleMeetingOnList = function (_Component) {
     return _this;
   }
 
-  _createClass(SingleMeetingOnList, [{
+  _createClass(SinglePointOnList, [{
     key: "render",
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -57090,10 +57118,10 @@ var SingleMeetingOnList = function (_Component) {
     }
   }]);
 
-  return SingleMeetingOnList;
+  return SinglePointOnList;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (SingleMeetingOnList);
+/* harmony default export */ __webpack_exports__["a"] = (SinglePointOnList);
 
 /***/ }),
 /* 348 */
@@ -57111,11 +57139,15 @@ var SingleMeetingOnList = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_leaflet__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 
 
@@ -57125,19 +57157,55 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 delete __WEBPACK_IMPORTED_MODULE_4_leaflet___default.a.Icon.Default.prototype._getIconUrl;
 
+var MyPopupMarker = function MyPopupMarker(_ref) {
+  var map = _ref.map,
+      position = _ref.position,
+      text = _ref.text;
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */],
+    { map: map, position: position },
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["c" /* Popup */],
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "span",
+        null,
+        text
+      )
+    )
+  );
+};
+
+var MyMarkersList = function MyMarkersList(_ref2) {
+  var map = _ref2.map,
+      markers = _ref2.markers;
+
+  var items = markers.map(function (_ref3) {
+    var key = _ref3.key,
+        props = _objectWithoutProperties(_ref3, ["key"]);
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MyPopupMarker, _extends({ key: key, map: map }, props));
+  });
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    "div",
+    { style: { display: "none" } },
+    items
+  );
+};
+
 __WEBPACK_IMPORTED_MODULE_4_leaflet___default.a.Icon.Default.mergeOptions({
   iconRetinaUrl: __webpack_require__(331),
   iconUrl: __webpack_require__(121),
   shadowUrl: __webpack_require__(332)
 });
 
-var LeafletMapComponent = function (_Component) {
-  _inherits(LeafletMapComponent, _Component);
+var MapComponent = function (_Component) {
+  _inherits(MapComponent, _Component);
 
-  function LeafletMapComponent(props) {
-    _classCallCheck(this, LeafletMapComponent);
+  function MapComponent(props) {
+    _classCallCheck(this, MapComponent);
 
-    var _this = _possibleConstructorReturn(this, (LeafletMapComponent.__proto__ || Object.getPrototypeOf(LeafletMapComponent)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MapComponent.__proto__ || Object.getPrototypeOf(MapComponent)).call(this, props));
 
     _this.state = {
       position: [props.latCenter, props.lngCenter],
@@ -57150,7 +57218,7 @@ var LeafletMapComponent = function (_Component) {
     return _this;
   }
 
-  _createClass(LeafletMapComponent, [{
+  _createClass(MapComponent, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setState({
@@ -57176,15 +57244,16 @@ var LeafletMapComponent = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
           { center: this.state.position, zoom: 13 },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["c" /* TileLayer */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["d" /* TileLayer */], {
             attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
             url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
           }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */], {
+          this.props.markersData ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MyMarkersList, { markers: this.props.markersData }) : "",
+          this.props.displayFirstMarker ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */], {
             position: this.state.position,
             draggable: this.state.allowDragableMarker,
             onDragend: this.moveMarker
-          }),
+          }) : "",
           this.props.displaySecondMarker ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["b" /* Marker */], {
             position: this.state.secondPosition,
             draggable: this.state.allowDragableMarker,
@@ -57196,10 +57265,10 @@ var LeafletMapComponent = function (_Component) {
     }
   }]);
 
-  return LeafletMapComponent;
+  return MapComponent;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (LeafletMapComponent);
+/* harmony default export */ __webpack_exports__["a"] = (MapComponent);
 
 /***/ })
 /******/ ]);
