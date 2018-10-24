@@ -43565,7 +43565,11 @@ var Menu = function (_Component) {
             exact: true,
             path: "/points",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__["a" /* default */], { searchInLocation: _this2.state.searchInLocation });
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__["a" /* default */], {
+                searchInLocation: _this2.state.searchInLocation,
+                showAlertSuccess: _this2.props.showAlertSuccess,
+                showAlertWarning: _this2.props.showAlertWarning
+              });
             }
           }),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
@@ -56650,82 +56654,186 @@ var MainPoints = function (_Component) {
       pointsData: [],
       markersData: [],
       lat: 40.73061,
-      lng: -73.935242
+      lng: -73.935242,
+      centerCoord: [40.73061, -73.935242]
     };
+
+    _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
+    _this.disableVoteSelect = _this.disableVoteSelect.bind(_this);
+    _this.loadAllSpots = _this.loadAllSpots.bind(_this);
     return _this;
   }
 
   _createClass(MainPoints, [{
-    key: "componentDidMount",
+    key: "setNewCenterCoords",
+    value: function setNewCenterCoords(lat, lng) {
+      this.setState({ centerCoord: [lat, lng] });
+    }
+  }, {
+    key: "loadAllSpots",
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
         var _this2 = this;
 
         var allPoints;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
+                _context2.prev = 0;
+                _context2.next = 3;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points");
 
               case 3:
-                allPoints = _context.sent;
+                allPoints = _context2.sent;
 
 
                 console.log(allPoints);
 
-                _context.next = 7;
-                return allPoints.data.map(function (item, i) {
-                  var pointObject = {
-                    id: item.id,
-                    title: item.name,
-                    description: item.description,
-                    author: item.authorNickName,
-                    lattitude: item.lattitude,
-                    longitude: item.longitude,
-                    date: item.created_at
-                  };
+                _context2.next = 7;
+                return allPoints.data.map(function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(item, i) {
+                    var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            checkIfUserVoteExists = void 0;
+                            _context.prev = 1;
+                            _context.next = 4;
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserVoteExists", {
+                              user_id: sessionStorage.getItem("userId"),
+                              point_id: item.id
+                            }, {
+                              headers: {
+                                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                              }
+                            });
 
-                  var singleMarkerData = {
-                    key: item.name,
-                    position: [item.lattitude, item.longitude],
-                    text: item.name
-                  };
+                          case 4:
+                            checkIfUserVoteExists = _context.sent;
+                            _context.next = 10;
+                            break;
 
-                  _this2.setState(function (prevState) {
-                    return {
-                      pointsData: [].concat(_toConsumableArray(prevState.pointsData), [pointObject]),
-                      markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
-                    };
-                  });
-                });
+                          case 7:
+                            _context.prev = 7;
+                            _context.t0 = _context["catch"](1);
+
+                            console.log(_context.t0);
+
+                          case 10:
+                            checkIfUserVote = void 0;
+
+                            if (checkIfUserVoteExists.data == 1) {
+                              checkIfUserVote = true;
+                            } else {
+                              checkIfUserVote = false;
+                            }
+                            console.log(checkIfUserVoteExists.data);
+
+                            pointObject = {
+                              id: item.id,
+                              title: item.name,
+                              description: item.description,
+                              author: item.authorNickName,
+                              lattitude: item.lattitude,
+                              longitude: item.longitude,
+                              sumOfVotes: item.sumOfVotes,
+                              countVotes: item.countVotes,
+                              date: item.created_at,
+                              checkIfUserVote: checkIfUserVote
+                            };
+                            singleMarkerData = {
+                              key: item.name,
+                              position: [item.lattitude, item.longitude],
+                              text: item.name
+                            };
+
+
+                            _this2.setState(function (prevState) {
+                              return {
+                                pointsData: [].concat(_toConsumableArray(prevState.pointsData), [pointObject]),
+                                markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
+                              };
+                            });
+
+                          case 16:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee, _this2, [[1, 7]]);
+                  }));
+
+                  return function (_x, _x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
 
               case 7:
-                _context.next = 12;
+                _context2.next = 12;
                 break;
 
               case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](0);
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](0);
 
-                console.log(_context.t0);
+                console.log(_context2.t0);
 
               case 12:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[0, 9]]);
+        }, _callee2, this, [[0, 9]]);
+      }));
+
+      function loadAllSpots() {
+        return _ref.apply(this, arguments);
+      }
+
+      return loadAllSpots;
+    }()
+  }, {
+    key: "componentDidMount",
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.loadAllSpots();
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
       }));
 
       function componentDidMount() {
-        return _ref.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       }
 
       return componentDidMount;
     }()
+  }, {
+    key: "disableVoteSelect",
+    value: function disableVoteSelect(pointId, voteValue) {
+      var newPointsData = [].concat(_toConsumableArray(this.state.pointsData));
+
+      newPointsData.map(function (elem) {
+        if (elem.id == pointId) {
+          elem.checkIfUserVote = true;
+          elem.sumOfVotes = elem.sumOfVotes + parseInt(voteValue);
+          elem.countVotes = elem.countVotes + 1;
+        }
+      });
+      console.log(newPointsData);
+      this.setState({ pointsData: newPointsData });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -56742,12 +56850,19 @@ var MainPoints = function (_Component) {
               key: i,
               changeMarker: _this3.changeMarker,
               id: item.id,
+              checkIfUserVote: item.checkIfUserVote,
               title: item.title,
               description: item.description,
               author: item.author,
               lattitude: item.lattitude,
               longitude: item.longitude,
-              date: item.date
+              sumOfVotes: item.sumOfVotes,
+              countVotes: item.countVotes,
+              date: item.date,
+              setNewCenterCoords: _this3.setNewCenterCoords,
+              showAlertSuccess: _this3.props.showAlertSuccess,
+              showAlertWarning: _this3.props.showAlertWarning,
+              disableVoteSelect: _this3.disableVoteSelect
             });
           })
         ),
@@ -56758,7 +56873,8 @@ var MainPoints = function (_Component) {
             latCenter: this.state.lat,
             lngCenter: this.state.lng,
             markersData: this.state.markersData,
-            displayFirstMarker: false
+            displayFirstMarker: false,
+            centerCoord: this.state.centerCoord
           })
         )
       );
@@ -57028,12 +57144,19 @@ var AddNewMeeting = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SpotVotes__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
+
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -57043,7 +57166,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-/*import LocateOnMapBtn from "./LocateOnMapBtn";*/
+
 
 
 var SinglePointOnList = function (_Component) {
@@ -57056,62 +57179,172 @@ var SinglePointOnList = function (_Component) {
 
     _this.state = {
       lat: "",
-      lng: ""
+      lng: "",
+      currentVote: "Wybierz"
     };
+
+    _this.changeCurrentVote = _this.changeCurrentVote.bind(_this);
+    _this.saveNewSpotVote = _this.saveNewSpotVote.bind(_this);
     return _this;
   }
 
   _createClass(SinglePointOnList, [{
+    key: "changeCurrentVote",
+    value: function changeCurrentVote(event) {
+      this.setState({ currentVote: event.target.value });
+    }
+  }, {
+    key: "saveNewSpotVote",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
+        var savedNewSpotVote;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+
+                if (!(this.state.currentVote != "Wybierz")) {
+                  _context.next = 16;
+                  break;
+                }
+
+                savedNewSpotVote = void 0;
+                _context.prev = 3;
+                _context.next = 6;
+                return __WEBPACK_IMPORTED_MODULE_4_axios___default.a.post("http://127.0.0.1:8000/api/saveVote", {
+                  spot_id: this.props.id,
+                  user_id: sessionStorage.getItem("userId"),
+                  vote_value: this.state.currentVote
+                }, {
+                  headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                  }
+                });
+
+              case 6:
+                savedNewSpotVote = _context.sent;
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](3);
+
+                console.log(_context.t0);
+
+              case 12:
+
+                console.log(savedNewSpotVote);
+
+                if (savedNewSpotVote.status == "201") {
+                  console.log("zapisano glos");
+                  this.props.disableVoteSelect(this.props.id, this.state.currentVote);
+                  this.props.showAlertSuccess("zapisano glos.");
+                } else {
+                  this.props.showAlertWarning("Nie udało się zapisać glosu.");
+                }
+                _context.next = 17;
+                break;
+
+              case 16:
+                this.props.showAlertWarning("Wybierz wartosc liczbowa.");
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[3, 9]]);
+      }));
+
+      function saveNewSpotVote(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return saveNewSpotVote;
+    }()
+  }, {
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      var _this2 = this;
+
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
         { className: "panel-group" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
           { className: "panel panel-default" },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             { className: "panel-heading" },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
               "h4",
               { className: "panel-title bold" },
               this.props.title
             )
           ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             { className: "panel-body" },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
               "p",
               null,
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "span",
                 { className: "bold" },
                 "Date: "
               ),
               this.props.date
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
               "p",
               null,
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "span",
                 { className: "bold" },
                 "Description: "
               ),
               this.props.description
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
               "p",
               null,
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "span",
                 { className: "bold" },
                 "Created by: "
               ),
               this.props.author
-            )
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "p",
+              null,
+              "Ocena:",
+              " ",
+              this.props.sumOfVotes ? (this.props.sumOfVotes / this.props.countVotes).toFixed(2) : "---"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "p",
+              null,
+              "Ilosc glosow:",
+              " ",
+              this.props.countVotes ? this.props.countVotes : "0"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              {
+                className: "btn locateBtn",
+                onClick: function onClick() {
+                  _this2.props.setNewCenterCoords(_this2.props.lattitude, _this2.props.longitude);
+                }
+              },
+              "Lokalizuj"
+            ),
+            !this.props.checkIfUserVote ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SpotVotes__["a" /* default */], {
+              changeCurrentVote: this.changeCurrentVote,
+              saveNewSpotVote: this.saveNewSpotVote
+            }) : ""
           )
         )
       );
@@ -57119,7 +57352,7 @@ var SinglePointOnList = function (_Component) {
   }]);
 
   return SinglePointOnList;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (SinglePointOnList);
 
@@ -57243,7 +57476,10 @@ var MapComponent = function (_Component) {
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
-          { center: this.state.position, zoom: 13 },
+          {
+            center: this.props.centerCoord ? this.props.centerCoord : this.state.position,
+            zoom: 13
+          },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["d" /* TileLayer */], {
             attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
             url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
@@ -57269,6 +57505,66 @@ var MapComponent = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (MapComponent);
+
+/***/ }),
+/* 349 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var SpotVotes = function SpotVotes(props) {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    "div",
+    null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "select",
+      {
+        id: "inputState",
+        className: "form-control",
+        onChange: props.changeCurrentVote
+      },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "option",
+        { selected: true },
+        "Wybierz"
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "option",
+        { value: "1" },
+        "1"
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "option",
+        { value: "2" },
+        "2"
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "option",
+        { value: "3" },
+        "3"
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "option",
+        { value: "4" },
+        "4"
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "option",
+        { value: "5" },
+        "5"
+      )
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "div",
+      { className: "btn locateBtn", onClick: props.saveNewSpotVote },
+      "Dodaj g\u0142os"
+    )
+  );
+};
+/* harmony default export */ __webpack_exports__["a"] = (SpotVotes);
 
 /***/ })
 /******/ ]);

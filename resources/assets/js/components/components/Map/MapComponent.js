@@ -63,7 +63,14 @@ class MapComponent extends Component {
   render() {
     return (
       <div>
-        <Map center={this.state.position} zoom={13}>
+        <Map
+          center={
+            this.props.centerCoord
+              ? this.props.centerCoord
+              : this.state.position
+          }
+          zoom={13}
+        >
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"

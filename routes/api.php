@@ -13,6 +13,9 @@ Route::get('points', 'PointController@index');
 Route::get('point/{id}', 'PointController@show');
 Route::post('point', 'PointController@store');
 Route::delete('point/{id}', 'PointController@destroy');
+Route::post('saveVote', 'PointController@saveVote');
+Route::post('checkIfUserVoteExists', 'PointController@checkIfUserVoteExists');
+
 
 Route::post('comment', 'CommentController@store');
 Route::get('comments', 'CommentController@index');

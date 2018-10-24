@@ -258,7 +258,11 @@ class Menu extends Component {
             path="/points"
             render={() => {
               return (
-                <MainPoints searchInLocation={this.state.searchInLocation} />
+                <MainPoints
+                  searchInLocation={this.state.searchInLocation}
+                  showAlertSuccess={this.props.showAlertSuccess}
+                  showAlertWarning={this.props.showAlertWarning}
+                />
               );
             }}
           />
