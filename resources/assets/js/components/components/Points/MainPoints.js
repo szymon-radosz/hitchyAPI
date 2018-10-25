@@ -18,10 +18,80 @@ class MainPoints extends Component {
     this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
     this.disableVoteSelect = this.disableVoteSelect.bind(this);
     this.loadAllSpots = this.loadAllSpots.bind(this);
+    this.getTheNewestPoints = this.getTheNewestPoints.bind(this);
   }
 
   setNewCenterCoords(lat, lng) {
     this.setState({ centerCoord: [lat, lng] });
+  }
+
+  async getTheNewestPoints(sortBy) {
+    console.log(sortBy);
+    this.setState({ pointsData: [] });
+    try {
+      let allPoints;
+      if (sortBy == "newest") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/getTheNewestPoints`
+        );
+      } else if (sortBy == "oldest") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/getTheOldestPoints`
+        );
+      } else {
+        allPoints = await axios.get(`http://127.0.0.1:8000/api/points`);
+      }
+
+      console.log(allPoints);
+
+      await allPoints.data.map(async (item, i) => {
+        let checkIfUserVoteExists;
+
+        try {
+          checkIfUserVoteExists = await axios.post(
+            `http://127.0.0.1:8000/api/checkIfUserVoteExists`,
+            {
+              user_id: sessionStorage.getItem("userId"),
+              point_id: item.id
+            },
+            {
+              headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+              }
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+
+        let checkIfUserVote;
+        if (checkIfUserVoteExists.data == 1) {
+          checkIfUserVote = true;
+        } else {
+          checkIfUserVote = false;
+        }
+        console.log(checkIfUserVoteExists.data);
+
+        let pointObject = {
+          id: item.id,
+          title: item.name,
+          description: item.description,
+          author: item.authorNickName,
+          lattitude: item.lattitude,
+          longitude: item.longitude,
+          sumOfVotes: item.sumOfVotes,
+          countVotes: item.countVotes,
+          date: item.created_at,
+          checkIfUserVote: checkIfUserVote
+        };
+
+        this.setState(prevState => ({
+          pointsData: [...prevState.pointsData, pointObject]
+        }));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async loadAllSpots() {
@@ -109,6 +179,23 @@ class MainPoints extends Component {
     return (
       <div className="row listOfMeetingsRow">
         <div className="col-sm-6 listOfMeetingsCol">
+          <div
+            className="btn"
+            onClick={() => {
+              this.getTheNewestPoints("newest");
+            }}
+          >
+            Najnowsze
+          </div>
+
+          <div
+            className="btn"
+            onClick={() => {
+              this.getTheNewestPoints("oldest");
+            }}
+          >
+            Najstarsze
+          </div>
           {this.state.pointsData.map((item, i) => {
             return (
               <SinglePointOnList

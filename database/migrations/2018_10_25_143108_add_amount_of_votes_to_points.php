@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAuthorToPoints extends Migration
+class AddAmountOfVotesToPoints extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddAuthorToPoints extends Migration
     public function up()
     {
         Schema::table('points', function (Blueprint $table) {
-             $table->string('author');
-        });
+            $table->integer('amount_of_votes');
+       });
     }
 
     /**
@@ -25,8 +25,6 @@ class AddAuthorToPoints extends Migration
      */
     public function down()
     {
-        /*Schema::table('points', function (Blueprint $table) {
-            $table->string('author');
-        });*/
+        //
     }
 }

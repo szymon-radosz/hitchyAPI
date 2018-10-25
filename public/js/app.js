@@ -56661,6 +56661,7 @@ var MainPoints = function (_Component) {
     _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
     _this.disableVoteSelect = _this.disableVoteSelect.bind(_this);
     _this.loadAllSpots = _this.loadAllSpots.bind(_this);
+    _this.getTheNewestPoints = _this.getTheNewestPoints.bind(_this);
     return _this;
   }
 
@@ -56670,9 +56671,9 @@ var MainPoints = function (_Component) {
       this.setState({ centerCoord: [lat, lng] });
     }
   }, {
-    key: "loadAllSpots",
+    key: "getTheNewestPoints",
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(sortBy) {
         var _this2 = this;
 
         var allPoints;
@@ -56680,20 +56681,53 @@ var MainPoints = function (_Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                console.log(sortBy);
+                this.setState({ pointsData: [] });
+                _context2.prev = 2;
+                allPoints = void 0;
+
+                if (!(sortBy == "newest")) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                _context2.next = 7;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheNewestPoints");
+
+              case 7:
+                allPoints = _context2.sent;
+                _context2.next = 19;
+                break;
+
+              case 10:
+                if (!(sortBy == "oldest")) {
+                  _context2.next = 16;
+                  break;
+                }
+
+                _context2.next = 13;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheOldestPoints");
+
+              case 13:
+                allPoints = _context2.sent;
+                _context2.next = 19;
+                break;
+
+              case 16:
+                _context2.next = 18;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points");
 
-              case 3:
+              case 18:
                 allPoints = _context2.sent;
 
+              case 19:
 
                 console.log(allPoints);
 
-                _context2.next = 7;
+                _context2.next = 22;
                 return allPoints.data.map(function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(item, i) {
-                    var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
+                    var checkIfUserVoteExists, checkIfUserVote, pointObject;
                     return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
@@ -56743,6 +56777,125 @@ var MainPoints = function (_Component) {
                               date: item.created_at,
                               checkIfUserVote: checkIfUserVote
                             };
+
+
+                            _this2.setState(function (prevState) {
+                              return {
+                                pointsData: [].concat(_toConsumableArray(prevState.pointsData), [pointObject])
+                              };
+                            });
+
+                          case 15:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee, _this2, [[1, 7]]);
+                  }));
+
+                  return function (_x2, _x3) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+
+              case 22:
+                _context2.next = 27;
+                break;
+
+              case 24:
+                _context2.prev = 24;
+                _context2.t0 = _context2["catch"](2);
+
+                console.log(_context2.t0);
+
+              case 27:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[2, 24]]);
+      }));
+
+      function getTheNewestPoints(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return getTheNewestPoints;
+    }()
+  }, {
+    key: "loadAllSpots",
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+        var _this3 = this;
+
+        var allPoints;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points");
+
+              case 3:
+                allPoints = _context4.sent;
+
+
+                console.log(allPoints);
+
+                _context4.next = 7;
+                return allPoints.data.map(function () {
+                  var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(item, i) {
+                    var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            checkIfUserVoteExists = void 0;
+                            _context3.prev = 1;
+                            _context3.next = 4;
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserVoteExists", {
+                              user_id: sessionStorage.getItem("userId"),
+                              point_id: item.id
+                            }, {
+                              headers: {
+                                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                              }
+                            });
+
+                          case 4:
+                            checkIfUserVoteExists = _context3.sent;
+                            _context3.next = 10;
+                            break;
+
+                          case 7:
+                            _context3.prev = 7;
+                            _context3.t0 = _context3["catch"](1);
+
+                            console.log(_context3.t0);
+
+                          case 10:
+                            checkIfUserVote = void 0;
+
+                            if (checkIfUserVoteExists.data == 1) {
+                              checkIfUserVote = true;
+                            } else {
+                              checkIfUserVote = false;
+                            }
+                            console.log(checkIfUserVoteExists.data);
+
+                            pointObject = {
+                              id: item.id,
+                              title: item.name,
+                              description: item.description,
+                              author: item.authorNickName,
+                              lattitude: item.lattitude,
+                              longitude: item.longitude,
+                              sumOfVotes: item.sumOfVotes,
+                              countVotes: item.countVotes,
+                              date: item.created_at,
+                              checkIfUserVote: checkIfUserVote
+                            };
                             singleMarkerData = {
                               key: item.name,
                               position: [item.lattitude, item.longitude],
@@ -56750,7 +56903,7 @@ var MainPoints = function (_Component) {
                             };
 
 
-                            _this2.setState(function (prevState) {
+                            _this3.setState(function (prevState) {
                               return {
                                 pointsData: [].concat(_toConsumableArray(prevState.pointsData), [pointObject]),
                                 markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
@@ -56759,37 +56912,37 @@ var MainPoints = function (_Component) {
 
                           case 16:
                           case "end":
-                            return _context.stop();
+                            return _context3.stop();
                         }
                       }
-                    }, _callee, _this2, [[1, 7]]);
+                    }, _callee3, _this3, [[1, 7]]);
                   }));
 
-                  return function (_x, _x2) {
-                    return _ref2.apply(this, arguments);
+                  return function (_x4, _x5) {
+                    return _ref4.apply(this, arguments);
                   };
                 }());
 
               case 7:
-                _context2.next = 12;
+                _context4.next = 12;
                 break;
 
               case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](0);
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](0);
 
-                console.log(_context2.t0);
+                console.log(_context4.t0);
 
               case 12:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, this, [[0, 9]]);
+        }, _callee4, this, [[0, 9]]);
       }));
 
       function loadAllSpots() {
-        return _ref.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       }
 
       return loadAllSpots;
@@ -56797,24 +56950,24 @@ var MainPoints = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context3.next = 2;
+                _context5.next = 2;
                 return this.loadAllSpots();
 
               case 2:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee5, this);
       }));
 
       function componentDidMount() {
-        return _ref3.apply(this, arguments);
+        return _ref5.apply(this, arguments);
       }
 
       return componentDidMount;
@@ -56837,7 +56990,7 @@ var MainPoints = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
@@ -56845,10 +56998,30 @@ var MainPoints = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
           { className: "col-sm-6 listOfMeetingsCol" },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            {
+              className: "btn",
+              onClick: function onClick() {
+                _this4.getTheNewestPoints("newest");
+              }
+            },
+            "Najnowsze"
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            {
+              className: "btn",
+              onClick: function onClick() {
+                _this4.getTheNewestPoints("oldest");
+              }
+            },
+            "Najstarsze"
+          ),
           this.state.pointsData.map(function (item, i) {
             return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__["a" /* default */], {
               key: i,
-              changeMarker: _this3.changeMarker,
+              changeMarker: _this4.changeMarker,
               id: item.id,
               checkIfUserVote: item.checkIfUserVote,
               title: item.title,
@@ -56859,10 +57032,10 @@ var MainPoints = function (_Component) {
               sumOfVotes: item.sumOfVotes,
               countVotes: item.countVotes,
               date: item.date,
-              setNewCenterCoords: _this3.setNewCenterCoords,
-              showAlertSuccess: _this3.props.showAlertSuccess,
-              showAlertWarning: _this3.props.showAlertWarning,
-              disableVoteSelect: _this3.disableVoteSelect
+              setNewCenterCoords: _this4.setNewCenterCoords,
+              showAlertSuccess: _this4.props.showAlertSuccess,
+              showAlertWarning: _this4.props.showAlertWarning,
+              disableVoteSelect: _this4.disableVoteSelect
             });
           })
         ),
