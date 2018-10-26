@@ -10,6 +10,7 @@ class MainPoints extends Component {
     this.state = {
       pointsData: [],
       markersData: [],
+      dateSortedBy: "",
       lat: 40.73061,
       lng: -73.935242,
       centerCoord: [40.73061, -73.935242]
@@ -19,6 +20,7 @@ class MainPoints extends Component {
     this.disableVoteSelect = this.disableVoteSelect.bind(this);
     this.loadAllSpots = this.loadAllSpots.bind(this);
     this.getTheNewestPoints = this.getTheNewestPoints.bind(this);
+    this.filterResults = this.filterResults.bind(this);
   }
 
   setNewCenterCoords(lat, lng) {
@@ -26,71 +28,16 @@ class MainPoints extends Component {
   }
 
   async getTheNewestPoints(sortBy) {
-    console.log(sortBy);
-    this.setState({ pointsData: [] });
-    try {
-      let allPoints;
-      if (sortBy == "newest") {
-        allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheNewestPoints`
-        );
-      } else if (sortBy == "oldest") {
-        allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheOldestPoints`
-        );
-      } else {
-        allPoints = await axios.get(`http://127.0.0.1:8000/api/points`);
-      }
-
-      console.log(allPoints);
-
-      await allPoints.data.map(async (item, i) => {
-        let checkIfUserVoteExists;
-
-        try {
-          checkIfUserVoteExists = await axios.post(
-            `http://127.0.0.1:8000/api/checkIfUserVoteExists`,
-            {
-              user_id: sessionStorage.getItem("userId"),
-              point_id: item.id
-            },
-            {
-              headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-              }
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-
-        let checkIfUserVote;
-        if (checkIfUserVoteExists.data == 1) {
-          checkIfUserVote = true;
-        } else {
-          checkIfUserVote = false;
-        }
-        console.log(checkIfUserVoteExists.data);
-
-        let pointObject = {
-          id: item.id,
-          title: item.name,
-          description: item.description,
-          author: item.authorNickName,
-          lattitude: item.lattitude,
-          longitude: item.longitude,
-          sumOfVotes: item.sumOfVotes,
-          countVotes: item.countVotes,
-          date: item.created_at,
-          checkIfUserVote: checkIfUserVote
-        };
-
-        this.setState(prevState => ({
-          pointsData: [...prevState.pointsData, pointObject]
-        }));
-      });
-    } catch (error) {
-      console.log(error);
+    if (sortBy == "newest" && this.state.dateSortedBy == "oldest") {
+      this.setState({ dateSortedBy: "newest" });
+      let newState = [...this.state.pointsData];
+      newState.reverse();
+      this.setState({ pointsData: newState });
+    } else if (sortBy == "oldest" && this.state.dateSortedBy == "newest") {
+      this.setState({ dateSortedBy: "oldest" });
+      let newState = [...this.state.pointsData];
+      newState.reverse();
+      this.setState({ pointsData: newState });
     }
   }
 
@@ -135,10 +82,11 @@ class MainPoints extends Component {
           author: item.authorNickName,
           lattitude: item.lattitude,
           longitude: item.longitude,
-          sumOfVotes: item.sumOfVotes,
-          countVotes: item.countVotes,
+          sumOfVotes: item.sum_of_votes,
+          countVotes: item.amount_of_votes,
           date: item.created_at,
-          checkIfUserVote: checkIfUserVote
+          checkIfUserVote: checkIfUserVote,
+          rating: item.rating
         };
 
         let singleMarkerData = {
@@ -158,7 +106,37 @@ class MainPoints extends Component {
   }
 
   async componentDidMount() {
+    this.setState({ dateSortedBy: "newest" });
     await this.loadAllSpots();
+  }
+
+  filterResults(sortBy, theBestResults) {
+    let newState = [...this.state.pointsData];
+
+    if (theBestResults && sortBy == "rating") {
+      newState
+        .sort(
+          (a, b) => (a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0)
+        )
+        .reverse();
+    } else if (theBestResults && sortBy == "countVotes") {
+      newState
+        .sort(
+          (a, b) =>
+            a.countVotes > b.countVotes
+              ? 1
+              : b.countVotes > a.countVotes
+                ? -1
+                : 0
+        )
+        .reverse();
+    } else if (!theBestResults && sortBy == "rating") {
+      newState.sort(
+        (a, b) => (a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0)
+      );
+    }
+
+    this.setState({ pointsData: newState });
   }
 
   disableVoteSelect(pointId, voteValue) {
@@ -196,21 +174,37 @@ class MainPoints extends Component {
           >
             Najstarsze
           </div>
+
+          <div
+            className="btn"
+            onClick={() => {
+              this.filterResults("rating", true);
+            }}
+          >
+            Najlepiej oceniane
+          </div>
+          <div
+            className="btn"
+            onClick={() => {
+              this.filterResults("rating", false);
+            }}
+          >
+            Najgorzej oceniane
+          </div>
+          <div
+            className="btn"
+            onClick={() => {
+              this.filterResults("countVotes", true);
+            }}
+          >
+            Najczęściej oceniane
+          </div>
           {this.state.pointsData.map((item, i) => {
             return (
               <SinglePointOnList
                 key={i}
                 changeMarker={this.changeMarker}
-                id={item.id}
-                checkIfUserVote={item.checkIfUserVote}
-                title={item.title}
-                description={item.description}
-                author={item.author}
-                lattitude={item.lattitude}
-                longitude={item.longitude}
-                sumOfVotes={item.sumOfVotes}
-                countVotes={item.countVotes}
-                date={item.date}
+                item={item}
                 setNewCenterCoords={this.setNewCenterCoords}
                 showAlertSuccess={this.props.showAlertSuccess}
                 showAlertWarning={this.props.showAlertWarning}

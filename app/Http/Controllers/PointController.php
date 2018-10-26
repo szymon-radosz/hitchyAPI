@@ -13,41 +13,15 @@ class PointController extends Controller
 {
     public function index()
     {
-        $points = DB::table('points')->get();
-
-        foreach($points as $point){
-            $sumOfVotes = DB::table('spot_votes')->where('spot_id', $point->id)->sum('vote_value');
-            $countVotes = DB::table('spot_votes')->where('spot_id', $point->id)->get();
-            $point->sumOfVotes = (int)$sumOfVotes;
-            $point->countVotes = count($countVotes);
-        }
-
-        return $points;
-    }
-
-    public function getTheNewestPoints(){
         $points = DB::table('points')->orderBy('created_at', 'desc')->get();
 
         foreach($points as $point){
-            $sumOfVotes = DB::table('spot_votes')->where('spot_id', $point->id)->sum('vote_value');
-            $countVotes = DB::table('spot_votes')->where('spot_id', $point->id)->get();
-            $point->sumOfVotes = (int)$sumOfVotes;
-            $point->countVotes = count($countVotes);
+            if($point->amount_of_votes > 0){
+                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+            }else{
+                $point->rating = 0;
+            }
         }
-
-        return $points;
-    }
-
-    public function getTheOldestPoints(){
-        $points = DB::table('points')->orderBy('created_at', 'asc')->get();
-
-        foreach($points as $point){
-            $sumOfVotes = DB::table('spot_votes')->where('spot_id', $point->id)->sum('vote_value');
-            $countVotes = DB::table('spot_votes')->where('spot_id', $point->id)->get();
-            $point->sumOfVotes = (int)$sumOfVotes;
-            $point->countVotes = count($countVotes);
-        }
-
         return $points;
     }
 

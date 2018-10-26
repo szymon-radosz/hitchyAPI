@@ -31,7 +31,7 @@ class SinglePointOnList extends Component {
         savedNewSpotVote = await axios.post(
           `http://127.0.0.1:8000/api/saveVote`,
           {
-            spot_id: this.props.id,
+            spot_id: this.props.item.id,
             user_id: sessionStorage.getItem("userId"),
             vote_value: this.state.currentVote
           },
@@ -49,7 +49,10 @@ class SinglePointOnList extends Component {
 
       if (savedNewSpotVote.status == "201") {
         console.log("zapisano glos");
-        this.props.disableVoteSelect(this.props.id, this.state.currentVote);
+        this.props.disableVoteSelect(
+          this.props.item.id,
+          this.state.currentVote
+        );
         this.props.showAlertSuccess("zapisano glos.");
       } else {
         this.props.showAlertWarning("Nie udało się zapisać glosu.");
@@ -64,43 +67,45 @@ class SinglePointOnList extends Component {
       <div className="panel-group">
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h4 className="panel-title bold">{this.props.title}</h4>
+            <h4 className="panel-title bold">{this.props.item.title}</h4>
           </div>
           <div className="panel-body">
             <p>
-              <span className="bold">Date: </span>
-              {this.props.date}
+              <span className="bold">Data: </span>
+              {this.props.item.date}
             </p>
             <p>
-              <span className="bold">Description: </span>
-              {this.props.description}
+              <span className="bold">Opis: </span>
+              {this.props.item.description}
             </p>
             <p>
-              <span className="bold">Created by: </span>
-              {this.props.author}
+              <span className="bold">Autor: </span>
+              {this.props.item.author}
             </p>
             <p>
               Ocena:{" "}
-              {this.props.sumOfVotes
-                ? (this.props.sumOfVotes / this.props.countVotes).toFixed(2)
+              {this.props.item.sumOfVotes
+                ? (
+                    this.props.item.sumOfVotes / this.props.item.countVotes
+                  ).toFixed(2)
                 : "---"}
             </p>
             <p>
               Ilosc glosow:{" "}
-              {this.props.countVotes ? this.props.countVotes : "0"}
+              {this.props.item.countVotes ? this.props.item.countVotes : "0"}
             </p>
             <div
               className="btn locateBtn"
               onClick={() => {
                 this.props.setNewCenterCoords(
-                  this.props.lattitude,
-                  this.props.longitude
+                  this.props.item.lattitude,
+                  this.props.item.longitude
                 );
               }}
             >
               Lokalizuj
             </div>
-            {!this.props.checkIfUserVote ? (
+            {!this.props.item.checkIfUserVote ? (
               <SpotVotes
                 changeCurrentVote={this.changeCurrentVote}
                 saveNewSpotVote={this.saveNewSpotVote}
