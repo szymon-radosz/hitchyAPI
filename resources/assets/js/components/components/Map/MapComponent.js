@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, withLeaflet } from "react-leaflet";
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import Search from "./Search";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -61,6 +62,7 @@ class MapComponent extends Component {
   }
 
   render() {
+    const AddressSearch = withLeaflet(Search);
     return (
       <div>
         <Map
@@ -71,6 +73,7 @@ class MapComponent extends Component {
           }
           zoom={13}
         >
+          <AddressSearch />
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"

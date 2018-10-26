@@ -30,6 +30,40 @@
   background-position: 50%;
 }
 
+.leaflet-left {
+  width: 100%;
+}
+
+.leaflet-left .geosearch {
+  position: absolute;
+  border: none !important;
+  top: 0;
+  right: 0;
+  width: 80%;
+}
+
+.leaflet-left .geosearch .leaflet-bar-part-single {
+  display: none;
+}
+
+.leaflet-left .geosearch form {
+  text-align: right;
+}
+
+.leaflet-left .geosearch form .active {
+  background-color: #fff;
+}
+
+.leaflet-left .geosearch form .active > div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.leaflet-left .geosearch form .glass,
+.leaflet-left .geosearch form .reset {
+  display: inline-block;
+}
+
 .landing {
   margin: 0 !important;
   height: calc(100vh - 52px);
