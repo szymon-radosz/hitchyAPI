@@ -2,104 +2,105 @@ import React, { Component } from "react";
 import Menu from "./Menu.js";
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            alertSuccess: false,
-            alertSuccessDescription: "",
-            alertWarning: false,
-            alertWarningDescription: ""
-        };
+    this.state = {
+      alertSuccess: false,
+      alertSuccessDescription: "",
+      alertWarning: false,
+      alertWarningDescription: "",
+      loader: false
+    };
 
-        this.showAlertSuccess = this.showAlertSuccess.bind(this);
-        this.showAlertWarning = this.showAlertWarning.bind(this);
-        this.hideAlertSuccess = this.hideAlertSuccess.bind(this);
-        this.hideAlertWarning = this.hideAlertWarning.bind(this);
-    }
+    this.showAlertSuccess = this.showAlertSuccess.bind(this);
+    this.showAlertWarning = this.showAlertWarning.bind(this);
+    this.hideAlertSuccess = this.hideAlertSuccess.bind(this);
+    this.hideAlertWarning = this.hideAlertWarning.bind(this);
+    this.switchLoader = this.switchLoader.bind(this);
+  }
 
-    showAlertSuccess(info) {
-        this.setState({
-            alertSuccess: true,
-            alertSuccessDescription: info
-        });
+  showAlertSuccess(info) {
+    this.setState({
+      alertSuccess: true,
+      alertSuccessDescription: info
+    });
 
-        setTimeout(
-            function() {
-                this.setState({ alertSuccess: false });
-            }.bind(this),
-            4000
-        );
-    }
+    setTimeout(
+      function() {
+        this.setState({ alertSuccess: false });
+      }.bind(this),
+      4000
+    );
+  }
 
-    showAlertWarning(info) {
-        this.setState({
-            alertWarning: true,
-            alertWarningDescription: info
-        });
+  showAlertWarning(info) {
+    this.setState({
+      alertWarning: true,
+      alertWarningDescription: info
+    });
 
-        setTimeout(
-            function() {
-                this.setState({ alertWarning: false });
-            }.bind(this),
-            4000
-        );
-    }
+    setTimeout(
+      function() {
+        this.setState({ alertWarning: false });
+      }.bind(this),
+      4000
+    );
+  }
 
-    hideAlertSuccess() {
-        this.setState({
-            alertSuccess: false
-        });
-    }
+  switchLoader(state) {
+    return this.setState({
+      loader: state
+    });
+  }
 
-    hideAlertWarning() {
-        this.setState({
-            alertWarning: false
-        });
-    }
+  hideAlertSuccess() {
+    this.setState({
+      alertSuccess: false
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                {this.state.alertSuccess && (
-                    <div
-                        className="alert alert-success alert-dismissible"
-                        role="alert"
-                    >
-                        <a
-                            href="#"
-                            className="close"
-                            onClick={this.hideAlertSuccess}
-                        >
-                            ×
-                        </a>
-                        <strong>{this.state.alertSuccessDescription}</strong>
-                    </div>
-                )}
+  hideAlertWarning() {
+    this.setState({
+      alertWarning: false
+    });
+  }
 
-                {this.state.alertWarning && (
-                    <div
-                        className="alert alert-danger alert-dismissible"
-                        role="alert"
-                    >
-                        <a
-                            href="#"
-                            className="close"
-                            onClick={this.hideAlertWarning}
-                        >
-                            ×
-                        </a>
-                        <strong>{this.state.alertWarningDescription}</strong>
-                    </div>
-                )}
+  render() {
+    return (
+      <div>
+        {this.state.alertSuccess && (
+          <div className="alert alert-success alert-dismissible" role="alert">
+            <a href="#" className="close" onClick={this.hideAlertSuccess}>
+              ×
+            </a>
+            <strong>{this.state.alertSuccessDescription}</strong>
+          </div>
+        )}
 
-                <Menu
-                    showAlertSuccess={this.showAlertSuccess}
-                    showAlertWarning={this.showAlertWarning}
-                />
-            </div>
-        );
-    }
+        {this.state.alertWarning && (
+          <div className="alert alert-danger alert-dismissible" role="alert">
+            <a href="#" className="close" onClick={this.hideAlertWarning}>
+              ×
+            </a>
+            <strong>{this.state.alertWarningDescription}</strong>
+          </div>
+        )}
+
+        {this.state.loader && (
+          <div className="loaderContainer">
+            <div className="loader" />
+          </div>
+        )}
+
+        <Menu
+          switchLoader={this.switchLoader}
+          showAlertSuccess={this.showAlertSuccess}
+          showAlertWarning={this.showAlertWarning}
+        />
+      </div>
+    );
+  }
 }
 
 export default Main;

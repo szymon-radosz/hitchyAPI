@@ -262,6 +262,7 @@ class Menu extends Component {
                   searchInLocation={this.state.searchInLocation}
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  switchLoader={this.props.switchLoader}
                 />
               );
             }}

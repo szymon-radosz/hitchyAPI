@@ -42,6 +42,7 @@ class MainPoints extends Component {
   }
 
   async loadAllSpots() {
+    this.props.switchLoader(true);
     try {
       const allPoints = await axios.get(`http://127.0.0.1:8000/api/points`);
 
@@ -99,9 +100,11 @@ class MainPoints extends Component {
           pointsData: [...prevState.pointsData, pointObject],
           markersData: [...prevState.markersData, singleMarkerData]
         }));
+        this.props.switchLoader(false);
       });
     } catch (error) {
       console.log(error);
+      this.props.switchLoader(false);
     }
   }
 

@@ -19674,122 +19674,123 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var Main = function (_Component) {
-    _inherits(Main, _Component);
+  _inherits(Main, _Component);
 
-    function Main(props) {
-        _classCallCheck(this, Main);
+  function Main(props) {
+    _classCallCheck(this, Main);
 
-        var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
-        _this.state = {
-            alertSuccess: false,
-            alertSuccessDescription: "",
-            alertWarning: false,
-            alertWarningDescription: ""
-        };
+    _this.state = {
+      alertSuccess: false,
+      alertSuccessDescription: "",
+      alertWarning: false,
+      alertWarningDescription: "",
+      loader: false
+    };
 
-        _this.showAlertSuccess = _this.showAlertSuccess.bind(_this);
-        _this.showAlertWarning = _this.showAlertWarning.bind(_this);
-        _this.hideAlertSuccess = _this.hideAlertSuccess.bind(_this);
-        _this.hideAlertWarning = _this.hideAlertWarning.bind(_this);
-        return _this;
+    _this.showAlertSuccess = _this.showAlertSuccess.bind(_this);
+    _this.showAlertWarning = _this.showAlertWarning.bind(_this);
+    _this.hideAlertSuccess = _this.hideAlertSuccess.bind(_this);
+    _this.hideAlertWarning = _this.hideAlertWarning.bind(_this);
+    _this.switchLoader = _this.switchLoader.bind(_this);
+    return _this;
+  }
+
+  _createClass(Main, [{
+    key: "showAlertSuccess",
+    value: function showAlertSuccess(info) {
+      this.setState({
+        alertSuccess: true,
+        alertSuccessDescription: info
+      });
+
+      setTimeout(function () {
+        this.setState({ alertSuccess: false });
+      }.bind(this), 4000);
     }
+  }, {
+    key: "showAlertWarning",
+    value: function showAlertWarning(info) {
+      this.setState({
+        alertWarning: true,
+        alertWarningDescription: info
+      });
 
-    _createClass(Main, [{
-        key: "showAlertSuccess",
-        value: function showAlertSuccess(info) {
-            this.setState({
-                alertSuccess: true,
-                alertSuccessDescription: info
-            });
+      setTimeout(function () {
+        this.setState({ alertWarning: false });
+      }.bind(this), 4000);
+    }
+  }, {
+    key: "switchLoader",
+    value: function switchLoader(state) {
+      return this.setState({
+        loader: state
+      });
+    }
+  }, {
+    key: "hideAlertSuccess",
+    value: function hideAlertSuccess() {
+      this.setState({
+        alertSuccess: false
+      });
+    }
+  }, {
+    key: "hideAlertWarning",
+    value: function hideAlertWarning() {
+      this.setState({
+        alertWarning: false
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        this.state.alertSuccess && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "alert alert-success alert-dismissible", role: "alert" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "a",
+            { href: "#", className: "close", onClick: this.hideAlertSuccess },
+            "\xD7"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "strong",
+            null,
+            this.state.alertSuccessDescription
+          )
+        ),
+        this.state.alertWarning && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "alert alert-danger alert-dismissible", role: "alert" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "a",
+            { href: "#", className: "close", onClick: this.hideAlertWarning },
+            "\xD7"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "strong",
+            null,
+            this.state.alertWarningDescription
+          )
+        ),
+        this.state.loader && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "loaderContainer" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "loader" })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], {
+          switchLoader: this.switchLoader,
+          showAlertSuccess: this.showAlertSuccess,
+          showAlertWarning: this.showAlertWarning
+        })
+      );
+    }
+  }]);
 
-            setTimeout(function () {
-                this.setState({ alertSuccess: false });
-            }.bind(this), 4000);
-        }
-    }, {
-        key: "showAlertWarning",
-        value: function showAlertWarning(info) {
-            this.setState({
-                alertWarning: true,
-                alertWarningDescription: info
-            });
-
-            setTimeout(function () {
-                this.setState({ alertWarning: false });
-            }.bind(this), 4000);
-        }
-    }, {
-        key: "hideAlertSuccess",
-        value: function hideAlertSuccess() {
-            this.setState({
-                alertSuccess: false
-            });
-        }
-    }, {
-        key: "hideAlertWarning",
-        value: function hideAlertWarning() {
-            this.setState({
-                alertWarning: false
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                null,
-                this.state.alertSuccess && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    {
-                        className: "alert alert-success alert-dismissible",
-                        role: "alert"
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "a",
-                        {
-                            href: "#",
-                            className: "close",
-                            onClick: this.hideAlertSuccess
-                        },
-                        "\xD7"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "strong",
-                        null,
-                        this.state.alertSuccessDescription
-                    )
-                ),
-                this.state.alertWarning && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    {
-                        className: "alert alert-danger alert-dismissible",
-                        role: "alert"
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "a",
-                        {
-                            href: "#",
-                            className: "close",
-                            onClick: this.hideAlertWarning
-                        },
-                        "\xD7"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "strong",
-                        null,
-                        this.state.alertWarningDescription
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], {
-                    showAlertSuccess: this.showAlertSuccess,
-                    showAlertWarning: this.showAlertWarning
-                })
-            );
-        }
-    }]);
-
-    return Main;
+  return Main;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Main);
@@ -43568,7 +43569,8 @@ var Menu = function (_Component) {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__["a" /* default */], {
                 searchInLocation: _this2.state.searchInLocation,
                 showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning
+                showAlertWarning: _this2.props.showAlertWarning,
+                switchLoader: _this2.props.switchLoader
               });
             }
           }),
@@ -56721,17 +56723,18 @@ var MainPoints = function (_Component) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                this.props.switchLoader(true);
+                _context3.prev = 1;
+                _context3.next = 4;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points");
 
-              case 3:
+              case 4:
                 allPoints = _context3.sent;
 
 
                 console.log(allPoints);
 
-                _context3.next = 7;
+                _context3.next = 8;
                 return allPoints.data.map(function () {
                   var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(item, i) {
                     var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
@@ -56798,8 +56801,9 @@ var MainPoints = function (_Component) {
                                 markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
                               };
                             });
+                            _this2.props.switchLoader(false);
 
-                          case 16:
+                          case 17:
                           case "end":
                             return _context2.stop();
                         }
@@ -56812,22 +56816,23 @@ var MainPoints = function (_Component) {
                   };
                 }());
 
-              case 7:
-                _context3.next = 12;
+              case 8:
+                _context3.next = 14;
                 break;
 
-              case 9:
-                _context3.prev = 9;
-                _context3.t0 = _context3["catch"](0);
+              case 10:
+                _context3.prev = 10;
+                _context3.t0 = _context3["catch"](1);
 
                 console.log(_context3.t0);
+                this.props.switchLoader(false);
 
-              case 12:
+              case 14:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 9]]);
+        }, _callee3, this, [[1, 10]]);
       }));
 
       function loadAllSpots() {
