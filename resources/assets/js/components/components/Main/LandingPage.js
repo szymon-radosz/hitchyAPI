@@ -1,72 +1,65 @@
 import React, { Component } from "react";
 import MainMeetings from "./../Meetings/MainMeetings";
 import Main from "./Main";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class LandingPage extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            userLocationPrompt: ""
-        };
+    this.state = {
+      userLocationPrompt: ""
+    };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    console.log(this.state.userLocationPrompt);
+
+    if (this.state.userLocationPrompt) {
+      this.props.changeStateOfSearchInLocation(this.state.userLocationPrompt);
     }
+  }
 
-    handleChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
+  render() {
+    return (
+      <div>
+        {this.props.searchInLocation ? (
+          <MainMeetings searchInLocation={this.props.searchInLocation} />
+        ) : (
+          <div className="row landing">
+            <div className="col-sm-6 col-sm-offset-3 landingForm">
+              <h1>AutoStop app</h1>
 
-    handleSubmit(event) {
-        event.preventDefault();
+              <h4>Dołącz do społeczności autostopowiczów.</h4>
 
-        console.log(this.state.userLocationPrompt);
+              <div className="landingButtons">
+                <Link to="/login" onClick={this.cleanStateOfSearchInLocation}>
+                  <div className="btn btn-default">Login</div>
+                </Link>
 
-        if (this.state.userLocationPrompt) {
-            this.props.changeStateOfSearchInLocation(
-                this.state.userLocationPrompt
-            );
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                {this.props.searchInLocation ? (
-                    <MainMeetings
-                        searchInLocation={this.props.searchInLocation}
-                    />
-                ) : (
-                    <div className="row landing">
-                        <div className="col-sm-5 col-sm-offset-5 landingForm">
-                            <h1>Spend your time with valuable people.</h1>
-
-                            <form onSubmit={this.handleSubmit}>
-                                <div className="form-group">
-                                    <input
-                                        name="userLocationPrompt"
-                                        type="text"
-                                        className="form-control"
-                                        id="landingLocation"
-                                        placeholder="Type your city and check meetings..."
-                                        onChange={this.handleChange}
-                                    />
-                                </div>
-
-                                <input
-                                    type="submit"
-                                    className="btn landingBtn"
-                                    value="Find meetings"
-                                />
-                            </form>
-                        </div>
-                    </div>
-                )}
+                <Link
+                  to="/register"
+                  onClick={this.cleanStateOfSearchInLocation}
+                >
+                  <div className="btn btn-default">Register</div>
+                </Link>
+              </div>
             </div>
-        );
-    }
+          </div>
+        )}
+      </div>
+    );
+  }
 }
 
 export default LandingPage;

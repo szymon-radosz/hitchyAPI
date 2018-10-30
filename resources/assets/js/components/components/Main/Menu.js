@@ -187,7 +187,9 @@ class Menu extends Component {
                         >
                           <a onClick={this.logout}>Sign Out</a>
                           <Link
-                            to={`/profile/${this.state.loggedInUserNickName}`}
+                            to={`/profile/${sessionStorage.getItem(
+                              "userNickName"
+                            )}`}
                             onClick={this.cleanStateOfSearchInLocation}
                           >
                             My profile

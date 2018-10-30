@@ -71,7 +71,7 @@
 .landing {
   margin: 0 !important;
   height: calc(100vh - 52px);
-  background: url(/images/main.jpg?320ead4abdd9dc1ecebc3487b9678142) no-repeat center center fixed;
+  background: url(/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a) no-repeat center center fixed;
   background-size: cover;
 }
 

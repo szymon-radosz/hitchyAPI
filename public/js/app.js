@@ -44095,7 +44095,7 @@ exports.push([module.i, ".listOfMeetingsCol,\r\n.singleMeetingDetailsDataCol {\r
 /* 144 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/main.jpg?320ead4abdd9dc1ecebc3487b9678142";
+module.exports = "/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a";
 
 /***/ }),
 /* 145 */
@@ -44387,7 +44387,7 @@ var Menu = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                           __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
                           {
-                            to: "/profile/" + this.state.loggedInUserNickName,
+                            to: "/profile/" + sessionStorage.getItem("userNickName"),
                             onClick: this.cleanStateOfSearchInLocation
                           },
                           "My profile"
@@ -48613,6 +48613,7 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Meetings_MainMeetings__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Main__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(34);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -48627,90 +48628,98 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var LandingPage = function (_Component) {
-    _inherits(LandingPage, _Component);
+  _inherits(LandingPage, _Component);
 
-    function LandingPage(props) {
-        _classCallCheck(this, LandingPage);
+  function LandingPage(props) {
+    _classCallCheck(this, LandingPage);
 
-        var _this = _possibleConstructorReturn(this, (LandingPage.__proto__ || Object.getPrototypeOf(LandingPage)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (LandingPage.__proto__ || Object.getPrototypeOf(LandingPage)).call(this, props));
 
-        _this.state = {
-            userLocationPrompt: ""
-        };
+    _this.state = {
+      userLocationPrompt: ""
+    };
 
-        _this.handleSubmit = _this.handleSubmit.bind(_this);
-        _this.handleChange = _this.handleChange.bind(_this);
-        return _this;
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(LandingPage, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
+
+      this.setState(_defineProperty({}, name, value));
     }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
 
-    _createClass(LandingPage, [{
-        key: "handleChange",
-        value: function handleChange(event) {
-            var _event$target = event.target,
-                name = _event$target.name,
-                value = _event$target.value;
+      console.log(this.state.userLocationPrompt);
 
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: "handleSubmit",
-        value: function handleSubmit(event) {
-            event.preventDefault();
-
-            console.log(this.state.userLocationPrompt);
-
-            if (this.state.userLocationPrompt) {
-                this.props.changeStateOfSearchInLocation(this.state.userLocationPrompt);
-            }
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                null,
-                this.props.searchInLocation ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Meetings_MainMeetings__["a" /* default */], {
-                    searchInLocation: this.props.searchInLocation
-                }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "row landing" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "col-sm-5 col-sm-offset-5 landingForm" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h1",
-                            null,
-                            "Spend your time with valuable people."
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "form",
-                            { onSubmit: this.handleSubmit },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "form-group" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                    name: "userLocationPrompt",
-                                    type: "text",
-                                    className: "form-control",
-                                    id: "landingLocation",
-                                    placeholder: "Type your city and check meetings...",
-                                    onChange: this.handleChange
-                                })
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                                type: "submit",
-                                className: "btn landingBtn",
-                                value: "Find meetings"
-                            })
-                        )
-                    )
+      if (this.state.userLocationPrompt) {
+        this.props.changeStateOfSearchInLocation(this.state.userLocationPrompt);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        this.props.searchInLocation ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Meetings_MainMeetings__["a" /* default */], { searchInLocation: this.props.searchInLocation }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "row landing" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "col-sm-6 col-sm-offset-3 landingForm" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "h1",
+              null,
+              "AutoStop app"
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "h4",
+              null,
+              "Do\u0142\u0105cz do spo\u0142eczno\u015Bci autostopowicz\xF3w."
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              { className: "landingButtons" },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+                { to: "/login", onClick: this.cleanStateOfSearchInLocation },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  "div",
+                  { className: "btn btn-default" },
+                  "Login"
                 )
-            );
-        }
-    }]);
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+                {
+                  to: "/register",
+                  onClick: this.cleanStateOfSearchInLocation
+                },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  "div",
+                  { className: "btn btn-default" },
+                  "Register"
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
 
-    return LandingPage;
+  return LandingPage;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (LandingPage);
