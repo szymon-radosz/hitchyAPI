@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Response;
 use DB;
 
@@ -17,12 +19,14 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        $nickName = $request->input('emailOrNickname');
-        $password = $request->input('password');
+        $nickName = $request->emailOrNickname;
+        $password = $request->password;
 
-        $user = DB::table('users')->where('nickName', $nickName)->orWhere('email', $nickName)->where('password', $password)->first();
+        $user = DB::table('users')->where('nickName', $nickName)->orWhere('email', $nickName)->first();
 
-        if($user){
+        $passwordMatched = Hash::check($request->password, $user->password);
+
+        if($passwordMatched){
             $userId = $user->id;
             $userNickName = $user->nickName;
         }else{
@@ -38,7 +42,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User;
-
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
         $user->about = $request->about;
@@ -47,9 +50,8 @@ class UserController extends Controller
         $user->city = $request->city;
         $user->country = $request->country;
         $user->email = $request->email;
-        $user->password = $request->password;
-        $user->passwordConfirmation = $request->passwordConfirmation;
-
+        $user->password = Hash::make($request->password);
+       
         $user->save();
 
         $userInfo = (object) ['userId' => $user->id, 'userNickName' => $user->nickName];

@@ -8,7 +8,7 @@ const SpotVotes = props => {
         className="form-control"
         onChange={props.changeCurrentVote}
       >
-        <option selected>Wybierz</option>
+        <option defaultValue>Wybierz</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>

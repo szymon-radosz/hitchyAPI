@@ -161,7 +161,7 @@ class MainPoints extends Component {
       <div className="row listOfMeetingsRow">
         <div className="col-sm-6 listOfMeetingsCol">
           <div
-            className="btn"
+            className="btn btn-default"
             onClick={() => {
               this.getTheNewestPoints("newest");
             }}
@@ -170,7 +170,7 @@ class MainPoints extends Component {
           </div>
 
           <div
-            className="btn"
+            className="btn btn-default"
             onClick={() => {
               this.getTheNewestPoints("oldest");
             }}
@@ -179,7 +179,7 @@ class MainPoints extends Component {
           </div>
 
           <div
-            className="btn"
+            className="btn btn-default"
             onClick={() => {
               this.filterResults("rating", true);
             }}
@@ -187,7 +187,7 @@ class MainPoints extends Component {
             Najlepiej oceniane
           </div>
           <div
-            className="btn"
+            className="btn btn-default"
             onClick={() => {
               this.filterResults("rating", false);
             }}
@@ -195,7 +195,7 @@ class MainPoints extends Component {
             Najgorzej oceniane
           </div>
           <div
-            className="btn"
+            className="btn btn-default"
             onClick={() => {
               this.filterResults("countVotes", true);
             }}

@@ -17,8 +17,6 @@ class Menu extends Component {
 
     this.state = {
       userIsLoggedIn: false,
-      //loggedInUserEmail: "",
-      //loggedInUserNickName: "",
       searchInLocation: ""
     };
 
@@ -39,23 +37,18 @@ class Menu extends Component {
       const getUser = await axios.get(
         `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
       );
-
-      //this.setState({ loggedInUserEmail: getUser.data[0].email });
-      //this.setState({ loggedInUserNickName: getUser.data[0].nickName });
     }
   }
 
   loginUser(nickName) {
     this.setState({ userIsLoggedIn: true });
-    //this.setState({ loggedInUserNickName: nickName });
   }
 
   logout() {
     sessionStorage.setItem("userId", "");
-    //sessionStorage.setItem("userNickName", "");
+    sessionStorage.setItem("userNickName", "");
     this.props.showAlertSuccess("You're sucessfully logout");
     this.setState({ userIsLoggedIn: false });
-    //this.setState({ loggedInUserNickName: "" });
   }
 
   changeStateOfSearchInLocation(value) {
@@ -95,7 +88,7 @@ class Menu extends Component {
                   className="navbar-brand"
                   onClick={this.cleanStateOfSearchInLocation}
                 >
-                  Hitchy
+                  Autostart
                 </Link>
               </div>
               <div id="navbar" className="navbar-collapse collapse">
@@ -151,22 +144,30 @@ class Menu extends Component {
                   ) : (
                     ""
                   )}
-                  <li>
-                    <Link
-                      to="/login"
-                      onClick={this.cleanStateOfSearchInLocation}
-                    >
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/register"
-                      onClick={this.cleanStateOfSearchInLocation}
-                    >
-                      Register
-                    </Link>
-                  </li>
+                  {!this.state.userIsLoggedIn ? (
+                    <li>
+                      <Link
+                        to="/login"
+                        onClick={this.cleanStateOfSearchInLocation}
+                      >
+                        Login
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                  {!this.state.userIsLoggedIn ? (
+                    <li>
+                      <Link
+                        to="/register"
+                        onClick={this.cleanStateOfSearchInLocation}
+                      >
+                        Register
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                   {this.state.userIsLoggedIn ? (
                     <li>
                       <div className="dropdown">

@@ -65,8 +65,6 @@ class PointController extends Controller
         
         $exist = DB::table('spot_votes')->where([['user_id', $user_id],['spot_id',$point_id]])->get();
 
-        //var_dump($exist);
-
         if(count($exist) > 0){
             return 1;
         }else{
