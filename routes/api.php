@@ -11,6 +11,10 @@ Route::post('user','UserController@store');
 
 Route::get('points', 'PointController@index');
 Route::get('getTheOldestPoints', 'PointController@getTheOldestPoints');
+Route::get('getTheBestVoted', 'PointController@getTheBestVoted');
+Route::get('getTheMostTimeVoted', 'PointController@getTheMostTimeVoted');
+Route::get('getTheWorstVoted', 'PointController@getTheWorstVoted');
+
 Route::get('point/{id}', 'PointController@show');
 Route::post('point', 'PointController@store');
 Route::delete('point/{id}', 'PointController@destroy');

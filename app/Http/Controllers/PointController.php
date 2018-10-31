@@ -39,6 +39,48 @@ class PointController extends Controller
         return $points;
     }
 
+    public function getTheBestVoted()
+    {
+        $points = DB::table('points')->orderByRaw('sum_of_votes/amount_of_votes DESC')->paginate(3);
+
+        foreach($points as $point){
+            if($point->amount_of_votes > 0){
+                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+            }else{
+                $point->rating = 0;
+            }
+        }
+        return $points;
+    }
+
+    public function getTheWorstVoted()
+    {
+        $points = DB::table('points')->orderByRaw('sum_of_votes/amount_of_votes ASC')->paginate(3);
+
+        foreach($points as $point){
+            if($point->amount_of_votes > 0){
+                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+            }else{
+                $point->rating = 0;
+            }
+        }
+        return $points;
+    }
+
+    public function getTheMostTimeVoted()
+    {
+        $points = DB::table('points')->orderBy('amount_of_votes', 'desc')->paginate(3);
+
+        foreach($points as $point){
+            if($point->amount_of_votes > 0){
+                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+            }else{
+                $point->rating = 0;
+            }
+        }
+        return $points;
+    }
+
     public function store(Request $request)
     {
         $point = new Point;

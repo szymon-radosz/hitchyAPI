@@ -24,12 +24,57 @@ class MainPoints extends Component {
     this.loadAllSpots = this.loadAllSpots.bind(this);
     this.prevPointsPage = this.prevPointsPage.bind(this);
     this.nextPointsPage = this.nextPointsPage.bind(this);
+
     this.loadTheOldestPoint = this.loadTheOldestPoint.bind(this);
+    this.loadTheLatestPoint = this.loadTheLatestPoint.bind(this);
+    this.loadTheBestVoted = this.loadTheBestVoted.bind(this);
+    this.loadTheMostTimeVoted = this.loadTheMostTimeVoted.bind(this);
+    this.loadTheWorstVoted = this.loadTheWorstVoted.bind(this);
   }
 
   async loadTheOldestPoint() {
     await this.setState({
       filter: "theOldest",
+      currentPageResult: 1,
+      pointsData: []
+    });
+
+    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
+  }
+
+  async loadTheLatestPoint() {
+    await this.setState({
+      filter: "theLatest",
+      currentPageResult: 1,
+      pointsData: []
+    });
+
+    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
+  }
+
+  async loadTheBestVoted() {
+    await this.setState({
+      filter: "bestVoted",
+      currentPageResult: 1,
+      pointsData: []
+    });
+
+    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
+  }
+
+  async loadTheWorstVoted() {
+    await this.setState({
+      filter: "worstVoted",
+      currentPageResult: 1,
+      pointsData: []
+    });
+
+    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
+  }
+
+  async loadTheMostTimeVoted() {
+    await this.setState({
+      filter: "mostTimeVoted",
       currentPageResult: 1,
       pointsData: []
     });
@@ -70,7 +115,22 @@ class MainPoints extends Component {
         allPoints = await axios.get(
           `http://127.0.0.1:8000/api/getTheOldestPoints?page=${pageNumber}`
         );
-        console.log(filter);
+      } else if (filter == "theLatest") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/points?page=${pageNumber}`
+        );
+      } else if (filter == "bestVoted") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/getTheBestVoted?page=${pageNumber}`
+        );
+      } else if (filter == "worstVoted") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/getTheWorstVoted?page=${pageNumber}`
+        );
+      } else if (filter == "mostTimeVoted") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/getTheMostTimeVoted?page=${pageNumber}`
+        );
       } else {
         allPoints = await axios.get(
           `http://127.0.0.1:8000/api/points?page=${pageNumber}`
@@ -163,15 +223,25 @@ class MainPoints extends Component {
     return (
       <div className="row listOfMeetingsRow">
         <div className="col-sm-6 listOfMeetingsCol">
-          <div className="btn btn-default">Najnowsze</div>
+          <div className="btn btn-default" onClick={this.loadTheLatestPoint}>
+            Najnowsze
+          </div>
 
           <div className="btn btn-default" onClick={this.loadTheOldestPoint}>
             Najstarsze
           </div>
 
-          <div className="btn btn-default">Najlepiej oceniane</div>
-          <div className="btn btn-default">Najgorzej oceniane</div>
-          <div className="btn btn-default">Najczęściej oceniane</div>
+          <div className="btn btn-default" onClick={this.loadTheBestVoted}>
+            Najlepiej oceniane
+          </div>
+
+          <div className="btn btn-default" onClick={this.loadTheWorstVoted}>
+            Najgorzej oceniane
+          </div>
+
+          <div className="btn btn-default" onClick={this.loadTheMostTimeVoted}>
+            Najczęściej oceniane
+          </div>
           {this.state.pointsData.map((item, i) => {
             return (
               <SinglePointOnList
