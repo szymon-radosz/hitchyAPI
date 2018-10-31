@@ -25,6 +25,20 @@ class PointController extends Controller
         return $points;
     }
 
+    public function getTheOldestPoints()
+    {
+        $points = DB::table('points')->orderBy('created_at', 'asc')->paginate(3);
+
+        foreach($points as $point){
+            if($point->amount_of_votes > 0){
+                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+            }else{
+                $point->rating = 0;
+            }
+        }
+        return $points;
+    }
+
     public function store(Request $request)
     {
         $point = new Point;

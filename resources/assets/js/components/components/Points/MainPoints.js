@@ -13,6 +13,7 @@ class MainPoints extends Component {
       dateSortedBy: "",
       currentPageResult: 1,
       paginationPageLimit: 0,
+      filter: "",
       lat: 40.73061,
       lng: -73.935242,
       centerCoord: [40.73061, -73.935242]
@@ -21,10 +22,19 @@ class MainPoints extends Component {
     this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
     this.disableVoteSelect = this.disableVoteSelect.bind(this);
     this.loadAllSpots = this.loadAllSpots.bind(this);
-    this.getTheNewestPoints = this.getTheNewestPoints.bind(this);
-    this.filterResults = this.filterResults.bind(this);
     this.prevPointsPage = this.prevPointsPage.bind(this);
     this.nextPointsPage = this.nextPointsPage.bind(this);
+    this.loadTheOldestPoint = this.loadTheOldestPoint.bind(this);
+  }
+
+  async loadTheOldestPoint() {
+    await this.setState({
+      filter: "theOldest",
+      currentPageResult: 1,
+      pointsData: []
+    });
+
+    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
   }
 
   async prevPointsPage() {
@@ -33,7 +43,7 @@ class MainPoints extends Component {
         pointsData: [],
         currentPageResult: this.state.currentPageResult - 1
       });
-      await this.loadAllSpots(this.state.currentPageResult);
+      await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
     }
   }
 
@@ -43,7 +53,7 @@ class MainPoints extends Component {
         pointsData: [],
         currentPageResult: this.state.currentPageResult + 1
       });
-      await this.loadAllSpots(this.state.currentPageResult);
+      await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
     }
   }
 
@@ -51,30 +61,25 @@ class MainPoints extends Component {
     this.setState({ centerCoord: [lat, lng] });
   }
 
-  async getTheNewestPoints(sortBy) {
-    if (sortBy == "newest" && this.state.dateSortedBy == "oldest") {
-      this.setState({ dateSortedBy: "newest" });
-      let newState = [...this.state.pointsData];
-      newState.reverse();
-      this.setState({ pointsData: newState });
-    } else if (sortBy == "oldest" && this.state.dateSortedBy == "newest") {
-      this.setState({ dateSortedBy: "oldest" });
-      let newState = [...this.state.pointsData];
-      newState.reverse();
-      this.setState({ pointsData: newState });
-    }
-  }
-
-  async loadAllSpots(pageNumber) {
+  async loadAllSpots(pageNumber, filter) {
     this.props.switchLoader(true);
     try {
-      const allPoints = await axios.get(
-        `http://127.0.0.1:8000/api/points?page=${pageNumber}`
-      );
+      let allPoints;
+
+      if (filter == "theOldest") {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/getTheOldestPoints?page=${pageNumber}`
+        );
+        console.log(filter);
+      } else {
+        allPoints = await axios.get(
+          `http://127.0.0.1:8000/api/points?page=${pageNumber}`
+        );
+      }
 
       console.log(allPoints.data);
 
-      this.setState({ paginationPageLimit: allPoints.data.last_page });
+      await this.setState({ paginationPageLimit: allPoints.data.last_page });
 
       await allPoints.data.data.map(async (item, i) => {
         let checkIfUserVoteExists;
@@ -137,37 +142,7 @@ class MainPoints extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ dateSortedBy: "newest" });
     await this.loadAllSpots(this.state.currentPageResult);
-  }
-
-  filterResults(sortBy, theBestResults) {
-    let newState = [...this.state.pointsData];
-
-    if (theBestResults && sortBy == "rating") {
-      newState
-        .sort(
-          (a, b) => (a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0)
-        )
-        .reverse();
-    } else if (theBestResults && sortBy == "countVotes") {
-      newState
-        .sort(
-          (a, b) =>
-            a.countVotes > b.countVotes
-              ? 1
-              : b.countVotes > a.countVotes
-                ? -1
-                : 0
-        )
-        .reverse();
-    } else if (!theBestResults && sortBy == "rating") {
-      newState.sort(
-        (a, b) => (a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0)
-      );
-    }
-
-    this.setState({ pointsData: newState });
   }
 
   disableVoteSelect(pointId, voteValue) {
@@ -188,48 +163,15 @@ class MainPoints extends Component {
     return (
       <div className="row listOfMeetingsRow">
         <div className="col-sm-6 listOfMeetingsCol">
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.getTheNewestPoints("newest");
-            }}
-          >
-            Najnowsze
-          </div>
+          <div className="btn btn-default">Najnowsze</div>
 
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.getTheNewestPoints("oldest");
-            }}
-          >
+          <div className="btn btn-default" onClick={this.loadTheOldestPoint}>
             Najstarsze
           </div>
 
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.filterResults("rating", true);
-            }}
-          >
-            Najlepiej oceniane
-          </div>
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.filterResults("rating", false);
-            }}
-          >
-            Najgorzej oceniane
-          </div>
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.filterResults("countVotes", true);
-            }}
-          >
-            Najczęściej oceniane
-          </div>
+          <div className="btn btn-default">Najlepiej oceniane</div>
+          <div className="btn btn-default">Najgorzej oceniane</div>
+          <div className="btn btn-default">Najczęściej oceniane</div>
           {this.state.pointsData.map((item, i) => {
             return (
               <SinglePointOnList

@@ -10,6 +10,7 @@ Route::put('user','UserController@store');
 Route::post('user','UserController@store');
 
 Route::get('points', 'PointController@index');
+Route::get('getTheOldestPoints', 'PointController@getTheOldestPoints');
 Route::get('point/{id}', 'PointController@show');
 Route::post('point', 'PointController@store');
 Route::delete('point/{id}', 'PointController@destroy');

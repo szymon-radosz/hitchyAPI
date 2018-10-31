@@ -59094,6 +59094,7 @@ var MainPoints = function (_Component) {
       dateSortedBy: "",
       currentPageResult: 1,
       paginationPageLimit: 0,
+      filter: "",
       lat: 40.73061,
       lng: -73.935242,
       centerCoord: [40.73061, -73.935242]
@@ -59102,37 +59103,32 @@ var MainPoints = function (_Component) {
     _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
     _this.disableVoteSelect = _this.disableVoteSelect.bind(_this);
     _this.loadAllSpots = _this.loadAllSpots.bind(_this);
-    _this.getTheNewestPoints = _this.getTheNewestPoints.bind(_this);
-    _this.filterResults = _this.filterResults.bind(_this);
     _this.prevPointsPage = _this.prevPointsPage.bind(_this);
     _this.nextPointsPage = _this.nextPointsPage.bind(_this);
+    _this.loadTheOldestPoint = _this.loadTheOldestPoint.bind(_this);
     return _this;
   }
 
   _createClass(MainPoints, [{
-    key: "prevPointsPage",
+    key: "loadTheOldestPoint",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(this.state.currentPageResult > 1)) {
-                  _context.next = 5;
-                  break;
-                }
-
-                _context.next = 3;
+                _context.next = 2;
                 return this.setState({
-                  pointsData: [],
-                  currentPageResult: this.state.currentPageResult - 1
+                  filter: "theOldest",
+                  currentPageResult: 1,
+                  pointsData: []
                 });
 
-              case 3:
-                _context.next = 5;
-                return this.loadAllSpots(this.state.currentPageResult);
+              case 2:
+                _context.next = 4;
+                return this.loadAllSpots(this.state.currentPageResult, this.state.filter);
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -59140,21 +59136,21 @@ var MainPoints = function (_Component) {
         }, _callee, this);
       }));
 
-      function prevPointsPage() {
+      function loadTheOldestPoint() {
         return _ref.apply(this, arguments);
       }
 
-      return prevPointsPage;
+      return loadTheOldestPoint;
     }()
   }, {
-    key: "nextPointsPage",
+    key: "prevPointsPage",
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(this.state.currentPageResult < this.state.paginationPageLimit)) {
+                if (!(this.state.currentPageResult > 1)) {
                   _context2.next = 5;
                   break;
                 }
@@ -59162,12 +59158,12 @@ var MainPoints = function (_Component) {
                 _context2.next = 3;
                 return this.setState({
                   pointsData: [],
-                  currentPageResult: this.state.currentPageResult + 1
+                  currentPageResult: this.state.currentPageResult - 1
                 });
 
               case 3:
                 _context2.next = 5;
-                return this.loadAllSpots(this.state.currentPageResult);
+                return this.loadAllSpots(this.state.currentPageResult, this.state.filter);
 
               case 5:
               case "end":
@@ -59177,8 +59173,45 @@ var MainPoints = function (_Component) {
         }, _callee2, this);
       }));
 
-      function nextPointsPage() {
+      function prevPointsPage() {
         return _ref2.apply(this, arguments);
+      }
+
+      return prevPointsPage;
+    }()
+  }, {
+    key: "nextPointsPage",
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(this.state.currentPageResult < this.state.paginationPageLimit)) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                _context3.next = 3;
+                return this.setState({
+                  pointsData: [],
+                  currentPageResult: this.state.currentPageResult + 1
+                });
+
+              case 3:
+                _context3.next = 5;
+                return this.loadAllSpots(this.state.currentPageResult, this.state.filter);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function nextPointsPage() {
+        return _ref3.apply(this, arguments);
       }
 
       return nextPointsPage;
@@ -59189,47 +59222,9 @@ var MainPoints = function (_Component) {
       this.setState({ centerCoord: [lat, lng] });
     }
   }, {
-    key: "getTheNewestPoints",
-    value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(sortBy) {
-        var newState, _newState;
-
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                if (sortBy == "newest" && this.state.dateSortedBy == "oldest") {
-                  this.setState({ dateSortedBy: "newest" });
-                  newState = [].concat(_toConsumableArray(this.state.pointsData));
-
-                  newState.reverse();
-                  this.setState({ pointsData: newState });
-                } else if (sortBy == "oldest" && this.state.dateSortedBy == "newest") {
-                  this.setState({ dateSortedBy: "oldest" });
-                  _newState = [].concat(_toConsumableArray(this.state.pointsData));
-
-                  _newState.reverse();
-                  this.setState({ pointsData: _newState });
-                }
-
-              case 1:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function getTheNewestPoints(_x) {
-        return _ref3.apply(this, arguments);
-      }
-
-      return getTheNewestPoints;
-    }()
-  }, {
     key: "loadAllSpots",
     value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(pageNumber) {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(pageNumber, filter) {
         var _this2 = this;
 
         var allPoints;
@@ -59239,18 +59234,39 @@ var MainPoints = function (_Component) {
               case 0:
                 this.props.switchLoader(true);
                 _context5.prev = 1;
-                _context5.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points?page=" + pageNumber);
+                allPoints = void 0;
 
-              case 4:
+                if (!(filter == "theOldest")) {
+                  _context5.next = 10;
+                  break;
+                }
+
+                _context5.next = 6;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheOldestPoints?page=" + pageNumber);
+
+              case 6:
                 allPoints = _context5.sent;
 
+                console.log(filter);
+                _context5.next = 13;
+                break;
+
+              case 10:
+                _context5.next = 12;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points?page=" + pageNumber);
+
+              case 12:
+                allPoints = _context5.sent;
+
+              case 13:
 
                 console.log(allPoints.data);
 
-                this.setState({ paginationPageLimit: allPoints.data.last_page });
+                _context5.next = 16;
+                return this.setState({ paginationPageLimit: allPoints.data.last_page });
 
-                _context5.next = 9;
+              case 16:
+                _context5.next = 18;
                 return allPoints.data.data.map(function () {
                   var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(item, i) {
                     var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
@@ -59332,26 +59348,26 @@ var MainPoints = function (_Component) {
                   };
                 }());
 
-              case 9:
-                _context5.next = 15;
+              case 18:
+                _context5.next = 24;
                 break;
 
-              case 11:
-                _context5.prev = 11;
+              case 20:
+                _context5.prev = 20;
                 _context5.t0 = _context5["catch"](1);
 
                 console.log(_context5.t0);
                 this.props.switchLoader(false);
 
-              case 15:
+              case 24:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, this, [[1, 11]]);
+        }, _callee5, this, [[1, 20]]);
       }));
 
-      function loadAllSpots(_x2) {
+      function loadAllSpots(_x, _x2) {
         return _ref4.apply(this, arguments);
       }
 
@@ -59365,11 +59381,10 @@ var MainPoints = function (_Component) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                this.setState({ dateSortedBy: "newest" });
-                _context6.next = 3;
+                _context6.next = 2;
                 return this.loadAllSpots(this.state.currentPageResult);
 
-              case 3:
+              case 2:
               case "end":
                 return _context6.stop();
             }
@@ -59383,27 +59398,6 @@ var MainPoints = function (_Component) {
 
       return componentDidMount;
     }()
-  }, {
-    key: "filterResults",
-    value: function filterResults(sortBy, theBestResults) {
-      var newState = [].concat(_toConsumableArray(this.state.pointsData));
-
-      if (theBestResults && sortBy == "rating") {
-        newState.sort(function (a, b) {
-          return a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0;
-        }).reverse();
-      } else if (theBestResults && sortBy == "countVotes") {
-        newState.sort(function (a, b) {
-          return a.countVotes > b.countVotes ? 1 : b.countVotes > a.countVotes ? -1 : 0;
-        }).reverse();
-      } else if (!theBestResults && sortBy == "rating") {
-        newState.sort(function (a, b) {
-          return a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0;
-        });
-      }
-
-      this.setState({ pointsData: newState });
-    }
   }, {
     key: "disableVoteSelect",
     value: function disableVoteSelect(pointId, voteValue) {
@@ -59432,52 +59426,27 @@ var MainPoints = function (_Component) {
           { className: "col-sm-6 listOfMeetingsCol" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            {
-              className: "btn btn-default",
-              onClick: function onClick() {
-                _this3.getTheNewestPoints("newest");
-              }
-            },
+            { className: "btn btn-default" },
             "Najnowsze"
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            {
-              className: "btn btn-default",
-              onClick: function onClick() {
-                _this3.getTheNewestPoints("oldest");
-              }
-            },
+            { className: "btn btn-default", onClick: this.loadTheOldestPoint },
             "Najstarsze"
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            {
-              className: "btn btn-default",
-              onClick: function onClick() {
-                _this3.filterResults("rating", true);
-              }
-            },
+            { className: "btn btn-default" },
             "Najlepiej oceniane"
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            {
-              className: "btn btn-default",
-              onClick: function onClick() {
-                _this3.filterResults("rating", false);
-              }
-            },
+            { className: "btn btn-default" },
             "Najgorzej oceniane"
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            {
-              className: "btn btn-default",
-              onClick: function onClick() {
-                _this3.filterResults("countVotes", true);
-              }
-            },
+            { className: "btn btn-default" },
             "Najcz\u0119\u015Bciej oceniane"
           ),
           this.state.pointsData.map(function (item, i) {
