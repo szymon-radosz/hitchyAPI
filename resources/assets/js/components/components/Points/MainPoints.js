@@ -11,6 +11,8 @@ class MainPoints extends Component {
       pointsData: [],
       markersData: [],
       dateSortedBy: "",
+      currentPageResult: 1,
+      paginationPageLimit: 0,
       lat: 40.73061,
       lng: -73.935242,
       centerCoord: [40.73061, -73.935242]
@@ -21,6 +23,28 @@ class MainPoints extends Component {
     this.loadAllSpots = this.loadAllSpots.bind(this);
     this.getTheNewestPoints = this.getTheNewestPoints.bind(this);
     this.filterResults = this.filterResults.bind(this);
+    this.prevPointsPage = this.prevPointsPage.bind(this);
+    this.nextPointsPage = this.nextPointsPage.bind(this);
+  }
+
+  async prevPointsPage() {
+    if (this.state.currentPageResult > 1) {
+      await this.setState({
+        pointsData: [],
+        currentPageResult: this.state.currentPageResult - 1
+      });
+      await this.loadAllSpots(this.state.currentPageResult);
+    }
+  }
+
+  async nextPointsPage() {
+    if (this.state.currentPageResult < this.state.paginationPageLimit) {
+      await this.setState({
+        pointsData: [],
+        currentPageResult: this.state.currentPageResult + 1
+      });
+      await this.loadAllSpots(this.state.currentPageResult);
+    }
   }
 
   setNewCenterCoords(lat, lng) {
@@ -41,14 +65,18 @@ class MainPoints extends Component {
     }
   }
 
-  async loadAllSpots() {
+  async loadAllSpots(pageNumber) {
     this.props.switchLoader(true);
     try {
-      const allPoints = await axios.get(`http://127.0.0.1:8000/api/points`);
+      const allPoints = await axios.get(
+        `http://127.0.0.1:8000/api/points?page=${pageNumber}`
+      );
 
-      console.log(allPoints);
+      console.log(allPoints.data);
 
-      await allPoints.data.map(async (item, i) => {
+      this.setState({ paginationPageLimit: allPoints.data.last_page });
+
+      await allPoints.data.data.map(async (item, i) => {
         let checkIfUserVoteExists;
 
         try {
@@ -110,7 +138,7 @@ class MainPoints extends Component {
 
   async componentDidMount() {
     this.setState({ dateSortedBy: "newest" });
-    await this.loadAllSpots();
+    await this.loadAllSpots(this.state.currentPageResult);
   }
 
   filterResults(sortBy, theBestResults) {
@@ -215,6 +243,13 @@ class MainPoints extends Component {
               />
             );
           })}
+
+          <div className="btn btn-default" onClick={this.prevPointsPage}>
+            Poprzednie
+          </div>
+          <div className="btn btn-default" onClick={this.nextPointsPage}>
+            Nastepne
+          </div>
         </div>
 
         <div className="col-sm-6">

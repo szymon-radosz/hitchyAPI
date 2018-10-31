@@ -59092,6 +59092,8 @@ var MainPoints = function (_Component) {
       pointsData: [],
       markersData: [],
       dateSortedBy: "",
+      currentPageResult: 1,
+      paginationPageLimit: 0,
       lat: 40.73061,
       lng: -73.935242,
       centerCoord: [40.73061, -73.935242]
@@ -59102,10 +59104,86 @@ var MainPoints = function (_Component) {
     _this.loadAllSpots = _this.loadAllSpots.bind(_this);
     _this.getTheNewestPoints = _this.getTheNewestPoints.bind(_this);
     _this.filterResults = _this.filterResults.bind(_this);
+    _this.prevPointsPage = _this.prevPointsPage.bind(_this);
+    _this.nextPointsPage = _this.nextPointsPage.bind(_this);
     return _this;
   }
 
   _createClass(MainPoints, [{
+    key: "prevPointsPage",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(this.state.currentPageResult > 1)) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.setState({
+                  pointsData: [],
+                  currentPageResult: this.state.currentPageResult - 1
+                });
+
+              case 3:
+                _context.next = 5;
+                return this.loadAllSpots(this.state.currentPageResult);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function prevPointsPage() {
+        return _ref.apply(this, arguments);
+      }
+
+      return prevPointsPage;
+    }()
+  }, {
+    key: "nextPointsPage",
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(this.state.currentPageResult < this.state.paginationPageLimit)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                _context2.next = 3;
+                return this.setState({
+                  pointsData: [],
+                  currentPageResult: this.state.currentPageResult + 1
+                });
+
+              case 3:
+                _context2.next = 5;
+                return this.loadAllSpots(this.state.currentPageResult);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function nextPointsPage() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return nextPointsPage;
+    }()
+  }, {
     key: "setNewCenterCoords",
     value: function setNewCenterCoords(lat, lng) {
       this.setState({ centerCoord: [lat, lng] });
@@ -59113,12 +59191,12 @@ var MainPoints = function (_Component) {
   }, {
     key: "getTheNewestPoints",
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(sortBy) {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(sortBy) {
         var newState, _newState;
 
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 if (sortBy == "newest" && this.state.dateSortedBy == "oldest") {
                   this.setState({ dateSortedBy: "newest" });
@@ -59136,14 +59214,14 @@ var MainPoints = function (_Component) {
 
               case 1:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, this);
+        }, _callee3, this);
       }));
 
       function getTheNewestPoints(_x) {
-        return _ref.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       }
 
       return getTheNewestPoints;
@@ -59151,36 +59229,38 @@ var MainPoints = function (_Component) {
   }, {
     key: "loadAllSpots",
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(pageNumber) {
         var _this2 = this;
 
         var allPoints;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.props.switchLoader(true);
-                _context3.prev = 1;
-                _context3.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points");
+                _context5.prev = 1;
+                _context5.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points?page=" + pageNumber);
 
               case 4:
-                allPoints = _context3.sent;
+                allPoints = _context5.sent;
 
 
-                console.log(allPoints);
+                console.log(allPoints.data);
 
-                _context3.next = 8;
-                return allPoints.data.map(function () {
-                  var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(item, i) {
+                this.setState({ paginationPageLimit: allPoints.data.last_page });
+
+                _context5.next = 9;
+                return allPoints.data.data.map(function () {
+                  var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(item, i) {
                     var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
-                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context4.prev = _context4.next) {
                           case 0:
                             checkIfUserVoteExists = void 0;
-                            _context2.prev = 1;
-                            _context2.next = 4;
+                            _context4.prev = 1;
+                            _context4.next = 4;
                             return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserVoteExists", {
                               user_id: sessionStorage.getItem("userId"),
                               point_id: item.id
@@ -59191,15 +59271,15 @@ var MainPoints = function (_Component) {
                             });
 
                           case 4:
-                            checkIfUserVoteExists = _context2.sent;
-                            _context2.next = 10;
+                            checkIfUserVoteExists = _context4.sent;
+                            _context4.next = 10;
                             break;
 
                           case 7:
-                            _context2.prev = 7;
-                            _context2.t0 = _context2["catch"](1);
+                            _context4.prev = 7;
+                            _context4.t0 = _context4["catch"](1);
 
-                            console.log(_context2.t0);
+                            console.log(_context4.t0);
 
                           case 10:
                             checkIfUserVote = void 0;
@@ -59241,38 +59321,38 @@ var MainPoints = function (_Component) {
 
                           case 17:
                           case "end":
-                            return _context2.stop();
+                            return _context4.stop();
                         }
                       }
-                    }, _callee2, _this2, [[1, 7]]);
+                    }, _callee4, _this2, [[1, 7]]);
                   }));
 
-                  return function (_x2, _x3) {
-                    return _ref3.apply(this, arguments);
+                  return function (_x3, _x4) {
+                    return _ref5.apply(this, arguments);
                   };
                 }());
 
-              case 8:
-                _context3.next = 14;
+              case 9:
+                _context5.next = 15;
                 break;
 
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](1);
+              case 11:
+                _context5.prev = 11;
+                _context5.t0 = _context5["catch"](1);
 
-                console.log(_context3.t0);
+                console.log(_context5.t0);
                 this.props.switchLoader(false);
 
-              case 14:
+              case 15:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3, this, [[1, 10]]);
+        }, _callee5, this, [[1, 11]]);
       }));
 
-      function loadAllSpots() {
-        return _ref2.apply(this, arguments);
+      function loadAllSpots(_x2) {
+        return _ref4.apply(this, arguments);
       }
 
       return loadAllSpots;
@@ -59280,25 +59360,25 @@ var MainPoints = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 this.setState({ dateSortedBy: "newest" });
-                _context4.next = 3;
-                return this.loadAllSpots();
+                _context6.next = 3;
+                return this.loadAllSpots(this.state.currentPageResult);
 
               case 3:
               case "end":
-                return _context4.stop();
+                return _context6.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee6, this);
       }));
 
       function componentDidMount() {
-        return _ref4.apply(this, arguments);
+        return _ref6.apply(this, arguments);
       }
 
       return componentDidMount;
@@ -59410,7 +59490,17 @@ var MainPoints = function (_Component) {
               showAlertWarning: _this3.props.showAlertWarning,
               disableVoteSelect: _this3.disableVoteSelect
             });
-          })
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "btn btn-default", onClick: this.prevPointsPage },
+            "Poprzednie"
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "btn btn-default", onClick: this.nextPointsPage },
+            "Nastepne"
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
