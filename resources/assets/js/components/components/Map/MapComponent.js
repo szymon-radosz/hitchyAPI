@@ -67,7 +67,7 @@ class MapComponent extends Component {
       <div>
         <Map
           center={
-            this.props.centerCoord
+            this.props.centerCoord.length > 0
               ? this.props.centerCoord
               : this.state.position
           }

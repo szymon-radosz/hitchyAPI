@@ -17,13 +17,33 @@ class SingleMeetingDetails extends Component {
       displayTakPartBtn: false,
       displayResignBtn: false,
       displayCommentsContainer: false,
+      startLat: "",
+      startLng: "",
+      stopLat: "",
+      stopLng: "",
       comments: [],
-      commentBody: ""
+      commentBody: "",
+      centerCoord: []
     };
+
+    this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
 
     /*this.takePartClick = this.takePartClick.bind(this);
     this.resignClick = this.resignClick.bind(this);
     this.addCommentToState = this.addCommentToState.bind(this);*/
+  }
+
+  componentDidMount() {
+    this.setState({
+      startLat: this.props.startPlaceLattitude,
+      startLng: this.props.startPlaceLongitude,
+      stopLat: this.props.stopPlaceLattitude,
+      stopLng: this.props.stopPlaceLongitude
+    });
+  }
+
+  setNewCenterCoords(lat, lng) {
+    this.setState({ centerCoord: [lat, lng] });
   }
 
   handleChange(event) {
@@ -294,10 +314,28 @@ class SingleMeetingDetails extends Component {
             {this.props.title} - {this.props.date}{" "}
           </h2>
 
+          <div
+            className="btn locateBtn"
+            onClick={() => {
+              this.setNewCenterCoords(this.state.startLat, this.state.startLng);
+            }}
+          >
+            Punkt Startowy
+          </div>
+
+          <div
+            className="btn locateBtn"
+            onClick={() => {
+              this.setNewCenterCoords(this.state.stopLat, this.state.stopLng);
+            }}
+          >
+            Punkt Końcowy
+          </div>
+
           <p>Description: {this.props.description}</p>
           <p>Created by: {this.props.author}</p>
           <p>
-            Limit: {this.props.limit} (
+            Limit: {this.props.limit}
             {/*{this.state.usersEmails.length}/{this.props.limit})*/}
           </p>
 
@@ -384,9 +422,11 @@ class SingleMeetingDetails extends Component {
             latCenter={this.props.startPlaceLattitude}
             lngCenter={this.props.startPlaceLongitude}
             allowDragableMarker={false}
+            displayFirstMarker={true}
             displaySecondMarker={true}
             secondLatCenter={this.props.stopPlaceLattitude}
             secondLngCenter={this.props.stopPlaceLongitude}
+            centerCoord={this.state.centerCoord}
           />
         </div>
       </div>

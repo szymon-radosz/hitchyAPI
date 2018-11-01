@@ -50,9 +50,28 @@ class SingleMeetingOnList extends Component {
             <Link to={`/events/${this.props.id}`}>
               <div className="btn meetingDetailsBtn">Details</div>
             </Link>
-            <LocateOnMapBtn
-              setCoordinate={this.sendCoordinatesToMainMeetings}
-            />
+            <div
+              className="btn locateBtn"
+              onClick={() => {
+                this.props.setNewCenterCoords(
+                  this.props.startPlaceLattitude,
+                  this.props.startPlaceLongitude
+                );
+              }}
+            >
+              Punkt Początkowy
+            </div>
+            <div
+              className="btn locateBtn"
+              onClick={() => {
+                this.props.setNewCenterCoords(
+                  this.props.stopPlaceLattitude,
+                  this.props.stopPlaceLongitude
+                );
+              }}
+            >
+              Punkt Końcowy
+            </div>
           </div>
         </div>
       </div>

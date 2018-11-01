@@ -15224,7 +15224,7 @@ var MapComponent = function (_Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
           {
-            center: this.props.centerCoord ? this.props.centerCoord : this.state.position,
+            center: this.props.centerCoord.length > 0 ? this.props.centerCoord : this.state.position,
             zoom: 13
           },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AddressSearch, null),
@@ -21575,15 +21575,22 @@ var MainMeetings = function (_Component) {
     _this.state = {
       meetingsData: [],
       markersData: [],
+      centerCoord: [],
       lat: 40.73061,
       lng: -73.935242
     };
 
     _this.setCoordinates = _this.setCoordinates.bind(_this);
+    _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
     return _this;
   }
 
   _createClass(MainMeetings, [{
+    key: "setNewCenterCoords",
+    value: function setNewCenterCoords(lat, lng) {
+      this.setState({ centerCoord: [lat, lng] });
+    }
+  }, {
     key: "componentDidMount",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -21679,12 +21686,15 @@ var MainMeetings = function (_Component) {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__["a" /* default */], {
                 key: i,
                 changeMarker: _this3.changeMarker,
+                setNewCenterCoords: _this3.setNewCenterCoords,
                 id: item.id,
                 title: item.title,
                 description: item.description,
                 author: item.author,
-                lattitude: item.lattitude,
-                longitude: item.longitude,
+                startPlaceLattitude: item.startPlaceLattitude,
+                startPlaceLongitude: item.startPlaceLongitude,
+                stopPlaceLattitude: item.stopPlaceLattitude,
+                stopPlaceLongitude: item.stopPlaceLongitude,
                 limit: item.limit,
                 date: item.date,
                 time: item.time,
@@ -21699,7 +21709,8 @@ var MainMeetings = function (_Component) {
               latCenter: this.state.lat,
               lngCenter: this.state.lng,
               markersData: this.state.markersData,
-              displayFirstMarker: false
+              displayFirstMarker: false,
+              centerCoord: this.state.centerCoord
             })
           )
         )
@@ -48773,6 +48784,8 @@ var SingleMeetingOnList = function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
         { className: "panel-group" },
@@ -48844,9 +48857,26 @@ var SingleMeetingOnList = function (_Component) {
                 "Details"
               )
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__LocateOnMapBtn__["a" /* default */], {
-              setCoordinate: this.sendCoordinatesToMainMeetings
-            })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              {
+                className: "btn locateBtn",
+                onClick: function onClick() {
+                  _this2.props.setNewCenterCoords(_this2.props.startPlaceLattitude, _this2.props.startPlaceLongitude);
+                }
+              },
+              "Punkt Pocz\u0105tkowy"
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              {
+                className: "btn locateBtn",
+                onClick: function onClick() {
+                  _this2.props.setNewCenterCoords(_this2.props.stopPlaceLattitude, _this2.props.stopPlaceLongitude);
+                }
+              },
+              "Punkt Ko\u0144cowy"
+            )
           )
         )
       );
@@ -48898,7 +48928,7 @@ var LocateOnMapBtn = function (_Component) {
   return LocateOnMapBtn;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (LocateOnMapBtn);
+/* unused harmony default export */ var _unused_webpack_default_export = (LocateOnMapBtn);
 
 /***/ }),
 /* 194 */
@@ -57785,7 +57815,8 @@ var AddNewMeeting = function (_Component) {
       lat: 40.73061,
       lng: -73.935242,
       secondLat: 40.8,
-      secondLng: -73.99
+      secondLng: -73.99,
+      centerCoord: []
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
@@ -58139,7 +58170,8 @@ var AddNewMeeting = function (_Component) {
             displaySecondMarker: true,
             secondLatCenter: this.state.secondLat,
             secondLngCenter: this.state.secondLng,
-            setNewSecondCoords: this.setNewSecondCoords
+            setNewSecondCoords: this.setNewSecondCoords,
+            centerCoord: this.state.centerCoord
           })
         )
       );
@@ -58336,9 +58368,16 @@ var SingleMeetingDetails = function (_Component) {
             displayTakPartBtn: false,
             displayResignBtn: false,
             displayCommentsContainer: false,
+            startLat: "",
+            startLng: "",
+            stopLat: "",
+            stopLng: "",
             comments: [],
-            commentBody: ""
+            commentBody: "",
+            centerCoord: []
         };
+
+        _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
 
         /*this.takePartClick = this.takePartClick.bind(this);
         this.resignClick = this.resignClick.bind(this);
@@ -58347,6 +58386,21 @@ var SingleMeetingDetails = function (_Component) {
     }
 
     _createClass(SingleMeetingDetails, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.setState({
+                startLat: this.props.startPlaceLattitude,
+                startLng: this.props.startPlaceLongitude,
+                stopLat: this.props.stopPlaceLattitude,
+                stopLng: this.props.stopPlaceLongitude
+            });
+        }
+    }, {
+        key: "setNewCenterCoords",
+        value: function setNewCenterCoords(lat, lng) {
+            this.setState({ centerCoord: [lat, lng] });
+        }
+    }, {
         key: "handleChange",
         value: function handleChange(event) {
             var _event$target = event.target,
@@ -58578,6 +58632,8 @@ var SingleMeetingDetails = function (_Component) {
     }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "register row singleMeetingDetailsDataRow" },
@@ -58591,6 +58647,26 @@ var SingleMeetingDetails = function (_Component) {
                         " - ",
                         this.props.date,
                         " "
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        {
+                            className: "btn locateBtn",
+                            onClick: function onClick() {
+                                _this2.setNewCenterCoords(_this2.state.startLat, _this2.state.startLng);
+                            }
+                        },
+                        "Punkt Startowy"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        {
+                            className: "btn locateBtn",
+                            onClick: function onClick() {
+                                _this2.setNewCenterCoords(_this2.state.stopLat, _this2.state.stopLng);
+                            }
+                        },
+                        "Punkt Ko\u0144cowy"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
@@ -58608,8 +58684,7 @@ var SingleMeetingDetails = function (_Component) {
                         "p",
                         null,
                         "Limit: ",
-                        this.props.limit,
-                        " ("
+                        this.props.limit
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
@@ -58640,9 +58715,11 @@ var SingleMeetingDetails = function (_Component) {
                         latCenter: this.props.startPlaceLattitude,
                         lngCenter: this.props.startPlaceLongitude,
                         allowDragableMarker: false,
+                        displayFirstMarker: true,
                         displaySecondMarker: true,
                         secondLatCenter: this.props.stopPlaceLattitude,
-                        secondLngCenter: this.props.stopPlaceLongitude
+                        secondLngCenter: this.props.stopPlaceLongitude,
+                        centerCoord: this.state.centerCoord
                     })
                 )
             );

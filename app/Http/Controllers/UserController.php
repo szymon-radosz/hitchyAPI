@@ -41,22 +41,27 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $user = new User;
-        $user->firstName = $request->firstName;
-        $user->lastName = $request->lastName;
-        $user->about = $request->about;
-        $user->age = $request->age;
-        $user->nickName = $request->nickName;
-        $user->city = $request->city;
-        $user->country = $request->country;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-       
-        $user->save();
+        try{
+            $user = new User;
+            $user->firstName = $request->firstName;
+            $user->lastName = $request->lastName;
+            $user->about = $request->about;
+            $user->age = $request->age;
+            $user->nickName = $request->nickName;
+            $user->city = $request->city;
+            $user->country = $request->country;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+           
+            $user->save();
+    
+            $userInfo = (object) ['userId' => $user->id, 'userNickName' => $user->nickName];
 
-        $userInfo = (object) ['userId' => $user->id, 'userNickName' => $user->nickName];
-
-        return Response::json($userInfo);
+            return Response::json($userInfo);
+        }catch(\Exception $e) {
+            return $e->getMessage();
+        }
+      
     }
 
     public function findById($id)

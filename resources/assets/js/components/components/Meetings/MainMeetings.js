@@ -10,11 +10,17 @@ class MainMeetings extends Component {
     this.state = {
       meetingsData: [],
       markersData: [],
+      centerCoord: [],
       lat: 40.73061,
       lng: -73.935242
     };
 
     this.setCoordinates = this.setCoordinates.bind(this);
+    this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
+  }
+
+  setNewCenterCoords(lat, lng) {
+    this.setState({ centerCoord: [lat, lng] });
   }
 
   async componentDidMount() {
@@ -71,12 +77,15 @@ class MainMeetings extends Component {
                   <SingleMeetingOnList
                     key={i}
                     changeMarker={this.changeMarker}
+                    setNewCenterCoords={this.setNewCenterCoords}
                     id={item.id}
                     title={item.title}
                     description={item.description}
                     author={item.author}
-                    lattitude={item.lattitude}
-                    longitude={item.longitude}
+                    startPlaceLattitude={item.startPlaceLattitude}
+                    startPlaceLongitude={item.startPlaceLongitude}
+                    stopPlaceLattitude={item.stopPlaceLattitude}
+                    stopPlaceLongitude={item.stopPlaceLongitude}
                     limit={item.limit}
                     date={item.date}
                     time={item.time}
@@ -92,6 +101,7 @@ class MainMeetings extends Component {
                 lngCenter={this.state.lng}
                 markersData={this.state.markersData}
                 displayFirstMarker={false}
+                centerCoord={this.state.centerCoord}
               />
             </div>
           </div>
