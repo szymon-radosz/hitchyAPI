@@ -9,6 +9,10 @@
   width: 100%;
 }
 
+.alert {
+  z-index: 10000;
+}
+
 .dropdown-menu {
   z-index: 10000;
 }

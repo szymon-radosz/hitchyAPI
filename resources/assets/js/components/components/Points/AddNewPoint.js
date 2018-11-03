@@ -15,7 +15,8 @@ class AddNewMeeting extends Component {
       lattitude: "",
       longitude: "",
       lat: 40.73061,
-      lng: -73.935242
+      lng: -73.935242,
+      centerCoord: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -143,6 +144,7 @@ class AddNewMeeting extends Component {
             setNewCoords={this.setNewCoords}
             displayFirstMarker={true}
             displaySecondMarker={false}
+            centerCoord={this.state.centerCoord}
           />
         </div>
       </div>

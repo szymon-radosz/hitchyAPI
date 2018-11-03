@@ -58326,16 +58326,24 @@ var MeetingDetails = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_underscore__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleMeetingComponents_Comment__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_CommentForm__ = __webpack_require__(358);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Map_MapComponent_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_underscore__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_Comment__ = __webpack_require__(357);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SingleMeetingComponents_CommentForm__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Map_MapComponent_js__ = __webpack_require__(26);
+
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -58353,381 +58361,523 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var SingleMeetingDetails = function (_Component) {
-    _inherits(SingleMeetingDetails, _Component);
+  _inherits(SingleMeetingDetails, _Component);
 
-    function SingleMeetingDetails(props) {
-        _classCallCheck(this, SingleMeetingDetails);
+  function SingleMeetingDetails(props) {
+    _classCallCheck(this, SingleMeetingDetails);
 
-        var _this = _possibleConstructorReturn(this, (SingleMeetingDetails.__proto__ || Object.getPrototypeOf(SingleMeetingDetails)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SingleMeetingDetails.__proto__ || Object.getPrototypeOf(SingleMeetingDetails)).call(this, props));
 
-        _this.state = {
-            usersEmails: [],
-            resignedUsersEmails: [],
-            loggedInUserEmail: "",
-            loggedInUserNickname: "",
-            displayTakPartBtn: false,
-            displayResignBtn: false,
-            displayCommentsContainer: false,
-            startLat: "",
-            startLng: "",
-            stopLat: "",
-            stopLng: "",
-            comments: [],
-            commentBody: "",
-            centerCoord: []
-        };
+    _this.state = {
+      usersEmails: [],
+      resignedUsersEmails: [],
+      loggedInUserEmail: "",
+      loggedInUserNickname: "",
+      displayTakPartBtn: false,
+      displayResignBtn: false,
+      displayCommentsContainer: false,
+      startLat: "",
+      startLng: "",
+      stopLat: "",
+      stopLng: "",
+      comments: [],
+      commentBody: "",
+      centerCoord: []
+    };
 
-        _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
+    _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
 
-        /*this.takePartClick = this.takePartClick.bind(this);
-        this.resignClick = this.resignClick.bind(this);
-        this.addCommentToState = this.addCommentToState.bind(this);*/
-        return _this;
+    _this.takePartClick = _this.takePartClick.bind(_this);
+    //this.resignClick = this.resignClick.bind(this);
+    _this.addCommentToState = _this.addCommentToState.bind(_this);
+    return _this;
+  }
+
+  _createClass(SingleMeetingDetails, [{
+    key: "setNewCenterCoords",
+    value: function setNewCenterCoords(lat, lng) {
+      this.setState({ centerCoord: [lat, lng] });
     }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
 
-    _createClass(SingleMeetingDetails, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.setState({
-                startLat: this.props.startPlaceLattitude,
-                startLng: this.props.startPlaceLongitude,
-                stopLat: this.props.stopPlaceLattitude,
-                stopLng: this.props.stopPlaceLongitude
-            });
-        }
-    }, {
-        key: "setNewCenterCoords",
-        value: function setNewCenterCoords(lat, lng) {
-            this.setState({ centerCoord: [lat, lng] });
-        }
-    }, {
-        key: "handleChange",
-        value: function handleChange(event) {
-            var _event$target = event.target,
-                name = _event$target.name,
-                value = _event$target.value;
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: "componentDidMount",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+        var _this2 = this;
 
-            this.setState(_defineProperty({}, name, value));
-        }
-        /*
-          async componentDidMount() {
-              console.log(this.props.meetingId);
-              const getUser = await axios.get(
-                  `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
-              );
+        var getUser, getCurrentMeetingInfo, meetingLimit, usersIDs, allMatches, meetingMatched, allComments, i;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.setState({
+                  startLat: this.props.startPlaceLattitude,
+                  startLng: this.props.startPlaceLongitude,
+                  stopLat: this.props.stopPlaceLattitude,
+                  stopLng: this.props.stopPlaceLongitude
+                });
+
+                console.log(this.props.meetingId);
+                _context2.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
+
+              case 4:
+                getUser = _context2.sent;
+
+
                 this.setState({ loggedInUserEmail: getUser.data[0].email });
-              this.setState({ loggedInUserNickname: getUser.data[0].nickName });
-                const getCurrentMeetingInfo = await axios.get(
-                  `http://127.0.0.1:8000/api/meeting/${this.props.meetingId}`
-              );
-                let meetingLimit = getCurrentMeetingInfo.data[0].limit;
-                let usersIDs = [];
-                const allMatches = await axios.get(
-                  `http://127.0.0.1:8000/api/matchUserWithMeetings`
-              );
-                let meetingMatched = 0;
-                for (var i = 0; i < allMatches.data.length; i++) {
-                  if (_.contains(allMatches.data[i], this.props.meetingId)) {
-                      usersIDs.push(allMatches.data[i].userId);
-                        meetingMatched++;
-                        if (
-                          _.contains(
-                              allMatches.data[i],
-                              sessionStorage.getItem("userId")
-                          ) &&
-                          this.state.loggedInUserEmail != getCurrentMeetingInfo.author
-                      ) {
-                          this.setState({ displayCommentsContainer: true });
-                          this.setState({ displayResignBtn: true });
-                      }
+                this.setState({ loggedInUserNickname: getUser.data[0].nickName });
+
+                _context2.next = 9;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events/" + this.props.meetingId);
+
+              case 9:
+                getCurrentMeetingInfo = _context2.sent;
+                meetingLimit = getCurrentMeetingInfo.data[0].limit;
+                usersIDs = [];
+                _context2.next = 14;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
+
+              case 14:
+                allMatches = _context2.sent;
+                meetingMatched = 0;
+
+
+                allMatches.data.map(function (singleMatch, i) {
+                  if (singleMatch.eventId == _this2.props.meetingId) {
+                    console.log(singleMatch);
+
+                    usersIDs.push(singleMatch.userId);
+
+                    meetingMatched++;
+
+                    if (singleMatch.userId == sessionStorage.getItem("userId") && _this2.state.loggedInUserEmail != getCurrentMeetingInfo.author) {
+                      _this2.setState({ displayTakPartBtn: false });
+                      _this2.setState({ displayCommentsContainer: true });
+                      _this2.setState({ displayResignBtn: true });
+                    }
                   }
-              }
+                });
+
                 if (meetingMatched < meetingLimit) {
                   this.setState({ displayTakPartBtn: true });
-              }
-                usersIDs.map(async (userId, i) => {
-                  const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
-                    for (var i = 0; i < allUsers.data.length; i++) {
-                      if (_.contains(allUsers.data[i], parseInt(userId))) {
-                          let userObject = {
-                              email: allUsers.data[i].email,
-                              id: allUsers.data[i].id
-                          };
-                            this.setState(prevState => ({
-                              usersEmails: [...prevState.usersEmails, userObject]
-                          }));
-                      } else {
-                          console.log("cant map user id");
+                }
+
+                usersIDs.map(function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(userId, i) {
+                    var allUsers;
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            _context.next = 2;
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
+
+                          case 2:
+                            allUsers = _context.sent;
+
+
+                            for (i = 0; i < allUsers.data.length; i++) {
+                              if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], parseInt(userId))) {
+                                (function () {
+                                  var userObject = {
+                                    email: allUsers.data[i].email,
+                                    id: allUsers.data[i].id
+                                  };
+
+                                  _this2.setState(function (prevState) {
+                                    return {
+                                      usersEmails: [].concat(_toConsumableArray(prevState.usersEmails), [userObject])
+                                    };
+                                  });
+                                })();
+                              } else {
+                                console.log("cant map user id");
+                              }
+                            }
+
+                          case 4:
+                          case "end":
+                            return _context.stop();
+                        }
                       }
-                  }
-              });
-                let ResignedUsersIDs = [];
-                const allDeleted = await axios.get(
-                  `http://127.0.0.1:8000/api/deleteUserFromMeeting`
-              );
-                for (var i = 0; i < allDeleted.data.length; i++) {
-                  if (_.contains(allDeleted.data[i], this.props.meetingId)) {
-                      if (!_.contains(ResignedUsersIDs, allDeleted.data[i].userID)) {
-                          ResignedUsersIDs.push(allDeleted.data[i].userID);
-                      }
-                        console.log(allDeleted.data[i].userID);
-                  }
-              }
-                ResignedUsersIDs.map(async (userID, i) => {
-                  const user = await axios.get(
-                      `http://127.0.0.1:8000/api/user/${userID}`
-                  );
-                    let userObject = {
-                      email: user.data.email,
-                      id: user.data.id
-                  };
-                    this.setState(prevState => ({
-                      resignedUsersEmails: [
-                          ...prevState.resignedUsersEmails,
-                          userObject
-                      ]
+                    }, _callee, _this2);
                   }));
-              });
-                const allComments = await axios.get(
-                  `http://127.0.0.1:8000/api/comments?results=1`
-              );
-                for (var i = 0; i < allComments.data.length; i++) {
-                  if (allComments.data[i].meetingId == this.props.meetingId) {
-                      let commentObject = {
-                          userID: allComments.data[i].userId,
-                          userEmail: allComments.data[i].userEmail,
-                          date: allComments.data[i].date,
-                          commentBody: allComments.data[i].commentBody
-                      };
-                        this.setState(prevState => ({
-                          comments: [...prevState.comments, commentObject]
-                      }));
-                  }
-              }
-          }
-            async takePartClick() {
-              let takePart = true;
-                const allMatches = await axios.get(
-                  `http://127.0.0.1:8000/api/matchUserWithMeetings`
-              );
-                for (var i = 0; i < allMatches.data.length; i++) {
-                  if (
-                      _.contains(
-                          allMatches.data[i],
-                          sessionStorage.getItem("userId")
-                      ) &&
-                      _.contains(allMatches.data[i], this.props.meetingId)
-                  ) {
-                      takePart = false;
-                  }
-              }
-                if (takePart === false) {
-                  this.props.showAlertWarning(
-                      "user with email " +
-                          this.state.loggedInUserEmail +
-                          " took part in the past!"
-                  );
-              } else {
-                  const savedMatchUserWithMeeting = await axios.post(
-                      `http://127.0.0.1:8000/api/matchUserWithMeeting`,
-                      {
-                          userId: sessionStorage.getItem("userId"),
-                          meetingId: this.props.meetingId
-                      }
-                  );
-                    if (savedMatchUserWithMeeting.status == "200") {
-                      //if successful then find user and add him/her to userId array/ update state
-                      const user = await axios.get(
-                          `http://127.0.0.1:8000/api/user/${sessionStorage.getItem(
-                              "userId"
-                          )}`
-                      );
-                        if (user.status == 200) {
+
+                  return function (_x, _x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+
+                /*let ResignedUsersIDs = [];
+                      const allDeleted = await axios.get(
+                        `http://127.0.0.1:8000/api/deleteUserFromMeeting`
+                    );
+                      for (var i = 0; i < allDeleted.data.length; i++) {
+                        if (_.contains(allDeleted.data[i], this.props.meetingId)) {
+                            if (!_.contains(ResignedUsersIDs, allDeleted.data[i].userID)) {
+                                ResignedUsersIDs.push(allDeleted.data[i].userID);
+                            }
+                              console.log(allDeleted.data[i].userID);
+                        }
+                    }
+                      ResignedUsersIDs.map(async (userID, i) => {
+                        const user = await axios.get(
+                            `http://127.0.0.1:8000/api/user/${userID}`
+                        );
                           let userObject = {
-                              email: user.data.email,
-                              id: user.data.id
-                          };
-                            this.setState(prevState => ({
-                              usersEmails: [...prevState.usersEmails, userObject]
-                          }));
-                          this.setState({
-                              displayTakPartBtn: false,
-                              displayResignBtn: true,
-                              displayCommentsContainer: true
-                          });
-                          this.props.showAlertSuccess(
-                              "You are saved to that meeting. Now you can write comments."
-                          );
-                      } else {
-                          this.props.showAlertWarning(
-                              "Troubles with adding user to tak part."
-                          );
-                      }
-                  } else {
-                      this.props.showAlertWarning(
-                          "Sorry we can't handle that. Please repeat for a while."
-                      );
+                            email: user.data.email,
+                            id: user.data.id
+                        };
+                          this.setState(prevState => ({
+                            resignedUsersEmails: [
+                                ...prevState.resignedUsersEmails,
+                                userObject
+                            ]
+                        }));
+                    });*/
+
+                _context2.next = 21;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/comments");
+
+              case 21:
+                allComments = _context2.sent;
+
+
+                for (i = 0; i < allComments.data.length; i++) {
+                  if (allComments.data[i].meetingId == this.props.meetingId) {
+                    (function () {
+                      var commentObject = {
+                        userID: allComments.data[i].userId,
+                        userEmail: allComments.data[i].userEmail,
+                        date: allComments.data[i].date,
+                        commentBody: allComments.data[i].commentBody
+                      };
+
+                      _this2.setState(function (prevState) {
+                        return {
+                          comments: [].concat(_toConsumableArray(prevState.comments), [commentObject])
+                        };
+                      });
+                    })();
                   }
-              }
+                }
+
+              case 23:
+              case "end":
+                return _context2.stop();
+            }
           }
-            async resignClick() {
-              const allMatches = await axios.get(
-                  `http://127.0.0.1:8000/api/matchUserWithMeetings`
-              );
-                for (var i = 0; i < allMatches.data.length; i++) {
-                  if (
-                      _.contains(
-                          allMatches.data[i],
-                          sessionStorage.getItem("userId")
-                      ) &&
-                      _.contains(allMatches.data[i], this.props.meetingId)
-                  ) {
-                      const deleteUser = await axios.delete(
-                          `http://127.0.0.1:8000/api/matchUserWithMeeting/${
-                              allMatches.data[i].id
-                          }`,
+        }, _callee2, this);
+      }));
+
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: "takePartClick",
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+        var takePart, allMatches, i, savedMatchUserWithMeeting, user, userObject;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                takePart = true;
+                _context3.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
+
+              case 3:
+                allMatches = _context3.sent;
+
+
+                for (i = 0; i < allMatches.data.length; i++) {
+                  if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allMatches.data[i], sessionStorage.getItem("userId")) && __WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allMatches.data[i], this.props.meetingId)) {
+                    takePart = false;
+                  }
+                }
+
+                if (!(takePart === false)) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                this.props.showAlertWarning("user with email " + this.state.loggedInUserEmail + " took part in the past!");
+                _context3.next = 20;
+                break;
+
+              case 9:
+                _context3.next = 11;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
+                  userId: sessionStorage.getItem("userId"),
+                  eventId: this.props.meetingId
+                });
+
+              case 11:
+                savedMatchUserWithMeeting = _context3.sent;
+
+                if (!(savedMatchUserWithMeeting.status == "200")) {
+                  _context3.next = 19;
+                  break;
+                }
+
+                _context3.next = 15;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
+
+              case 15:
+                user = _context3.sent;
+
+
+                if (user.status == 200) {
+                  userObject = {
+                    email: user.data.email,
+                    id: user.data.id
+                  };
+
+
+                  this.setState(function (prevState) {
+                    return {
+                      usersEmails: [].concat(_toConsumableArray(prevState.usersEmails), [userObject])
+                    };
+                  });
+                  this.setState({
+                    displayTakPartBtn: false,
+                    displayResignBtn: true,
+                    displayCommentsContainer: true
+                  });
+                  this.props.showAlertSuccess("You are saved to that meeting. Now you can write comments.");
+                } else {
+                  this.props.showAlertWarning("Troubles with adding user to tak part.");
+                }
+                _context3.next = 20;
+                break;
+
+              case 19:
+                this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
+
+              case 20:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function takePartClick() {
+        return _ref3.apply(this, arguments);
+      }
+
+      return takePartClick;
+    }()
+
+    /*async resignClick() {
+          const allMatches = await axios.get(
+              `http://127.0.0.1:8000/api/matchUserWithMeetings`
+          );
+            for (var i = 0; i < allMatches.data.length; i++) {
+              if (
+                  _.contains(
+                      allMatches.data[i],
+                      sessionStorage.getItem("userId")
+                  ) &&
+                  _.contains(allMatches.data[i], this.props.meetingId)
+              ) {
+                  const deleteUser = await axios.delete(
+                      `http://127.0.0.1:8000/api/matchUserWithMeeting/${
+                          allMatches.data[i].id
+                      }`,
+                      {
+                          headers: {
+                              "Content-Type": "application/x-www-form-urlencoded"
+                          }
+                      }
+                  );
+                    if (deleteUser.status == "200") {
+                      const savedDeleteUserFromMeeting = await axios.post(
+                          `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
                           {
-                              headers: {
-                                  "Content-Type": "application/x-www-form-urlencoded"
-                              }
+                              userId: sessionStorage.getItem("userId"),
+                              meetingId: this.props.meetingId
                           }
                       );
-                        if (deleteUser.status == "200") {
-                          const savedDeleteUserFromMeeting = await axios.post(
-                              `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
-                              {
-                                  userId: sessionStorage.getItem("userId"),
-                                  meetingId: this.props.meetingId
-                              }
+                        if (savedDeleteUserFromMeeting.status == "200") {
+                          window.location.reload();
+                          this.props.showAlertSuccess(
+                              "we are sad that you resigned."
                           );
-                            if (savedDeleteUserFromMeeting.status == "200") {
-                              window.location.reload();
-                              this.props.showAlertSuccess(
-                                  "we are sad that you resigned."
-                              );
-                          } else {
-                              this.props.showAlertWarning(
-                                  "Some problems occured with delete you from meeting."
-                              );
-                          }
                       } else {
                           this.props.showAlertWarning(
                               "Some problems occured with delete you from meeting."
                           );
                       }
+                  } else {
+                      this.props.showAlertWarning(
+                          "Some problems occured with delete you from meeting."
+                      );
                   }
               }
           }
-            addCommentToState(userNickname, commentDate, commentBody) {
-              let commentObject = {
-                  userNickname: userNickname,
-                  date: commentDate,
-                  commentBody: commentBody
-              };
-                this.setState(prevState => ({
-                  comments: [...prevState.comments, commentObject]
-              }));
-          }*/
+      }*/
 
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
+  }, {
+    key: "addCommentToState",
+    value: function addCommentToState(userNickname, commentDate, commentBody) {
+      var commentObject = {
+        userNickname: userNickname,
+        date: commentDate,
+        commentBody: commentBody
+      };
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "register row singleMeetingDetailsDataRow" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "col-sm-6 singleMeetingDetailsDataCol" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "h2",
-                        null,
-                        this.props.title,
-                        " - ",
-                        this.props.date,
-                        " "
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        {
-                            className: "btn locateBtn",
-                            onClick: function onClick() {
-                                _this2.setNewCenterCoords(_this2.state.startLat, _this2.state.startLng);
-                            }
-                        },
-                        "Punkt Startowy"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        {
-                            className: "btn locateBtn",
-                            onClick: function onClick() {
-                                _this2.setNewCenterCoords(_this2.state.stopLat, _this2.state.stopLng);
-                            }
-                        },
-                        "Punkt Ko\u0144cowy"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        "Description: ",
-                        this.props.description
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        "Created by: ",
-                        this.props.author
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        "Limit: ",
-                        this.props.limit
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "strong",
-                            null,
-                            "Users take part:"
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "strong",
-                            null,
-                            "Users which resigned in the past:"
-                        )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    {
-                        className: "col-sm-6 mainMeetingsMap",
-                        style: { height: "calc(100vh - 60px)" }
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Map_MapComponent_js__["a" /* default */], {
-                        latCenter: this.props.startPlaceLattitude,
-                        lngCenter: this.props.startPlaceLongitude,
-                        allowDragableMarker: false,
-                        displayFirstMarker: true,
-                        displaySecondMarker: true,
-                        secondLatCenter: this.props.stopPlaceLattitude,
-                        secondLngCenter: this.props.stopPlaceLongitude,
-                        centerCoord: this.state.centerCoord
-                    })
-                )
+      this.setState(function (prevState) {
+        return {
+          comments: [].concat(_toConsumableArray(prevState.comments), [commentObject])
+        };
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        { className: "register row singleMeetingDetailsDataRow" },
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          { className: "col-sm-6 singleMeetingDetailsDataCol" },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "h2",
+            null,
+            this.props.title,
+            " - ",
+            this.props.date,
+            " "
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            {
+              className: "btn locateBtn",
+              onClick: function onClick() {
+                _this3.setNewCenterCoords(_this3.state.startLat, _this3.state.startLng);
+              }
+            },
+            "Punkt Startowy"
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            {
+              className: "btn locateBtn",
+              onClick: function onClick() {
+                _this3.setNewCenterCoords(_this3.state.stopLat, _this3.state.stopLng);
+              }
+            },
+            "Punkt Ko\u0144cowy"
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            "Description: ",
+            this.props.description
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            "Created by: ",
+            this.props.author
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            "Limit: ",
+            this.props.limit
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Users take part:"
+            )
+          ),
+          this.state.usersEmails.map(function (user, i) {
+            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "p",
+              { key: i },
+              user.email
             );
-        }
-    }]);
+          }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Users which resigned in the past:"
+            )
+          ),
+          this.state.displayTakPartBtn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "btn btn-default", onClick: this.takePartClick },
+            "Take part"
+          ) : "",
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Comments"
+            )
+          ),
+          this.state.displayCommentsContainer ? this.state.comments.slice(0).reverse().map(function (comment, i) {
+            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_Comment__["a" /* default */], {
+              key: i,
+              userNickname: _this3.state.loggedInUserNickname,
+              date: comment.date,
+              commentBody: comment.commentBody
+            });
+          }) : "",
+          this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__SingleMeetingComponents_CommentForm__["a" /* default */], {
+            loggedInUserEmail: this.state.loggedInUserEmail,
+            loggedInUserNickname: this.state.loggedInUserNickname,
+            meetingId: this.props.meetingId,
+            addCommentToState: this.addCommentToState,
+            showAlertSuccess: this.props.showAlertSuccess,
+            showAlertWarning: this.props.showAlertWarning
+          }) : ""
+        ),
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          { className: "col-sm-6 mainMeetingsMap" },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Map_MapComponent_js__["a" /* default */], {
+            latCenter: this.props.startPlaceLattitude,
+            lngCenter: this.props.startPlaceLongitude,
+            allowDragableMarker: false,
+            displayFirstMarker: true,
+            displaySecondMarker: true,
+            secondLatCenter: this.props.stopPlaceLattitude,
+            secondLngCenter: this.props.stopPlaceLongitude,
+            centerCoord: this.state.centerCoord
+          })
+        )
+      );
+    }
+  }]);
 
-    return SingleMeetingDetails;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+  return SingleMeetingDetails;
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (SingleMeetingDetails);
 
@@ -58809,7 +58959,7 @@ var Comment = function Comment(props) {
     );
 };
 
-/* unused harmony default export */ var _unused_webpack_default_export = (Comment);
+/* harmony default export */ __webpack_exports__["a"] = (Comment);
 
 /***/ }),
 /* 358 */
@@ -58840,150 +58990,126 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var CommentForm = function (_Component) {
-    _inherits(CommentForm, _Component);
+  _inherits(CommentForm, _Component);
 
-    function CommentForm(props) {
-        _classCallCheck(this, CommentForm);
+  function CommentForm(props) {
+    _classCallCheck(this, CommentForm);
 
-        var _this = _possibleConstructorReturn(this, (CommentForm.__proto__ || Object.getPrototypeOf(CommentForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CommentForm.__proto__ || Object.getPrototypeOf(CommentForm)).call(this, props));
 
-        _this.state = {
-            commentBody: "",
-            loggedInUserNickname: "",
-            meetingId: ""
-        };
+    _this.state = {
+      commentBody: "",
+      loggedInUserNickname: "",
+      meetingId: ""
+    };
 
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.submitComment = _this.submitComment.bind(_this);
-        return _this;
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.submitComment = _this.submitComment.bind(_this);
+    return _this;
+  }
+
+  _createClass(CommentForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        loggedInUserNickname: this.props.loggedInUserNickname,
+        meetingId: this.props.meetingId
+      });
     }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
 
-    _createClass(CommentForm, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.setState({
-                loggedInUserNickname: this.props.loggedInUserNickname,
-                meetingId: this.props.meetingId
-            });
-        }
-    }, {
-        key: "handleChange",
-        value: function handleChange(event) {
-            var _event$target = event.target,
-                name = _event$target.name,
-                value = _event$target.value;
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: "submitComment",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
+        var savedComment;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
 
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: "submitComment",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
-                var time, year, month, date1, commentDate, savedComment;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                event.preventDefault();
+                _context.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
+                  userId: sessionStorage.getItem("userId"),
+                  userEmail: this.props.loggedInUserEmail,
+                  meetingId: this.props.meetingId,
+                  commentBody: this.state.commentBody
+                });
 
-                                time = new Date();
-                                year = time.getFullYear();
-                                month = time.getMonth() + 1;
-                                date1 = time.getDate();
-                                /*const hour = time.getHours();
-                                const minutes = time.getMinutes();
-                                const seconds = time.getSeconds();*/
-
-                                /*const commentDate =
-                                    date1 +
-                                    "-" +
-                                    month +
-                                    "-" +
-                                    year +
-                                    " " +
-                                    hour +
-                                    ":" +
-                                    minutes +
-                                    ":" +
-                                    seconds;*/
-
-                                commentDate = year + "-" + month + "-" + date1;
-                                _context.next = 8;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
-                                    userId: sessionStorage.getItem("userId"),
-                                    userNickName: this.state.loggedInUserNickname,
-                                    meetingId: this.props.meetingId,
-                                    date: commentDate,
-                                    commentBody: this.state.commentBody
-                                });
-
-                            case 8:
-                                savedComment = _context.sent;
+              case 3:
+                savedComment = _context.sent;
 
 
-                                if (savedComment.status == "200") {
-                                    this.props.addCommentToState(this.state.loggedInUserNickname, commentDate, this.state.commentBody);
-                                    this.props.showAlertSuccess("You wrote a comment.");
-                                } else {
-                                    this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
-                                }
+                if (savedComment.status == "200") {
+                  this.props.addCommentToState(this.props.loggedInUserEmail, savedComment.data.created_at, this.state.commentBody);
+                  this.props.showAlertSuccess("You wrote a comment.");
+                } else {
+                  this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
+                }
 
-                            case 10:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function submitComment(_x) {
-                return _ref.apply(this, arguments);
+              case 5:
+              case "end":
+                return _context.stop();
             }
+          }
+        }, _callee, this);
+      }));
 
-            return submitComment;
-        }()
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                null,
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "form",
-                    { onSubmit: this.submitComment },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "div",
-                        { className: "form-group" },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "label",
-                            { htmlFor: "commentBody" },
-                            "Write a comment like a",
-                            " ",
-                            this.props.loggedInUserNickName
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("textarea", {
-                            maxLength: "150",
-                            className: "form-control",
-                            name: "commentBody",
-                            id: "commentBody",
-                            rows: "3",
-                            onChange: this.handleChange
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "button",
-                        { type: "submit", className: "btn btn-default" },
-                        "Send a comment"
-                    )
-                )
-            );
-        }
-    }]);
+      function submitComment(_x) {
+        return _ref.apply(this, arguments);
+      }
 
-    return CommentForm;
+      return submitComment;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "form",
+          { onSubmit: this.submitComment },
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "form-group" },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "label",
+              { htmlFor: "commentBody" },
+              "Write a comment like a ",
+              this.props.loggedInUserEmail
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("textarea", {
+              maxLength: "150",
+              className: "form-control",
+              name: "commentBody",
+              id: "commentBody",
+              rows: "3",
+              onChange: this.handleChange
+            })
+          ),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "button",
+            { type: "submit", className: "btn btn-default" },
+            "Send a comment"
+          )
+        )
+      );
+    }
+  }]);
+
+  return CommentForm;
 }(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (CommentForm);
+/* harmony default export */ __webpack_exports__["a"] = (CommentForm);
 
 /***/ }),
 /* 359 */
@@ -60083,7 +60209,8 @@ var AddNewMeeting = function (_Component) {
       lattitude: "",
       longitude: "",
       lat: 40.73061,
-      lng: -73.935242
+      lng: -73.935242,
+      centerCoord: []
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
@@ -60277,7 +60404,8 @@ var AddNewMeeting = function (_Component) {
             allowDragableMarker: true,
             setNewCoords: this.setNewCoords,
             displayFirstMarker: true,
-            displaySecondMarker: false
+            displaySecondMarker: false,
+            centerCoord: this.state.centerCoord
           })
         )
       );

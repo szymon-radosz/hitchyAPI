@@ -34,4 +34,5 @@ Route::get('eventComments', 'EventCommentsController@index');
 Route::get('eventComments/{id}', array('uses' => 'EventCommentsController@commentsForID'));
 
 Route::post('matchUserWithMeeting', 'MatchUserWithMeetingController@store');
+Route::get('matchUserWithMeetings', 'MatchUserWithMeetingController@index');
 
