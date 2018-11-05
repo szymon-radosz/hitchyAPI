@@ -35,4 +35,10 @@ Route::get('eventComments/{id}', array('uses' => 'EventCommentsController@commen
 
 Route::post('matchUserWithMeeting', 'MatchUserWithMeetingController@store');
 Route::get('matchUserWithMeetings', 'MatchUserWithMeetingController@index');
+Route::delete('deleteMatchUserWithMeeting/{id}', 'MatchUserWithMeetingController@matchUserWithMeeting');
+
+Route::get('deleteUserFromMeeting/{meetingId}', 'DeleteUserFromMeetingController@index');
+Route::post('deleteUserFromMeeting', 'DeleteUserFromMeetingController@deleteUserFromMeeting');
+
+
 

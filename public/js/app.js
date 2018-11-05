@@ -58396,7 +58396,7 @@ var SingleMeetingDetails = function (_Component) {
     _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
 
     _this.takePartClick = _this.takePartClick.bind(_this);
-    //this.resignClick = this.resignClick.bind(this);
+    _this.resignClick = _this.resignClick.bind(_this);
     _this.addCommentToState = _this.addCommentToState.bind(_this);
     return _this;
   }
@@ -58421,7 +58421,7 @@ var SingleMeetingDetails = function (_Component) {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
         var _this2 = this;
 
-        var getUser, getCurrentMeetingInfo, meetingLimit, usersIDs, allMatches, meetingMatched, allComments, i;
+        var getUser, getCurrentMeetingInfo, meetingLimit, usersIDs, allMatches, meetingMatched, ResignedUsersIDs, allDeleted, i, allComments;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -58529,38 +58529,30 @@ var SingleMeetingDetails = function (_Component) {
                   };
                 }());
 
-                /*let ResignedUsersIDs = [];
-                      const allDeleted = await axios.get(
-                        `http://127.0.0.1:8000/api/deleteUserFromMeeting`
-                    );
-                      for (var i = 0; i < allDeleted.data.length; i++) {
-                        if (_.contains(allDeleted.data[i], this.props.meetingId)) {
-                            if (!_.contains(ResignedUsersIDs, allDeleted.data[i].userID)) {
-                                ResignedUsersIDs.push(allDeleted.data[i].userID);
-                            }
-                              console.log(allDeleted.data[i].userID);
-                        }
-                    }
-                      ResignedUsersIDs.map(async (userID, i) => {
-                        const user = await axios.get(
-                            `http://127.0.0.1:8000/api/user/${userID}`
-                        );
-                          let userObject = {
-                            email: user.data.email,
-                            id: user.data.id
-                        };
-                          this.setState(prevState => ({
-                            resignedUsersEmails: [
-                                ...prevState.resignedUsersEmails,
-                                userObject
-                            ]
-                        }));
-                    });*/
+                ResignedUsersIDs = [];
+                _context2.next = 23;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/deleteUserFromMeeting/" + this.props.meetingId);
 
-                _context2.next = 22;
+              case 23:
+                allDeleted = _context2.sent;
+
+
+                for (i = 0; i < allDeleted.data.length; i++) {
+                  ResignedUsersIDs.push(allDeleted.data[i].email);
+
+                  console.log(allDeleted.data[i]);
+
+                  this.setState(function (prevState) {
+                    return {
+                      resignedUsersEmails: [].concat(_toConsumableArray(prevState.resignedUsersEmails), [allDeleted.data[i][0].email])
+                    };
+                  });
+                }
+
+                _context2.next = 27;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/comments");
 
-              case 22:
+              case 27:
                 allComments = _context2.sent;
 
 
@@ -58585,7 +58577,7 @@ var SingleMeetingDetails = function (_Component) {
 
                 this.props.switchLoader(false);
 
-              case 25:
+              case 30:
               case "end":
                 return _context2.stop();
             }
@@ -58617,17 +58609,19 @@ var SingleMeetingDetails = function (_Component) {
 
 
                 for (i = 0; i < allMatches.data.length; i++) {
-                  if (allMatches.data[i].userId == sessionStorage.getItem("userId") && allMatches.data[i].eventId == this.props.meetingId) {
+                  console.log(allMatches.data[i].userId);
+                  console.log(this.props.meetingID);
+                  if (allMatches.data[i].userId == sessionStorage.getItem("userId") && allMatches.data[i].eventId == this.props.meetingID) {
                     takePart = false;
                   }
                 }
 
-                if (!(takePart === false)) {
+                if (!(takePart == false)) {
                   _context3.next = 9;
                   break;
                 }
 
-                this.props.showAlertWarning("user with email " + this.state.loggedInUserEmail + " took part in the past!");
+                this.props.showAlertWarning("Użytkownik " + this.state.loggedInUserEmail + " wziął już udział!");
                 _context3.next = 20;
                 break;
 
@@ -58654,9 +58648,10 @@ var SingleMeetingDetails = function (_Component) {
 
 
                 if (user.status == 200) {
+                  console.log(user.data[0]);
                   userObject = {
-                    email: user.data.email,
-                    id: user.data.id
+                    email: user.data[0].email,
+                    id: user.data[0].id
                   };
 
 
@@ -58670,15 +58665,15 @@ var SingleMeetingDetails = function (_Component) {
                     displayResignBtn: true,
                     displayCommentsContainer: true
                   });
-                  this.props.showAlertSuccess("You are saved to that meeting. Now you can write comments.");
+                  this.props.showAlertSuccess("Wziąłeś udział w wydarzeniu. Możesz dodawać komentarze.");
                 } else {
-                  this.props.showAlertWarning("Troubles with adding user to tak part.");
+                  this.props.showAlertWarning("Nie można dodać użytkownika do spotkania.");
                 }
                 _context3.next = 20;
                 break;
 
               case 19:
-                this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
+                this.props.showAlertWarning("Błąd. Nie można dodać użytkownika do spotkania.");
 
               case 20:
               case "end":
@@ -58694,56 +58689,95 @@ var SingleMeetingDetails = function (_Component) {
 
       return takePartClick;
     }()
+  }, {
+    key: "resignClick",
+    value: function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+        var allMatches, i, deleteUser, savedDeleteUserFromMeeting;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
 
-    /*async resignClick() {
-          const allMatches = await axios.get(
-              `http://127.0.0.1:8000/api/matchUserWithMeetings`
-          );
-            for (var i = 0; i < allMatches.data.length; i++) {
-              if (
-                  _.contains(
-                      allMatches.data[i],
-                      sessionStorage.getItem("userId")
-                  ) &&
-                  _.contains(allMatches.data[i], this.props.meetingId)
-              ) {
-                  const deleteUser = await axios.delete(
-                      `http://127.0.0.1:8000/api/matchUserWithMeeting/${
-                          allMatches.data[i].id
-                      }`,
-                      {
-                          headers: {
-                              "Content-Type": "application/x-www-form-urlencoded"
-                          }
-                      }
-                  );
-                    if (deleteUser.status == "200") {
-                      const savedDeleteUserFromMeeting = await axios.post(
-                          `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
-                          {
-                              userId: sessionStorage.getItem("userId"),
-                              meetingId: this.props.meetingId
-                          }
-                      );
-                        if (savedDeleteUserFromMeeting.status == "200") {
-                          window.location.reload();
-                          this.props.showAlertSuccess(
-                              "we are sad that you resigned."
-                          );
-                      } else {
-                          this.props.showAlertWarning(
-                              "Some problems occured with delete you from meeting."
-                          );
-                      }
-                  } else {
-                      this.props.showAlertWarning(
-                          "Some problems occured with delete you from meeting."
-                      );
+              case 2:
+                allMatches = _context4.sent;
+                i = 0;
+
+              case 4:
+                if (!(i < allMatches.data.length)) {
+                  _context4.next = 21;
+                  break;
+                }
+
+                if (!(allMatches.data[i].userId == sessionStorage.getItem("userId") && allMatches.data[i].eventId == this.props.meetingId)) {
+                  _context4.next = 18;
+                  break;
+                }
+
+                console.log("id: " + allMatches.data[i].id);
+                _context4.next = 9;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete("http://127.0.0.1:8000/api/deleteMatchUserWithMeeting/" + allMatches.data[i].id, {
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
                   }
-              }
-          }
-      }*/
+                });
 
+              case 9:
+                deleteUser = _context4.sent;
+
+                if (!(deleteUser.status == "200")) {
+                  _context4.next = 17;
+                  break;
+                }
+
+                _context4.next = 13;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/deleteUserFromMeeting", {
+                  userId: sessionStorage.getItem("userId"),
+                  meetingId: this.props.meetingId
+                });
+
+              case 13:
+                savedDeleteUserFromMeeting = _context4.sent;
+
+
+                if (savedDeleteUserFromMeeting.status == "200") {
+                  this.props.showAlertSuccess("Szkoda, że rezygnujesz.");
+
+                  this.setState({
+                    displayTakPartBtn: true,
+                    displayResignBtn: false,
+                    displayCommentsContainer: false
+                  });
+                } else {
+                  this.props.showAlertWarning("Problem z usunięciem użytkownika ze spotkania.");
+                }
+                _context4.next = 18;
+                break;
+
+              case 17:
+                this.props.showAlertWarning("Problem z usunięciem użytkownika z tabeli match_user_with_meeting.");
+
+              case 18:
+                i++;
+                _context4.next = 4;
+                break;
+
+              case 21:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function resignClick() {
+        return _ref4.apply(this, arguments);
+      }
+
+      return resignClick;
+    }()
   }, {
     key: "addCommentToState",
     value: function addCommentToState(userNickname, commentDate, commentBody) {
@@ -58834,10 +58868,31 @@ var SingleMeetingDetails = function (_Component) {
               user.email
             );
           }),
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "p",
+            null,
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Users which resigned in the past:"
+            )
+          ),
+          this.state.resignedUsersEmails.map(function (userEmail, i) {
+            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "p",
+              { key: i },
+              userEmail
+            );
+          }),
           this.state.displayTakPartBtn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             { className: "btn btn-default", onClick: this.takePartClick },
             "We\u017A udzia\u0142"
+          ) : "",
+          this.state.displayResignBtn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "btn btn-default", onClick: this.resignClick },
+            "Zrezygnuj"
           ) : "",
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "p",

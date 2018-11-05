@@ -29,7 +29,7 @@ class SingleMeetingDetails extends Component {
     this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
 
     this.takePartClick = this.takePartClick.bind(this);
-    //this.resignClick = this.resignClick.bind(this);
+    this.resignClick = this.resignClick.bind(this);
     this.addCommentToState = this.addCommentToState.bind(this);
   }
 
@@ -118,39 +118,24 @@ class SingleMeetingDetails extends Component {
       }
     });
 
-    /*let ResignedUsersIDs = [];
+    let ResignedUsersIDs = [];
 
-        const allDeleted = await axios.get(
-            `http://127.0.0.1:8000/api/deleteUserFromMeeting`
-        );
+    const allDeleted = await axios.get(
+      `http://127.0.0.1:8000/api/deleteUserFromMeeting/${this.props.meetingId}`
+    );
 
-        for (var i = 0; i < allDeleted.data.length; i++) {
-            if (_.contains(allDeleted.data[i], this.props.meetingId)) {
-                if (!_.contains(ResignedUsersIDs, allDeleted.data[i].userID)) {
-                    ResignedUsersIDs.push(allDeleted.data[i].userID);
-                }
+    for (var i = 0; i < allDeleted.data.length; i++) {
+      ResignedUsersIDs.push(allDeleted.data[i].email);
 
-                console.log(allDeleted.data[i].userID);
-            }
-        }
+      console.log(allDeleted.data[i]);
 
-        ResignedUsersIDs.map(async (userID, i) => {
-            const user = await axios.get(
-                `http://127.0.0.1:8000/api/user/${userID}`
-            );
-
-            let userObject = {
-                email: user.data.email,
-                id: user.data.id
-            };
-
-            this.setState(prevState => ({
-                resignedUsersEmails: [
-                    ...prevState.resignedUsersEmails,
-                    userObject
-                ]
-            }));
-        });*/
+      this.setState(prevState => ({
+        resignedUsersEmails: [
+          ...prevState.resignedUsersEmails,
+          allDeleted.data[i][0].email
+        ]
+      }));
+    }
 
     const allComments = await axios.get(`http://127.0.0.1:8000/api/comments`);
 
@@ -180,19 +165,19 @@ class SingleMeetingDetails extends Component {
     );
 
     for (var i = 0; i < allMatches.data.length; i++) {
+      console.log(allMatches.data[i].userId);
+      console.log(this.props.meetingID);
       if (
         allMatches.data[i].userId == sessionStorage.getItem("userId") &&
-        allMatches.data[i].eventId == this.props.meetingId
+        allMatches.data[i].eventId == this.props.meetingID
       ) {
         takePart = false;
       }
     }
 
-    if (takePart === false) {
+    if (takePart == false) {
       this.props.showAlertWarning(
-        "user with email " +
-          this.state.loggedInUserEmail +
-          " took part in the past!"
+        "Użytkownik " + this.state.loggedInUserEmail + " wziął już udział!"
       );
     } else {
       const savedMatchUserWithMeeting = await axios.post(
@@ -210,9 +195,10 @@ class SingleMeetingDetails extends Component {
         );
 
         if (user.status == 200) {
+          console.log(user.data[0]);
           let userObject = {
-            email: user.data.email,
-            id: user.data.id
+            email: user.data[0].email,
+            id: user.data[0].id
           };
 
           this.setState(prevState => ({
@@ -224,70 +210,73 @@ class SingleMeetingDetails extends Component {
             displayCommentsContainer: true
           });
           this.props.showAlertSuccess(
-            "You are saved to that meeting. Now you can write comments."
+            "Wziąłeś udział w wydarzeniu. Możesz dodawać komentarze."
           );
         } else {
-          this.props.showAlertWarning("Troubles with adding user to tak part.");
+          this.props.showAlertWarning(
+            "Nie można dodać użytkownika do spotkania."
+          );
         }
       } else {
         this.props.showAlertWarning(
-          "Sorry we can't handle that. Please repeat for a while."
+          "Błąd. Nie można dodać użytkownika do spotkania."
         );
       }
     }
   }
 
-  /*async resignClick() {
-        const allMatches = await axios.get(
-            `http://127.0.0.1:8000/api/matchUserWithMeetings`
+  async resignClick() {
+    const allMatches = await axios.get(
+      `http://127.0.0.1:8000/api/matchUserWithMeetings`
+    );
+
+    for (var i = 0; i < allMatches.data.length; i++) {
+      if (
+        allMatches.data[i].userId == sessionStorage.getItem("userId") &&
+        allMatches.data[i].eventId == this.props.meetingId
+      ) {
+        console.log("id: " + allMatches.data[i].id);
+        const deleteUser = await axios.delete(
+          `http://127.0.0.1:8000/api/deleteMatchUserWithMeeting/${
+            allMatches.data[i].id
+          }`,
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
+          }
         );
 
-        for (var i = 0; i < allMatches.data.length; i++) {
-            if (
-                _.contains(
-                    allMatches.data[i],
-                    sessionStorage.getItem("userId")
-                ) &&
-                _.contains(allMatches.data[i], this.props.meetingId)
-            ) {
-                const deleteUser = await axios.delete(
-                    `http://127.0.0.1:8000/api/matchUserWithMeeting/${
-                        allMatches.data[i].id
-                    }`,
-                    {
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        }
-                    }
-                );
-
-                if (deleteUser.status == "200") {
-                    const savedDeleteUserFromMeeting = await axios.post(
-                        `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
-                        {
-                            userId: sessionStorage.getItem("userId"),
-                            meetingId: this.props.meetingId
-                        }
-                    );
-
-                    if (savedDeleteUserFromMeeting.status == "200") {
-                        window.location.reload();
-                        this.props.showAlertSuccess(
-                            "we are sad that you resigned."
-                        );
-                    } else {
-                        this.props.showAlertWarning(
-                            "Some problems occured with delete you from meeting."
-                        );
-                    }
-                } else {
-                    this.props.showAlertWarning(
-                        "Some problems occured with delete you from meeting."
-                    );
-                }
+        if (deleteUser.status == "200") {
+          const savedDeleteUserFromMeeting = await axios.post(
+            `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
+            {
+              userId: sessionStorage.getItem("userId"),
+              meetingId: this.props.meetingId
             }
+          );
+
+          if (savedDeleteUserFromMeeting.status == "200") {
+            this.props.showAlertSuccess("Szkoda, że rezygnujesz.");
+
+            this.setState({
+              displayTakPartBtn: true,
+              displayResignBtn: false,
+              displayCommentsContainer: false
+            });
+          } else {
+            this.props.showAlertWarning(
+              "Problem z usunięciem użytkownika ze spotkania."
+            );
+          }
+        } else {
+          this.props.showAlertWarning(
+            "Problem z usunięciem użytkownika z tabeli match_user_with_meeting."
+          );
         }
-    }*/
+      }
+    }
+  }
 
   addCommentToState(userNickname, commentDate, commentBody) {
     let commentObject = {
@@ -339,12 +328,12 @@ class SingleMeetingDetails extends Component {
           {this.state.usersEmails.map((user, i) => {
             return <p key={i}>{user.email}</p>;
           })}
-          {/*<p>
+          <p>
             <strong>Users which resigned in the past:</strong>
-          </p>*/}
-          {/*{this.state.resignedUsersEmails.map((user, i) => {
-                        return <p key={i}>{user.email}</p>;
-                    })}*/}
+          </p>
+          {this.state.resignedUsersEmails.map((userEmail, i) => {
+            return <p key={i}>{userEmail}</p>;
+          })}
           {this.state.displayTakPartBtn ? (
             <div className="btn btn-default" onClick={this.takePartClick}>
               Weź udział
@@ -352,17 +341,14 @@ class SingleMeetingDetails extends Component {
           ) : (
             ""
           )}
-          {/*
-                    {this.state.displayResignBtn ? (
-                        <div
-                            className="btn btn-default"
-                            onClick={this.resignClick}
-                        >
-                            Resign
-                        </div>
-                    ) : (
-                        ""
-                    )}*/}
+
+          {this.state.displayResignBtn ? (
+            <div className="btn btn-default" onClick={this.resignClick}>
+              Zrezygnuj
+            </div>
+          ) : (
+            ""
+          )}
           <p>
             <strong>Komentarze</strong>
           </p>

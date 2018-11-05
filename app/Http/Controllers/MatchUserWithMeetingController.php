@@ -22,4 +22,15 @@ class MatchUserWithMeetingController extends Controller
 
         $match->save();
     }
+
+    public function matchUserWithMeeting($id){
+
+        $deleteMatch = matchUserWithMeeting::find($id);
+
+        var_dump($id);
+        var_dump($deleteMatch);
+
+        $deleteMatch->delete();
+        //$allUsers = DB::table('match_user_with_event')->where('id', $id)->delete();
+    }
 }
