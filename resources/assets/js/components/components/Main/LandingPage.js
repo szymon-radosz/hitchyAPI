@@ -44,14 +44,14 @@ class LandingPage extends Component {
 
               <div className="landingButtons">
                 <Link to="/login" onClick={this.cleanStateOfSearchInLocation}>
-                  <div className="btn btn-default">Login</div>
+                  <div className="btn btn-default defaultBtn">Login</div>
                 </Link>
 
                 <Link
                   to="/register"
                   onClick={this.cleanStateOfSearchInLocation}
                 >
-                  <div className="btn btn-default">Register</div>
+                  <div className="btn btn-default defaultBtn">Register</div>
                 </Link>
               </div>
             </div>

@@ -21,14 +21,14 @@ const Comment = props => (
                     <p>{props.userNickname}</p>
                     <li>
                         <Link to={`/profile/${props.userNickname}`}>
-                            User profile
+                           Profil użytkownika
                         </Link>
                     </li>
                 </div>
             </div>
 
             <p>
-                {props.userNickname} wrote {props.date}:{" "}
+                {props.userNickname} napisał/a {props.date}:{" "}
             </p>
 
             <p>{props.commentBody}</p>

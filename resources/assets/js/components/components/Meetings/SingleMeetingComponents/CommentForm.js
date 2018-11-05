@@ -43,10 +43,10 @@ class CommentForm extends Component {
         savedComment.data.created_at,
         this.state.commentBody
       );
-      this.props.showAlertSuccess("You wrote a comment.");
+      this.props.showAlertSuccess("Dodałeś komentarz.");
     } else {
       this.props.showAlertWarning(
-        "Sorry we can't handle that. Please repeat for a while."
+        "Nie udało się dodać komentarza."
       );
     }
   }
@@ -57,7 +57,7 @@ class CommentForm extends Component {
         <form onSubmit={this.submitComment}>
           <div className="form-group">
             <label htmlFor="commentBody">
-              Write a comment like a {this.props.loggedInUserEmail}
+              Napisz komentarz jako {this.props.loggedInUserEmail}
             </label>
             <textarea
               maxLength="150"
@@ -70,7 +70,7 @@ class CommentForm extends Component {
           </div>
 
           <button type="submit" className="btn btn-default">
-            Send a comment
+            Dodaj
           </button>
         </form>
       </div>

@@ -24,6 +24,7 @@ class MainMeetings extends Component {
   }
 
   async componentDidMount() {
+    this.props.switchLoader(true);
     try {
       const allMeetings = await axios.get(`http://127.0.0.1:8000/api/events`);
 
@@ -55,6 +56,7 @@ class MainMeetings extends Component {
     } catch (error) {
       console.log(error);
     }
+    this.props.switchLoader(false);
   }
 
   setCoordinates(childLat, childLng) {
@@ -100,7 +102,6 @@ class MainMeetings extends Component {
                 latCenter={this.state.lat}
                 lngCenter={this.state.lng}
                 markersData={this.state.markersData}
-                displayFirstMarker={false}
                 centerCoord={this.state.centerCoord}
               />
             </div>

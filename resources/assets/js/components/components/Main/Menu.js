@@ -47,7 +47,7 @@ class Menu extends Component {
   logout() {
     sessionStorage.setItem("userId", "");
     sessionStorage.setItem("userNickName", "");
-    this.props.showAlertSuccess("You're sucessfully logout");
+    this.props.showAlertSuccess("Poprawnie wylogowano.");
     this.setState({ userIsLoggedIn: false });
   }
 
@@ -99,7 +99,7 @@ class Menu extends Component {
                         to="/meetings"
                         onClick={this.cleanStateOfSearchInLocation}
                       >
-                        Meetings
+                        Wydarzenia
                       </Link>
                     </li>
                   ) : (
@@ -112,7 +112,7 @@ class Menu extends Component {
                         to="/points"
                         onClick={this.cleanStateOfSearchInLocation}
                       >
-                        Spots
+                        Punkty
                       </Link>
                     </li>
                   ) : (
@@ -125,7 +125,7 @@ class Menu extends Component {
                         to="/add-point"
                         onClick={this.cleanStateOfSearchInLocation}
                       >
-                        Add Spot
+                        Dodaj punkt
                       </Link>
                     </li>
                   ) : (
@@ -138,7 +138,7 @@ class Menu extends Component {
                         to="/add-meeting"
                         onClick={this.cleanStateOfSearchInLocation}
                       >
-                        Add meetings
+                        Dodaj wydarzenie
                       </Link>
                     </li>
                   ) : (
@@ -150,7 +150,7 @@ class Menu extends Component {
                         to="/login"
                         onClick={this.cleanStateOfSearchInLocation}
                       >
-                        Login
+                        Logowanie
                       </Link>
                     </li>
                   ) : (
@@ -162,7 +162,7 @@ class Menu extends Component {
                         to="/register"
                         onClick={this.cleanStateOfSearchInLocation}
                       >
-                        Register
+                        Rejestracja
                       </Link>
                     </li>
                   ) : (
@@ -179,20 +179,20 @@ class Menu extends Component {
                           aria-haspopup="true"
                           aria-expanded="false"
                         >
-                          Account
+                          Konto
                         </button>
                         <div
                           className="dropdown-menu"
                           aria-labelledby="dropdownMenuButton"
                         >
-                          <a onClick={this.logout}>Sign Out</a>
+                          <a onClick={this.logout}>Wyloguj się</a>
                           <Link
                             to={`/profile/${sessionStorage.getItem(
                               "userNickName"
                             )}`}
                             onClick={this.cleanStateOfSearchInLocation}
                           >
-                            My profile
+                            Mój profil
                           </Link>
                         </div>
                       </div>
@@ -251,7 +251,10 @@ class Menu extends Component {
             path="/meetings"
             render={() => {
               return (
-                <MainMeetings searchInLocation={this.state.searchInLocation} />
+                <MainMeetings
+                  searchInLocation={this.state.searchInLocation}
+                  switchLoader={this.props.switchLoader}
+                />
               );
             }}
           />
@@ -280,6 +283,7 @@ class Menu extends Component {
                   {...props}
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  switchLoader={this.props.switchLoader}
                 />
               );
             }}

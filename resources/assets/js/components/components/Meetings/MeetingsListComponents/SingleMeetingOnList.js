@@ -32,23 +32,23 @@ class SingleMeetingOnList extends Component {
           </div>
           <div className="panel-body">
             <p>
-              <span className="bold">Date: </span>
+              <span className="bold">Data: </span>
               {this.props.date} {this.props.time}
             </p>
             <p>
-              <span className="bold">Description: </span>
+              <span className="bold">Opis: </span>
               {this.props.description}
             </p>
             <p>
-              <span className="bold">Created by: </span>
+              <span className="bold">Stworzone przez: </span>
               {this.props.author}
             </p>
             <p>
-              <span className="bold">Limit: </span>
+              <span className="bold">Limit uczestników: </span>
               {this.props.limit}
             </p>
             <Link to={`/events/${this.props.id}`}>
-              <div className="btn meetingDetailsBtn">Details</div>
+              <div className="btn meetingDetailsBtn">Szczegóły</div>
             </Link>
             <div
               className="btn locateBtn"

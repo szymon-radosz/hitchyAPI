@@ -1,0 +1,124 @@
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.alert {
+  position: absolute;
+  top: 52px;
+  z-index: 10000;
+  right: 0;
+}
+
+.defaultBtn {
+  padding: 6px 30px;
+  /*-webkit-box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);
+  -moz-box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);
+  box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);*/
+}
+
+.loginCol,
+.registerCol {
+  margin-bottom: 30px;
+}
+
+.dropdown-menu {
+  z-index: 10000;
+}
+
+.leaflet-container {
+  height: 90vh;
+  width: 100%;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.row {
+  margin: 0 !important;
+}
+
+.listOfMeetingsRow,
+.navbar,
+.singleMeetingDetailsDataRow {
+  margin: 0 !important;
+}
+
+.navbar {
+  background-color: #fff !important;
+
+  .dropdown {
+    margin: 9px;
+
+    .dropdown-toggle {
+      background-color: #dedbdb;
+      border: none;
+    }
+
+    .dropdown-menu {
+      padding: 15px;
+      min-width: 120px;
+
+      a {
+        display: block;
+        color: #333;
+        text-align: right;
+      }
+      a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+      }
+    }
+  }
+}
+
+* {
+  font-family: "Open Sans", sans-serif !important;
+}
+
+textarea:focus,
+.form-control:focus,
+button:focus,
+select:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: rgba(202, 201, 201, 0.8) !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0 0 8px rgba(202, 201, 201, 0.8) !important;
+  outline: 0 none !important;
+}
+
+.loaderContainer {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 10000;
+
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("./../js/components/images/loader.gif");
+    height: 100px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
+}

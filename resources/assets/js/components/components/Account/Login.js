@@ -37,9 +37,9 @@ class Login extends Component {
       sessionStorage.setItem("userId", loginUser.data.userId);
       sessionStorage.setItem("userNickName", loginUser.data.userNickName);
       this.props.loginUser(loginUser.data.userNickName);
-      this.props.showAlertSuccess("Thank you. Let's find new friends");
+      this.props.showAlertSuccess("Poprawnie zalogowano.");
     } else {
-      this.props.showAlertWarning("wrong password for that account");
+      this.props.showAlertWarning("Złe hasło.");
     }
   }
 
@@ -47,11 +47,11 @@ class Login extends Component {
     return (
       <div className="login row loginRow">
         <div className="col-sm-6 col-sm-offset-3 loginCol">
-          <h2>Login</h2>
+          <h2>Logowanie</h2>
 
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="emailOrNickname">Email or nickname:</label>
+              <label htmlFor="emailOrNickname">Email lub nick:</label>
               <input
                 type="text"
                 className="form-control"
@@ -63,7 +63,7 @@ class Login extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">Hasło:</label>
               <input
                 type="password"
                 className="form-control"
@@ -76,7 +76,7 @@ class Login extends Component {
 
             <input
               type="submit"
-              className="btn btn-default"
+              className="btn btn-default defaultBtn"
               id="loginBtn"
               value="Login"
             />

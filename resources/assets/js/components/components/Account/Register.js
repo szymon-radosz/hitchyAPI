@@ -31,7 +31,9 @@ class Register extends Component {
     event.preventDefault();
 
     if (_.contains(this.state.nickName, " ")) {
-      this.props.showAlertWarning("You can't use whitespace in your nickname");
+      this.props.showAlertWarning(
+        "Nie można używać pustych znaków w polu Nick"
+      );
     } else {
       let uniqueEmail = true;
       let uniqueNickname = true;
@@ -49,11 +51,11 @@ class Register extends Component {
 
         if (uniqueEmail === false) {
           this.props.showAlertWarning(
-            "user with email " + this.state.email + " already exists"
+            "Użytkownik " + this.state.email + " już istnieję."
           );
         } else if (uniqueNickname === false) {
           this.props.showAlertWarning(
-            "user with nickname " + this.state.nickName + " already exists"
+            "Użytkownik " + this.state.nickName + " już istnieję."
           );
         } else {
           const savedUser = await axios.post(`http://127.0.0.1:8000/api/user`, {
@@ -75,16 +77,14 @@ class Register extends Component {
             sessionStorage.setItem("userId", savedUser.data.userId);
             sessionStorage.setItem("userNickName", savedUser.data.userNickName);
             this.props.loginUser(savedUser.data.userNickName);
-            this.props.showAlertSuccess("Thank you. You created an account");
+            this.props.showAlertSuccess("Poprawnie stworzono nowe konto.");
           } else {
-            this.props.showAlertWarning(
-              "Sorry we can't handle that. Please repeat for a while."
-            );
+            this.props.showAlertWarning("Nie udało się stworzyć konta.");
           }
         }
       } else {
         this.props.showAlertWarning(
-          "Sorry password and confirmation doesn't match "
+          "Hasło i potwierdzenie hasła nie są takie same."
         );
       }
     }
@@ -94,11 +94,11 @@ class Register extends Component {
     return (
       <div className="register row registerRow">
         <div className="col-sm-6 col-sm-offset-3 registerCol">
-          <h2>Register</h2>
+          <h2>Rejestracja</h2>
 
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="firstName">First Name:</label>
+              <label htmlFor="firstName">Imię:</label>
               <input
                 type="text"
                 className="form-control"
@@ -110,12 +110,24 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="lastName">Last Name:</label>
+              <label htmlFor="lastName">Nazwisko:</label>
               <input
                 type="text"
                 className="form-control"
                 id="lastName"
                 name="lastName"
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
                 onChange={this.handleChange}
                 required
               />
@@ -134,7 +146,7 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="age">age:</label>
+              <label htmlFor="age">Wiek:</label>
               <input
                 type="number"
                 className="form-control"
@@ -146,7 +158,7 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="city">city:</label>
+              <label htmlFor="city">Miasto:</label>
               <input
                 type="text"
                 className="form-control"
@@ -158,7 +170,7 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="country">country:</label>
+              <label htmlFor="country">Kraj:</label>
               <input
                 type="text"
                 className="form-control"
@@ -170,7 +182,7 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="about">about:</label>
+              <label htmlFor="about">O mnie(krótki opis):</label>
               <input
                 type="text"
                 className="form-control"
@@ -182,19 +194,7 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">email:</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                onChange={this.handleChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">Hasło:</label>
               <input
                 type="password"
                 className="form-control"
@@ -206,9 +206,7 @@ class Register extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="passwordConfirmation">
-                Password confirmation:
-              </label>
+              <label htmlFor="passwordConfirmation">Potwierdzenie hasło:</label>
               <input
                 type="password"
                 className="form-control"
@@ -221,7 +219,7 @@ class Register extends Component {
 
             <input
               type="submit"
-              className="btn btn-default"
+              className="btn btn-default defaultBtn"
               id="registerBtn"
               value="Register"
             />

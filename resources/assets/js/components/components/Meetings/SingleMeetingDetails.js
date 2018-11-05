@@ -43,6 +43,7 @@ class SingleMeetingDetails extends Component {
   }
 
   async componentDidMount() {
+    this.props.switchLoader(true);
     this.setState({
       startLat: this.props.startPlaceLattitude,
       startLng: this.props.startPlaceLongitude,
@@ -51,6 +52,7 @@ class SingleMeetingDetails extends Component {
     });
 
     console.log(this.props.meetingId);
+
     const getUser = await axios.get(
       `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
     );
@@ -99,11 +101,13 @@ class SingleMeetingDetails extends Component {
       const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
       for (var i = 0; i < allUsers.data.length; i++) {
-        if (_.contains(allUsers.data[i], parseInt(userId))) {
+        if (allUsers.data[i].id == parseInt(userId)) {
           let userObject = {
             email: allUsers.data[i].email,
             id: allUsers.data[i].id
           };
+
+          console.log(allUsers.data[i].email);
 
           this.setState(prevState => ({
             usersEmails: [...prevState.usersEmails, userObject]
@@ -164,6 +168,8 @@ class SingleMeetingDetails extends Component {
         }));
       }
     }
+
+    this.props.switchLoader(false);
   }
 
   async takePartClick() {
@@ -175,8 +181,8 @@ class SingleMeetingDetails extends Component {
 
     for (var i = 0; i < allMatches.data.length; i++) {
       if (
-        _.contains(allMatches.data[i], sessionStorage.getItem("userId")) &&
-        _.contains(allMatches.data[i], this.props.meetingId)
+        allMatches.data[i].userId == sessionStorage.getItem("userId") &&
+        allMatches.data[i].eventId == this.props.meetingId
       ) {
         takePart = false;
       }
@@ -318,27 +324,30 @@ class SingleMeetingDetails extends Component {
           >
             Punkt Końcowy
           </div>
-          <p>Description: {this.props.description}</p>
-          <p>Created by: {this.props.author}</p>
+          <p>Opis: {this.props.description}</p>
+          <p>Stworzone przez: {this.props.author}</p>
           <p>
-            Limit: {this.props.limit}
+            Limit uczestników: {this.props.limit}{" "}
+            {this.state.usersEmails.length == this.props.limit
+              ? " (osiągnięto limit)"
+              : ""}
             {/*{this.state.usersEmails.length}/{this.props.limit})*/}
           </p>
           <p>
-            <strong>Users take part:</strong>
+            <strong>Wezmą udział:</strong>
           </p>
           {this.state.usersEmails.map((user, i) => {
             return <p key={i}>{user.email}</p>;
           })}
-          <p>
+          {/*<p>
             <strong>Users which resigned in the past:</strong>
-          </p>
+          </p>*/}
           {/*{this.state.resignedUsersEmails.map((user, i) => {
                         return <p key={i}>{user.email}</p>;
                     })}*/}
           {this.state.displayTakPartBtn ? (
             <div className="btn btn-default" onClick={this.takePartClick}>
-              Take part
+              Weź udział
             </div>
           ) : (
             ""
@@ -355,7 +364,7 @@ class SingleMeetingDetails extends Component {
                         ""
                     )}*/}
           <p>
-            <strong>Comments</strong>
+            <strong>Komentarze</strong>
           </p>
 
           {/* in db comments are stored from the oldest to the newest, render reverse*/}

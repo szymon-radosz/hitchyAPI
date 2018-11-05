@@ -1,0 +1,35 @@
+.landing {
+  margin: 0 !important;
+  height: calc(100vh - 52px);
+  background: url("./../js/components/images/main.jpg") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  .landingForm {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 30px;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+
+    h1 {
+      margin: 0;
+      padding: 0 0 15px 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    h4 {
+      padding-bottom: 20px;
+    }
+
+    .defaultBtn {
+      margin: 0 7px;
+    }
+  }
+}

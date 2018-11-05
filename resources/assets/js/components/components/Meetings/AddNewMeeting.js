@@ -41,8 +41,8 @@ class AddNewMeeting extends Component {
     let savedMatchUserWithMeeting;
     let savedMeetingId;
 
-    if (this.state.limit == "Select") {
-      this.props.showAlertWarning("Please choose the limit of users.");
+    if (this.state.limit == "Wybierz") {
+      this.props.showAlertWarning("Wybierz limit użytkowników.");
     } else {
       try {
         savedMeeting = await axios.post(
@@ -113,11 +113,11 @@ class AddNewMeeting extends Component {
     return (
       <div className="addNewMeeting row addNewMeetingRow">
         <div className="col-sm-6 addNewMeetingCol">
-          <h2>Add new meeting</h2>
+          <h2>Dodaj nowy wyjazd/wydarzenie</h2>
 
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="title">Title:</label>
+              <label htmlFor="title">Tytuł:</label>
               <input
                 type="text"
                 className="form-control"
@@ -128,7 +128,7 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="description">Description:</label>
+              <label htmlFor="description">Opis:</label>
               <input
                 type="text"
                 className="form-control"
@@ -139,7 +139,9 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="lattitude">Start lattitude:</label>
+              <label htmlFor="lattitude">
+                Szerokość geograficzna punktu startowego:
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -151,7 +153,9 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="longitude">Start longitude:</label>
+              <label htmlFor="longitude">
+                Wysokość geograficzna punktu startowego:
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -163,7 +167,9 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="lattitude">Stop lattitude:</label>
+              <label htmlFor="lattitude">
+                Szerokość geograficzna punktu końcowego:
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -175,7 +181,9 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="longitude">Stop longitude:</label>
+              <label htmlFor="longitude">
+                Wysokość geograficzna punktu startowego:
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -187,7 +195,7 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="limit">Limit:</label>
+              <label htmlFor="limit">Limit uczestników:</label>
               <div className="form-group">
                 <select
                   className="form-control"
@@ -196,16 +204,16 @@ class AddNewMeeting extends Component {
                   onChange={this.handleChange}
                   required
                 >
-                  <option>Select</option>
+                  <option>Wybierz</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
-                  <option>No limit</option>
+                  <option>Bez limitu</option>
                 </select>
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="date">Date:</label>
+              <label htmlFor="date">Data:</label>
               <input
                 type="date"
                 className="form-control"
@@ -220,15 +228,15 @@ class AddNewMeeting extends Component {
               type="submit"
               className="btn btn-default"
               id="addNewMeetingBtn"
-              value="Add new meeting"
+              value="Dodaj"
             />
           </form>
         </div>
 
-        <div
+        <div 
           className="col-sm-6 mainMeetingsMap"
           style={{ height: "calc(100vh - 60px)" }}
-        >
+        > 
           <MapComponent
             latCenter={this.state.lat}
             lngCenter={this.state.lng}

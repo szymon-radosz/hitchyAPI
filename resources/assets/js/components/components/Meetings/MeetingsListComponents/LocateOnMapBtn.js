@@ -8,7 +8,7 @@ class LocateOnMapBtn extends Component {
   render() {
     return (
       <div className="btn locateBtn" onClick={this.props.setCoordinate}>
-        Locate on map
+        Lokalizuj
       </div>
     );
   }

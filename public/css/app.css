@@ -4,116 +4,32 @@
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.leaflet-container {
-  height: 90vh;
-  width: 100%;
+.alert {
+  position: absolute;
+  top: 52px;
+  z-index: 10000;
+  right: 0;
 }
 
-.alert {
-  z-index: 10000;
+.defaultBtn {
+  padding: 6px 30px;
+  /*-webkit-box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);
+  -moz-box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);
+  box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);*/
+}
+
+.loginCol,
+.registerCol {
+  margin-bottom: 30px;
 }
 
 .dropdown-menu {
   z-index: 10000;
 }
 
-.loaderContainer {
+.leaflet-container {
+  height: 90vh;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  z-index: 10000;
-}
-
-.loaderContainer .loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  background: url(/images/loader.gif?7c5f6adb22aca91536dcf5a1ac0289c4);
-  height: 100px;
-  width: 100px;
-  background-repeat: no-repeat;
-  background-position: 50%;
-}
-
-.leaflet-left {
-  width: 100%;
-}
-
-.leaflet-left .geosearch {
-  position: absolute;
-  border: none !important;
-  top: 0;
-  right: 0;
-  width: 80%;
-}
-
-.leaflet-left .geosearch .leaflet-bar-part-single {
-  display: none;
-}
-
-.leaflet-left .geosearch form {
-  text-align: right;
-}
-
-.leaflet-left .geosearch form .active {
-  background-color: #fff;
-}
-
-.leaflet-left .geosearch form .active > div {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.leaflet-left .geosearch form .glass,
-.leaflet-left .geosearch form .reset {
-  display: inline-block;
-}
-
-.landing {
-  margin: 0 !important;
-  height: calc(100vh - 52px);
-  background: url(/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a) no-repeat center center fixed;
-  background-size: cover;
-}
-
-.landing .landingForm {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 5px;
-  padding: 30px;
-  position: relative;
-  top: 25%;
-  -webkit-transform: translateY(-25%);
-          transform: translateY(-25%);
-}
-
-.landing .landingForm h1 {
-  margin: 0;
-  padding: 0 0 15px 0;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.landing .landingForm .landingBtn {
-  color: #fff;
-  background-color: #6f9dcc;
-  padding: 10px 30px;
-  font-weight: 700;
-  font-size: 16px;
-}
-
-.landing .landingForm .landingBtn:hover {
-  background-color: #d6998f;
-  -webkit-transition-duration: 1s;
-          transition-duration: 1s;
-}
-
-.listOfMeetingsCol,
-.singleMeetingDetailsDataCol {
-  height: calc(100vh - 60px);
-  overflow-y: scroll;
 }
 
 .bold {
@@ -189,6 +105,100 @@ input[type="color"]:focus,
   outline: 0 none !important;
 }
 
+.loaderContainer {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 10000;
+}
+
+.loaderContainer .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: url(/images/loader.gif?7c5f6adb22aca91536dcf5a1ac0289c4);
+  height: 100px;
+  width: 100px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.landing {
+  margin: 0 !important;
+  height: calc(100vh - 52px);
+  background: url(/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.landing .landingForm {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  padding: 30px;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.landing .landingForm h1 {
+  margin: 0;
+  padding: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.landing .landingForm h4 {
+  padding-bottom: 20px;
+}
+
+.landing .landingForm .defaultBtn {
+  margin: 0 7px;
+}
+
+.leaflet-left {
+  width: 100%;
+}
+
+.leaflet-left .geosearch {
+  position: absolute;
+  border: none !important;
+  top: 0;
+  right: 0;
+  width: 80%;
+}
+
+.leaflet-left .geosearch .leaflet-bar-part-single {
+  display: none;
+}
+
+.leaflet-left .geosearch form {
+  text-align: right;
+}
+
+.leaflet-left .geosearch form .active {
+  background-color: #fff;
+}
+
+.leaflet-left .geosearch form .active > div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.leaflet-left .geosearch form .glass,
+.leaflet-left .geosearch form .reset {
+  display: inline-block;
+}
+
+.listOfMeetingsCol,
+.singleMeetingDetailsDataCol {
+  height: calc(100vh - 60px);
+  overflow-y: scroll;
+}
+
 .listOfMeetingsRow .listOfMeetingsCol {
   padding: 20px;
 }
@@ -222,13 +232,6 @@ input[type="color"]:focus,
 
 .App {
   text-align: center;
-}
-
-.alert {
-  position: absolute;
-  top: 52px;
-  z-index: 1000;
-  right: 0;
 }
 
 .App-logo {

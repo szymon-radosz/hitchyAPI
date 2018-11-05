@@ -74,11 +74,11 @@ class AddNewMeeting extends Component {
     return (
       <div className="addNewMeeting row addNewMeetingRow">
         <div className="col-sm-6 addNewMeetingCol">
-          <h2>Add new meeting</h2>
+          <h2>Dodaj nowy punkt</h2>
 
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="title">Title:</label>
+              <label htmlFor="title">Tytuł:</label>
               <input
                 type="text"
                 className="form-control"
@@ -89,7 +89,7 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="description">Description:</label>
+              <label htmlFor="description">Opis:</label>
               <input
                 type="text"
                 className="form-control"
@@ -100,7 +100,7 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="lattitude">lattitude:</label>
+              <label htmlFor="lattitude">Szerokość geograficzna:</label>
               <input
                 type="text"
                 className="form-control"
@@ -112,7 +112,7 @@ class AddNewMeeting extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="longitude">longitude:</label>
+              <label htmlFor="longitude">Wysokość geograficzna:</label>
               <input
                 type="text"
                 className="form-control"
@@ -128,7 +128,7 @@ class AddNewMeeting extends Component {
               type="submit"
               className="btn btn-default"
               id="addNewMeetingBtn"
-              value="Add new meeting"
+              value="Dodaj"
             />
           </form>
         </div>
