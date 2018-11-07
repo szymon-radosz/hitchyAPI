@@ -145,7 +145,7 @@ class MainMeetings extends Component {
               </div>
             </div>
 
-            <div className="col-sm-6">
+            <div className="col-sm-6 meetingMapContainer">
               <MapComponent
                 latCenter={this.state.lat}
                 lngCenter={this.state.lng}

@@ -1,0 +1,57 @@
+.meetingMapContainer {
+  height: calc(100vh - 52px);
+  padding: 0 !important;
+
+  div {
+    .leaflet-container {
+      height: calc(100vh - 52px);
+    }
+  }
+
+  .leaflet-control-zoom {
+    z-index: 10000;
+  }
+
+  .leaflet-control-geosearch {
+    width: 100% !important;
+    background: rgba(255, 255, 255, 0.7);
+    margin: 0 !important;
+    padding: 10px 0;
+
+    form {
+      text-align: center !important;
+      width: 100%;
+    }
+  }
+}
+
+.listOfMeetingsRow {
+  margin: 0;
+
+  .listOfMeetingsCol {
+    padding: 20px;
+    height: calc(100vh - 52px);
+    overflow-y: scroll;
+
+    .btn {
+      margin: 0 10px 10px 0;
+    }
+  }
+}
+
+.singleMeetingDetailsDataRow {
+  margin: 0;
+
+  .btn {
+    margin: 0 10px 10px 0;
+  }
+
+  .singleMeetingDetailsDataCol {
+    height: calc(100vh - 52px);
+    overflow-y: scroll;
+
+    .userCommentInfoBox {
+      text-align: center;
+    }
+  }
+}

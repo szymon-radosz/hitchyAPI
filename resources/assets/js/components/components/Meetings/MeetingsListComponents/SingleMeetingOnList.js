@@ -48,10 +48,10 @@ class SingleMeetingOnList extends Component {
               {this.props.limit}
             </p>
             <Link to={`/events/${this.props.id}`}>
-              <div className="btn meetingDetailsBtn">Szczegóły</div>
+              <div className="btn btn-default">Szczegóły</div>
             </Link>
             <div
-              className="btn locateBtn"
+              className="btn btn-default"
               onClick={() => {
                 this.props.setNewCenterCoords(
                   this.props.startPlaceLattitude,
@@ -62,7 +62,7 @@ class SingleMeetingOnList extends Component {
               Punkt Początkowy
             </div>
             <div
-              className="btn locateBtn"
+              className="btn btn-default"
               onClick={() => {
                 this.props.setNewCenterCoords(
                   this.props.stopPlaceLattitude,

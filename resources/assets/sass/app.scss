@@ -4,6 +4,7 @@
 @import "global";
 @import "landing";
 @import "points";
+@import "meetings";
 
 .leaflet-left {
   width: 100%;
@@ -34,43 +35,6 @@
       .reset {
         display: inline-block;
       }
-    }
-  }
-}
-
-.listOfMeetingsCol,
-.singleMeetingDetailsDataCol {
-  height: calc(100vh - 60px);
-  overflow-y: scroll;
-}
-
-.listOfMeetingsRow {
-  .listOfMeetingsCol {
-    padding: 20px;
-
-    .meetingDetailsBtn {
-      background-color: #92adaf;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .meetingDetailsBtn:hover {
-      background-color: #749799;
-      transition-duration: 0.5s;
-    }
-
-    .locateBtn {
-      background-color: #dedbdc;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      margin-left: 10px;
-    }
-
-    .locateBtn:hover {
-      background-color: #cac3c5;
-      transition-duration: 0.5s;
     }
   }
 }

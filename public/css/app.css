@@ -4,6 +4,10 @@
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+textarea {
+  resize: none;
+}
+
 .alert {
   position: absolute;
   top: 52px;
@@ -50,9 +54,7 @@
   margin: 0 !important;
 }
 
-.listOfMeetingsRow,
-.navbar,
-.singleMeetingDetailsDataRow {
+.navbar {
   margin: 0 !important;
 }
 
@@ -216,6 +218,62 @@ input[type="color"]:focus,
   margin-right: 10px;
 }
 
+.meetingMapContainer {
+  height: calc(100vh - 52px);
+  padding: 0 !important;
+}
+
+.meetingMapContainer div .leaflet-container {
+  height: calc(100vh - 52px);
+}
+
+.meetingMapContainer .leaflet-control-zoom {
+  z-index: 10000;
+}
+
+.meetingMapContainer .leaflet-control-geosearch {
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0 !important;
+  padding: 10px 0;
+}
+
+.meetingMapContainer .leaflet-control-geosearch form {
+  text-align: center !important;
+  width: 100%;
+}
+
+.listOfMeetingsRow {
+  margin: 0;
+}
+
+.listOfMeetingsRow .listOfMeetingsCol {
+  padding: 20px;
+  height: calc(100vh - 52px);
+  overflow-y: scroll;
+}
+
+.listOfMeetingsRow .listOfMeetingsCol .btn {
+  margin: 0 10px 10px 0;
+}
+
+.singleMeetingDetailsDataRow {
+  margin: 0;
+}
+
+.singleMeetingDetailsDataRow .btn {
+  margin: 0 10px 10px 0;
+}
+
+.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol {
+  height: calc(100vh - 52px);
+  overflow-y: scroll;
+}
+
+.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol .userCommentInfoBox {
+  text-align: center;
+}
+
 .leaflet-left {
   width: 100%;
 }
@@ -248,43 +306,6 @@ input[type="color"]:focus,
 .leaflet-left .geosearch form .glass,
 .leaflet-left .geosearch form .reset {
   display: inline-block;
-}
-
-.listOfMeetingsCol,
-.singleMeetingDetailsDataCol {
-  height: calc(100vh - 60px);
-  overflow-y: scroll;
-}
-
-.listOfMeetingsRow .listOfMeetingsCol {
-  padding: 20px;
-}
-
-.listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn {
-  background-color: #92adaf;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn:hover {
-  background-color: #749799;
-  -webkit-transition-duration: 0.5s;
-          transition-duration: 0.5s;
-}
-
-.listOfMeetingsRow .listOfMeetingsCol .locateBtn {
-  background-color: #dedbdc;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  margin-left: 10px;
-}
-
-.listOfMeetingsRow .listOfMeetingsCol .locateBtn:hover {
-  background-color: #cac3c5;
-  -webkit-transition-duration: 0.5s;
-          transition-duration: 0.5s;
 }
 
 .App {

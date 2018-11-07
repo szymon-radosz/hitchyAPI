@@ -3,6 +3,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+textarea {
+  resize: none;
+}
+
 .alert {
   position: absolute;
   top: 52px;
@@ -49,9 +53,7 @@
   margin: 0 !important;
 }
 
-.listOfMeetingsRow,
-.navbar,
-.singleMeetingDetailsDataRow {
+.navbar {
   margin: 0 !important;
 }
 

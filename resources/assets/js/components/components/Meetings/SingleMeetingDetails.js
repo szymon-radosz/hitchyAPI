@@ -298,7 +298,7 @@ class SingleMeetingDetails extends Component {
             {this.props.title} - {this.props.date}{" "}
           </h2>
           <div
-            className="btn locateBtn"
+            className="btn btn-default"
             onClick={() => {
               this.setNewCenterCoords(this.state.startLat, this.state.startLng);
             }}
@@ -306,17 +306,21 @@ class SingleMeetingDetails extends Component {
             Punkt Startowy
           </div>
           <div
-            className="btn locateBtn"
+            className="btn btn-default"
             onClick={() => {
               this.setNewCenterCoords(this.state.stopLat, this.state.stopLng);
             }}
           >
             Punkt Końcowy
           </div>
-          <p>Opis: {this.props.description}</p>
-          <p>Stworzone przez: {this.props.author}</p>
           <p>
-            Limit uczestników: {this.props.limit}{" "}
+            <strong>Opis:</strong> {this.props.description}
+          </p>
+          <p>
+            <strong>Stworzone przez:</strong> {this.props.author}
+          </p>
+          <p>
+            <strong>Limit uczestników:</strong> {this.props.limit}{" "}
             {this.state.usersEmails.length == this.props.limit
               ? " (osiągnięto limit)"
               : ""}
@@ -329,7 +333,7 @@ class SingleMeetingDetails extends Component {
             return <p key={i}>{user.email}</p>;
           })}
           <p>
-            <strong>Users which resigned in the past:</strong>
+            <strong>Użytkownicy, którzy zrezygnowali:</strong>
           </p>
           {this.state.resignedUsersEmails.map((userEmail, i) => {
             return <p key={i}>{userEmail}</p>;
@@ -384,7 +388,7 @@ class SingleMeetingDetails extends Component {
           )}
         </div>
 
-        <div className="col-sm-6 mainMeetingsMap">
+        <div className="col-sm-6 meetingMapContainer">
           <MapComponent
             latCenter={this.props.startPlaceLattitude}
             lngCenter={this.props.startPlaceLongitude}

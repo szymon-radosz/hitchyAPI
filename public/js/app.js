@@ -21834,7 +21834,7 @@ var MainMeetings = function (_Component) {
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            { className: "col-sm-6" },
+            { className: "col-sm-6 meetingMapContainer" },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Map_MapComponent_js__["a" /* default */], {
               latCenter: this.state.lat,
               lngCenter: this.state.lng,
@@ -48986,14 +48986,14 @@ var SingleMeetingOnList = function (_Component) {
               { to: "/events/" + this.props.id },
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "btn meetingDetailsBtn" },
+                { className: "btn btn-default" },
                 "Szczeg\xF3\u0142y"
               )
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               {
-                className: "btn locateBtn",
+                className: "btn btn-default",
                 onClick: function onClick() {
                   _this2.props.setNewCenterCoords(_this2.props.startPlaceLattitude, _this2.props.startPlaceLongitude);
                 }
@@ -49003,7 +49003,7 @@ var SingleMeetingOnList = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               {
-                className: "btn locateBtn",
+                className: "btn btn-default",
                 onClick: function onClick() {
                   _this2.props.setNewCenterCoords(_this2.props.stopPlaceLattitude, _this2.props.stopPlaceLongitude);
                 }
@@ -58941,7 +58941,7 @@ var SingleMeetingDetails = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             {
-              className: "btn locateBtn",
+              className: "btn btn-default",
               onClick: function onClick() {
                 _this3.setNewCenterCoords(_this3.state.startLat, _this3.state.startLng);
               }
@@ -58951,7 +58951,7 @@ var SingleMeetingDetails = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             {
-              className: "btn locateBtn",
+              className: "btn btn-default",
               onClick: function onClick() {
                 _this3.setNewCenterCoords(_this3.state.stopLat, _this3.state.stopLng);
               }
@@ -58961,19 +58961,34 @@ var SingleMeetingDetails = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "p",
             null,
-            "Opis: ",
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Opis:"
+            ),
+            " ",
             this.props.description
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "p",
             null,
-            "Stworzone przez: ",
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Stworzone przez:"
+            ),
+            " ",
             this.props.author
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "p",
             null,
-            "Limit uczestnik\xF3w: ",
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "strong",
+              null,
+              "Limit uczestnik\xF3w:"
+            ),
+            " ",
             this.props.limit,
             " ",
             this.state.usersEmails.length == this.props.limit ? " (osiągnięto limit)" : ""
@@ -59000,7 +59015,7 @@ var SingleMeetingDetails = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
               "strong",
               null,
-              "Users which resigned in the past:"
+              "U\u017Cytkownicy, kt\xF3rzy zrezygnowali:"
             )
           ),
           this.state.resignedUsersEmails.map(function (userEmail, i) {
@@ -59048,7 +59063,7 @@ var SingleMeetingDetails = function (_Component) {
         ),
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 mainMeetingsMap" },
+          { className: "col-sm-6 meetingMapContainer" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Map_MapComponent_js__["a" /* default */], {
             latCenter: this.props.startPlaceLattitude,
             lngCenter: this.props.startPlaceLongitude,
@@ -59081,70 +59096,65 @@ var SingleMeetingDetails = function (_Component) {
 
 
 var Comment = function Comment(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    "div",
+    { className: "panel panel-default" },
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "div",
+      { className: "panel-body" },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
-        { className: "panel panel-default" },
+        { className: "dropdown" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "div",
-            { className: "panel-body" },
+          "button",
+          {
+            className: "btn btn-secondary dropdown-toggle",
+            type: "button",
+            id: "dropdownMenuButton",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false"
+          },
+          "Szczego\u0142y"
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          {
+            className: "dropdown-menu userCommentInfoBox",
+            "aria-labelledby": "dropdownMenuButton"
+          },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            null,
+            props.userNickname
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "li",
+            null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "btn-group dropup" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    { type: "button", className: "btn btn-secondary" },
-                    "Dropup"
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    {
-                        type: "button",
-                        className: "btn btn-secondary dropdown-toggle",
-                        "data-toggle": "dropdown",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "span",
-                        { className: "sr-only" },
-                        "Toggle Dropdown"
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "dropdown-menu" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        props.userNickname
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "li",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: "/profile/" + props.userNickname },
-                            "Profil u\u017Cytkownika"
-                        )
-                    )
-                )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "p",
-                null,
-                props.userNickname,
-                " napisa\u0142/a ",
-                props.date,
-                ":",
-                " "
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "p",
-                null,
-                props.commentBody
+              __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+              { to: "/profile/" + props.userNickname },
+              "Profil u\u017Cytkownika"
             )
+          )
         )
-    );
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "p",
+        null,
+        props.userNickname,
+        " napisa\u0142/a ",
+        props.date,
+        ":",
+        " "
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "p",
+        null,
+        props.commentBody
+      )
+    )
+  );
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Comment);
