@@ -1,0 +1,50 @@
+.listOfPointsRow {
+  margin: 0 !important;
+
+  .pointMapContainer {
+    height: calc(100vh - 52px);
+    padding: 0 !important;
+
+    div {
+      .leaflet-container {
+        height: calc(100vh - 52px);
+      }
+    }
+
+    .leaflet-control-zoom {
+      z-index: 10000;
+    }
+
+    .leaflet-control-geosearch {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      margin: 0;
+      padding: 10px 0;
+
+      form {
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  .listOfPointsCol {
+    padding: 20px;
+    height: calc(100vh - 52px);
+    overflow-y: scroll;
+
+    .addVoteSelect {
+      margin: 15px 0 5px 0;
+    }
+
+    .mainPointsButtonPanel {
+      .btn {
+        margin: 0 10px 10px 0;
+      }
+    }
+
+    .paginateBtn {
+      margin-right: 10px;
+    }
+  }
+}

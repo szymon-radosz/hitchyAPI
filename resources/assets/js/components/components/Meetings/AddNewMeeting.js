@@ -85,7 +85,7 @@ class AddNewMeeting extends Component {
         }
 
         if (savedMatchUserWithMeeting.status == "200") {
-          this.props.showAlertSuccess("You added new meeting");
+          this.props.showAlertSuccess("Dodałeś nowe spotkanie");
         } else {
           this.props.showAlertWarning("Nie udało się zapisać spotkania.");
         }
@@ -233,10 +233,10 @@ class AddNewMeeting extends Component {
           </form>
         </div>
 
-        <div 
+        <div
           className="col-sm-6 mainMeetingsMap"
           style={{ height: "calc(100vh - 60px)" }}
-        > 
+        >
           <MapComponent
             latCenter={this.state.lat}
             lngCenter={this.state.lng}

@@ -18,8 +18,18 @@
 }
 
 .loginCol,
-.registerCol {
+.registerCol,
+.addNewPoint {
   margin-bottom: 30px;
+}
+
+.addNewMeetingCol {
+  overflow: scroll;
+  height: 90vh;
+
+  form {
+    margin-bottom: 30px;
+  }
 }
 
 .dropdown-menu {

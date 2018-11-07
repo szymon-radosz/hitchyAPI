@@ -95,7 +95,7 @@ class SinglePointOnList extends Component {
               {this.props.item.countVotes ? this.props.item.countVotes : "0"}
             </p>
             <div
-              className="btn locateBtn"
+              className="btn btn-default"
               onClick={() => {
                 this.props.setNewCenterCoords(
                   this.props.item.lattitude,

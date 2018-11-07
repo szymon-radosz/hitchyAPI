@@ -5,7 +5,7 @@ const SpotVotes = props => {
     <div>
       <select
         id="inputState"
-        className="form-control"
+        className="form-control addVoteSelect"
         onChange={props.changeCurrentVote}
       >
         <option defaultValue>Wybierz</option>
@@ -15,7 +15,7 @@ const SpotVotes = props => {
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <div className="btn locateBtn" onClick={props.saveNewSpotVote}>
+      <div className="btn btn-default" onClick={props.saveNewSpotVote}>
         Dodaj głos
       </div>
     </div>

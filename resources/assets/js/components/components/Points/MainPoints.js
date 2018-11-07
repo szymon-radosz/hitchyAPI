@@ -221,26 +221,31 @@ class MainPoints extends Component {
 
   render() {
     return (
-      <div className="row listOfMeetingsRow">
-        <div className="col-sm-6 listOfMeetingsCol">
-          <div className="btn btn-default" onClick={this.loadTheLatestPoint}>
-            Najnowsze
-          </div>
+      <div className="row listOfPointsRow">
+        <div className="col-sm-6 listOfPointsCol">
+          <div className="mainPointsButtonPanel">
+            <div className="btn btn-default" onClick={this.loadTheLatestPoint}>
+              Najnowsze
+            </div>
 
-          <div className="btn btn-default" onClick={this.loadTheOldestPoint}>
-            Najstarsze
-          </div>
+            <div className="btn btn-default" onClick={this.loadTheOldestPoint}>
+              Najstarsze
+            </div>
 
-          <div className="btn btn-default" onClick={this.loadTheBestVoted}>
-            Najlepiej oceniane
-          </div>
+            <div className="btn btn-default" onClick={this.loadTheBestVoted}>
+              Najlepiej oceniane
+            </div>
 
-          <div className="btn btn-default" onClick={this.loadTheWorstVoted}>
-            Najgorzej oceniane
-          </div>
+            <div className="btn btn-default" onClick={this.loadTheWorstVoted}>
+              Najgorzej oceniane
+            </div>
 
-          <div className="btn btn-default" onClick={this.loadTheMostTimeVoted}>
-            Najczęściej oceniane
+            <div
+              className="btn btn-default"
+              onClick={this.loadTheMostTimeVoted}
+            >
+              Najczęściej oceniane
+            </div>
           </div>
           {this.state.pointsData.map((item, i) => {
             return (
@@ -256,15 +261,21 @@ class MainPoints extends Component {
             );
           })}
 
-          <div className="btn btn-default" onClick={this.prevPointsPage}>
+          <div
+            className="btn btn-default paginateBtn"
+            onClick={this.prevPointsPage}
+          >
             Poprzednie
           </div>
-          <div className="btn btn-default" onClick={this.nextPointsPage}>
+          <div
+            className="btn btn-default paginateBtn"
+            onClick={this.nextPointsPage}
+          >
             Nastepne
           </div>
         </div>
 
-        <div className="col-sm-6">
+        <div className="col-sm-6 pointMapContainer">
           <MapComponent
             latCenter={this.state.lat}
             lngCenter={this.state.lng}

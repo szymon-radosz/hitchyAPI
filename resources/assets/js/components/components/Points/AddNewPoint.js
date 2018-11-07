@@ -72,8 +72,8 @@ class AddNewMeeting extends Component {
 
   render() {
     return (
-      <div className="addNewMeeting row addNewMeetingRow">
-        <div className="col-sm-6 addNewMeetingCol">
+      <div className="addNewPoint row addNewPointRow">
+        <div className="col-sm-6 addNewPointCol">
           <h2>Dodaj nowy punkt</h2>
 
           <form onSubmit={this.handleSubmit}>

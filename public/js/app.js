@@ -57926,7 +57926,7 @@ var AddNewMeeting = function (_Component) {
               case 29:
 
                 if (savedMatchUserWithMeeting.status == "200") {
-                  this.props.showAlertSuccess("You added new meeting");
+                  this.props.showAlertSuccess("Dodałeś nowe spotkanie");
                 } else {
                   this.props.showAlertWarning("Nie udało się zapisać spotkania.");
                 }
@@ -59872,34 +59872,41 @@ var MainPoints = function (_Component) {
 
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
-        { className: "row listOfMeetingsRow" },
+        { className: "row listOfPointsRow" },
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 listOfMeetingsCol" },
+          { className: "col-sm-6 listOfPointsCol" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            { className: "btn btn-default", onClick: this.loadTheLatestPoint },
-            "Najnowsze"
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            { className: "btn btn-default", onClick: this.loadTheOldestPoint },
-            "Najstarsze"
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            { className: "btn btn-default", onClick: this.loadTheBestVoted },
-            "Najlepiej oceniane"
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            { className: "btn btn-default", onClick: this.loadTheWorstVoted },
-            "Najgorzej oceniane"
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            { className: "btn btn-default", onClick: this.loadTheMostTimeVoted },
-            "Najcz\u0119\u015Bciej oceniane"
+            { className: "mainPointsButtonPanel" },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "btn btn-default", onClick: this.loadTheLatestPoint },
+              "Najnowsze"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "btn btn-default", onClick: this.loadTheOldestPoint },
+              "Najstarsze"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "btn btn-default", onClick: this.loadTheBestVoted },
+              "Najlepiej oceniane"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "btn btn-default", onClick: this.loadTheWorstVoted },
+              "Najgorzej oceniane"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              {
+                className: "btn btn-default",
+                onClick: this.loadTheMostTimeVoted
+              },
+              "Najcz\u0119\u015Bciej oceniane"
+            )
           ),
           this.state.pointsData.map(function (item, i) {
             return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__["a" /* default */], {
@@ -59914,18 +59921,24 @@ var MainPoints = function (_Component) {
           }),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            { className: "btn btn-default", onClick: this.prevPointsPage },
+            {
+              className: "btn btn-default paginateBtn",
+              onClick: this.prevPointsPage
+            },
             "Poprzednie"
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            { className: "btn btn-default", onClick: this.nextPointsPage },
+            {
+              className: "btn btn-default paginateBtn",
+              onClick: this.nextPointsPage
+            },
             "Nastepne"
           )
         ),
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6" },
+          { className: "col-sm-6 pointMapContainer" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
             latCenter: this.state.lat,
             lngCenter: this.state.lng,
@@ -60138,7 +60151,7 @@ var SinglePointOnList = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
               "div",
               {
-                className: "btn locateBtn",
+                className: "btn btn-default",
                 onClick: function onClick() {
                   _this2.props.setNewCenterCoords(_this2.props.item.lattitude, _this2.props.item.longitude);
                 }
@@ -60177,7 +60190,7 @@ var SpotVotes = function SpotVotes(props) {
       "select",
       {
         id: "inputState",
-        className: "form-control",
+        className: "form-control addVoteSelect",
         onChange: props.changeCurrentVote
       },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -60213,7 +60226,7 @@ var SpotVotes = function SpotVotes(props) {
     ),
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
-      { className: "btn locateBtn", onClick: props.saveNewSpotVote },
+      { className: "btn btn-default", onClick: props.saveNewSpotVote },
       "Dodaj g\u0142os"
     )
   );
@@ -60360,10 +60373,10 @@ var AddNewMeeting = function (_Component) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
-        { className: "addNewMeeting row addNewMeetingRow" },
+        { className: "addNewPoint row addNewPointRow" },
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 addNewMeetingCol" },
+          { className: "col-sm-6 addNewPointCol" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "h2",
             null,
