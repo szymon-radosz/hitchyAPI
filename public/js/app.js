@@ -21573,6 +21573,8 @@ var MainMeetings = function (_Component) {
     var _this = _possibleConstructorReturn(this, (MainMeetings.__proto__ || Object.getPrototypeOf(MainMeetings)).call(this, props));
 
     _this.state = {
+      currentPageResult: 1,
+      paginationPageLimit: 1,
       meetingsData: [],
       markersData: [],
       centerCoord: [],
@@ -21582,34 +21584,117 @@ var MainMeetings = function (_Component) {
 
     _this.setCoordinates = _this.setCoordinates.bind(_this);
     _this.setNewCenterCoords = _this.setNewCenterCoords.bind(_this);
+    _this.prevPointsPage = _this.prevPointsPage.bind(_this);
+    _this.nextPointsPage = _this.nextPointsPage.bind(_this);
+    _this.loadAllMeetings = _this.loadAllMeetings.bind(_this);
     return _this;
   }
 
   _createClass(MainMeetings, [{
+    key: "prevPointsPage",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(this.state.currentPageResult > 1)) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.setState({
+                  meetingsData: [],
+                  currentPageResult: this.state.currentPageResult - 1
+                });
+
+              case 3:
+                _context.next = 5;
+                return this.loadAllMeetings(this.state.currentPageResult);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function prevPointsPage() {
+        return _ref.apply(this, arguments);
+      }
+
+      return prevPointsPage;
+    }()
+  }, {
+    key: "nextPointsPage",
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(this.state.currentPageResult < this.state.paginationPageLimit)) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                _context2.next = 3;
+                return this.setState({
+                  meetingsData: [],
+                  currentPageResult: this.state.currentPageResult + 1
+                });
+
+              case 3:
+                _context2.next = 5;
+                return this.loadAllMeetings(this.state.currentPageResult);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function nextPointsPage() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return nextPointsPage;
+    }()
+  }, {
     key: "setNewCenterCoords",
     value: function setNewCenterCoords(lat, lng) {
       this.setState({ centerCoord: [lat, lng] });
     }
   }, {
-    key: "componentDidMount",
+    key: "loadAllMeetings",
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(page) {
         var _this2 = this;
 
         var allMeetings;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.props.switchLoader(true);
-                _context.prev = 1;
-                _context.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events");
+                _context3.prev = 1;
+                _context3.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events?page=" + page);
 
               case 4:
-                allMeetings = _context.sent;
-                _context.next = 7;
-                return allMeetings.data.map(function (item, i) {
+                allMeetings = _context3.sent;
+
+
+                console.log(allMeetings);
+
+                this.setState({ paginationPageLimit: allMeetings.data.last_page });
+
+                _context3.next = 9;
+                return allMeetings.data.data.map(function (item, i) {
                   var meetingObject = {
                     id: item.id,
                     title: item.title,
@@ -21637,29 +21722,54 @@ var MainMeetings = function (_Component) {
                   });
                 });
 
-              case 7:
-                _context.next = 12;
+              case 9:
+                _context3.next = 14;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](1);
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](1);
 
-                console.log(_context.t0);
+                console.log(_context3.t0);
 
-              case 12:
+              case 14:
                 this.props.switchLoader(false);
 
-              case 13:
+              case 15:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, this, [[1, 9]]);
+        }, _callee3, this, [[1, 11]]);
+      }));
+
+      function loadAllMeetings(_x) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return loadAllMeetings;
+    }()
+  }, {
+    key: "componentDidMount",
+    value: function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.loadAllMeetings(this.state.currentPageResult);
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
       }));
 
       function componentDidMount() {
-        return _ref.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       }
 
       return componentDidMount;
@@ -21704,7 +21814,23 @@ var MainMeetings = function (_Component) {
                 time: item.time,
                 setCoordinates: _this3.setCoordinates
               });
-            })
+            }),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              {
+                className: "btn btn-default paginateBtn",
+                onClick: this.prevPointsPage
+              },
+              "Poprzednie"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              {
+                className: "btn btn-default paginateBtn",
+                onClick: this.nextPointsPage
+              },
+              "Nastepne"
+            )
           ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",

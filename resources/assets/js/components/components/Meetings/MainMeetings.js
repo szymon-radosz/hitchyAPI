@@ -8,6 +8,8 @@ class MainMeetings extends Component {
     super(props);
 
     this.state = {
+      currentPageResult: 1,
+      paginationPageLimit: 1,
       meetingsData: [],
       markersData: [],
       centerCoord: [],
@@ -17,18 +19,47 @@ class MainMeetings extends Component {
 
     this.setCoordinates = this.setCoordinates.bind(this);
     this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
+    this.prevPointsPage = this.prevPointsPage.bind(this);
+    this.nextPointsPage = this.nextPointsPage.bind(this);
+    this.loadAllMeetings = this.loadAllMeetings.bind(this);
+  }
+
+  async prevPointsPage() {
+    if (this.state.currentPageResult > 1) {
+      await this.setState({
+        meetingsData: [],
+        currentPageResult: this.state.currentPageResult - 1
+      });
+      await this.loadAllMeetings(this.state.currentPageResult);
+    }
+  }
+
+  async nextPointsPage() {
+    if (this.state.currentPageResult < this.state.paginationPageLimit) {
+      await this.setState({
+        meetingsData: [],
+        currentPageResult: this.state.currentPageResult + 1
+      });
+      await this.loadAllMeetings(this.state.currentPageResult);
+    }
   }
 
   setNewCenterCoords(lat, lng) {
     this.setState({ centerCoord: [lat, lng] });
   }
 
-  async componentDidMount() {
+  async loadAllMeetings(page) {
     this.props.switchLoader(true);
     try {
-      const allMeetings = await axios.get(`http://127.0.0.1:8000/api/events`);
+      const allMeetings = await axios.get(
+        `http://127.0.0.1:8000/api/events?page=${page}`
+      );
 
-      await allMeetings.data.map((item, i) => {
+      console.log(allMeetings);
+
+      this.setState({ paginationPageLimit: allMeetings.data.last_page });
+
+      await allMeetings.data.data.map((item, i) => {
         let meetingObject = {
           id: item.id,
           title: item.title,
@@ -57,6 +88,10 @@ class MainMeetings extends Component {
       console.log(error);
     }
     this.props.switchLoader(false);
+  }
+
+  async componentDidMount() {
+    await this.loadAllMeetings(this.state.currentPageResult);
   }
 
   setCoordinates(childLat, childLng) {
@@ -95,6 +130,19 @@ class MainMeetings extends Component {
                   />
                 );
               })}
+
+              <div
+                className="btn btn-default paginateBtn"
+                onClick={this.prevPointsPage}
+              >
+                Poprzednie
+              </div>
+              <div
+                className="btn btn-default paginateBtn"
+                onClick={this.nextPointsPage}
+              >
+                Nastepne
+              </div>
             </div>
 
             <div className="col-sm-6">

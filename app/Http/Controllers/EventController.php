@@ -9,11 +9,7 @@ use DB;
 class EventController extends Controller
 {
     public function index(){
-
-        //return only unique events when author of event and joined user are the same, e.g. events creted by user
-        //$events = DB::table('events')->whereColumn('author', 'joinedUser')->get();
-
-        $events = DB::table('events')->get();
+        $events = DB::table('events')->paginate(3);
 
         return $events;
     }
@@ -24,15 +20,6 @@ class EventController extends Controller
         return $event;
     }
 
-    //return all events
-    public function allEvents(){
-
-        $events = DB::table('events')->get();
-
-        return $events;
-    }
-
-    //save event
     public function store(Request $request)
     {
         $event = new Event;
@@ -48,17 +35,6 @@ class EventController extends Controller
         $event->limit = $request->limit;
 
         $event->save();
-
-        return $event;
-    }
-
-    public function matchUserWithMeeting(Request $request){
-
-    }
-
-    //return single event
-    public function show($id){
-        $event = Event::find($id);
 
         return $event;
     }

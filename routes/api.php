@@ -26,7 +26,6 @@ Route::get('comments', 'CommentController@index');
 
 Route::get('events', 'EventController@index');
 Route::post('events', 'EventController@store');
-Route::get('allEvents', 'EventController@allEvents');
 Route::get('events/{id}', 'EventController@showEventById');
 
 Route::post('eventComments', 'EventCommentsController@store');
