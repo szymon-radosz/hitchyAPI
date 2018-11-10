@@ -47,6 +47,7 @@ class Menu extends Component {
   logout() {
     sessionStorage.setItem("userId", "");
     sessionStorage.setItem("userNickName", "");
+    sessionStorage.setItem("userEmail", "");
     this.props.showAlertSuccess("Poprawnie wylogowano.");
     this.setState({ userIsLoggedIn: false });
   }

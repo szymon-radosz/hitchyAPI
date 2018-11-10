@@ -34,8 +34,10 @@ class Login extends Component {
     if (loginUser.status == 200 && loginUser.data.userId != null) {
       sessionStorage.setItem("userId", "");
       sessionStorage.setItem("userNickName", "");
+      sessionStorage.setItem("userEmail", "");
       sessionStorage.setItem("userId", loginUser.data.userId);
       sessionStorage.setItem("userNickName", loginUser.data.userNickName);
+      sessionStorage.setItem("userEmail", loginUser.data.userEmail);
       this.props.loginUser(loginUser.data.userNickName);
       this.props.showAlertSuccess("Poprawnie zalogowano.");
     } else {

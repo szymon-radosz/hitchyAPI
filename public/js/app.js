@@ -44351,6 +44351,7 @@ var Menu = function (_Component) {
     value: function logout() {
       sessionStorage.setItem("userId", "");
       sessionStorage.setItem("userNickName", "");
+      sessionStorage.setItem("userEmail", "");
       this.props.showAlertSuccess("Poprawnie wylogowano.");
       this.setState({ userIsLoggedIn: false });
     }
@@ -57393,8 +57394,10 @@ var Login = function (_Component) {
                 if (loginUser.status == 200 && loginUser.data.userId != null) {
                   sessionStorage.setItem("userId", "");
                   sessionStorage.setItem("userNickName", "");
+                  sessionStorage.setItem("userEmail", "");
                   sessionStorage.setItem("userId", loginUser.data.userId);
                   sessionStorage.setItem("userNickName", loginUser.data.userNickName);
+                  sessionStorage.setItem("userEmail", loginUser.data.userEmail);
                   this.props.loginUser(loginUser.data.userNickName);
                   this.props.showAlertSuccess("Poprawnie zalogowano.");
                 } else {
@@ -58560,36 +58563,36 @@ var SingleMeetingDetails = function (_Component) {
                   stopLng: this.props.stopPlaceLongitude
                 });
 
-                console.log(this.props.meetingId);
+                //console.log(this.props.meetingId);
 
-                _context2.next = 5;
+                _context2.next = 4;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
 
-              case 5:
+              case 4:
                 getUser = _context2.sent;
 
 
                 this.setState({ loggedInUserEmail: getUser.data[0].email });
                 this.setState({ loggedInUserNickname: getUser.data[0].nickName });
 
-                _context2.next = 10;
+                _context2.next = 9;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events/" + this.props.meetingId);
 
-              case 10:
+              case 9:
                 getCurrentMeetingInfo = _context2.sent;
                 meetingLimit = getCurrentMeetingInfo.data[0].limit;
                 usersIDs = [];
-                _context2.next = 15;
+                _context2.next = 14;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
 
-              case 15:
+              case 14:
                 allMatches = _context2.sent;
                 meetingMatched = 0;
 
 
                 allMatches.data.map(function (singleMatch, i) {
                   if (singleMatch.eventId == _this2.props.meetingId) {
-                    console.log(singleMatch);
+                    //console.log(singleMatch);
 
                     usersIDs.push(singleMatch.userId);
 
@@ -58629,7 +58632,7 @@ var SingleMeetingDetails = function (_Component) {
                                     id: allUsers.data[i].id
                                   };
 
-                                  console.log(allUsers.data[i].email);
+                                  //console.log(allUsers.data[i].email);
 
                                   _this2.setState(function (prevState) {
                                     return {
@@ -58656,17 +58659,17 @@ var SingleMeetingDetails = function (_Component) {
                 }());
 
                 ResignedUsersIDs = [];
-                _context2.next = 23;
+                _context2.next = 22;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/deleteUserFromMeeting/" + this.props.meetingId);
 
-              case 23:
+              case 22:
                 allDeleted = _context2.sent;
 
 
                 for (i = 0; i < allDeleted.data.length; i++) {
                   ResignedUsersIDs.push(allDeleted.data[i].email);
 
-                  console.log(allDeleted.data[i]);
+                  //console.log(allDeleted.data[i]);
 
                   this.setState(function (prevState) {
                     return {
@@ -58675,10 +58678,10 @@ var SingleMeetingDetails = function (_Component) {
                   });
                 }
 
-                _context2.next = 27;
+                _context2.next = 26;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/comments");
 
-              case 27:
+              case 26:
                 allComments = _context2.sent;
 
 
@@ -58703,7 +58706,7 @@ var SingleMeetingDetails = function (_Component) {
 
                 this.props.switchLoader(false);
 
-              case 30:
+              case 29:
               case "end":
                 return _context2.stop();
             }
@@ -58735,8 +58738,8 @@ var SingleMeetingDetails = function (_Component) {
 
 
                 for (i = 0; i < allMatches.data.length; i++) {
-                  console.log(allMatches.data[i].userId);
-                  console.log(this.props.meetingID);
+                  //console.log(allMatches.data[i].userId);
+                  //console.log(this.props.meetingID);
                   if (allMatches.data[i].userId == sessionStorage.getItem("userId") && allMatches.data[i].eventId == this.props.meetingID) {
                     takePart = false;
                   }
@@ -58774,7 +58777,7 @@ var SingleMeetingDetails = function (_Component) {
 
 
                 if (user.status == 200) {
-                  console.log(user.data[0]);
+                  //console.log(user.data[0]);
                   userObject = {
                     email: user.data[0].email,
                     id: user.data[0].id
@@ -58819,6 +58822,8 @@ var SingleMeetingDetails = function (_Component) {
     key: "resignClick",
     value: function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+        var _this3 = this;
+
         var allMatches, i, deleteUser, savedDeleteUserFromMeeting;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
           while (1) {
@@ -58833,64 +58838,75 @@ var SingleMeetingDetails = function (_Component) {
 
               case 4:
                 if (!(i < allMatches.data.length)) {
-                  _context4.next = 21;
+                  _context4.next = 20;
                   break;
                 }
 
                 if (!(allMatches.data[i].userId == sessionStorage.getItem("userId") && allMatches.data[i].eventId == this.props.meetingId)) {
-                  _context4.next = 18;
+                  _context4.next = 17;
                   break;
                 }
 
-                console.log("id: " + allMatches.data[i].id);
-                _context4.next = 9;
+                _context4.next = 8;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete("http://127.0.0.1:8000/api/deleteMatchUserWithMeeting/" + allMatches.data[i].id, {
                   headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                   }
                 });
 
-              case 9:
+              case 8:
                 deleteUser = _context4.sent;
 
                 if (!(deleteUser.status == "200")) {
-                  _context4.next = 17;
+                  _context4.next = 16;
                   break;
                 }
 
-                _context4.next = 13;
+                _context4.next = 12;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/deleteUserFromMeeting", {
                   userId: sessionStorage.getItem("userId"),
                   meetingId: this.props.meetingId
                 });
 
-              case 13:
+              case 12:
                 savedDeleteUserFromMeeting = _context4.sent;
 
 
                 if (savedDeleteUserFromMeeting.status == "200") {
-                  this.props.showAlertSuccess("Szkoda, że rezygnujesz.");
+                  (function () {
+                    _this3.props.showAlertSuccess("Szkoda, że rezygnujesz.");
 
-                  this.setState({
-                    displayTakPartBtn: true,
-                    displayResignBtn: false,
-                    displayCommentsContainer: false
-                  });
+                    _this3.setState({
+                      displayTakPartBtn: true,
+                      displayResignBtn: false,
+                      displayCommentsContainer: false
+                    });
+
+                    var updatedUsersList = [].concat(_toConsumableArray(_this3.state.usersEmails));
+
+                    updatedUsersList.map(function (emailElement, i) {
+                      if (emailElement.email == sessionStorage.getItem("userEmail")) {
+                        updatedUsersList.splice(i, 1);
+                      }
+                    });
+
+                    _this3.setState({ usersEmails: updatedUsersList });
+                  })();
                 } else {
                   this.props.showAlertWarning("Problem z usunięciem użytkownika ze spotkania.");
                 }
-                _context4.next = 18;
+                _context4.next = 17;
                 break;
 
-              case 17:
+              case 16:
                 this.props.showAlertWarning("Problem z usunięciem użytkownika z tabeli match_user_with_meeting.");
 
-              case 18:
+              case 17:
                 i++;
                 _context4.next = 4;
                 break;
 
-              case 21:
+              case 20:
               case "end":
                 return _context4.stop();
             }
@@ -58922,7 +58938,7 @@ var SingleMeetingDetails = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
@@ -58943,7 +58959,7 @@ var SingleMeetingDetails = function (_Component) {
             {
               className: "btn btn-default",
               onClick: function onClick() {
-                _this3.setNewCenterCoords(_this3.state.startLat, _this3.state.startLng);
+                _this4.setNewCenterCoords(_this4.state.startLat, _this4.state.startLng);
               }
             },
             "Punkt Startowy"
@@ -58953,7 +58969,7 @@ var SingleMeetingDetails = function (_Component) {
             {
               className: "btn btn-default",
               onClick: function onClick() {
-                _this3.setNewCenterCoords(_this3.state.stopLat, _this3.state.stopLng);
+                _this4.setNewCenterCoords(_this4.state.stopLat, _this4.state.stopLng);
               }
             },
             "Punkt Ko\u0144cowy"
@@ -59047,7 +59063,7 @@ var SingleMeetingDetails = function (_Component) {
           this.state.displayCommentsContainer ? this.state.comments.slice(0).reverse().map(function (comment, i) {
             return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_Comment__["a" /* default */], {
               key: i,
-              userNickname: _this3.state.loggedInUserNickname,
+              userNickname: _this4.state.loggedInUserNickname,
               date: comment.date,
               commentBody: comment.commentBody
             });

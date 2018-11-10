@@ -51,7 +51,7 @@ class SingleMeetingDetails extends Component {
       stopLng: this.props.stopPlaceLongitude
     });
 
-    console.log(this.props.meetingId);
+    //console.log(this.props.meetingId);
 
     const getUser = await axios.get(
       `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
@@ -76,7 +76,7 @@ class SingleMeetingDetails extends Component {
 
     allMatches.data.map((singleMatch, i) => {
       if (singleMatch.eventId == this.props.meetingId) {
-        console.log(singleMatch);
+        //console.log(singleMatch);
 
         usersIDs.push(singleMatch.userId);
 
@@ -107,7 +107,7 @@ class SingleMeetingDetails extends Component {
             id: allUsers.data[i].id
           };
 
-          console.log(allUsers.data[i].email);
+          //console.log(allUsers.data[i].email);
 
           this.setState(prevState => ({
             usersEmails: [...prevState.usersEmails, userObject]
@@ -127,7 +127,7 @@ class SingleMeetingDetails extends Component {
     for (var i = 0; i < allDeleted.data.length; i++) {
       ResignedUsersIDs.push(allDeleted.data[i].email);
 
-      console.log(allDeleted.data[i]);
+      //console.log(allDeleted.data[i]);
 
       this.setState(prevState => ({
         resignedUsersEmails: [
@@ -165,8 +165,8 @@ class SingleMeetingDetails extends Component {
     );
 
     for (var i = 0; i < allMatches.data.length; i++) {
-      console.log(allMatches.data[i].userId);
-      console.log(this.props.meetingID);
+      //console.log(allMatches.data[i].userId);
+      //console.log(this.props.meetingID);
       if (
         allMatches.data[i].userId == sessionStorage.getItem("userId") &&
         allMatches.data[i].eventId == this.props.meetingID
@@ -195,7 +195,7 @@ class SingleMeetingDetails extends Component {
         );
 
         if (user.status == 200) {
-          console.log(user.data[0]);
+          //console.log(user.data[0]);
           let userObject = {
             email: user.data[0].email,
             id: user.data[0].id
@@ -235,7 +235,7 @@ class SingleMeetingDetails extends Component {
         allMatches.data[i].userId == sessionStorage.getItem("userId") &&
         allMatches.data[i].eventId == this.props.meetingId
       ) {
-        console.log("id: " + allMatches.data[i].id);
+        //console.log("id: " + allMatches.data[i].id);
         const deleteUser = await axios.delete(
           `http://127.0.0.1:8000/api/deleteMatchUserWithMeeting/${
             allMatches.data[i].id
@@ -264,6 +264,16 @@ class SingleMeetingDetails extends Component {
               displayResignBtn: false,
               displayCommentsContainer: false
             });
+
+            let updatedUsersList = [...this.state.usersEmails];
+
+            updatedUsersList.map((emailElement, i) => {
+              if (emailElement.email == sessionStorage.getItem("userEmail")) {
+                updatedUsersList.splice(i, 1);
+              }
+            });
+
+            this.setState({ usersEmails: updatedUsersList });
           } else {
             this.props.showAlertWarning(
               "Problem z usunięciem użytkownika ze spotkania."

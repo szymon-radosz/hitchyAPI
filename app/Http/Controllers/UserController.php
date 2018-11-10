@@ -29,12 +29,13 @@ class UserController extends Controller
         if($passwordMatched){
             $userId = $user->id;
             $userNickName = $user->nickName;
+            $userEmail = $user->email;
         }else{
             $userId = null;
             $userNickName = null;
         }
 
-        $userInfo = (object) ['userId' => $userId, 'userNickName' => $nickName];
+        $userInfo = (object) ['userId' => $userId, 'userNickName' => $nickName, 'userEmail' => $userEmail];
 
         return Response::json($userInfo);
     }
