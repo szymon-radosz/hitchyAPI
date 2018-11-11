@@ -13,7 +13,7 @@ class PointController extends Controller
 {
     public function index()
     {
-        $points = DB::table('points')->orderBy('created_at', 'desc')->paginate(3);
+        $points = DB::table('points')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){

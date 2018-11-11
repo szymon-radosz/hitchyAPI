@@ -21,7 +21,7 @@ class MeetingDetails extends Component {
       `http://127.0.0.1:8000/api/events/${meetingId}`
     );
 
-    console.log(getMeeting);
+    //console.log(getMeeting);
 
     const meeting = getMeeting.data[0];
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import _ from "underscore";
 
 class Register extends Component {
   constructor(props) {
@@ -30,7 +29,7 @@ class Register extends Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-    if (_.contains(this.state.nickName, " ")) {
+    if (this.state.nickName.indexOf(" ") !== -1) {
       this.props.showAlertWarning(
         "Nie można używać pustych znaków w polu Nick"
       );
@@ -41,13 +40,14 @@ class Register extends Component {
       if (this.state.password === this.state.passwordConfirmation) {
         const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
-        for (var i = 0; i < allUsers.data.length; i++) {
-          if (_.contains(allUsers.data[i], this.state.email)) {
+        allUsers.data.map((singleUser, i) => {
+          if (
+            singleUser.email == this.state.email ||
+            singleUser.nickName == this.state.nickName
+          ) {
             uniqueEmail = false;
-          } else if (_.contains(allUsers.data[i], this.state.nickName)) {
-            uniqueNickname = false;
           }
-        }
+        });
 
         if (uniqueEmail === false) {
           this.props.showAlertWarning(

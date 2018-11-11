@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import _ from "underscore";
 
 class Login extends Component {
   constructor(props) {

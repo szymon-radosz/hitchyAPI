@@ -26,6 +26,10 @@ class DeleteUserFromMeetingController extends Controller
         $deleteUserFromMeeting->userId = $request->userId;
         $deleteUserFromMeeting->eventId = $request->meetingId;
 
-        $deleteUserFromMeeting->save();
+        if(DB::table('delete_user_from_meeting')->where([['userId', $request->userId], ['eventId', $request->meetingId]])->count() == 0){
+            $deleteUserFromMeeting->save();
+        }else{
+            return;
+        }
     }
 }
