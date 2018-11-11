@@ -227,17 +227,26 @@ class SingleMeetingDetails extends Component {
 
             console.log(updatedResignedUsersEmailsList);
 
-            updatedResignedUsersEmailsList.map((email, i) => {
-              console.log(email);
-              if (email != sessionStorage.getItem("userEmail")) {
-                this.setState(prevState => ({
-                  resignedUsersEmails: [
-                    ...prevState.resignedUsersEmails,
-                    sessionStorage.getItem("userEmail")
-                  ]
-                }));
-              }
-            });
+            if (updatedResignedUsersEmailsList.length == 0) {
+              this.setState(prevState => ({
+                resignedUsersEmails: [
+                  ...prevState.resignedUsersEmails,
+                  sessionStorage.getItem("userEmail")
+                ]
+              }));
+            } else {
+              updatedResignedUsersEmailsList.map((email, i) => {
+                console.log(email);
+                if (email != sessionStorage.getItem("userEmail")) {
+                  this.setState(prevState => ({
+                    resignedUsersEmails: [
+                      ...prevState.resignedUsersEmails,
+                      sessionStorage.getItem("userEmail")
+                    ]
+                  }));
+                }
+              });
+            }
 
             const updatedUsersList = [...this.state.usersEmails];
 

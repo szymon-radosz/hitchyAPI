@@ -57175,16 +57175,24 @@ var SingleMeetingDetails = function (_Component) {
 
                               console.log(updatedResignedUsersEmailsList);
 
-                              updatedResignedUsersEmailsList.map(function (email, i) {
-                                console.log(email);
-                                if (email != sessionStorage.getItem("userEmail")) {
-                                  _this5.setState(function (prevState) {
-                                    return {
-                                      resignedUsersEmails: [].concat(_toConsumableArray(prevState.resignedUsersEmails), [sessionStorage.getItem("userEmail")])
-                                    };
-                                  });
-                                }
-                              });
+                              if (updatedResignedUsersEmailsList.length == 0) {
+                                _this5.setState(function (prevState) {
+                                  return {
+                                    resignedUsersEmails: [].concat(_toConsumableArray(prevState.resignedUsersEmails), [sessionStorage.getItem("userEmail")])
+                                  };
+                                });
+                              } else {
+                                updatedResignedUsersEmailsList.map(function (email, i) {
+                                  console.log(email);
+                                  if (email != sessionStorage.getItem("userEmail")) {
+                                    _this5.setState(function (prevState) {
+                                      return {
+                                        resignedUsersEmails: [].concat(_toConsumableArray(prevState.resignedUsersEmails), [sessionStorage.getItem("userEmail")])
+                                      };
+                                    });
+                                  }
+                                });
+                              }
 
                               updatedUsersList = [].concat(_toConsumableArray(_this5.state.usersEmails));
 
