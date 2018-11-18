@@ -3,6 +3,8 @@ import axios from "axios";
 import SingleMeetingOnList from "./MeetingsListComponents/SingleMeetingOnList.js";
 import MapComponent from "./../Map/MapComponent.js";
 
+const uuidv1 = require("uuid/v1");
+
 class MainMeetings extends Component {
   constructor(props) {
     super(props);
@@ -73,15 +75,25 @@ class MainMeetings extends Component {
           date: item.startDate
         };
 
-        let singleMarkerData = {
-          key: item.title,
-          position: [item.startPlaceLattitude, item.stopPlaceLattitude],
+        let singleStartMarkerData = {
+          key: uuidv1(),
+          position: [item.startPlaceLattitude, item.startPlaceLongitude],
+          text: item.title
+        };
+
+        let singleStopMarkerData = {
+          key: uuidv1(),
+          position: [item.stopPlaceLattitude, item.stopPlaceLongitude],
           text: item.title
         };
 
         this.setState(prevState => ({
           meetingsData: [...prevState.meetingsData, meetingObject],
-          markersData: [...prevState.markersData, singleMarkerData]
+          markersData: [...prevState.markersData, singleStartMarkerData]
+        }));
+
+        this.setState(prevState => ({
+          markersData: [...prevState.markersData, singleStopMarkerData]
         }));
       });
     } catch (error) {

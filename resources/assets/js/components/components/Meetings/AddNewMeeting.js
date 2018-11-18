@@ -14,7 +14,7 @@ class AddNewMeeting extends Component {
       longitude: "",
       stopLat: "",
       stopLng: "",
-      limit: "Select",
+      limit: "Wybierz",
       date: "",
       lat: 40.73061,
       lng: -73.935242,
@@ -42,6 +42,12 @@ class AddNewMeeting extends Component {
 
     if (this.state.limit == "Wybierz") {
       this.props.showAlertWarning("Wybierz limit użytkowników.");
+    } else if (
+      !this.state.title ||
+      !this.state.description ||
+      !this.state.date
+    ) {
+      this.props.showAlertWarning("Wszystkie pola muszą być uzupełnione.");
     } else {
       try {
         savedMeeting = await axios.post(
@@ -123,7 +129,6 @@ class AddNewMeeting extends Component {
                 id="title"
                 name="title"
                 onChange={this.handleChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -134,7 +139,6 @@ class AddNewMeeting extends Component {
                 id="description"
                 name="description"
                 onChange={this.handleChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -201,7 +205,6 @@ class AddNewMeeting extends Component {
                   name="limit"
                   id="limit"
                   onChange={this.handleChange}
-                  required
                 >
                   <option>Wybierz</option>
                   <option>2</option>
@@ -219,7 +222,6 @@ class AddNewMeeting extends Component {
                 id="date"
                 name="date"
                 onChange={this.handleChange}
-                required
               />
             </div>
 

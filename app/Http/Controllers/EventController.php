@@ -9,7 +9,7 @@ use DB;
 class EventController extends Controller
 {
     public function index(){
-        $events = DB::table('events')->paginate(3);
+        $events = DB::table('events')->orderBy('created_at', 'desc')->paginate(3);
 
         return $events;
     }

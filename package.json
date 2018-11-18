@@ -29,6 +29,7 @@
         "pigeon-marker": "^0.3.4",
         "react-leaflet": "^2.1.0",
         "react-router-dom": "^4.3.1",
-        "underscore": "^1.9.1"
+        "underscore": "^1.9.1",
+        "uuid": "^3.3.2"
     }
 }
