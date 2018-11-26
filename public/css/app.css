@@ -171,6 +171,12 @@ input[type="color"]:focus,
   margin: 0 7px;
 }
 
+.searchAreaBtn {
+  position: absolute;
+  top: 100px;
+  z-index: 1000;
+}
+
 .listOfPointsRow {
   margin: 0 !important;
 }

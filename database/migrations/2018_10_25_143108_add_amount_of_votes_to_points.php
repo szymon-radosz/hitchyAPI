@@ -14,7 +14,7 @@ class AddAmountOfVotesToPoints extends Migration
     public function up()
     {
         Schema::table('points', function (Blueprint $table) {
-            $table->integer('amount_of_votes');
+            $table->integer('amount_of_votes')->default(0);
        });
     }
 

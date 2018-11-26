@@ -35,11 +35,14 @@ class MapComponent extends Component {
     this.state = {
       position: [props.latCenter, props.lngCenter],
       secondPosition: [props.secondLatCenter, props.secondLngCenter],
-      allowDragableMarker: false
+      allowDragableMarker: false,
+      currentMapPosition: [props.latCenter, props.lngCenter]
     };
 
+    this.mapPositionChange = this.mapPositionChange.bind(this);
     this.moveMarker = this.moveMarker.bind(this);
     this.moveSecondMarker = this.moveSecondMarker.bind(this);
+    this.setCurrentPosition = this.setCurrentPosition.bind(this);
   }
 
   componentDidMount() {
@@ -61,6 +64,24 @@ class MapComponent extends Component {
     );
   }
 
+  mapPositionChange(event) {
+    console.log(this.state.currentMapPosition);
+
+    this.props.setNewCenterCoords(
+      this.state.currentMapPosition[0],
+      this.state.currentMapPosition[1]
+    );
+  }
+
+  setCurrentPosition(event) {
+    this.setState({
+      currentMapPosition: [
+        event.target.getCenter().lat,
+        event.target.getCenter().lng
+      ]
+    });
+  }
+
   render() {
     const AddressSearch = withLeaflet(Search);
     return (
@@ -71,9 +92,16 @@ class MapComponent extends Component {
               ? this.props.centerCoord
               : this.state.position
           }
+          onMoveEnd={this.setCurrentPosition}
           zoom={13}
         >
           <AddressSearch />
+          <div
+            onClick={this.mapPositionChange}
+            className="btn btn-default searchAreaBtn"
+          >
+            Szukaj w tym obszarze
+          </div>
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"

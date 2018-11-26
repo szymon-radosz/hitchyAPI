@@ -102,8 +102,14 @@ class MainPoints extends Component {
     }
   }
 
-  setNewCenterCoords(lat, lng) {
-    this.setState({ centerCoord: [lat, lng] });
+  async setNewCenterCoords(lat, lng) {
+    await this.setState({
+      centerCoord: [lat, lng],
+      pointsData: [],
+      markersData: []
+    });
+
+    await this.loadAllSpots(1, "");
   }
 
   async loadAllSpots(pageNumber, filter) {
@@ -133,11 +139,11 @@ class MainPoints extends Component {
         );
       } else {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/points?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getPointsNearCoords/${
+            this.state.centerCoord[0]
+          }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
       }
-
-      console.log(allPoints.data);
 
       await this.setState({ paginationPageLimit: allPoints.data.last_page });
 
@@ -202,6 +208,7 @@ class MainPoints extends Component {
   }
 
   async componentDidMount() {
+    console.log("componentDidMount");
     await this.loadAllSpots(this.state.currentPageResult);
   }
 
@@ -261,18 +268,22 @@ class MainPoints extends Component {
             );
           })}
 
-          <div
-            className="btn btn-default paginateBtn"
-            onClick={this.prevPointsPage}
-          >
-            Poprzednie
-          </div>
-          <div
-            className="btn btn-default paginateBtn"
-            onClick={this.nextPointsPage}
-          >
-            Nastepne
-          </div>
+          {this.state.pointsData.length > 2 && (
+            <div>
+              <div
+                className="btn btn-default paginateBtn"
+                onClick={this.prevPointsPage}
+              >
+                Poprzednie
+              </div>
+              <div
+                className="btn btn-default paginateBtn"
+                onClick={this.nextPointsPage}
+              >
+                Nastepne
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="col-sm-6 pointMapContainer">
@@ -282,6 +293,7 @@ class MainPoints extends Component {
             markersData={this.state.markersData}
             displayFirstMarker={false}
             centerCoord={this.state.centerCoord}
+            setNewCenterCoords={this.setNewCenterCoords}
           />
         </div>
       </div>

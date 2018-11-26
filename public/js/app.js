@@ -15251,11 +15251,14 @@ var MapComponent = function (_Component) {
     _this.state = {
       position: [props.latCenter, props.lngCenter],
       secondPosition: [props.secondLatCenter, props.secondLngCenter],
-      allowDragableMarker: false
+      allowDragableMarker: false,
+      currentMapPosition: [props.latCenter, props.lngCenter]
     };
 
+    _this.mapPositionChange = _this.mapPositionChange.bind(_this);
     _this.moveMarker = _this.moveMarker.bind(_this);
     _this.moveSecondMarker = _this.moveSecondMarker.bind(_this);
+    _this.setCurrentPosition = _this.setCurrentPosition.bind(_this);
     return _this;
   }
 
@@ -15277,6 +15280,20 @@ var MapComponent = function (_Component) {
       this.props.setNewSecondCoords(event.target._latlng.lat, event.target._latlng.lng);
     }
   }, {
+    key: "mapPositionChange",
+    value: function mapPositionChange(event) {
+      console.log(this.state.currentMapPosition);
+
+      this.props.setNewCenterCoords(this.state.currentMapPosition[0], this.state.currentMapPosition[1]);
+    }
+  }, {
+    key: "setCurrentPosition",
+    value: function setCurrentPosition(event) {
+      this.setState({
+        currentMapPosition: [event.target.getCenter().lat, event.target.getCenter().lng]
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var AddressSearch = Object(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["f" /* withLeaflet */])(__WEBPACK_IMPORTED_MODULE_5__Search__["a" /* default */]);
@@ -15287,9 +15304,18 @@ var MapComponent = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_1_react_leaflet__["a" /* Map */],
           {
             center: this.props.centerCoord.length > 0 ? this.props.centerCoord : this.state.position,
+            onMoveEnd: this.setCurrentPosition,
             zoom: 13
           },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AddressSearch, null),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            {
+              onClick: this.mapPositionChange,
+              className: "btn btn-default searchAreaBtn"
+            },
+            "Szukaj w tym obszarze"
+          ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_leaflet__["e" /* TileLayer */], {
             attribution: "&copy <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
             url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
@@ -58400,119 +58426,144 @@ var MainPoints = function (_Component) {
     }()
   }, {
     key: "setNewCenterCoords",
-    value: function setNewCenterCoords(lat, lng) {
-      this.setState({ centerCoord: [lat, lng] });
-    }
+    value: function () {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8(lat, lng) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _context8.next = 2;
+                return this.setState({
+                  centerCoord: [lat, lng],
+                  pointsData: [],
+                  markersData: []
+                });
+
+              case 2:
+                _context8.next = 4;
+                return this.loadAllSpots(1, "");
+
+              case 4:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this);
+      }));
+
+      function setNewCenterCoords(_x, _x2) {
+        return _ref8.apply(this, arguments);
+      }
+
+      return setNewCenterCoords;
+    }()
   }, {
     key: "loadAllSpots",
     value: function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(pageNumber, filter) {
+      var _ref9 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10(pageNumber, filter) {
         var _this2 = this;
 
         var allPoints;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 this.props.switchLoader(true);
-                _context9.prev = 1;
+                _context10.prev = 1;
                 allPoints = void 0;
 
                 if (!(filter == "theOldest")) {
-                  _context9.next = 9;
+                  _context10.next = 9;
                   break;
                 }
 
-                _context9.next = 6;
+                _context10.next = 6;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheOldestPoints?page=" + pageNumber);
 
               case 6:
-                allPoints = _context9.sent;
-                _context9.next = 36;
+                allPoints = _context10.sent;
+                _context10.next = 36;
                 break;
 
               case 9:
                 if (!(filter == "theLatest")) {
-                  _context9.next = 15;
+                  _context10.next = 15;
                   break;
                 }
 
-                _context9.next = 12;
+                _context10.next = 12;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points?page=" + pageNumber);
 
               case 12:
-                allPoints = _context9.sent;
-                _context9.next = 36;
+                allPoints = _context10.sent;
+                _context10.next = 36;
                 break;
 
               case 15:
                 if (!(filter == "bestVoted")) {
-                  _context9.next = 21;
+                  _context10.next = 21;
                   break;
                 }
 
-                _context9.next = 18;
+                _context10.next = 18;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheBestVoted?page=" + pageNumber);
 
               case 18:
-                allPoints = _context9.sent;
-                _context9.next = 36;
+                allPoints = _context10.sent;
+                _context10.next = 36;
                 break;
 
               case 21:
                 if (!(filter == "worstVoted")) {
-                  _context9.next = 27;
+                  _context10.next = 27;
                   break;
                 }
 
-                _context9.next = 24;
+                _context10.next = 24;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheWorstVoted?page=" + pageNumber);
 
               case 24:
-                allPoints = _context9.sent;
-                _context9.next = 36;
+                allPoints = _context10.sent;
+                _context10.next = 36;
                 break;
 
               case 27:
                 if (!(filter == "mostTimeVoted")) {
-                  _context9.next = 33;
+                  _context10.next = 33;
                   break;
                 }
 
-                _context9.next = 30;
+                _context10.next = 30;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheMostTimeVoted?page=" + pageNumber);
 
               case 30:
-                allPoints = _context9.sent;
-                _context9.next = 36;
+                allPoints = _context10.sent;
+                _context10.next = 36;
                 break;
 
               case 33:
-                _context9.next = 35;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points?page=" + pageNumber);
+                _context10.next = 35;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getPointsNearCoords/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 35:
-                allPoints = _context9.sent;
+                allPoints = _context10.sent;
 
               case 36:
-
-                console.log(allPoints.data);
-
-                _context9.next = 39;
+                _context10.next = 38;
                 return this.setState({ paginationPageLimit: allPoints.data.last_page });
 
-              case 39:
-                _context9.next = 41;
+              case 38:
+                _context10.next = 40;
                 return allPoints.data.data.map(function () {
-                  var _ref9 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8(item, i) {
+                  var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(item, i) {
                     var checkIfUserVoteExists, checkIfUserVote, pointObject, singleMarkerData;
-                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
                       while (1) {
-                        switch (_context8.prev = _context8.next) {
+                        switch (_context9.prev = _context9.next) {
                           case 0:
                             checkIfUserVoteExists = void 0;
-                            _context8.prev = 1;
-                            _context8.next = 4;
+                            _context9.prev = 1;
+                            _context9.next = 4;
                             return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserVoteExists", {
                               user_id: sessionStorage.getItem("userId"),
                               point_id: item.id
@@ -58523,15 +58574,15 @@ var MainPoints = function (_Component) {
                             });
 
                           case 4:
-                            checkIfUserVoteExists = _context8.sent;
-                            _context8.next = 10;
+                            checkIfUserVoteExists = _context9.sent;
+                            _context9.next = 10;
                             break;
 
                           case 7:
-                            _context8.prev = 7;
-                            _context8.t0 = _context8["catch"](1);
+                            _context9.prev = 7;
+                            _context9.t0 = _context9["catch"](1);
 
-                            console.log(_context8.t0);
+                            console.log(_context9.t0);
 
                           case 10:
                             checkIfUserVote = void 0;
@@ -58573,38 +58624,38 @@ var MainPoints = function (_Component) {
 
                           case 17:
                           case "end":
-                            return _context8.stop();
+                            return _context9.stop();
                         }
                       }
-                    }, _callee8, _this2, [[1, 7]]);
+                    }, _callee9, _this2, [[1, 7]]);
                   }));
 
-                  return function (_x3, _x4) {
-                    return _ref9.apply(this, arguments);
+                  return function (_x5, _x6) {
+                    return _ref10.apply(this, arguments);
                   };
                 }());
 
-              case 41:
-                _context9.next = 47;
+              case 40:
+                _context10.next = 46;
                 break;
 
-              case 43:
-                _context9.prev = 43;
-                _context9.t0 = _context9["catch"](1);
+              case 42:
+                _context10.prev = 42;
+                _context10.t0 = _context10["catch"](1);
 
-                console.log(_context9.t0);
+                console.log(_context10.t0);
                 this.props.switchLoader(false);
 
-              case 47:
+              case 46:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this, [[1, 43]]);
+        }, _callee10, this, [[1, 42]]);
       }));
 
-      function loadAllSpots(_x, _x2) {
-        return _ref8.apply(this, arguments);
+      function loadAllSpots(_x3, _x4) {
+        return _ref9.apply(this, arguments);
       }
 
       return loadAllSpots;
@@ -58612,24 +58663,25 @@ var MainPoints = function (_Component) {
   }, {
     key: "componentDidMount",
     value: function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
+      var _ref11 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                _context10.next = 2;
+                console.log("componentDidMount");
+                _context11.next = 3;
                 return this.loadAllSpots(this.state.currentPageResult);
 
-              case 2:
+              case 3:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee11, this);
       }));
 
       function componentDidMount() {
-        return _ref10.apply(this, arguments);
+        return _ref11.apply(this, arguments);
       }
 
       return componentDidMount;
@@ -58703,21 +58755,25 @@ var MainPoints = function (_Component) {
               disableVoteSelect: _this3.disableVoteSelect
             });
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.pointsData.length > 2 && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            {
-              className: "btn btn-default paginateBtn",
-              onClick: this.prevPointsPage
-            },
-            "Poprzednie"
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            {
-              className: "btn btn-default paginateBtn",
-              onClick: this.nextPointsPage
-            },
-            "Nastepne"
+            null,
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              {
+                className: "btn btn-default paginateBtn",
+                onClick: this.prevPointsPage
+              },
+              "Poprzednie"
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              {
+                className: "btn btn-default paginateBtn",
+                onClick: this.nextPointsPage
+              },
+              "Nastepne"
+            )
           )
         ),
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -58728,7 +58784,8 @@ var MainPoints = function (_Component) {
             lngCenter: this.state.lng,
             markersData: this.state.markersData,
             displayFirstMarker: false,
-            centerCoord: this.state.centerCoord
+            centerCoord: this.state.centerCoord,
+            setNewCenterCoords: this.setNewCenterCoords
           })
         )
       );

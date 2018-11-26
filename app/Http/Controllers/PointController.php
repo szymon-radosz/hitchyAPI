@@ -25,6 +25,33 @@ class PointController extends Controller
         return $points;
     }
 
+    public function getPointsNearCoords(Request $request)
+    {
+        $minLat = $request->lattitude - 1;
+        $minLng = $request->longitude - 1;
+
+        $maxLat = $request->lattitude + 1;
+        $maxLng = $request->longitude + 1;
+
+        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->paginate(3);
+
+        if(count($points) > 0){
+            foreach($points as $point){
+                if($point->amount_of_votes > 0){
+                    $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+                }else{
+                    $point->rating = 0;
+                }
+            }
+
+            return $points;
+        }else{
+            return "no points";
+        }
+        
+        
+    }
+
     public function getTheOldestPoints()
     {
         $points = DB::table('points')->orderBy('created_at', 'asc')->paginate(3);
