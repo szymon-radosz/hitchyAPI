@@ -13,7 +13,36 @@ import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 
 const defaultMapOptions = {
   fullscreenControl: false,
-  disableDefaultUI: true
+  disableDefaultUI: true,
+  styles: [
+    {
+      stylers: [
+        {
+          hue: "#007fff"
+        },
+        {
+          saturation: 89
+        }
+      ]
+    },
+    {
+      featureType: "water",
+      stylers: [
+        {
+          color: "#ffffff"
+        }
+      ]
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off"
+        }
+      ]
+    }
+  ]
 };
 
 const MyMapComponent = compose(
@@ -31,7 +60,7 @@ const MyMapComponent = compose(
     ),
     mapElement: (
       <div
-        className="gmMapComponent"
+        className="hitchyMapComponent"
         style={{
           height: 520,
           width: "100%",

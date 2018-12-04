@@ -776,7 +776,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var defaultMapOptions = {
   fullscreenControl: false,
-  disableDefaultUI: true
+  disableDefaultUI: true,
+  styles: [{
+    stylers: [{
+      hue: "#007fff"
+    }, {
+      saturation: 89
+    }]
+  }, {
+    featureType: "water",
+    stylers: [{
+      color: "#ffffff"
+    }]
+  }, {
+    featureType: "administrative.country",
+    elementType: "labels",
+    stylers: [{
+      visibility: "off"
+    }]
+  }]
 };
 
 var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["withProps"])({
@@ -789,7 +807,7 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
     }
   }),
   mapElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
-    className: "gmMapComponent",
+    className: "hitchyMapComponent",
     style: {
       height: 520,
       width: "100%",

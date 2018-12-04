@@ -280,6 +280,10 @@ input[type="color"]:focus,
   text-align: center;
 }
 
+.hitchyMapComponent {
+  height: calc(100vh - 52px) !important;
+}
+
 .leaflet-left {
   width: 100%;
 }

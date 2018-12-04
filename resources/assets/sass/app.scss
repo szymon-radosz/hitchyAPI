@@ -6,6 +6,10 @@
 @import "points";
 @import "meetings";
 
+.hitchyMapComponent {
+  height: calc(100vh - 52px) !important;
+}
+
 .leaflet-left {
   width: 100%;
 
