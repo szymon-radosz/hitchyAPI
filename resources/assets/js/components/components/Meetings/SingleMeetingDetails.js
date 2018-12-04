@@ -446,6 +446,7 @@ class SingleMeetingDetails extends Component {
             secondLatCenter={this.props.stopPlaceLattitude}
             secondLngCenter={this.props.stopPlaceLongitude}
             centerCoord={this.state.centerCoord}
+            hideSearchBox={true}
           />
         </div>
       </div>

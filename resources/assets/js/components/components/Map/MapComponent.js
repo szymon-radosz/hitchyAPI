@@ -1,139 +1,226 @@
 import React, { Component } from "react";
-import { Map, Marker, Popup, TileLayer, withLeaflet } from "react-leaflet";
+import { compose, withProps, withStateHandlers } from "recompose";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import axios from "axios";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import Search from "./Search";
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+  InfoWindow
+} from "react-google-maps";
+import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 
-delete L.Icon.Default.prototype._getIconUrl;
-
-const MyPopupMarker = ({ map, position, text }) => (
-  <Marker map={map} position={position}>
-    <Popup>
-      <span>{text}</span>
-    </Popup>
-  </Marker>
-);
-
-const MyMarkersList = ({ map, markers }) => {
-  const items = markers.map(({ key, ...props }) => (
-    <MyPopupMarker key={key} map={map} {...props} />
-  ));
-  return <div style={{ display: "none" }}>{items}</div>;
+const defaultMapOptions = {
+  fullscreenControl: false,
+  disableDefaultUI: true
 };
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-});
+const MyMapComponent = compose(
+  withProps({
+    googleMapURL:
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyCE_A8CoQsymuTUwtLLdwt4IyIBBhGsu3Q&v=3.exp&libraries=geometry,drawing,places",
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: (
+      <div
+        style={{
+          width: "100%",
+          marginLeft: 0
+        }}
+      />
+    ),
+    mapElement: (
+      <div
+        className="gmMapComponent"
+        style={{
+          height: 520,
+          width: "100%",
+          display: "flex",
+          flexFlow: "row nowrap",
+          justifyContent: "center",
+          padding: 0
+        }}
+      />
+    )
+  }),
+  withScriptjs,
+  withGoogleMap
+)(props => (
+  <GoogleMap
+    defaultZoom={13}
+    defaultOptions={defaultMapOptions}
+    ref={map => (this._map = map)}
+    /*onDragEnd={map => {
+      props.getMapCoords(this._map);
+    }}*/
+    center={{ lat: props.lat, lng: props.lng }}
+  >
+    {!props.hideSearchBox && (
+      <SearchBox
+        ref={searchBox => (this._searchBox = searchBox)}
+        controlPosition={google.maps.ControlPosition.TOP_CENTER}
+        onPlacesChanged={map => {
+          props.changeStateCoords(
+            this._searchBox.getPlaces()[0].geometry.location.lat(),
+            this._searchBox.getPlaces()[0].geometry.location.lng()
+          );
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Szukaj w ..."
+          style={{
+            boxSizing: `border-box`,
+            border: `1px solid #e3e6e8`,
+            width: `60%`,
+            maxWidth: "400px",
+            height: `40px`,
+            margin: `10px auto 0 auto`,
+            padding: `10px`,
+            borderRadius: `8px`,
+            boxShadow: `0 0 15px rgba(0, 0, 0, 0.22)`,
+            fontSize: `12px`,
+            outline: `none`,
+            fontWeight: "300"
+          }}
+        />
+      </SearchBox>
+    )}
+    {props.latCenter &&
+      props.lngCenter && (
+        <Marker
+          position={{
+            lat: Number(props.latCenter),
+            lng: Number(props.lngCenter)
+          }}
+        />
+      )}
 
-class MapComponent extends Component {
+    {props.secondLatCenter &&
+      props.secondLngCenter && (
+        <Marker
+          position={{
+            lat: Number(props.secondLatCenter),
+            lng: Number(props.secondLngCenter)
+          }}
+        />
+      )}
+
+    {props.markersData &&
+      props.markersData.map((singleMarker, i) => {
+        console.log(singleMarker);
+        return (
+          <Marker
+            key={i}
+            position={{
+              lat: Number(singleMarker.position[0]),
+              lng: Number(singleMarker.position[1])
+            }}
+            ref={marker => (this._marker = marker)}
+            onClick={() => {
+              props.toggleLocationsActive(i);
+              // this.setCurrentLocation(location.latitude, location.longitude);
+            }}
+          >
+            {i === props.activeKey && (
+              <InfoWindow>
+                <div>{singleMarker.text}</div>
+              </InfoWindow>
+            )}
+          </Marker>
+        );
+      })}
+  </GoogleMap>
+));
+
+export default class MapComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      position: [props.latCenter, props.lngCenter],
-      secondPosition: [props.secondLatCenter, props.secondLngCenter],
-      allowDragableMarker: false,
-      currentMapPosition: [props.latCenter, props.lngCenter]
+      lat: this.props.latCenter ? this.props.latCenter : 52.22977,
+      lng: this.props.lngCenter ? this.props.lngCenter : 21.01178,
+      markersData: [],
+      activeKey: ""
     };
 
-    this.mapPositionChange = this.mapPositionChange.bind(this);
-    this.moveMarker = this.moveMarker.bind(this);
-    this.moveSecondMarker = this.moveSecondMarker.bind(this);
-    this.setCurrentPosition = this.setCurrentPosition.bind(this);
+    this.changeStateCoords = this.changeStateCoords.bind(this);
+    this.loadPoints = this.loadPoints.bind(this);
+    this.toggleLocationsActive = this.toggleLocationsActive.bind(this);
   }
 
-  componentDidMount() {
+  toggleLocationsActive(locationKey) {
     this.setState({
-      allowDragableMarker: this.props.allowDragableMarker
-        ? this.props.allowDragableMarker
-        : false
+      activeKey: locationKey
     });
   }
 
-  moveMarker(event) {
-    this.props.setNewCoords(event.target._latlng.lat, event.target._latlng.lng);
+  async changeStateCoords(lat, lng) {
+    await this.setState({ lat: lat, lng: lng });
+    await this.loadPoints(lat, lng);
   }
 
-  moveSecondMarker(event) {
-    this.props.setNewSecondCoords(
-      event.target._latlng.lat,
-      event.target._latlng.lng
-    );
+  async loadPoints(lat, lng) {
+    let response;
+    let lattitude = "";
+    let longitude = "";
+
+    if (!lat && !lng) {
+      lattitude = this.state.lat;
+      longitude = this.state.lng;
+    } else {
+      lattitude = lat;
+      longitude = lng;
+    }
+
+    try {
+      response = await axios.get(
+        `/getPointsNearCoords/${lattitude}/${longitude}`,
+        {
+          headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+          }
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log(response.data);
+
+    //await this.setState({ markersList: response.data.location });
   }
 
-  mapPositionChange(event) {
-    console.log(this.state.currentMapPosition);
-
-    this.props.setNewCenterCoords(
-      this.state.currentMapPosition[0],
-      this.state.currentMapPosition[1]
-    );
+  async componentDidMount() {
+    await this.loadPoints(this.state.lat, this.state.lng);
   }
 
-  setCurrentPosition(event) {
-    this.setState({
-      currentMapPosition: [
-        event.target.getCenter().lat,
-        event.target.getCenter().lng
-      ]
-    });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.centerCoord !== this.props.centerCoord) {
+      this.setState({
+        lat: Number(nextProps.centerCoord[0]),
+        lng: Number(nextProps.centerCoord[1])
+      });
+    }
   }
 
   render() {
-    const AddressSearch = withLeaflet(Search);
     return (
       <div>
-        <Map
-          center={
-            this.props.centerCoord.length > 0
-              ? this.props.centerCoord
-              : this.state.position
-          }
-          onMoveEnd={this.setCurrentPosition}
-          zoom={13}
-        >
-          <AddressSearch />
-          <div
-            onClick={this.mapPositionChange}
-            className="btn btn-default searchAreaBtn"
-          >
-            Szukaj w tym obszarze
-          </div>
-          <TileLayer
-            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-          />
-          {this.props.markersData ? (
-            <MyMarkersList markers={this.props.markersData} />
-          ) : (
-            ""
-          )}
-          {this.props.displayFirstMarker ? (
-            <Marker
-              position={this.state.position}
-              draggable={this.state.allowDragableMarker}
-              onDragend={this.moveMarker}
-            />
-          ) : (
-            ""
-          )}
-          {this.props.displaySecondMarker ? (
-            <Marker
-              position={this.state.secondPosition}
-              draggable={this.state.allowDragableMarker}
-              onDragend={this.moveSecondMarker}
-            />
-          ) : (
-            ""
-          )}
-          }
-        </Map>
+        <MyMapComponent
+          lat={this.state.lat}
+          lng={this.state.lng}
+          changeStateCoords={this.changeStateCoords}
+          markersData={this.props.markersData}
+          activeKey={this.state.activeKey}
+          toggleLocationsActive={this.toggleLocationsActive}
+          latCenter={this.props.latCenter}
+          lngCenter={this.props.lngCenter}
+          secondLatCenter={this.props.secondLatCenter}
+          secondLngCenter={this.props.secondLngCenter}
+          hideSearchBox={this.props.hideSearchBox}
+        />
       </div>
     );
   }
 }
-
-export default MapComponent;
