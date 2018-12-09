@@ -1560,7 +1560,7 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
       /*onDragEnd={map => {
         props.getMapCoords(this._map);
       }}*/
-      , center: { lat: props.lat, lng: props.lng }
+      , center: { lat: Number(props.lat), lng: Number(props.lng) }
     },
     !props.hideSearchBox && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default.a,
@@ -1598,12 +1598,13 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
         lat: Number(props.latCenter),
         lng: Number(props.lngCenter)
       },
-      ref: function ref(marker) {
-        return _this._marker = marker;
+      key: "addNewMeetingStart",
+      ref: function ref(marker1) {
+        return _this._marker1 = marker1;
       },
       onDragEnd: function onDragEnd() {
-        props.setNewCoords(_this._marker.getPosition().lat(), _this._marker.getPosition().lng());
-        console.log(_this._marker.getPosition().lat());
+        props.setNewCoords(_this._marker1.getPosition().lat(), _this._marker1.getPosition().lng());
+        console.log(_this._marker1.getPosition().lat());
       }
     }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
       draggable: false,
@@ -1612,7 +1613,20 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
         lng: Number(props.lngCenter)
       }
     }),
-    props.secondLatCenter && props.secondLngCenter && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
+    props.secondLatCenter && props.secondLngCenter && props.allowDragableSecondMarker ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
+      draggable: true,
+      position: {
+        lat: Number(props.secondLatCenter),
+        lng: Number(props.secondLngCenter)
+      },
+      key: "addNewMeetingStop",
+      ref: function ref(marker2) {
+        return _this._marker2 = marker2;
+      },
+      onDragEnd: function onDragEnd() {
+        props.setNewSecondCoords(_this._marker2.getPosition().lat(), _this._marker2.getPosition().lng());
+      }
+    }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
       position: {
         lat: Number(props.secondLatCenter),
         lng: Number(props.secondLngCenter)
@@ -1822,7 +1836,11 @@ var MapComponent = function (_Component) {
           secondLngCenter: this.props.secondLngCenter,
           hideSearchBox: this.props.hideSearchBox,
           allowDragableMarker: this.props.allowDragableMarker,
-          setNewCoords: this.props.setNewCoords
+          allowDragableSecondMarker: this.props.allowDragableSecondMarker,
+          setNewCoords: this.props.setNewCoords,
+          setNewSecondCoords: this.props.setNewSecondCoords,
+          displayFirstMarker: this.props.displayFirstMarker,
+          displaySecondMarker: this.props.displaySecondMarker
         })
       );
     }
@@ -47737,13 +47755,14 @@ var AddNewMeeting = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
             latCenter: this.state.lat,
             lngCenter: this.state.lng,
-            allowDragableMarker: true,
-            setNewCoords: this.setNewCoords,
-            displayFirstMarker: true,
-            displaySecondMarker: true,
             secondLatCenter: this.state.secondLat,
             secondLngCenter: this.state.secondLng,
+            allowDragableMarker: true,
+            allowDragableSecondMarker: true,
+            setNewCoords: this.setNewCoords,
             setNewSecondCoords: this.setNewSecondCoords,
+            displayFirstMarker: true,
+            displaySecondMarker: true,
             centerCoord: this.state.centerCoord
           })
         )

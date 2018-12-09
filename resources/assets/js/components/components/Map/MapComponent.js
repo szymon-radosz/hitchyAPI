@@ -82,7 +82,7 @@ const MyMapComponent = compose(
     /*onDragEnd={map => {
       props.getMapCoords(this._map);
     }}*/
-    center={{ lat: props.lat, lng: props.lng }}
+    center={{ lat: Number(props.lat), lng: Number(props.lng) }}
   >
     {!props.hideSearchBox && (
       <SearchBox
@@ -122,13 +122,14 @@ const MyMapComponent = compose(
           lat: Number(props.latCenter),
           lng: Number(props.lngCenter)
         }}
-        ref={marker => (this._marker = marker)}
+        key="addNewMeetingStart"
+        ref={marker1 => (this._marker1 = marker1)}
         onDragEnd={() => {
           props.setNewCoords(
-            this._marker.getPosition().lat(),
-            this._marker.getPosition().lng()
+            this._marker1.getPosition().lat(),
+            this._marker1.getPosition().lng()
           );
-          console.log(this._marker.getPosition().lat());
+          console.log(this._marker1.getPosition().lat());
         }}
       />
     ) : (
@@ -142,14 +143,31 @@ const MyMapComponent = compose(
     )}
 
     {props.secondLatCenter &&
-      props.secondLngCenter && (
-        <Marker
-          position={{
-            lat: Number(props.secondLatCenter),
-            lng: Number(props.secondLngCenter)
-          }}
-        />
-      )}
+    props.secondLngCenter &&
+    props.allowDragableSecondMarker ? (
+      <Marker
+        draggable={true}
+        position={{
+          lat: Number(props.secondLatCenter),
+          lng: Number(props.secondLngCenter)
+        }}
+        key="addNewMeetingStop"
+        ref={marker2 => (this._marker2 = marker2)}
+        onDragEnd={() => {
+          props.setNewSecondCoords(
+            this._marker2.getPosition().lat(),
+            this._marker2.getPosition().lng()
+          );
+        }}
+      />
+    ) : (
+      <Marker
+        position={{
+          lat: Number(props.secondLatCenter),
+          lng: Number(props.secondLngCenter)
+        }}
+      />
+    )}
 
     {props.markersData &&
       props.markersData.map((singleMarker, i) => {
@@ -265,7 +283,11 @@ export default class MapComponent extends Component {
           secondLngCenter={this.props.secondLngCenter}
           hideSearchBox={this.props.hideSearchBox}
           allowDragableMarker={this.props.allowDragableMarker}
+          allowDragableSecondMarker={this.props.allowDragableSecondMarker}
           setNewCoords={this.props.setNewCoords}
+          setNewSecondCoords={this.props.setNewSecondCoords}
+          displayFirstMarker={this.props.displayFirstMarker}
+          displaySecondMarker={this.props.displaySecondMarker}
         />
       </div>
     );
