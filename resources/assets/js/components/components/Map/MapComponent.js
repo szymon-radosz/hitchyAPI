@@ -115,15 +115,31 @@ const MyMapComponent = compose(
         />
       </SearchBox>
     )}
-    {props.latCenter &&
-      props.lngCenter && (
-        <Marker
-          position={{
-            lat: Number(props.latCenter),
-            lng: Number(props.lngCenter)
-          }}
-        />
-      )}
+    {props.latCenter && props.lngCenter && props.allowDragableMarker ? (
+      <Marker
+        draggable={true}
+        position={{
+          lat: Number(props.latCenter),
+          lng: Number(props.lngCenter)
+        }}
+        ref={marker => (this._marker = marker)}
+        onDragEnd={() => {
+          props.setNewCoords(
+            this._marker.getPosition().lat(),
+            this._marker.getPosition().lng()
+          );
+          console.log(this._marker.getPosition().lat());
+        }}
+      />
+    ) : (
+      <Marker
+        draggable={false}
+        position={{
+          lat: Number(props.latCenter),
+          lng: Number(props.lngCenter)
+        }}
+      />
+    )}
 
     {props.secondLatCenter &&
       props.secondLngCenter && (
@@ -248,6 +264,8 @@ export default class MapComponent extends Component {
           secondLatCenter={this.props.secondLatCenter}
           secondLngCenter={this.props.secondLngCenter}
           hideSearchBox={this.props.hideSearchBox}
+          allowDragableMarker={this.props.allowDragableMarker}
+          setNewCoords={this.props.setNewCoords}
         />
       </div>
     );
