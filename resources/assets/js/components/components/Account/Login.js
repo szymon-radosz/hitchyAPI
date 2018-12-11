@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { loginUser } from "./../../actions/userActions";
 
 class Login extends Component {
   constructor(props) {
@@ -20,28 +22,13 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  async handleSubmit(event) {
-    event.preventDefault();
-
-    const loginUser = await axios.post(`http://127.0.0.1:8000/api/login`, {
+  handleSubmit() {
+    const userCredentials = {
       emailOrNickname: this.state.emailOrNickname,
       password: this.state.password
-    });
+    };
 
-    console.log(loginUser);
-
-    if (loginUser.status == 200 && loginUser.data.userId != null) {
-      sessionStorage.setItem("userId", "");
-      sessionStorage.setItem("userNickName", "");
-      sessionStorage.setItem("userEmail", "");
-      sessionStorage.setItem("userId", loginUser.data.userId);
-      sessionStorage.setItem("userNickName", loginUser.data.userNickName);
-      sessionStorage.setItem("userEmail", loginUser.data.userEmail);
-      this.props.loginUser(loginUser.data.userNickName);
-      this.props.showAlertSuccess("Poprawnie zalogowano.");
-    } else {
-      this.props.showAlertWarning("Złe hasło.");
-    }
+    this.props.loginUser(userCredentials);
   }
 
   render() {
@@ -50,7 +37,7 @@ class Login extends Component {
         <div className="col-sm-6 col-sm-offset-3 loginCol">
           <h2>Logowanie</h2>
 
-          <form onSubmit={this.handleSubmit}>
+          <form>
             <div className="form-group">
               <label htmlFor="emailOrNickname">Email lub nick:</label>
               <input
@@ -75,12 +62,13 @@ class Login extends Component {
               />
             </div>
 
-            <input
-              type="submit"
+            <div
+              onClick={this.handleSubmit}
               className="btn btn-default defaultBtn"
               id="loginBtn"
-              value="Login"
-            />
+            >
+              Login
+            </div>
           </form>
         </div>
       </div>
@@ -88,4 +76,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  user: state.result
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);

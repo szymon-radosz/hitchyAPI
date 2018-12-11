@@ -97,6 +97,7 @@ class Main extends Component {
           switchLoader={this.switchLoader}
           showAlertSuccess={this.showAlertSuccess}
           showAlertWarning={this.showAlertWarning}
+          store={this.props.store}
         />
       </div>
     );
