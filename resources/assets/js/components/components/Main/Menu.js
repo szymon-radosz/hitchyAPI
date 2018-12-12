@@ -10,6 +10,7 @@ import MeetingDetails from "./../Meetings/MeetingDetails.js";
 import MainProfile from "./../Profile/MainProfile.js";
 import MainPoints from "./../Points/MainPoints.js";
 import AddNewPoint from "./../Points/AddNewPoint";
+import { store } from "./../../store";
 
 class Menu extends Component {
   constructor(props) {
@@ -31,6 +32,22 @@ class Menu extends Component {
   }
 
   async componentDidMount() {
+    store.subscribe(() => {
+      console.log(store.getState());
+
+      let storeData = store.getState();
+
+      if (storeData.user.user.userId) {
+        this.setState({ userIsLoggedIn: true });
+      }
+    });
+
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({ userIsLoggedIn: true });
+    }
+
     if (sessionStorage.getItem("userId")) {
       this.setState({ userIsLoggedIn: true });
 

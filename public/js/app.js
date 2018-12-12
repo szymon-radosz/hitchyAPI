@@ -30104,7 +30104,9 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__App_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Main_Main__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(457);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(475);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(475);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30112,6 +30114,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -30133,8 +30136,12 @@ var App = function (_Component) {
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_3_react_redux__["a" /* Provider */],
-        { store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */] },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Main_Main__["a" /* default */], { store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */] })
+        { store: __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */] },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react__["PersistGate"],
+          { loading: null, persistor: __WEBPACK_IMPORTED_MODULE_5__store__["a" /* persistor */] },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Main_Main__["a" /* default */], { store: __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */] })
+        )
       );
     }
   }]);
@@ -30239,6 +30246,7 @@ module.exports = "/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(452);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__ = __webpack_require__(453);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__ = __webpack_require__(456);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__store__ = __webpack_require__(475);
 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -30252,6 +30260,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -30290,25 +30299,44 @@ var Menu = function (_Component) {
     key: "componentDidMount",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var getUser;
+        var _this2 = this;
+
+        var storeData, getUser;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                __WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].subscribe(function () {
+                  console.log(__WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].getState());
+
+                  var storeData = __WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].getState();
+
+                  if (storeData.user.user.userId) {
+                    _this2.setState({ userIsLoggedIn: true });
+                  }
+                });
+
+                storeData = __WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].getState();
+
+
+                if (storeData.user.user.userId) {
+                  this.setState({ userIsLoggedIn: true });
+                }
+
                 if (!sessionStorage.getItem("userId")) {
-                  _context.next = 5;
+                  _context.next = 8;
                   break;
                 }
 
                 this.setState({ userIsLoggedIn: true });
 
-                _context.next = 4;
+                _context.next = 7;
                 return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
 
-              case 4:
+              case 7:
                 getUser = _context.sent;
 
-              case 5:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -30353,7 +30381,7 @@ var Menu = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* BrowserRouter */],
@@ -30526,8 +30554,8 @@ var Menu = function (_Component) {
             path: "/",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__LandingPage_js__["a" /* default */], {
-                searchInLocation: _this2.state.searchInLocation,
-                changeStateOfSearchInLocation: _this2.changeStateOfSearchInLocation
+                searchInLocation: _this3.state.searchInLocation,
+                changeStateOfSearchInLocation: _this3.changeStateOfSearchInLocation
               });
             }
           }),
@@ -30536,9 +30564,9 @@ var Menu = function (_Component) {
             path: "/login",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Login_js__["a" /* default */], {
-                loginUser: _this2.loginUser,
-                showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning
+                loginUser: _this3.loginUser,
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning
               });
             }
           }),
@@ -30547,9 +30575,9 @@ var Menu = function (_Component) {
             path: "/register",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Account_Register_js__["a" /* default */], {
-                loginUser: _this2.loginUser,
-                showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning
+                loginUser: _this3.loginUser,
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning
               });
             }
           }),
@@ -30558,8 +30586,8 @@ var Menu = function (_Component) {
             path: "/meetings",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__["a" /* default */], {
-                searchInLocation: _this2.state.searchInLocation,
-                switchLoader: _this2.props.switchLoader
+                searchInLocation: _this3.state.searchInLocation,
+                switchLoader: _this3.props.switchLoader
               });
             }
           }),
@@ -30568,10 +30596,10 @@ var Menu = function (_Component) {
             path: "/points",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__["a" /* default */], {
-                searchInLocation: _this2.state.searchInLocation,
-                showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning,
-                switchLoader: _this2.props.switchLoader
+                searchInLocation: _this3.state.searchInLocation,
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning,
+                switchLoader: _this3.props.switchLoader
               });
             }
           }),
@@ -30580,9 +30608,9 @@ var Menu = function (_Component) {
             path: "/events/:id",
             render: function render(props) {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__["a" /* default */], _extends({}, props, {
-                showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning,
-                switchLoader: _this2.props.switchLoader
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning,
+                switchLoader: _this3.props.switchLoader
               }));
             }
           }),
@@ -30592,8 +30620,8 @@ var Menu = function (_Component) {
             path: "/add-meeting",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
-                showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning
               });
             }
           }),
@@ -30602,8 +30630,8 @@ var Menu = function (_Component) {
             path: "/add-point",
             render: function render() {
               return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__["a" /* default */], {
-                showAlertSuccess: _this2.props.showAlertSuccess,
-                showAlertWarning: _this2.props.showAlertWarning
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning
               });
             }
           })
@@ -52287,9 +52315,19 @@ function unregister() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return persistor; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(465);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_thunk__ = __webpack_require__(476);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reducers__ = __webpack_require__(477);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_redux_persist__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_storage__ = __webpack_require__(494);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_storage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_redux_persist_lib_stateReconciler_autoMergeLevel2__ = __webpack_require__(497);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_redux_persist_lib_stateReconciler_autoMergeLevel2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_redux_persist_lib_stateReconciler_autoMergeLevel2__);
+
+
+
 
 
 
@@ -52298,9 +52336,17 @@ var initialState = {};
 
 var middleware = [__WEBPACK_IMPORTED_MODULE_1_redux_thunk__["a" /* default */]];
 
-var store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["e" /* createStore */])(__WEBPACK_IMPORTED_MODULE_2__reducers__["a" /* default */], initialState, Object(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* compose */])(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */].apply(undefined, middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+var persistConfig = {
+  key: "root",
+  storage: __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_storage___default.a,
+  stateReconciler: __WEBPACK_IMPORTED_MODULE_5_redux_persist_lib_stateReconciler_autoMergeLevel2___default.a // see "Merge Process" section for details.
+};
 
-/* harmony default export */ __webpack_exports__["a"] = (store);
+var pReducer = Object(__WEBPACK_IMPORTED_MODULE_3_redux_persist__["a" /* persistReducer */])(persistConfig, __WEBPACK_IMPORTED_MODULE_2__reducers__["a" /* default */]);
+
+var store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["e" /* createStore */])(pReducer, initialState, Object(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* compose */])(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */].apply(undefined, middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+
+var persistor = Object(__WEBPACK_IMPORTED_MODULE_3_redux_persist__["b" /* persistStore */])(store);
 
 /***/ }),
 /* 476 */
@@ -52348,13 +52394,18 @@ thunk.withExtraArgument = createThunkMiddleware;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_types__ = __webpack_require__(479);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_persist__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_redux_persist_lib_storage__ = __webpack_require__(494);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_redux_persist_lib_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_redux_persist_lib_storage__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
 
 
 
 var initialState = {};
 
-/* harmony default export */ __webpack_exports__["a"] = (function () {
+var userReducer = function userReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
 
@@ -52366,7 +52417,14 @@ var initialState = {};
     default:
       return state;
   }
-});
+};
+
+var persistConfig = {
+  key: "auth",
+  storage: __WEBPACK_IMPORTED_MODULE_2_redux_persist_lib_storage___default.a
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_redux_persist__["a" /* persistReducer */])(persistConfig, userReducer));
 
 /***/ }),
 /* 479 */
@@ -52422,6 +52480,956 @@ var loginUser = function loginUser(userData) {
       console.log(test);
     }
   };
+};
+
+/***/ }),
+/* 481 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return KEY_PREFIX; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FLUSH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return REHYDRATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return PAUSE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return PERSIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return PURGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return REGISTER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DEFAULT_VERSION; });
+var KEY_PREFIX = 'persist:';
+var FLUSH = 'persist/FLUSH';
+var REHYDRATE = 'persist/REHYDRATE';
+var PAUSE = 'persist/PAUSE';
+var PERSIST = 'persist/PERSIST';
+var PURGE = 'persist/PURGE';
+var REGISTER = 'persist/REGISTER';
+var DEFAULT_VERSION = -1;
+
+/***/ }),
+/* 482 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = persistReducer;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(481);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stateReconciler_autoMergeLevel1__ = __webpack_require__(487);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createPersistoid__ = __webpack_require__(483);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getStoredState__ = __webpack_require__(484);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__purgeStoredState__ = __webpack_require__(485);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+
+
+
+
+
+
+
+var DEFAULT_TIMEOUT = 5000;
+/*
+  @TODO add validation / handling for:
+  - persisting a reducer which has nested _persist
+  - handling actions that fire before reydrate is called
+*/
+function persistReducer(config, baseReducer) {
+  if (true) {
+    if (!config) throw new Error('config is required for persistReducer');
+    if (!config.key) throw new Error('key is required in persistor config');
+    if (!config.storage) throw new Error("redux-persist: config.storage is required. Try using one of the provided storage engines `import storage from 'redux-persist/lib/storage'`");
+  }
+
+  var version = config.version !== undefined ? config.version : __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* DEFAULT_VERSION */];
+  var debug = config.debug || false;
+  var stateReconciler = config.stateReconciler === undefined ? __WEBPACK_IMPORTED_MODULE_1__stateReconciler_autoMergeLevel1__["a" /* default */] : config.stateReconciler;
+  var getStoredState = config.getStoredState || __WEBPACK_IMPORTED_MODULE_3__getStoredState__["a" /* default */];
+  var timeout = config.timeout !== undefined ? config.timeout : DEFAULT_TIMEOUT;
+  var _persistoid = null;
+  var _purge = false;
+  var _paused = true;
+  var conditionalUpdate = function conditionalUpdate(state) {
+    // update the persistoid only if we are rehydrated and not paused
+    state._persist.rehydrated && _persistoid && !_paused && _persistoid.update(state);
+    return state;
+  };
+
+  return function (state, action) {
+    var _ref = state || {},
+        _persist = _ref._persist,
+        rest = _objectWithoutProperties(_ref, ['_persist']);
+
+    var restState = rest;
+
+    if (action.type === __WEBPACK_IMPORTED_MODULE_0__constants__["e" /* PERSIST */]) {
+      var _sealed = false;
+      var _rehydrate = function _rehydrate(payload, err) {
+        // dev warning if we are already sealed
+        if ("development" !== 'production' && _sealed) console.error('redux-persist: rehydrate for "' + config.key + '" called after timeout.', payload, err);
+
+        // only rehydrate if we are not already sealed
+        if (!_sealed) {
+          action.rehydrate(config.key, payload, err);
+          _sealed = true;
+        }
+      };
+      timeout && setTimeout(function () {
+        !_sealed && _rehydrate(undefined, new Error('redux-persist: persist timed out for persist key "' + config.key + '"'));
+      }, timeout);
+
+      // @NOTE PERSIST resumes if paused.
+      _paused = false;
+
+      // @NOTE only ever create persistoid once, ensure we call it at least once, even if _persist has already been set
+      if (!_persistoid) _persistoid = Object(__WEBPACK_IMPORTED_MODULE_2__createPersistoid__["a" /* default */])(config);
+
+      // @NOTE PERSIST can be called multiple times, noop after the first
+      if (_persist) return state;
+      if (typeof action.rehydrate !== 'function' || typeof action.register !== 'function') throw new Error('redux-persist: either rehydrate or register is not a function on the PERSIST action. This can happen if the action is being replayed. This is an unexplored use case, please open an issue and we will figure out a resolution.');
+
+      action.register(config.key);
+
+      getStoredState(config).then(function (restoredState) {
+        var migrate = config.migrate || function (s, v) {
+          return Promise.resolve(s);
+        };
+        migrate(restoredState, version).then(function (migratedState) {
+          _rehydrate(migratedState);
+        }, function (migrateErr) {
+          if ("development" !== 'production' && migrateErr) console.error('redux-persist: migration error', migrateErr);
+          _rehydrate(undefined, migrateErr);
+        });
+      }, function (err) {
+        _rehydrate(undefined, err);
+      });
+
+      return _extends({}, baseReducer(restState, action), {
+        _persist: { version: version, rehydrated: false }
+      });
+    } else if (action.type === __WEBPACK_IMPORTED_MODULE_0__constants__["f" /* PURGE */]) {
+      _purge = true;
+      action.result(Object(__WEBPACK_IMPORTED_MODULE_4__purgeStoredState__["a" /* default */])(config));
+      return _extends({}, baseReducer(restState, action), {
+        _persist: _persist
+      });
+    } else if (action.type === __WEBPACK_IMPORTED_MODULE_0__constants__["b" /* FLUSH */]) {
+      action.result(_persistoid && _persistoid.flush());
+      return _extends({}, baseReducer(restState, action), {
+        _persist: _persist
+      });
+    } else if (action.type === __WEBPACK_IMPORTED_MODULE_0__constants__["d" /* PAUSE */]) {
+      _paused = true;
+    } else if (action.type === __WEBPACK_IMPORTED_MODULE_0__constants__["h" /* REHYDRATE */]) {
+      // noop on restState if purging
+      if (_purge) return _extends({}, restState, {
+        _persist: _extends({}, _persist, { rehydrated: true })
+
+        // @NOTE if key does not match, will continue to default else below
+      });if (action.key === config.key) {
+        var reducedState = baseReducer(restState, action);
+        var inboundState = action.payload;
+        // only reconcile state if stateReconciler and inboundState are both defined
+        var reconciledRest = stateReconciler !== false && inboundState !== undefined ? stateReconciler(inboundState, state, reducedState, config) : reducedState;
+
+        var _newState = _extends({}, reconciledRest, {
+          _persist: _extends({}, _persist, { rehydrated: true })
+        });
+        return conditionalUpdate(_newState);
+      }
+    }
+
+    // if we have not already handled PERSIST, straight passthrough
+    if (!_persist) return baseReducer(state, action);
+
+    // run base reducer:
+    // is state modified ? return original : return updated
+    var newState = baseReducer(restState, action);
+    if (newState === restState) return state;else {
+      newState._persist = _persist;
+      return conditionalUpdate(newState);
+    }
+  };
+}
+
+/***/ }),
+/* 483 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = createPersistoid;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(481);
+
+
+// @TODO remove once flow < 0.63 support is no longer required.
+
+function createPersistoid(config) {
+  // defaults
+  var blacklist = config.blacklist || null;
+  var whitelist = config.whitelist || null;
+  var transforms = config.transforms || [];
+  var throttle = config.throttle || 0;
+  var storageKey = '' + (config.keyPrefix !== undefined ? config.keyPrefix : __WEBPACK_IMPORTED_MODULE_0__constants__["c" /* KEY_PREFIX */]) + config.key;
+  var storage = config.storage;
+  var serialize = config.serialize === false ? function (x) {
+    return x;
+  } : defaultSerialize;
+
+  // initialize stateful values
+  var lastState = {};
+  var stagedState = {};
+  var keysToProcess = [];
+  var timeIterator = null;
+  var writePromise = null;
+
+  var update = function update(state) {
+    // add any changed keys to the queue
+    Object.keys(state).forEach(function (key) {
+      if (!passWhitelistBlacklist(key)) return; // is keyspace ignored? noop
+      if (lastState[key] === state[key]) return; // value unchanged? noop
+      if (keysToProcess.indexOf(key) !== -1) return; // is key already queued? noop
+      keysToProcess.push(key); // add key to queue
+    });
+
+    //if any key is missing in the new state which was present in the lastState,
+    //add it for processing too
+    Object.keys(lastState).forEach(function (key) {
+      if (state[key] === undefined) {
+        keysToProcess.push(key);
+      }
+    });
+
+    // start the time iterator if not running (read: throttle)
+    if (timeIterator === null) {
+      timeIterator = setInterval(processNextKey, throttle);
+    }
+
+    lastState = state;
+  };
+
+  function processNextKey() {
+    if (keysToProcess.length === 0) {
+      if (timeIterator) clearInterval(timeIterator);
+      timeIterator = null;
+      return;
+    }
+
+    var key = keysToProcess.shift();
+    var endState = transforms.reduce(function (subState, transformer) {
+      return transformer.in(subState, key, lastState);
+    }, lastState[key]);
+
+    if (endState !== undefined) {
+      try {
+        stagedState[key] = serialize(endState);
+      } catch (err) {
+        console.error('redux-persist/createPersistoid: error serializing state', err);
+      }
+    } else {
+      //if the endState is undefined, no need to persist the existing serialized content
+      delete stagedState[key];
+    }
+
+    if (keysToProcess.length === 0) {
+      writeStagedState();
+    }
+  }
+
+  function writeStagedState() {
+    // cleanup any removed keys just before write.
+    Object.keys(stagedState).forEach(function (key) {
+      if (lastState[key] === undefined) {
+        delete stagedState[key];
+      }
+    });
+
+    writePromise = storage.setItem(storageKey, serialize(stagedState)).catch(onWriteFail);
+  }
+
+  function passWhitelistBlacklist(key) {
+    if (whitelist && whitelist.indexOf(key) === -1 && key !== '_persist') return false;
+    if (blacklist && blacklist.indexOf(key) !== -1) return false;
+    return true;
+  }
+
+  function onWriteFail(err) {
+    // @TODO add fail handlers (typically storage full)
+    if (err && "development" !== 'production') {
+      console.error('Error storing data', err);
+    }
+  }
+
+  var flush = function flush() {
+    while (keysToProcess.length !== 0) {
+      processNextKey();
+    }
+    return writePromise || Promise.resolve();
+  };
+
+  // return `persistoid`
+  return {
+    update: update,
+    flush: flush
+  };
+}
+
+// @NOTE in the future this may be exposed via config
+function defaultSerialize(data) {
+  return JSON.stringify(data);
+}
+
+/***/ }),
+/* 484 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = getStoredState;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(481);
+
+
+
+
+function getStoredState(config) {
+  var transforms = config.transforms || [];
+  var storageKey = '' + (config.keyPrefix !== undefined ? config.keyPrefix : __WEBPACK_IMPORTED_MODULE_0__constants__["c" /* KEY_PREFIX */]) + config.key;
+  var storage = config.storage;
+  var debug = config.debug;
+  var deserialize = config.serialize === false ? function (x) {
+    return x;
+  } : defaultDeserialize;
+  return storage.getItem(storageKey).then(function (serialized) {
+    if (!serialized) return undefined;else {
+      try {
+        var state = {};
+        var rawState = deserialize(serialized);
+        Object.keys(rawState).forEach(function (key) {
+          state[key] = transforms.reduceRight(function (subState, transformer) {
+            return transformer.out(subState, key, rawState);
+          }, deserialize(rawState[key]));
+        });
+        return state;
+      } catch (err) {
+        if ("development" !== 'production' && debug) console.log('redux-persist/getStoredState: Error restoring data ' + serialized, err);
+        throw err;
+      }
+    }
+  });
+}
+
+function defaultDeserialize(serial) {
+  return JSON.parse(serial);
+}
+
+/***/ }),
+/* 485 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = purgeStoredState;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(481);
+
+
+
+
+function purgeStoredState(config) {
+  var storage = config.storage;
+  var storageKey = '' + (config.keyPrefix !== undefined ? config.keyPrefix : __WEBPACK_IMPORTED_MODULE_0__constants__["c" /* KEY_PREFIX */]) + config.key;
+  return storage.removeItem(storageKey, warnIfRemoveError);
+}
+
+function warnIfRemoveError(err) {
+  if (err && "development" !== 'production') {
+    console.error('redux-persist/purgeStoredState: Error purging data stored state', err);
+  }
+}
+
+/***/ }),
+/* 486 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__persistReducer__ = __webpack_require__(482);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__persistReducer__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__persistCombineReducers__ = __webpack_require__(488);
+/* unused harmony reexport persistCombineReducers */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__persistStore__ = __webpack_require__(490);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__persistStore__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createMigrate__ = __webpack_require__(491);
+/* unused harmony reexport createMigrate */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransform__ = __webpack_require__(492);
+/* unused harmony reexport createTransform */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__getStoredState__ = __webpack_require__(484);
+/* unused harmony reexport getStoredState */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__createPersistoid__ = __webpack_require__(483);
+/* unused harmony reexport createPersistoid */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__purgeStoredState__ = __webpack_require__(485);
+/* unused harmony reexport purgeStoredState */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__constants__ = __webpack_require__(481);
+/* unused harmony namespace reexport */
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 487 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = autoMergeLevel1;
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function autoMergeLevel1(inboundState, originalState, reducedState, _ref) {
+  var debug = _ref.debug;
+
+  var newState = _extends({}, reducedState);
+  // only rehydrate if inboundState exists and is an object
+  if (inboundState && (typeof inboundState === 'undefined' ? 'undefined' : _typeof(inboundState)) === 'object') {
+    Object.keys(inboundState).forEach(function (key) {
+      // ignore _persist data
+      if (key === '_persist') return;
+      // if reducer modifies substate, skip auto rehydration
+      if (originalState[key] !== reducedState[key]) {
+        if ("development" !== 'production' && debug) console.log('redux-persist/stateReconciler: sub state for key `%s` modified, skipping.', key);
+        return;
+      }
+      // otherwise hard set the new value
+      newState[key] = inboundState[key];
+    });
+  }
+
+  if ("development" !== 'production' && debug && inboundState && (typeof inboundState === 'undefined' ? 'undefined' : _typeof(inboundState)) === 'object') console.log('redux-persist/stateReconciler: rehydrated keys \'' + Object.keys(inboundState).join(', ') + '\'');
+
+  return newState;
+}
+
+/*
+  autoMergeLevel1: 
+    - merges 1 level of substate
+    - skips substate if already modified
+*/
+
+/***/ }),
+/* 488 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export default */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__persistReducer__ = __webpack_require__(482);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stateReconciler_autoMergeLevel2__ = __webpack_require__(489);
+
+
+
+
+// combineReducers + persistReducer with stateReconciler defaulted to autoMergeLevel2
+function persistCombineReducers(config, reducers) {
+  config.stateReconciler = config.stateReconciler === undefined ? __WEBPACK_IMPORTED_MODULE_2__stateReconciler_autoMergeLevel2__["a" /* default */] : config.stateReconciler;
+  return Object(__WEBPACK_IMPORTED_MODULE_1__persistReducer__["a" /* default */])(config, Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])(reducers));
+}
+
+/***/ }),
+/* 489 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = autoMergeLevel2;
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function autoMergeLevel2(inboundState, originalState, reducedState, _ref) {
+  var debug = _ref.debug;
+
+  var newState = _extends({}, reducedState);
+  // only rehydrate if inboundState exists and is an object
+  if (inboundState && (typeof inboundState === 'undefined' ? 'undefined' : _typeof(inboundState)) === 'object') {
+    Object.keys(inboundState).forEach(function (key) {
+      // ignore _persist data
+      if (key === '_persist') return;
+      // if reducer modifies substate, skip auto rehydration
+      if (originalState[key] !== reducedState[key]) {
+        if ("development" !== 'production' && debug) console.log('redux-persist/stateReconciler: sub state for key `%s` modified, skipping.', key);
+        return;
+      }
+      if (isPlainEnoughObject(reducedState[key])) {
+        // if object is plain enough shallow merge the new values (hence "Level2")
+        newState[key] = _extends({}, newState[key], inboundState[key]);
+        return;
+      }
+      // otherwise hard set
+      newState[key] = inboundState[key];
+    });
+  }
+
+  if ("development" !== 'production' && debug && inboundState && (typeof inboundState === 'undefined' ? 'undefined' : _typeof(inboundState)) === 'object') console.log('redux-persist/stateReconciler: rehydrated keys \'' + Object.keys(inboundState).join(', ') + '\'');
+
+  return newState;
+}
+
+/*
+  autoMergeLevel2: 
+    - merges 2 level of substate
+    - skips substate if already modified
+    - this is essentially redux-perist v4 behavior
+*/
+
+function isPlainEnoughObject(o) {
+  return o !== null && !Array.isArray(o) && (typeof o === 'undefined' ? 'undefined' : _typeof(o)) === 'object';
+}
+
+/***/ }),
+/* 490 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = persistStore;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__persistReducer__ = __webpack_require__(482);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(481);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
+
+
+
+
+var initialState = {
+  registry: [],
+  bootstrapped: false
+};
+
+var persistorReducer = function persistorReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case __WEBPACK_IMPORTED_MODULE_2__constants__["g" /* REGISTER */]:
+      return _extends({}, state, { registry: [].concat(_toConsumableArray(state.registry), [action.key]) });
+    case __WEBPACK_IMPORTED_MODULE_2__constants__["h" /* REHYDRATE */]:
+      var firstIndex = state.registry.indexOf(action.key);
+      var registry = [].concat(_toConsumableArray(state.registry));
+      registry.splice(firstIndex, 1);
+      return _extends({}, state, { registry: registry, bootstrapped: registry.length === 0 });
+    default:
+      return state;
+  }
+};
+
+function persistStore(store, options, cb) {
+  // help catch incorrect usage of passing PersistConfig in as PersistorOptions
+  if (true) {
+    var optionsToTest = options || {};
+    var bannedKeys = ['blacklist', 'whitelist', 'transforms', 'storage', 'keyPrefix', 'migrate'];
+    bannedKeys.forEach(function (k) {
+      if (!!optionsToTest[k]) console.error('redux-persist: invalid option passed to persistStore: "' + k + '". You may be incorrectly passing persistConfig into persistStore, whereas it should be passed into persistReducer.');
+    });
+  }
+  var boostrappedCb = cb || false;
+
+  var _pStore = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["e" /* createStore */])(persistorReducer, initialState, options ? options.enhancer : undefined);
+  var register = function register(key) {
+    _pStore.dispatch({
+      type: __WEBPACK_IMPORTED_MODULE_2__constants__["g" /* REGISTER */],
+      key: key
+    });
+  };
+
+  var rehydrate = function rehydrate(key, payload, err) {
+    var rehydrateAction = {
+      type: __WEBPACK_IMPORTED_MODULE_2__constants__["h" /* REHYDRATE */],
+      payload: payload,
+      err: err,
+      key: key
+      // dispatch to `store` to rehydrate and `persistor` to track result
+    };store.dispatch(rehydrateAction);
+    _pStore.dispatch(rehydrateAction);
+    if (boostrappedCb && persistor.getState().bootstrapped) {
+      boostrappedCb();
+      boostrappedCb = false;
+    }
+  };
+
+  var persistor = _extends({}, _pStore, {
+    purge: function purge() {
+      var results = [];
+      store.dispatch({
+        type: __WEBPACK_IMPORTED_MODULE_2__constants__["f" /* PURGE */],
+        result: function result(purgeResult) {
+          results.push(purgeResult);
+        }
+      });
+      return Promise.all(results);
+    },
+    flush: function flush() {
+      var results = [];
+      store.dispatch({
+        type: __WEBPACK_IMPORTED_MODULE_2__constants__["b" /* FLUSH */],
+        result: function result(flushResult) {
+          results.push(flushResult);
+        }
+      });
+      return Promise.all(results);
+    },
+    pause: function pause() {
+      store.dispatch({
+        type: __WEBPACK_IMPORTED_MODULE_2__constants__["d" /* PAUSE */]
+      });
+    },
+    persist: function persist() {
+      store.dispatch({ type: __WEBPACK_IMPORTED_MODULE_2__constants__["e" /* PERSIST */], register: register, rehydrate: rehydrate });
+    }
+  });
+
+  persistor.persist();
+
+  return persistor;
+}
+
+/***/ }),
+/* 491 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export default */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(481);
+
+
+function createMigrate(migrations, config) {
+  var _ref = config || {},
+      debug = _ref.debug;
+
+  return function (state, currentVersion) {
+    if (!state) {
+      if ("development" !== 'production' && debug) console.log('redux-persist: no inbound state, skipping migration');
+      return Promise.resolve(undefined);
+    }
+
+    var inboundVersion = state._persist && state._persist.version !== undefined ? state._persist.version : __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* DEFAULT_VERSION */];
+    if (inboundVersion === currentVersion) {
+      if ("development" !== 'production' && debug) console.log('redux-persist: versions match, noop migration');
+      return Promise.resolve(state);
+    }
+    if (inboundVersion > currentVersion) {
+      if (true) console.error('redux-persist: downgrading version is not supported');
+      return Promise.resolve(state);
+    }
+
+    var migrationKeys = Object.keys(migrations).map(function (ver) {
+      return parseInt(ver);
+    }).filter(function (key) {
+      return currentVersion >= key && key > inboundVersion;
+    }).sort(function (a, b) {
+      return a - b;
+    });
+
+    if ("development" !== 'production' && debug) console.log('redux-persist: migrationKeys', migrationKeys);
+    try {
+      var migratedState = migrationKeys.reduce(function (state, versionKey) {
+        if ("development" !== 'production' && debug) console.log('redux-persist: running migration for versionKey', versionKey);
+        return migrations[versionKey](state);
+      }, state);
+      return Promise.resolve(migratedState);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+}
+
+/***/ }),
+/* 492 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export default */
+
+
+function createTransform(
+// @NOTE inbound: transform state coming from redux on its way to being serialized and stored
+inbound,
+// @NOTE outbound: transform state coming from storage, on its way to be rehydrated into redux
+outbound) {
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var whitelist = config.whitelist || null;
+  var blacklist = config.blacklist || null;
+
+  function whitelistBlacklistCheck(key) {
+    if (whitelist && whitelist.indexOf(key) === -1) return true;
+    if (blacklist && blacklist.indexOf(key) !== -1) return true;
+    return false;
+  }
+
+  return {
+    in: function _in(state, key, fullState) {
+      return !whitelistBlacklistCheck(key) && inbound ? inbound(state, key, fullState) : state;
+    },
+    out: function out(state, key, fullState) {
+      return !whitelistBlacklistCheck(key) && outbound ? outbound(state, key, fullState) : state;
+    }
+  };
+}
+
+/***/ }),
+/* 493 */,
+/* 494 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createWebStorage = __webpack_require__(495);
+
+var _createWebStorage2 = _interopRequireDefault(_createWebStorage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = (0, _createWebStorage2.default)('local');
+
+/***/ }),
+/* 495 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = createWebStorage;
+
+var _getStorage = __webpack_require__(496);
+
+var _getStorage2 = _interopRequireDefault(_getStorage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function createWebStorage(type) {
+  var storage = (0, _getStorage2.default)(type);
+  return {
+    getItem: function getItem(key) {
+      return new Promise(function (resolve, reject) {
+        resolve(storage.getItem(key));
+      });
+    },
+    setItem: function setItem(key, item) {
+      return new Promise(function (resolve, reject) {
+        resolve(storage.setItem(key, item));
+      });
+    },
+    removeItem: function removeItem(key) {
+      return new Promise(function (resolve, reject) {
+        resolve(storage.removeItem(key));
+      });
+    }
+  };
+}
+
+/***/ }),
+/* 496 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = getStorage;
+
+
+function noop() {}
+
+var noopStorage = {
+  getItem: noop,
+  setItem: noop,
+  removeItem: noop
+};
+
+function hasStorage(storageType) {
+  if ((typeof self === 'undefined' ? 'undefined' : _typeof(self)) !== 'object' || !(storageType in self)) {
+    return false;
+  }
+
+  try {
+    var storage = self[storageType];
+    var testKey = 'redux-persist ' + storageType + ' test';
+    storage.setItem(testKey, 'test');
+    storage.getItem(testKey);
+    storage.removeItem(testKey);
+  } catch (e) {
+    if (true) console.warn('redux-persist ' + storageType + ' test failed, persistence will be disabled.');
+    return false;
+  }
+  return true;
+}
+
+function getStorage(type) {
+  var storageType = type + 'Storage';
+  if (hasStorage(storageType)) return self[storageType];else {
+    if (true) {
+      console.error('redux-persist failed to create sync storage. falling back to memory storage.');
+    }
+    return noopStorage;
+  }
+}
+
+/***/ }),
+/* 497 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = autoMergeLevel2;
+function autoMergeLevel2(inboundState, originalState, reducedState, _ref) {
+  var debug = _ref.debug;
+
+  var newState = _extends({}, reducedState);
+  // only rehydrate if inboundState exists and is an object
+  if (inboundState && (typeof inboundState === 'undefined' ? 'undefined' : _typeof(inboundState)) === 'object') {
+    Object.keys(inboundState).forEach(function (key) {
+      // ignore _persist data
+      if (key === '_persist') return;
+      // if reducer modifies substate, skip auto rehydration
+      if (originalState[key] !== reducedState[key]) {
+        if ("development" !== 'production' && debug) console.log('redux-persist/stateReconciler: sub state for key `%s` modified, skipping.', key);
+        return;
+      }
+      if (isPlainEnoughObject(reducedState[key])) {
+        // if object is plain enough shallow merge the new values (hence "Level2")
+        newState[key] = _extends({}, newState[key], inboundState[key]);
+        return;
+      }
+      // otherwise hard set
+      newState[key] = inboundState[key];
+    });
+  }
+
+  if ("development" !== 'production' && debug && inboundState && (typeof inboundState === 'undefined' ? 'undefined' : _typeof(inboundState)) === 'object') console.log('redux-persist/stateReconciler: rehydrated keys \'' + Object.keys(inboundState).join(', ') + '\'');
+
+  return newState;
+}
+
+/*
+  autoMergeLevel2: 
+    - merges 2 level of substate
+    - skips substate if already modified
+    - this is essentially redux-perist v4 behavior
+*/
+
+function isPlainEnoughObject(o) {
+  return o !== null && !Array.isArray(o) && (typeof o === 'undefined' ? 'undefined' : _typeof(o)) === 'object';
+}
+
+/***/ }),
+/* 498 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.PersistGate = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// eslint-disable-line import/no-unresolved
+// eslint-disable-line import/no-unresolved
+var PersistGate = exports.PersistGate = function (_PureComponent) {
+  _inherits(PersistGate, _PureComponent);
+
+  function PersistGate() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, PersistGate);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PersistGate.__proto__ || Object.getPrototypeOf(PersistGate)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      bootstrapped: false
+    }, _this.handlePersistorState = function () {
+      var persistor = _this.props.persistor;
+
+      var _persistor$getState = persistor.getState(),
+          bootstrapped = _persistor$getState.bootstrapped;
+
+      if (bootstrapped) {
+        if (_this.props.onBeforeLift) {
+          Promise.resolve(_this.props.onBeforeLift()).then(function () {
+            return _this.setState({ bootstrapped: true });
+          }).catch(function () {
+            return _this.setState({ bootstrapped: true });
+          });
+        } else {
+          _this.setState({ bootstrapped: true });
+        }
+        _this._unsubscribe && _this._unsubscribe();
+      }
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(PersistGate, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._unsubscribe = this.props.persistor.subscribe(this.handlePersistorState);
+      this.handlePersistorState();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this._unsubscribe && this._unsubscribe();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (true) {
+        if (typeof this.props.children === 'function' && this.props.loading) console.error('redux-persist: PersistGate expects either a function child or loading prop, but not both. The loading prop will be ignored.');
+      }
+      if (typeof this.props.children === 'function') {
+        return this.props.children(this.state.bootstrapped);
+      }
+
+      return this.state.bootstrapped ? this.props.children : this.props.loading;
+    }
+  }]);
+
+  return PersistGate;
+}(_react.PureComponent);
+
+PersistGate.defaultProps = {
+  loading: null
 };
 
 /***/ })
