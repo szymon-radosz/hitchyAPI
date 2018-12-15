@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import UserInfo from "./UserInfo";
 
 class MainProfile extends Component {
   constructor(props) {
@@ -39,20 +40,9 @@ class MainProfile extends Component {
     console.log(this.props.match.params.nickname);
     return (
       <div className="col-sm-6 col-sm-offset-3">
-        {this.state.userExist ? (
-          <div>
-            <p>Profil {this.state.nickName}</p>
-            <p>
-              {this.state.firstName} {this.state.lastName}
-            </p>
-            <p>{this.state.description}</p>
-            <p>
-              {this.state.age}, {this.state.location}
-            </p>
-          </div>
-        ) : (
-          ""
-        )}
+        {this.state.userExist &&
+          <UserInfo nickName={this.state.nickName} firstName={this.state.firstName} lastName={this.state.lastName} age={this.state.age} location={this.state.location} />
+         }
       </div>
     );
   }

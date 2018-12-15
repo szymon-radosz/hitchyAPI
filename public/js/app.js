@@ -8589,7 +8589,7 @@ module.exports = baseAssignValue;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(166);
-module.exports = __webpack_require__(449);
+module.exports = __webpack_require__(450);
 
 
 /***/ }),
@@ -8613,7 +8613,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__App__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__registerServiceWorker__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__registerServiceWorker__ = __webpack_require__(449);
 
 
 
@@ -29553,7 +29553,7 @@ exports = module.exports = __webpack_require__(96)(false);
 
 
 // module
-exports.push([module.i, "body {\r\n  margin: 0;\r\n  padding: 0;\r\n  font-family: sans-serif;\r\n}\r\n", ""]);
+exports.push([module.i, "body {\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif;\n}\n", ""]);
 
 // exports
 
@@ -29737,7 +29737,7 @@ exports = module.exports = __webpack_require__(96)(false);
 
 
 // module
-exports.push([module.i, ".listOfMeetingsCol,\r\n.singleMeetingDetailsDataCol {\r\n  height: calc(100vh - 60px);\r\n  overflow-y: scroll; }\r\n\r\n.bold {\r\n  font-weight: 700; }\r\n\r\n.row {\r\n  margin: 0 !important; }\r\n\r\n.listOfMeetingsRow,\r\n.navbar,\r\n.singleMeetingDetailsDataRow {\r\n  margin: 0 !important; }\r\n\r\n.navbar {\r\n  background-color: #fff !important; }\r\n  .navbar .dropdown {\r\n    margin: 9px; }\r\n    .navbar .dropdown .dropdown-toggle {\r\n      background-color: #dedbdb;\r\n      border: none; }\r\n    .navbar .dropdown .dropdown-menu {\r\n      padding: 15px;\r\n      min-width: 120px; }\r\n      .navbar .dropdown .dropdown-menu a {\r\n        display: block;\r\n        color: #333;\r\n        text-align: right; }\r\n      .navbar .dropdown .dropdown-menu a:hover {\r\n        cursor: pointer;\r\n        text-decoration: none;\r\n        color: #000; }\r\n\r\n* {\r\n  font-family: \"Open Sans\", sans-serif !important; }\r\n\r\ntextarea:focus,\r\n.form-control:focus,\r\nbutton:focus,\r\nselect:focus,\r\ninput[type=\"text\"]:focus,\r\ninput[type=\"password\"]:focus,\r\ninput[type=\"datetime\"]:focus,\r\ninput[type=\"datetime-local\"]:focus,\r\ninput[type=\"date\"]:focus,\r\ninput[type=\"month\"]:focus,\r\ninput[type=\"time\"]:focus,\r\ninput[type=\"week\"]:focus,\r\ninput[type=\"number\"]:focus,\r\ninput[type=\"email\"]:focus,\r\ninput[type=\"url\"]:focus,\r\ninput[type=\"search\"]:focus,\r\ninput[type=\"tel\"]:focus,\r\ninput[type=\"color\"]:focus,\r\n.uneditable-input:focus {\r\n  border-color: rgba(202, 201, 201, 0.8) !important;\r\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(202, 201, 201, 0.8) !important;\r\n  outline: 0 none !important; }\r\n\r\n.landing {\r\n  margin: 0 !important;\r\n  height: calc(100vh - 52px);\r\n  background: url(" + escape(__webpack_require__(181)) + ") no-repeat center center fixed;\r\n  -webkit-background-size: cover;\r\n  -moz-background-size: cover;\r\n  -o-background-size: cover;\r\n  background-size: cover; }\r\n  .landing .landingForm {\r\n    background-color: rgba(255, 255, 255, 0.9);\r\n    border-radius: 5px;\r\n    padding: 30px;\r\n    position: relative;\r\n    top: 25%;\r\n    transform: translateY(-25%); }\r\n    .landing .landingForm h1 {\r\n      margin: 0;\r\n      padding: 0 0 15px 0;\r\n      font-size: 24px;\r\n      font-weight: 700; }\r\n    .landing .landingForm .landingBtn {\r\n      color: #fff;\r\n      background-color: #c78177;\r\n      padding: 10px 30px;\r\n      font-weight: 700;\r\n      font-size: 16px; }\r\n    .landing .landingForm .landingBtn:hover {\r\n      background-color: #d6998f;\r\n      transition-duration: 1s; }\r\n\r\n.listOfMeetingsRow .listOfMeetingsCol {\r\n  padding: 20px; }\r\n  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn {\r\n    background-color: #92adaf;\r\n    color: #fff;\r\n    font-size: 16px;\r\n    font-weight: 700; }\r\n  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn:hover {\r\n    background-color: #749799;\r\n    transition-duration: 0.5s; }\r\n  .listOfMeetingsRow .listOfMeetingsCol .locateBtn {\r\n    background-color: #dedbdc;\r\n    color: #fff;\r\n    font-size: 16px;\r\n    font-weight: 700;\r\n    margin-left: 10px; }\r\n  .listOfMeetingsRow .listOfMeetingsCol .locateBtn:hover {\r\n    background-color: #cac3c5;\r\n    transition-duration: 0.5s; }\r\n\r\n.App {\r\n  text-align: center; }\r\n\r\n.App-logo {\r\n  animation: App-logo-spin infinite 20s linear;\r\n  height: 80px; }\r\n\r\n.App-header {\r\n  background-color: #222;\r\n  height: 150px;\r\n  padding: 20px;\r\n  color: white; }\r\n\r\n.App-title {\r\n  font-size: 1.5em; }\r\n\r\n.App-intro {\r\n  font-size: large; }\r\n\r\n@keyframes App-logo-spin {\r\n  from {\r\n    transform: rotate(0deg); }\r\n  to {\r\n    transform: rotate(360deg); } }\r\n", ""]);
+exports.push([module.i, ".listOfMeetingsCol,\n.singleMeetingDetailsDataCol {\n  height: calc(100vh - 60px);\n  overflow-y: scroll; }\n\n.bold {\n  font-weight: 700; }\n\n.row {\n  margin: 0 !important; }\n\n.listOfMeetingsRow,\n.navbar,\n.singleMeetingDetailsDataRow {\n  margin: 0 !important; }\n\n.navbar {\n  background-color: #fff !important; }\n  .navbar .dropdown {\n    margin: 9px; }\n    .navbar .dropdown .dropdown-toggle {\n      background-color: #dedbdb;\n      border: none; }\n    .navbar .dropdown .dropdown-menu {\n      padding: 15px;\n      min-width: 120px; }\n      .navbar .dropdown .dropdown-menu a {\n        display: block;\n        color: #333;\n        text-align: right; }\n      .navbar .dropdown .dropdown-menu a:hover {\n        cursor: pointer;\n        text-decoration: none;\n        color: #000; }\n\n* {\n  font-family: \"Open Sans\", sans-serif !important; }\n\ntextarea:focus,\n.form-control:focus,\nbutton:focus,\nselect:focus,\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus,\ninput[type=\"datetime\"]:focus,\ninput[type=\"datetime-local\"]:focus,\ninput[type=\"date\"]:focus,\ninput[type=\"month\"]:focus,\ninput[type=\"time\"]:focus,\ninput[type=\"week\"]:focus,\ninput[type=\"number\"]:focus,\ninput[type=\"email\"]:focus,\ninput[type=\"url\"]:focus,\ninput[type=\"search\"]:focus,\ninput[type=\"tel\"]:focus,\ninput[type=\"color\"]:focus,\n.uneditable-input:focus {\n  border-color: rgba(202, 201, 201, 0.8) !important;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(202, 201, 201, 0.8) !important;\n  outline: 0 none !important; }\n\n.landing {\n  margin: 0 !important;\n  height: calc(100vh - 52px);\n  background: url(" + escape(__webpack_require__(181)) + ") no-repeat center center fixed;\n  -webkit-background-size: cover;\n  -moz-background-size: cover;\n  -o-background-size: cover;\n  background-size: cover; }\n  .landing .landingForm {\n    background-color: rgba(255, 255, 255, 0.9);\n    border-radius: 5px;\n    padding: 30px;\n    position: relative;\n    top: 25%;\n    transform: translateY(-25%); }\n    .landing .landingForm h1 {\n      margin: 0;\n      padding: 0 0 15px 0;\n      font-size: 24px;\n      font-weight: 700; }\n    .landing .landingForm .landingBtn {\n      color: #fff;\n      background-color: #c78177;\n      padding: 10px 30px;\n      font-weight: 700;\n      font-size: 16px; }\n    .landing .landingForm .landingBtn:hover {\n      background-color: #d6998f;\n      transition-duration: 1s; }\n\n.listOfMeetingsRow .listOfMeetingsCol {\n  padding: 20px; }\n  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn {\n    background-color: #92adaf;\n    color: #fff;\n    font-size: 16px;\n    font-weight: 700; }\n  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn:hover {\n    background-color: #749799;\n    transition-duration: 0.5s; }\n  .listOfMeetingsRow .listOfMeetingsCol .locateBtn {\n    background-color: #dedbdc;\n    color: #fff;\n    font-size: 16px;\n    font-weight: 700;\n    margin-left: 10px; }\n  .listOfMeetingsRow .listOfMeetingsCol .locateBtn:hover {\n    background-color: #cac3c5;\n    transition-duration: 0.5s; }\n\n.App {\n  text-align: center; }\n\n.App-logo {\n  animation: App-logo-spin infinite 20s linear;\n  height: 80px; }\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white; }\n\n.App-title {\n  font-size: 1.5em; }\n\n.App-intro {\n  font-size: large; }\n\n@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg); }\n  to {\n    transform: rotate(360deg); } }\n", ""]);
 
 // exports
 
@@ -29789,8 +29789,8 @@ module.exports = "/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__ = __webpack_require__(438);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(439);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(443);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__ = __webpack_require__(444);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__ = __webpack_require__(447);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__ = __webpack_require__(448);
 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -48957,6 +48957,7 @@ var CommentForm = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UserInfo__ = __webpack_require__(444);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48968,6 +48969,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -49044,35 +49046,7 @@ var MainProfile = function (_Component) {
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
         { className: "col-sm-6 col-sm-offset-3" },
-        this.state.userExist ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-          "div",
-          null,
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "p",
-            null,
-            "Profil ",
-            this.state.nickName
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "p",
-            null,
-            this.state.firstName,
-            " ",
-            this.state.lastName
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "p",
-            null,
-            this.state.description
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "p",
-            null,
-            this.state.age,
-            ", ",
-            this.state.location
-          )
-        ) : ""
+        this.state.userExist && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__UserInfo__["a" /* default */], { nickName: this.state.nickName, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, location: this.state.location })
       );
     }
   }]);
@@ -49087,6 +49061,49 @@ var MainProfile = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var UserInfo = function UserInfo(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            null,
+            "Profil ",
+            props.nickName
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            null,
+            props.firstName,
+            " ",
+            props.lastName
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            null,
+            props.description
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            null,
+            props.age,
+            ", ",
+            props.location
+        )
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (UserInfo);
+
+/***/ }),
+/* 445 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
@@ -49094,7 +49111,7 @@ var MainProfile = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__ = __webpack_require__(446);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -49761,7 +49778,7 @@ var MainPoints = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (MainPoints);
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49770,7 +49787,7 @@ var MainPoints = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SpotVotes__ = __webpack_require__(446);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SpotVotes__ = __webpack_require__(447);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
 
@@ -49978,7 +49995,7 @@ var SinglePointOnList = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SinglePointOnList);
 
 /***/ }),
-/* 446 */
+/* 447 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50038,7 +50055,7 @@ var SpotVotes = function SpotVotes(props) {
 /* harmony default export */ __webpack_exports__["a"] = (SpotVotes);
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50293,7 +50310,7 @@ var AddNewMeeting = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (AddNewMeeting);
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50401,7 +50418,7 @@ function unregister() {
 }
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
