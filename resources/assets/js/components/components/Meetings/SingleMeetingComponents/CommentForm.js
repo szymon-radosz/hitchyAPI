@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { store } from "./../../../store";
 
 class CommentForm extends Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class CommentForm extends Component {
     this.state = {
       commentBody: "",
       loggedInUserNickname: "",
-      meetingId: ""
+      meetingId: "",
+      currentUserId: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,6 +18,13 @@ class CommentForm extends Component {
   }
 
   componentDidMount() {
+      let storeData = store.getState();
+    
+      if (storeData.user.user.userId) {
+        this.setState({
+          currentUserId: storeData.user.user.userId
+        });
+      }
     this.setState({
       loggedInUserNickname: this.props.loggedInUserNickname,
       meetingId: this.props.meetingId
@@ -31,7 +40,7 @@ class CommentForm extends Component {
     event.preventDefault();
 
     const savedComment = await axios.post(`http://127.0.0.1:8000/api/comment`, {
-      userId: sessionStorage.getItem("userId"),
+      userId: this.state.currentUserId,
       userEmail: this.props.loggedInUserEmail,
       meetingId: this.props.meetingId,
       commentBody: this.state.commentBody

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
+import { store } from "./../../store";
 
 class AddNewMeeting extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class AddNewMeeting extends Component {
       title: "",
       description: "",
       author: "",
+      currentUserId: 0,
       lattitude: "",
       longitude: "",
       stopLat: "",
@@ -27,6 +29,14 @@ class AddNewMeeting extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setNewCoords = this.setNewCoords.bind(this);
     this.setNewSecondCoords = this.setNewSecondCoords.bind(this);
+  }
+
+  componentDidMount(){
+    let storeData = store.getState();
+
+    if (storeData.user.user.userNickName) {
+      this.setState({author: storeData.user.user.userNickName, currentUserId: storeData.user.user.userId});
+    }
   }
 
   handleChange(event) {
@@ -55,7 +65,7 @@ class AddNewMeeting extends Component {
           {
             title: this.state.title,
             description: this.state.description,
-            authorNickName: sessionStorage.getItem("userNickName"),
+            authorNickName: this.state.author,
             startPlaceLattitude: this.state.lat,
             startPlaceLongitude: this.state.lng,
             stopPlaceLattitude: this.state.secondLat,
@@ -80,7 +90,7 @@ class AddNewMeeting extends Component {
           savedMatchUserWithMeeting = await axios.post(
             `http://127.0.0.1:8000/api/matchUserWithMeeting`,
             {
-              userId: sessionStorage.getItem("userId"),
+              userId: this.state.currentUserId,
               eventId: savedMeeting.data.id
             }
           );

@@ -1,2 +1,2 @@
 export const GET_USER_DATA = "GET_USER_DATA";
-export const REGISTER_NEW_USER = "REGISTER_NEW_USER";
+export const LOGOUT_USER = "LOGOUT_USER";

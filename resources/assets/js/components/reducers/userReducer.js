@@ -1,4 +1,4 @@
-import { GET_USER_DATA, REGISTER_NEW_USER } from "./../actions/types";
+import { GET_USER_DATA, LOGOUT_USER } from "./../actions/types";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -7,6 +7,11 @@ const initialState = {};
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_DATA:
+      return {
+        ...state,
+        user: action.result
+      };
+    case LOGOUT_USER:
       return {
         ...state,
         user: action.result

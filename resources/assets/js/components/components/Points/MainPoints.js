@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import SinglePointOnList from "./PointsListComponent/SinglePointOnList";
+import { store } from "./../../store";
 
 class MainPoints extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class MainPoints extends Component {
       markersData: [],
       dateSortedBy: "",
       currentPageResult: 1,
+      currentUserId: 0,
       paginationPageLimit: 0,
       filter: "",
       lat: 40.73061,
@@ -30,6 +32,14 @@ class MainPoints extends Component {
     this.loadTheBestVoted = this.loadTheBestVoted.bind(this);
     this.loadTheMostTimeVoted = this.loadTheMostTimeVoted.bind(this);
     this.loadTheWorstVoted = this.loadTheWorstVoted.bind(this);
+  }
+
+  componentDidMount(){
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({currentUserId: storeData.user.user.userId});
+    }
   }
 
   async loadTheOldestPoint() {
@@ -154,7 +164,7 @@ class MainPoints extends Component {
           checkIfUserVoteExists = await axios.post(
             `http://127.0.0.1:8000/api/checkIfUserVoteExists`,
             {
-              user_id: sessionStorage.getItem("userId"),
+              user_id: this.state.currentUserId,
               point_id: item.id
             },
             {

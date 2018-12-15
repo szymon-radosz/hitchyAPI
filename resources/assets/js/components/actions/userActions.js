@@ -1,4 +1,4 @@
-import { GET_USER_DATA, REGISTER_NEW_USER } from "./types";
+import { GET_USER_DATA, LOGOUT_USER } from "./types";
 import axios from "axios";
 
 export const loginUser = userData => dispatch => {
@@ -19,14 +19,6 @@ export const loginUser = userData => dispatch => {
   console.log(login);
 
   if (login.status == 200 && login.data.userId != null) {
-    /* sessionStorage.setItem("userId", "");
-        sessionStorage.setItem("userNickName", "");
-        sessionStorage.setItem("userEmail", "");
-        sessionStorage.setItem("userId", loginUser.data.userId);
-        sessionStorage.setItem("userNickName", loginUser.data.userNickName);
-        sessionStorage.setItem("userEmail", loginUser.data.userEmail);
-        this.props.loginUser(loginUser.data.userNickName);
-        this.props.showAlertSuccess("Poprawnie zalogowano.");*/
     const test = dispatch({
       type: GET_USER_DATA,
       result: login.data
@@ -34,3 +26,10 @@ export const loginUser = userData => dispatch => {
     console.log(test);
   }
 };
+
+export const logoutUser = () => dispatch => {
+  dispatch({
+    type: LOGOUT_USER,
+    result: ''
+  });
+}

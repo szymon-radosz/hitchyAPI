@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { loginUser } from "./../../actions/userActions";
 
 class Register extends Component {
   constructor(props) {
@@ -72,11 +74,15 @@ class Register extends Component {
           });
 
           if (savedUser.status == "200") {
-            sessionStorage.setItem("userId", "");
-            sessionStorage.setItem("userNickName", "");
-            sessionStorage.setItem("userId", savedUser.data.userId);
-            sessionStorage.setItem("userNickName", savedUser.data.userNickName);
-            this.props.loginUser(savedUser.data.userNickName);
+           
+
+            const userCredentials = {
+              emailOrNickname: savedUser.data.userNickName,
+              password: this.state.password
+            };
+        
+            this.props.loginUser(userCredentials);
+
             this.props.showAlertSuccess("Poprawnie stworzono nowe konto.");
           } else {
             this.props.showAlertWarning("Nie udało się stworzyć konta.");
@@ -230,4 +236,11 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  user: state.result
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Register);
