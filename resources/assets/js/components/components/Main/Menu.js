@@ -10,6 +10,8 @@ import MeetingDetails from "./../Meetings/MeetingDetails.js";
 import MainProfile from "./../Profile/MainProfile.js";
 import MainPoints from "./../Points/MainPoints.js";
 import AddNewPoint from "./../Points/AddNewPoint";
+import { store } from "./../../store";
+import LogoutBtn from "./LogoutBtn";
 
 class Menu extends Component {
   constructor(props) {
@@ -19,9 +21,6 @@ class Menu extends Component {
       userIsLoggedIn: false,
       searchInLocation: ""
     };
-
-    this.loginUser = this.loginUser.bind(this);
-    this.logout = this.logout.bind(this);
     this.changeStateOfSearchInLocation = this.changeStateOfSearchInLocation.bind(
       this
     );
@@ -31,25 +30,25 @@ class Menu extends Component {
   }
 
   async componentDidMount() {
-    if (sessionStorage.getItem("userId")) {
+    store.subscribe(() => {
+      console.log(store.getState());
+
+      let storeData = store.getState();
+
+      if (storeData.user.user.userId) {
+        this.setState({ userIsLoggedIn: true });
+      }else if (storeData.user.user == ""){
+        this.setState({ userIsLoggedIn: false });
+      }
+    });
+
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
       this.setState({ userIsLoggedIn: true });
-
-      const getUser = await axios.get(
-        `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
-      );
+    }else if (storeData.user.user == ""){
+      this.setState({ userIsLoggedIn: false });
     }
-  }
-
-  loginUser(nickName) {
-    this.setState({ userIsLoggedIn: true });
-  }
-
-  logout() {
-    sessionStorage.setItem("userId", "");
-    sessionStorage.setItem("userNickName", "");
-    sessionStorage.setItem("userEmail", "");
-    this.props.showAlertSuccess("Poprawnie wylogowano.");
-    this.setState({ userIsLoggedIn: false });
   }
 
   changeStateOfSearchInLocation(value) {
@@ -186,11 +185,9 @@ class Menu extends Component {
                           className="dropdown-menu"
                           aria-labelledby="dropdownMenuButton"
                         >
-                          <a onClick={this.logout}>Wyloguj się</a>
+                          <LogoutBtn />
                           <Link
-                            to={`/profile/${sessionStorage.getItem(
-                              "userNickName"
-                            )}`}
+                            to={`/profile`}
                             onClick={this.cleanStateOfSearchInLocation}
                           >
                             Mój profil
@@ -239,7 +236,6 @@ class Menu extends Component {
             render={() => {
               return (
                 <Register
-                  loginUser={this.loginUser}
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                 />
@@ -289,7 +285,7 @@ class Menu extends Component {
               );
             }}
           />
-          <Route path="/profile/:nickname" component={MainProfile} />
+          <Route path="/profile" component={MainProfile} />
 
           <Route
             exact

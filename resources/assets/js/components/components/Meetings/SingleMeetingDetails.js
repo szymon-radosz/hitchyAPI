@@ -3,6 +3,7 @@ import axios from "axios";
 import Comment from "./SingleMeetingComponents/Comment";
 import CommentForm from "./SingleMeetingComponents/CommentForm";
 import MapComponent from "./../Map/MapComponent.js";
+import { store } from "./../../store";
 
 class SingleMeetingDetails extends Component {
   constructor(props) {
@@ -17,6 +18,9 @@ class SingleMeetingDetails extends Component {
       displayResignBtn: false,
       displayCommentsContainer: false,
       startLat: "",
+      currentUserId: 0,
+      currentUserNickName: "",
+      currentUserEmail: "",
       startLng: "",
       stopLat: "",
       stopLng: "",
@@ -59,7 +63,7 @@ class SingleMeetingDetails extends Component {
 
   async loggedInUserInfo() {
     const getUser = await axios.get(
-      `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
+      `http://127.0.0.1:8000/api/user/${this.state.currentUserId}`
     );
 
     this.setState({ loggedInUserEmail: getUser.data[0].email });
@@ -125,7 +129,7 @@ class SingleMeetingDetails extends Component {
 
     allMatches.data.map(singleMatchUserWithMeeting => {
       if (
-        singleMatchUserWithMeeting.userId == sessionStorage.getItem("userId") &&
+        singleMatchUserWithMeeting.userId == this.state.currentUserId &&
         singleMatchUserWithMeeting.eventId == this.props.meetingID
       ) {
         takePart = false;
@@ -140,14 +144,14 @@ class SingleMeetingDetails extends Component {
       const savedMatchUserWithMeeting = await axios.post(
         `http://127.0.0.1:8000/api/matchUserWithMeeting`,
         {
-          userId: sessionStorage.getItem("userId"),
+          userId: this.state.currentUserId,
           eventId: this.props.meetingId
         }
       );
 
       if (savedMatchUserWithMeeting.status == "200") {
         const user = await axios.get(
-          `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
+          `http://127.0.0.1:8000/api/user/${this.state.currentUserId}`
         );
 
         if (user.status == 200) {
@@ -189,7 +193,7 @@ class SingleMeetingDetails extends Component {
 
     allMatches.data.map(async (singleMatchUserWithMeeting, i) => {
       if (
-        singleMatchUserWithMeeting.userId == sessionStorage.getItem("userId") &&
+        singleMatchUserWithMeeting.userId == this.state.currentUserId &&
         singleMatchUserWithMeeting.eventId == this.props.meetingId
       ) {
         const deletedUserFromMatchUserWithEventTable = await axios.delete(
@@ -207,7 +211,7 @@ class SingleMeetingDetails extends Component {
           const savedDeleteUserFromMeeting = await axios.post(
             `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
             {
-              userId: sessionStorage.getItem("userId"),
+              userId: this.state.currentUserId,
               meetingId: this.props.meetingId
             }
           );
@@ -231,17 +235,17 @@ class SingleMeetingDetails extends Component {
               this.setState(prevState => ({
                 resignedUsersEmails: [
                   ...prevState.resignedUsersEmails,
-                  sessionStorage.getItem("userEmail")
+                  this.state.currentUserEmail
                 ]
               }));
             } else {
               updatedResignedUsersEmailsList.map((email, i) => {
                 console.log(email);
-                if (email != sessionStorage.getItem("userEmail")) {
+                if (email != this.state.currentUserId) {
                   this.setState(prevState => ({
                     resignedUsersEmails: [
                       ...prevState.resignedUsersEmails,
-                      sessionStorage.getItem("userEmail")
+                      this.state.currentUserEmail
                     ]
                   }));
                 }
@@ -251,7 +255,7 @@ class SingleMeetingDetails extends Component {
             const updatedUsersList = [...this.state.usersEmails];
 
             updatedUsersList.map((emailElement, i) => {
-              if (emailElement.email == sessionStorage.getItem("userEmail")) {
+              if (emailElement.email == this.state.currentUserEmail) {
                 updatedUsersList.splice(i, 1);
               }
             });
@@ -273,6 +277,16 @@ class SingleMeetingDetails extends Component {
 
   async componentDidMount() {
     this.props.switchLoader(true);
+
+    let storeData = store.getState();
+  
+    if (storeData.user.user.userId) {
+      await this.setState({
+        currentUserId: storeData.user.user.userId, 
+        currentUserEmail: storeData.user.user.userEmail, 
+        currentUserNickName: storeData.user.user.userNickName
+      });
+    }
 
     this.setState({
       startLat: this.props.startPlaceLattitude,
@@ -299,7 +313,7 @@ class SingleMeetingDetails extends Component {
         meetingMatched++;
 
         if (
-          singleMatch.userId == sessionStorage.getItem("userId") &&
+          singleMatch.userId == this.state.currentUserId &&
           this.state.loggedInUserEmail != this.getCurrentMeetingAuthor()
         ) {
           this.setState({ displayTakPartBtn: false });

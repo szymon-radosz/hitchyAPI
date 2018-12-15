@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SpotVotes from "./SpotVotes";
 import axios from "axios";
+import { store } from "./../../../store";
 
 class SinglePointOnList extends Component {
   constructor(props) {
@@ -10,11 +11,20 @@ class SinglePointOnList extends Component {
     this.state = {
       lat: "",
       lng: "",
+      currentUserId: 0,
       currentVote: "Wybierz"
     };
 
     this.changeCurrentVote = this.changeCurrentVote.bind(this);
     this.saveNewSpotVote = this.saveNewSpotVote.bind(this);
+  }
+
+  componentDidMount(){
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({currentUserId: storeData.user.user.userId});
+    }
   }
 
   changeCurrentVote(event) {
@@ -32,7 +42,7 @@ class SinglePointOnList extends Component {
           `http://127.0.0.1:8000/api/saveVote`,
           {
             spot_id: this.props.item.id,
-            user_id: sessionStorage.getItem("userId"),
+            user_id: this.state.currentUserId,
             vote_value: this.state.currentVote
           },
           {

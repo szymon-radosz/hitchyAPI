@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
+import { store } from "./../../store";
 
 class AddNewMeeting extends Component {
   constructor(props) {
     super(props);
-
-    console.log(sessionStorage.getItem("userNickName"));
-
     this.state = {
       title: "",
       description: "",
@@ -22,6 +20,14 @@ class AddNewMeeting extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setNewCoords = this.setNewCoords.bind(this);
+  }
+
+  componentDidMount(){
+    let storeData = store.getState();
+
+    if (storeData.user.user.userNickName) {
+      this.setState({author: storeData.user.user.userNickName});
+    }
   }
 
   handleChange(event) {
@@ -39,7 +45,7 @@ class AddNewMeeting extends Component {
         {
           name: this.state.title,
           description: this.state.description,
-          authorNickName: sessionStorage.getItem("userNickName"),
+          authorNickName: this.state.author,
           lattitude: this.state.lat,
           longitude: this.state.lng
         },

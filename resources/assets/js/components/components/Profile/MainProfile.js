@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import UserInfo from "./UserInfo";
+import { store } from "./../../store";
 
 class MainProfile extends Component {
   constructor(props) {
@@ -18,7 +19,16 @@ class MainProfile extends Component {
   }
 
   async componentDidMount() {
-    const nickname = this.props.match.params.nickname;
+    let nickname;
+
+    let storeData = store.getState();
+
+    if (storeData.user.user.userNickName) {
+      nickname = storeData.user.user.userNickName;
+    }else if (storeData.user.user == ""){
+      nickname = '';
+    }
+
     const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
     for (var i = 0; i < allUsers.data.length; i++) {
@@ -37,7 +47,6 @@ class MainProfile extends Component {
   }
 
   render() {
-    console.log(this.props.match.params.nickname);
     return (
       <div className="col-sm-6 col-sm-offset-3">
         {this.state.userExist &&
