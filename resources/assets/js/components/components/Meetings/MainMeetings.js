@@ -54,7 +54,7 @@ class MainMeetings extends Component {
     this.props.switchLoader(true);
     try {
       const allMeetings = await axios.get(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/events?page=${page}`
+        `http://127.0.0.1:8000/api/events?page=${page}`
       );
 
       console.log(allMeetings);

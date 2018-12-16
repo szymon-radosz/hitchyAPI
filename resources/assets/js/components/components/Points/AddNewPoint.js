@@ -41,7 +41,7 @@ class AddNewMeeting extends Component {
 
     try {
       savedPoint = await axios.post(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/point`,
+        `http://127.0.0.1:8000/api/point`,
         {
           name: this.state.title,
           description: this.state.description,

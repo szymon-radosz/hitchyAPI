@@ -61,7 +61,7 @@ class AddNewMeeting extends Component {
     } else {
       try {
         savedMeeting = await axios.post(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/events`,
+          `http://127.0.0.1:8000/api/events`,
           {
             title: this.state.title,
             description: this.state.description,
@@ -88,7 +88,7 @@ class AddNewMeeting extends Component {
       if (savedMeeting.status == "201") {
         try {
           savedMatchUserWithMeeting = await axios.post(
-            `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeeting`,
+            `http://127.0.0.1:8000/api/matchUserWithMeeting`,
             {
               userId: this.state.currentUserId,
               eventId: savedMeeting.data.id

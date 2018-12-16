@@ -4,7 +4,7 @@ import axios from "axios";
 export const loginUser = userData => dispatch => {
   console.log(userData.password);
   const login = axios
-    .post(`http://phplaravel-226937-693336.cloudwaysapps.com/api/login`, {
+    .post(`http://127.0.0.1:8000/api/login`, {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     })

@@ -40,7 +40,7 @@ class Register extends Component {
       let uniqueNickname = true;
 
       if (this.state.password === this.state.passwordConfirmation) {
-        const allUsers = await axios.get(`http://phplaravel-226937-693336.cloudwaysapps.com/api/users`);
+        const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
         allUsers.data.map((singleUser, i) => {
           if (
@@ -60,7 +60,7 @@ class Register extends Component {
             "Użytkownik " + this.state.nickName + " już istnieję."
           );
         } else {
-          const savedUser = await axios.post(`http://phplaravel-226937-693336.cloudwaysapps.com/api/user`, {
+          const savedUser = await axios.post(`http://127.0.0.1:8000/api/user`, {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             city: this.state.city,

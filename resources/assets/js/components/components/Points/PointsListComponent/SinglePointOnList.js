@@ -39,7 +39,7 @@ class SinglePointOnList extends Component {
 
       try {
         savedNewSpotVote = await axios.post(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/saveVote`,
+          `http://127.0.0.1:8000/api/saveVote`,
           {
             spot_id: this.props.item.id,
             user_id: this.state.currentUserId,
