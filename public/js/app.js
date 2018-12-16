@@ -49443,7 +49443,7 @@ var Register = function (_Component) {
                 }
 
                 _context.next = 10;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/users");
 
               case 10:
                 allUsers = _context.sent;
@@ -49476,7 +49476,7 @@ var Register = function (_Component) {
 
               case 20:
                 _context.next = 22;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/user", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("hhttp://phplaravel-226937-693336.cloudwaysapps.com/api/user", {
                   firstName: this.state.firstName,
                   lastName: this.state.lastName,
                   city: this.state.city,
