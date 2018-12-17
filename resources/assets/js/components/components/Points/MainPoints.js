@@ -121,27 +121,27 @@ class MainPoints extends Component {
 
       if (filter == "theOldest") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheOldestPoints?page=${pageNumber}`
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheOldestPoints?page=${pageNumber}`
         );
       } else if (filter == "theLatest") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/points?page=${pageNumber}`
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/points?page=${pageNumber}`
         );
       } else if (filter == "bestVoted") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheBestVoted?page=${pageNumber}`
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheBestVoted?page=${pageNumber}`
         );
       } else if (filter == "worstVoted") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheWorstVoted?page=${pageNumber}`
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheWorstVoted?page=${pageNumber}`
         );
       } else if (filter == "mostTimeVoted") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheMostTimeVoted?page=${pageNumber}`
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheMostTimeVoted?page=${pageNumber}`
         );
       } else {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getPointsNearCoords/${
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getPointsNearCoords/${
             this.state.centerCoord[0]
           }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
@@ -154,7 +154,7 @@ class MainPoints extends Component {
 
         try {
           checkIfUserVoteExists = await axios.post(
-            `http://127.0.0.1:8000/api/checkIfUserVoteExists`,
+            `http://phplaravel-226937-693336.cloudwaysapps.com/api/checkIfUserVoteExists`,
             {
               user_id: this.state.currentUserId,
               point_id: item.id
