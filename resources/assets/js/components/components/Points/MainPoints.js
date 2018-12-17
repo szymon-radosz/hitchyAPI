@@ -34,14 +34,6 @@ class MainPoints extends Component {
     this.loadTheWorstVoted = this.loadTheWorstVoted.bind(this);
   }
 
-  componentDidMount(){
-    let storeData = store.getState();
-
-    if (storeData.user.user.userId) {
-      this.setState({currentUserId: storeData.user.user.userId});
-    }
-  }
-
   async loadTheOldestPoint() {
     await this.setState({
       filter: "theOldest",
@@ -177,13 +169,17 @@ class MainPoints extends Component {
           console.log(error);
         }
 
+        console.log(checkIfUserVoteExists.data);
+        console.log(this.state.currentUserId);
+        console.log(item.id);
+
         let checkIfUserVote;
         if (checkIfUserVoteExists.data == 1) {
           checkIfUserVote = true;
         } else {
           checkIfUserVote = false;
         }
-        console.log(checkIfUserVoteExists.data);
+        //console.log(checkIfUserVoteExists.data);
 
         let pointObject = {
           id: item.id,
@@ -218,7 +214,12 @@ class MainPoints extends Component {
   }
 
   async componentDidMount() {
-    console.log("componentDidMount");
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      await this.setState({currentUserId: storeData.user.user.userId});
+    }
+
     await this.loadAllSpots(this.state.currentPageResult);
   }
 

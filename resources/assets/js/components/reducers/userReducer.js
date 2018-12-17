@@ -9,12 +9,12 @@ const userReducer = (state = initialState, action) => {
     case GET_USER_DATA:
       return {
         ...state,
-        user: action.result
+        user: action.payload
       };
     case LOGOUT_USER:
       return {
         ...state,
-        user: action.result
+        user: action.payload
       };
     default:
       return state;

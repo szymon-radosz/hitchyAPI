@@ -22,7 +22,7 @@ class LogoutBtn extends Component {
   }
 }
 const mapStateToProps = state => ({
-    user: state.result
+    user: state.payload
   });
   
   export default connect(

@@ -935,7 +935,7 @@ $exports.store = store;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return store; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return persistor; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_thunk__ = __webpack_require__(472);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reducers__ = __webpack_require__(473);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_redux_persist__ = __webpack_require__(182);
@@ -1352,7 +1352,7 @@ var DEFAULT_VERSION = -1;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LocationUtils__ = __webpack_require__(45);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(37);
 /* unused harmony reexport parsePath */
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_4__PathUtils__["b"]; });
 
@@ -1370,7 +1370,7 @@ var DEFAULT_VERSION = -1;
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(22);
-var createDesc = __webpack_require__(40);
+var createDesc = __webpack_require__(39);
 module.exports = __webpack_require__(24) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -1460,6 +1460,509 @@ module.exports = baseGetTag;
 
 /***/ }),
 /* 37 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addLeadingSlash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return stripLeadingSlash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBasename; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stripBasename; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return stripTrailingSlash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parsePath; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createPath; });
+var addLeadingSlash = function addLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path : '/' + path;
+};
+
+var stripLeadingSlash = function stripLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path.substr(1) : path;
+};
+
+var hasBasename = function hasBasename(path, prefix) {
+  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+};
+
+var stripBasename = function stripBasename(path, prefix) {
+  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
+};
+
+var stripTrailingSlash = function stripTrailingSlash(path) {
+  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
+};
+
+var parsePath = function parsePath(path) {
+  var pathname = path || '/';
+  var search = '';
+  var hash = '';
+
+  var hashIndex = pathname.indexOf('#');
+  if (hashIndex !== -1) {
+    hash = pathname.substr(hashIndex);
+    pathname = pathname.substr(0, hashIndex);
+  }
+
+  var searchIndex = pathname.indexOf('?');
+  if (searchIndex !== -1) {
+    search = pathname.substr(searchIndex);
+    pathname = pathname.substr(0, searchIndex);
+  }
+
+  return {
+    pathname: pathname,
+    search: search === '?' ? '' : search,
+    hash: hash === '#' ? '' : hash
+  };
+};
+
+var createPath = function createPath(location) {
+  var pathname = location.pathname,
+      search = location.search,
+      hash = location.hash;
+
+
+  var path = pathname || '/';
+
+  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
+
+  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
+
+  return path;
+};
+
+/***/ }),
+/* 38 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_recompose__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_google_maps__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox__ = __webpack_require__(452);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox__);
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _this = this;
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+var defaultMapOptions = {
+  fullscreenControl: false,
+  disableDefaultUI: true,
+  styles: [{
+    stylers: [{
+      hue: "#007fff"
+    }, {
+      saturation: 89
+    }]
+  }, {
+    featureType: "water",
+    stylers: [{
+      color: "#ffffff"
+    }]
+  }, {
+    featureType: "administrative.country",
+    elementType: "labels",
+    stylers: [{
+      visibility: "off"
+    }]
+  }]
+};
+
+var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["withProps"])({
+  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCE_A8CoQsymuTUwtLLdwt4IyIBBhGsu3Q&v=3.exp&libraries=geometry,drawing,places",
+  loadingElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", { style: { height: "100%" } }),
+  containerElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
+    style: {
+      width: "100%",
+      marginLeft: 0
+    }
+  }),
+  mapElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
+    className: "hitchyMapComponent",
+    style: {
+      height: 520,
+      width: "100%",
+      display: "flex",
+      flexFlow: "row nowrap",
+      justifyContent: "center",
+      padding: 0
+    }
+  })
+}), __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["withScriptjs"], __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["withGoogleMap"])(function (props) {
+  return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["GoogleMap"],
+    {
+      defaultZoom: 13,
+      defaultOptions: defaultMapOptions,
+      ref: function ref(map) {
+        return _this._map = map;
+      }
+      /*onDragEnd={map => {
+        props.getMapCoords(this._map);
+      }}*/
+      , center: { lat: Number(props.lat), lng: Number(props.lng) }
+    },
+    !props.hideSearchBox && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default.a,
+      {
+        ref: function ref(searchBox) {
+          return _this._searchBox = searchBox;
+        },
+        controlPosition: google.maps.ControlPosition.TOP_CENTER,
+        onPlacesChanged: function onPlacesChanged(map) {
+          props.changeStateCoords(_this._searchBox.getPlaces()[0].geometry.location.lat(), _this._searchBox.getPlaces()[0].geometry.location.lng());
+        }
+      },
+      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Szukaj w ...",
+        style: {
+          boxSizing: "border-box",
+          border: "1px solid #e3e6e8",
+          width: "60%",
+          maxWidth: "400px",
+          height: "40px",
+          margin: "10px auto 0 auto",
+          padding: "10px",
+          borderRadius: "8px",
+          boxShadow: "0 0 15px rgba(0, 0, 0, 0.22)",
+          fontSize: "12px",
+          outline: "none",
+          fontWeight: "300"
+        }
+      })
+    ),
+    props.latCenter && props.lngCenter && props.allowDragableMarker ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
+      draggable: true,
+      position: {
+        lat: Number(props.latCenter),
+        lng: Number(props.lngCenter)
+      },
+      key: "addNewMeetingStart",
+      ref: function ref(marker1) {
+        return _this._marker1 = marker1;
+      },
+      onDragEnd: function onDragEnd() {
+        props.setNewCoords(_this._marker1.getPosition().lat(), _this._marker1.getPosition().lng());
+        console.log(_this._marker1.getPosition().lat());
+      }
+    }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
+      draggable: false,
+      position: {
+        lat: Number(props.latCenter),
+        lng: Number(props.lngCenter)
+      }
+    }),
+    props.secondLatCenter && props.secondLngCenter && props.allowDragableSecondMarker ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
+      draggable: true,
+      position: {
+        lat: Number(props.secondLatCenter),
+        lng: Number(props.secondLngCenter)
+      },
+      key: "addNewMeetingStop",
+      ref: function ref(marker2) {
+        return _this._marker2 = marker2;
+      },
+      onDragEnd: function onDragEnd() {
+        props.setNewSecondCoords(_this._marker2.getPosition().lat(), _this._marker2.getPosition().lng());
+      }
+    }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
+      position: {
+        lat: Number(props.secondLatCenter),
+        lng: Number(props.secondLngCenter)
+      }
+    }),
+    props.markersData && props.markersData.map(function (singleMarker, i) {
+      console.log(singleMarker);
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"],
+        {
+          key: i,
+          position: {
+            lat: Number(singleMarker.position[0]),
+            lng: Number(singleMarker.position[1])
+          },
+          ref: function ref(marker) {
+            return _this._marker = marker;
+          },
+          onClick: function onClick() {
+            props.toggleLocationsActive(i);
+            // this.setCurrentLocation(location.latitude, location.longitude);
+          }
+        },
+        i === props.activeKey && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["InfoWindow"],
+          null,
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            null,
+            singleMarker.text
+          )
+        )
+      );
+    })
+  );
+});
+
+var MapComponent = function (_Component) {
+  _inherits(MapComponent, _Component);
+
+  function MapComponent(props) {
+    _classCallCheck(this, MapComponent);
+
+    var _this2 = _possibleConstructorReturn(this, (MapComponent.__proto__ || Object.getPrototypeOf(MapComponent)).call(this, props));
+
+    _this2.state = {
+      lat: _this2.props.latCenter ? _this2.props.latCenter : 52.22977,
+      lng: _this2.props.lngCenter ? _this2.props.lngCenter : 21.01178,
+      markersData: [],
+      activeKey: ""
+    };
+
+    _this2.changeStateCoords = _this2.changeStateCoords.bind(_this2);
+    _this2.loadPoints = _this2.loadPoints.bind(_this2);
+    _this2.toggleLocationsActive = _this2.toggleLocationsActive.bind(_this2);
+    return _this2;
+  }
+
+  _createClass(MapComponent, [{
+    key: "toggleLocationsActive",
+    value: function toggleLocationsActive(locationKey) {
+      this.setState({
+        activeKey: locationKey
+      });
+    }
+  }, {
+    key: "changeStateCoords",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(lat, lng) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.setState({ lat: lat, lng: lng });
+
+              case 2:
+                _context.next = 4;
+                return this.loadPoints(lat, lng);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function changeStateCoords(_x, _x2) {
+        return _ref.apply(this, arguments);
+      }
+
+      return changeStateCoords;
+    }()
+  }, {
+    key: "loadPoints",
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(lat, lng) {
+        var response, lattitude, longitude;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = void 0;
+                lattitude = "";
+                longitude = "";
+
+
+                if (!lat && !lng) {
+                  lattitude = this.state.lat;
+                  longitude = this.state.lng;
+                } else {
+                  lattitude = lat;
+                  longitude = lng;
+                }
+
+                _context2.prev = 4;
+                _context2.next = 7;
+                return __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get("/getPointsNearCoords/" + lattitude + "/" + longitude, {
+                  headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                  }
+                });
+
+              case 7:
+                response = _context2.sent;
+                _context2.next = 13;
+                break;
+
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](4);
+
+                console.log(_context2.t0);
+
+              case 13:
+
+                console.log(response.data);
+
+                //await this.setState({ markersList: response.data.location });
+
+              case 14:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[4, 10]]);
+      }));
+
+      function loadPoints(_x3, _x4) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return loadPoints;
+    }()
+  }, {
+    key: "componentDidMount",
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.loadPoints(this.state.lat, this.state.lng);
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function componentDidMount() {
+        return _ref3.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.centerCoord !== this.props.centerCoord) {
+        this.setState({
+          lat: Number(nextProps.centerCoord[0]),
+          lng: Number(nextProps.centerCoord[1])
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(MyMapComponent, {
+          lat: this.state.lat,
+          lng: this.state.lng,
+          changeStateCoords: this.changeStateCoords,
+          markersData: this.props.markersData,
+          activeKey: this.state.activeKey,
+          toggleLocationsActive: this.toggleLocationsActive,
+          latCenter: this.props.latCenter,
+          lngCenter: this.props.lngCenter,
+          secondLatCenter: this.props.secondLatCenter,
+          secondLngCenter: this.props.secondLngCenter,
+          hideSearchBox: this.props.hideSearchBox,
+          allowDragableMarker: this.props.allowDragableMarker,
+          allowDragableSecondMarker: this.props.allowDragableSecondMarker,
+          setNewCoords: this.props.setNewCoords,
+          setNewSecondCoords: this.props.setNewSecondCoords,
+          displayFirstMarker: this.props.displayFirstMarker,
+          displaySecondMarker: this.props.displaySecondMarker
+        })
+      );
+    }
+  }]);
+
+  return MapComponent;
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (MapComponent);
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports) {
+
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+module.exports = identity;
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2109,509 +2612,6 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
 
 
 /***/ }),
-/* 38 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addLeadingSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return stripLeadingSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBasename; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stripBasename; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return stripTrailingSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parsePath; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createPath; });
-var addLeadingSlash = function addLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path : '/' + path;
-};
-
-var stripLeadingSlash = function stripLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path.substr(1) : path;
-};
-
-var hasBasename = function hasBasename(path, prefix) {
-  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
-};
-
-var stripBasename = function stripBasename(path, prefix) {
-  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
-};
-
-var stripTrailingSlash = function stripTrailingSlash(path) {
-  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
-};
-
-var parsePath = function parsePath(path) {
-  var pathname = path || '/';
-  var search = '';
-  var hash = '';
-
-  var hashIndex = pathname.indexOf('#');
-  if (hashIndex !== -1) {
-    hash = pathname.substr(hashIndex);
-    pathname = pathname.substr(0, hashIndex);
-  }
-
-  var searchIndex = pathname.indexOf('?');
-  if (searchIndex !== -1) {
-    search = pathname.substr(searchIndex);
-    pathname = pathname.substr(0, searchIndex);
-  }
-
-  return {
-    pathname: pathname,
-    search: search === '?' ? '' : search,
-    hash: hash === '#' ? '' : hash
-  };
-};
-
-var createPath = function createPath(location) {
-  var pathname = location.pathname,
-      search = location.search,
-      hash = location.hash;
-
-
-  var path = pathname || '/';
-
-  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
-
-  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
-
-  return path;
-};
-
-/***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_recompose__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_google_maps__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox__ = __webpack_require__(452);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox__);
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _this = this;
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-var defaultMapOptions = {
-  fullscreenControl: false,
-  disableDefaultUI: true,
-  styles: [{
-    stylers: [{
-      hue: "#007fff"
-    }, {
-      saturation: 89
-    }]
-  }, {
-    featureType: "water",
-    stylers: [{
-      color: "#ffffff"
-    }]
-  }, {
-    featureType: "administrative.country",
-    elementType: "labels",
-    stylers: [{
-      visibility: "off"
-    }]
-  }]
-};
-
-var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["withProps"])({
-  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCE_A8CoQsymuTUwtLLdwt4IyIBBhGsu3Q&v=3.exp&libraries=geometry,drawing,places",
-  loadingElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", { style: { height: "100%" } }),
-  containerElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
-    style: {
-      width: "100%",
-      marginLeft: 0
-    }
-  }),
-  mapElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
-    className: "hitchyMapComponent",
-    style: {
-      height: 520,
-      width: "100%",
-      display: "flex",
-      flexFlow: "row nowrap",
-      justifyContent: "center",
-      padding: 0
-    }
-  })
-}), __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["withScriptjs"], __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["withGoogleMap"])(function (props) {
-  return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-    __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["GoogleMap"],
-    {
-      defaultZoom: 13,
-      defaultOptions: defaultMapOptions,
-      ref: function ref(map) {
-        return _this._map = map;
-      }
-      /*onDragEnd={map => {
-        props.getMapCoords(this._map);
-      }}*/
-      , center: { lat: Number(props.lat), lng: Number(props.lng) }
-    },
-    !props.hideSearchBox && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-      __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default.a,
-      {
-        ref: function ref(searchBox) {
-          return _this._searchBox = searchBox;
-        },
-        controlPosition: google.maps.ControlPosition.TOP_CENTER,
-        onPlacesChanged: function onPlacesChanged(map) {
-          props.changeStateCoords(_this._searchBox.getPlaces()[0].geometry.location.lat(), _this._searchBox.getPlaces()[0].geometry.location.lng());
-        }
-      },
-      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-        type: "text",
-        placeholder: "Szukaj w ...",
-        style: {
-          boxSizing: "border-box",
-          border: "1px solid #e3e6e8",
-          width: "60%",
-          maxWidth: "400px",
-          height: "40px",
-          margin: "10px auto 0 auto",
-          padding: "10px",
-          borderRadius: "8px",
-          boxShadow: "0 0 15px rgba(0, 0, 0, 0.22)",
-          fontSize: "12px",
-          outline: "none",
-          fontWeight: "300"
-        }
-      })
-    ),
-    props.latCenter && props.lngCenter && props.allowDragableMarker ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
-      draggable: true,
-      position: {
-        lat: Number(props.latCenter),
-        lng: Number(props.lngCenter)
-      },
-      key: "addNewMeetingStart",
-      ref: function ref(marker1) {
-        return _this._marker1 = marker1;
-      },
-      onDragEnd: function onDragEnd() {
-        props.setNewCoords(_this._marker1.getPosition().lat(), _this._marker1.getPosition().lng());
-        console.log(_this._marker1.getPosition().lat());
-      }
-    }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
-      draggable: false,
-      position: {
-        lat: Number(props.latCenter),
-        lng: Number(props.lngCenter)
-      }
-    }),
-    props.secondLatCenter && props.secondLngCenter && props.allowDragableSecondMarker ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
-      draggable: true,
-      position: {
-        lat: Number(props.secondLatCenter),
-        lng: Number(props.secondLngCenter)
-      },
-      key: "addNewMeetingStop",
-      ref: function ref(marker2) {
-        return _this._marker2 = marker2;
-      },
-      onDragEnd: function onDragEnd() {
-        props.setNewSecondCoords(_this._marker2.getPosition().lat(), _this._marker2.getPosition().lng());
-      }
-    }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
-      position: {
-        lat: Number(props.secondLatCenter),
-        lng: Number(props.secondLngCenter)
-      }
-    }),
-    props.markersData && props.markersData.map(function (singleMarker, i) {
-      console.log(singleMarker);
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"],
-        {
-          key: i,
-          position: {
-            lat: Number(singleMarker.position[0]),
-            lng: Number(singleMarker.position[1])
-          },
-          ref: function ref(marker) {
-            return _this._marker = marker;
-          },
-          onClick: function onClick() {
-            props.toggleLocationsActive(i);
-            // this.setCurrentLocation(location.latitude, location.longitude);
-          }
-        },
-        i === props.activeKey && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["InfoWindow"],
-          null,
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            null,
-            singleMarker.text
-          )
-        )
-      );
-    })
-  );
-});
-
-var MapComponent = function (_Component) {
-  _inherits(MapComponent, _Component);
-
-  function MapComponent(props) {
-    _classCallCheck(this, MapComponent);
-
-    var _this2 = _possibleConstructorReturn(this, (MapComponent.__proto__ || Object.getPrototypeOf(MapComponent)).call(this, props));
-
-    _this2.state = {
-      lat: _this2.props.latCenter ? _this2.props.latCenter : 52.22977,
-      lng: _this2.props.lngCenter ? _this2.props.lngCenter : 21.01178,
-      markersData: [],
-      activeKey: ""
-    };
-
-    _this2.changeStateCoords = _this2.changeStateCoords.bind(_this2);
-    _this2.loadPoints = _this2.loadPoints.bind(_this2);
-    _this2.toggleLocationsActive = _this2.toggleLocationsActive.bind(_this2);
-    return _this2;
-  }
-
-  _createClass(MapComponent, [{
-    key: "toggleLocationsActive",
-    value: function toggleLocationsActive(locationKey) {
-      this.setState({
-        activeKey: locationKey
-      });
-    }
-  }, {
-    key: "changeStateCoords",
-    value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(lat, lng) {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return this.setState({ lat: lat, lng: lng });
-
-              case 2:
-                _context.next = 4;
-                return this.loadPoints(lat, lng);
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function changeStateCoords(_x, _x2) {
-        return _ref.apply(this, arguments);
-      }
-
-      return changeStateCoords;
-    }()
-  }, {
-    key: "loadPoints",
-    value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(lat, lng) {
-        var response, lattitude, longitude;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = void 0;
-                lattitude = "";
-                longitude = "";
-
-
-                if (!lat && !lng) {
-                  lattitude = this.state.lat;
-                  longitude = this.state.lng;
-                } else {
-                  lattitude = lat;
-                  longitude = lng;
-                }
-
-                _context2.prev = 4;
-                _context2.next = 7;
-                return __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get("/getPointsNearCoords/" + lattitude + "/" + longitude, {
-                  headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                  }
-                });
-
-              case 7:
-                response = _context2.sent;
-                _context2.next = 13;
-                break;
-
-              case 10:
-                _context2.prev = 10;
-                _context2.t0 = _context2["catch"](4);
-
-                console.log(_context2.t0);
-
-              case 13:
-
-                console.log(response.data);
-
-                //await this.setState({ markersList: response.data.location });
-
-              case 14:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[4, 10]]);
-      }));
-
-      function loadPoints(_x3, _x4) {
-        return _ref2.apply(this, arguments);
-      }
-
-      return loadPoints;
-    }()
-  }, {
-    key: "componentDidMount",
-    value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return this.loadPoints(this.state.lat, this.state.lng);
-
-              case 2:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function componentDidMount() {
-        return _ref3.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
-  }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.centerCoord !== this.props.centerCoord) {
-        this.setState({
-          lat: Number(nextProps.centerCoord[0]),
-          lng: Number(nextProps.centerCoord[1])
-        });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        "div",
-        null,
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(MyMapComponent, {
-          lat: this.state.lat,
-          lng: this.state.lng,
-          changeStateCoords: this.changeStateCoords,
-          markersData: this.props.markersData,
-          activeKey: this.state.activeKey,
-          toggleLocationsActive: this.toggleLocationsActive,
-          latCenter: this.props.latCenter,
-          lngCenter: this.props.lngCenter,
-          secondLatCenter: this.props.secondLatCenter,
-          secondLngCenter: this.props.secondLngCenter,
-          hideSearchBox: this.props.hideSearchBox,
-          allowDragableMarker: this.props.allowDragableMarker,
-          allowDragableSecondMarker: this.props.allowDragableSecondMarker,
-          setNewCoords: this.props.setNewCoords,
-          setNewSecondCoords: this.props.setNewSecondCoords,
-          displayFirstMarker: this.props.displayFirstMarker,
-          displaySecondMarker: this.props.displaySecondMarker
-        })
-      );
-    }
-  }]);
-
-  return MapComponent;
-}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (MapComponent);
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-/**
- * This method returns the first argument it receives.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {*} value Any value.
- * @returns {*} Returns `value`.
- * @example
- *
- * var object = { 'a': 1 };
- *
- * console.log(_.identity(object) === object);
- * // => true
- */
-function identity(value) {
-  return value;
-}
-
-module.exports = identity;
-
-
-/***/ }),
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2732,7 +2732,7 @@ module.exports = warning;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(37);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -5265,7 +5265,7 @@ exports.f = Object.getOwnPropertySymbols;
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(42),
+var identity = __webpack_require__(41),
     overRest = __webpack_require__(294),
     setToString = __webpack_require__(137);
 
@@ -5635,16 +5635,16 @@ var loginUser = function loginUser(userData) {
       console.log(user);
       dispatch({
         type: __WEBPACK_IMPORTED_MODULE_0__types__["a" /* GET_USER_DATA */],
-        result: user.data
+        payload: user.data
       });
     });
 
-    console.log(login);
+    //console.log(login);
 
     if (login.status == 200 && login.data.userId != null) {
       var test = dispatch({
         type: __WEBPACK_IMPORTED_MODULE_0__types__["a" /* GET_USER_DATA */],
-        result: login.data
+        payload: login.data
       });
       console.log(test);
     }
@@ -5655,7 +5655,7 @@ var logoutUser = function logoutUser() {
   return function (dispatch) {
     dispatch({
       type: __WEBPACK_IMPORTED_MODULE_0__types__["b" /* LOGOUT_USER */],
-      result: ''
+      payload: ''
     });
   };
 };
@@ -7588,7 +7588,7 @@ module.exports = Cancel;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Map_MapComponent_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Map_MapComponent_js__ = __webpack_require__(38);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8094,7 +8094,7 @@ var LIBRARY = __webpack_require__(47);
 var $export = __webpack_require__(21);
 var redefine = __webpack_require__(131);
 var hide = __webpack_require__(31);
-var Iterators = __webpack_require__(41);
+var Iterators = __webpack_require__(40);
 var $iterCreate = __webpack_require__(268);
 var setToStringTag = __webpack_require__(84);
 var getPrototypeOf = __webpack_require__(124);
@@ -8232,7 +8232,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(50);
-var createDesc = __webpack_require__(40);
+var createDesc = __webpack_require__(39);
 var toIObject = __webpack_require__(35);
 var toPrimitive = __webpack_require__(79);
 var has = __webpack_require__(23);
@@ -8376,7 +8376,7 @@ module.exports = shortOut;
 /* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(42),
+var identity = __webpack_require__(41),
     metaMap = __webpack_require__(143);
 
 /**
@@ -10206,7 +10206,7 @@ exports.default = (0, _createWebStorage2.default)('local');
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(188);
-module.exports = __webpack_require__(498);
+module.exports = __webpack_require__(497);
 
 
 /***/ }),
@@ -10230,7 +10230,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__App__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__registerServiceWorker__ = __webpack_require__(497);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__registerServiceWorker__ = __webpack_require__(496);
 
 
 
@@ -31281,7 +31281,7 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__App_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Main_Main__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react__ = __webpack_require__(496);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react__ = __webpack_require__(495);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_redux_persist_lib_integration_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(18);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -31419,12 +31419,12 @@ module.exports = "/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Account_Register_js__ = __webpack_require__(470);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__ = __webpack_require__(471);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(485);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(489);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__ = __webpack_require__(491);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__ = __webpack_require__(494);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(484);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__ = __webpack_require__(490);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__ = __webpack_require__(493);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__store__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__LogoutBtn__ = __webpack_require__(495);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__LogoutBtn__ = __webpack_require__(494);
 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -33205,7 +33205,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(108);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -33629,7 +33629,7 @@ function valueEqual(a, b) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(108);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -33947,7 +33947,7 @@ var createHashHistory = function createHashHistory() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(69);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -37001,7 +37001,7 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 var create = __webpack_require__(81);
-var descriptor = __webpack_require__(40);
+var descriptor = __webpack_require__(39);
 var setToStringTag = __webpack_require__(84);
 var IteratorPrototype = {};
 
@@ -37090,7 +37090,7 @@ module.exports = document && document.documentElement;
 __webpack_require__(274);
 var global = __webpack_require__(20);
 var hide = __webpack_require__(31);
-var Iterators = __webpack_require__(41);
+var Iterators = __webpack_require__(40);
 var TO_STRING_TAG = __webpack_require__(17)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
@@ -37116,7 +37116,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 var addToUnscopables = __webpack_require__(275);
 var step = __webpack_require__(276);
-var Iterators = __webpack_require__(41);
+var Iterators = __webpack_require__(40);
 var toIObject = __webpack_require__(35);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -37208,7 +37208,7 @@ var anObject = __webpack_require__(32);
 var isObject = __webpack_require__(33);
 var toIObject = __webpack_require__(35);
 var toPrimitive = __webpack_require__(79);
-var createDesc = __webpack_require__(40);
+var createDesc = __webpack_require__(39);
 var _create = __webpack_require__(81);
 var gOPNExt = __webpack_require__(283);
 var $GOPD = __webpack_require__(136);
@@ -37687,7 +37687,7 @@ module.exports = overRest;
 
 var constant = __webpack_require__(296),
     defineProperty = __webpack_require__(138),
-    identity = __webpack_require__(42);
+    identity = __webpack_require__(41);
 
 /**
  * The base implementation of `setToString` without support for hot loop shorting.
@@ -39984,7 +39984,7 @@ module.exports = function (iterator, fn, value, entries) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(41);
+var Iterators = __webpack_require__(40);
 var ITERATOR = __webpack_require__(17)('iterator');
 var ArrayProto = Array.prototype;
 
@@ -40000,7 +40000,7 @@ module.exports = function (it) {
 "use strict";
 
 var $defineProperty = __webpack_require__(22);
-var createDesc = __webpack_require__(40);
+var createDesc = __webpack_require__(39);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -40014,7 +40014,7 @@ module.exports = function (object, index, value) {
 
 var classof = __webpack_require__(337);
 var ITERATOR = __webpack_require__(17)('iterator');
-var Iterators = __webpack_require__(41);
+var Iterators = __webpack_require__(40);
 module.exports = __webpack_require__(15).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
@@ -40608,7 +40608,7 @@ module.exports = createBaseEach;
 
 var baseMatches = __webpack_require__(356),
     baseMatchesProperty = __webpack_require__(402),
-    identity = __webpack_require__(42),
+    identity = __webpack_require__(41),
     isArray = __webpack_require__(16),
     property = __webpack_require__(411);
 
@@ -42621,7 +42621,7 @@ module.exports = forEach;
 /* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(42);
+var identity = __webpack_require__(41);
 
 /**
  * Casts `value` to `identity` if it's not a function.
@@ -48523,7 +48523,7 @@ var Login = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    user: state.result
+    user: state.payload
   };
 };
 
@@ -49113,7 +49113,7 @@ function shallowEqual(objA, objB) {
 /* unused harmony export whenMapDispatchToPropsIsFunction */
 /* unused harmony export whenMapDispatchToPropsIsMissing */
 /* unused harmony export whenMapDispatchToPropsIsObject */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__ = __webpack_require__(178);
 
 
@@ -49734,7 +49734,7 @@ var Register = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    user: state.result
+    user: state.payload
   };
 };
 
@@ -49751,7 +49751,7 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(18);
 
 
@@ -50209,7 +50209,7 @@ thunk.withExtraArgument = createThunkMiddleware;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__userReducer__ = __webpack_require__(474);
 
 
@@ -50242,11 +50242,11 @@ var userReducer = function userReducer() {
   switch (action.type) {
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["a" /* GET_USER_DATA */]:
       return _extends({}, state, {
-        user: action.result
+        user: action.payload
       });
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["b" /* LOGOUT_USER */]:
       return _extends({}, state, {
-        user: action.result
+        user: action.payload
       });
     default:
       return state;
@@ -50306,7 +50306,7 @@ function autoMergeLevel1(inboundState, originalState, reducedState, _ref) {
 
 "use strict";
 /* unused harmony export default */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__persistReducer__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stateReconciler_autoMergeLevel2__ = __webpack_require__(477);
 
@@ -50375,7 +50375,7 @@ function isPlainEnoughObject(o) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = persistStore;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__persistReducer__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(28);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -50705,8 +50705,7 @@ function isPlainEnoughObject(o) {
 }
 
 /***/ }),
-/* 484 */,
-/* 485 */
+/* 484 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50716,7 +50715,7 @@ function isPlainEnoughObject(o) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleMeetingDetails_js__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleMeetingDetails_js__ = __webpack_require__(485);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -50845,7 +50844,7 @@ var MeetingDetails = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (MeetingDetails);
 
 /***/ }),
-/* 486 */
+/* 485 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50855,9 +50854,9 @@ var MeetingDetails = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleMeetingComponents_Comment__ = __webpack_require__(487);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_CommentForm__ = __webpack_require__(488);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Map_MapComponent_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleMeetingComponents_Comment__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_CommentForm__ = __webpack_require__(487);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Map_MapComponent_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(18);
 
 
@@ -51673,7 +51672,7 @@ var SingleMeetingDetails = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SingleMeetingDetails);
 
 /***/ }),
-/* 487 */
+/* 486 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51748,7 +51747,7 @@ var Comment = function Comment(props) {
 /* harmony default export */ __webpack_exports__["a"] = (Comment);
 
 /***/ }),
-/* 488 */
+/* 487 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51908,7 +51907,7 @@ var CommentForm = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (CommentForm);
 
 /***/ }),
-/* 489 */
+/* 488 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51918,7 +51917,7 @@ var CommentForm = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UserInfo__ = __webpack_require__(490);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UserInfo__ = __webpack_require__(489);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(18);
 
 
@@ -52028,7 +52027,7 @@ var MainProfile = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (MainProfile);
 
 /***/ }),
-/* 490 */
+/* 489 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52071,7 +52070,7 @@ var UserInfo = function UserInfo(props) {
 /* harmony default export */ __webpack_exports__["a"] = (UserInfo);
 
 /***/ }),
-/* 491 */
+/* 490 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52081,8 +52080,8 @@ var UserInfo = function UserInfo(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__ = __webpack_require__(492);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__ = __webpack_require__(491);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(18);
 
 
@@ -52140,15 +52139,6 @@ var MainPoints = function (_Component) {
   }
 
   _createClass(MainPoints, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var storeData = __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */].getState();
-
-      if (storeData.user.user.userId) {
-        this.setState({ currentUserId: storeData.user.user.userId });
-      }
-    }
-  }, {
     key: "loadTheOldestPoint",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -52548,6 +52538,11 @@ var MainPoints = function (_Component) {
                             console.log(_context9.t0);
 
                           case 10:
+
+                            console.log(checkIfUserVoteExists.data);
+                            console.log(_this2.state.currentUserId);
+                            console.log(item.id);
+
                             checkIfUserVote = void 0;
 
                             if (checkIfUserVoteExists.data == 1) {
@@ -52555,7 +52550,7 @@ var MainPoints = function (_Component) {
                             } else {
                               checkIfUserVote = false;
                             }
-                            console.log(checkIfUserVoteExists.data);
+                            //console.log(checkIfUserVoteExists.data);
 
                             pointObject = {
                               id: item.id,
@@ -52585,7 +52580,7 @@ var MainPoints = function (_Component) {
                             });
                             _this2.props.switchLoader(false);
 
-                          case 17:
+                          case 19:
                           case "end":
                             return _context9.stop();
                         }
@@ -52627,15 +52622,26 @@ var MainPoints = function (_Component) {
     key: "componentDidMount",
     value: function () {
       var _ref11 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11() {
+        var storeData;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                console.log("componentDidMount");
-                _context11.next = 3;
+                storeData = __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */].getState();
+
+                if (!storeData.user.user.userId) {
+                  _context11.next = 4;
+                  break;
+                }
+
+                _context11.next = 4;
+                return this.setState({ currentUserId: storeData.user.user.userId });
+
+              case 4:
+                _context11.next = 6;
                 return this.loadAllSpots(this.state.currentPageResult);
 
-              case 3:
+              case 6:
               case "end":
                 return _context11.stop();
             }
@@ -52761,7 +52767,7 @@ var MainPoints = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (MainPoints);
 
 /***/ }),
-/* 492 */
+/* 491 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52770,7 +52776,7 @@ var MainPoints = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SpotVotes__ = __webpack_require__(493);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SpotVotes__ = __webpack_require__(492);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(18);
@@ -52990,7 +52996,7 @@ var SinglePointOnList = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SinglePointOnList);
 
 /***/ }),
-/* 493 */
+/* 492 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53050,7 +53056,7 @@ var SpotVotes = function SpotVotes(props) {
 /* harmony default export */ __webpack_exports__["a"] = (SpotVotes);
 
 /***/ }),
-/* 494 */
+/* 493 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53060,7 +53066,7 @@ var SpotVotes = function SpotVotes(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(18);
 
 
@@ -53314,7 +53320,7 @@ var AddNewMeeting = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (AddNewMeeting);
 
 /***/ }),
-/* 495 */
+/* 494 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53371,14 +53377,14 @@ var LogoutBtn = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    user: state.result
+    user: state.payload
   };
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, { logoutUser: __WEBPACK_IMPORTED_MODULE_2__actions_userActions__["b" /* logoutUser */] })(LogoutBtn));
 
 /***/ }),
-/* 496 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53473,7 +53479,7 @@ PersistGate.defaultProps = {
 };
 
 /***/ }),
-/* 497 */
+/* 496 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53581,7 +53587,7 @@ function unregister() {
 }
 
 /***/ }),
-/* 498 */
+/* 497 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
