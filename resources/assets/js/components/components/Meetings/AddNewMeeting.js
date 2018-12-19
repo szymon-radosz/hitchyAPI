@@ -16,7 +16,7 @@ class AddNewMeeting extends Component {
       longitude: "",
       stopLat: "",
       stopLng: "",
-      limit: "Wybierz",
+      limit: "2",
       date: "",
       lat: 40.73061,
       lng: -73.935242,
@@ -31,11 +31,14 @@ class AddNewMeeting extends Component {
     this.setNewSecondCoords = this.setNewSecondCoords.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let storeData = store.getState();
 
     if (storeData.user.user.userNickName) {
-      this.setState({author: storeData.user.user.userNickName, currentUserId: storeData.user.user.userId});
+      this.setState({
+        author: storeData.user.user.userNickName,
+        currentUserId: storeData.user.user.userId
+      });
     }
   }
 
@@ -216,11 +219,9 @@ class AddNewMeeting extends Component {
                   id="limit"
                   onChange={this.handleChange}
                 >
-                  <option>Wybierz</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
-                  <option>Bez limitu</option>
                 </select>
               </div>
             </div>

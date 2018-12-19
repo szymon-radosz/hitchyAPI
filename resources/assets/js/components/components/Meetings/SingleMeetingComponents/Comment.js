@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Comment = props => (
   <div className="panel panel-default">
     <div className="panel-body">
-      <div className="dropdown">
+      {/*<div className="dropdown">
         <button
           className="btn btn-secondary dropdown-toggle"
           type="button"
@@ -26,7 +26,7 @@ const Comment = props => (
             </Link>
           </li>
         </div>
-      </div>
+</div>*/}
 
       <p>
         {props.userNickname} napisał/a {props.date}:{" "}

@@ -49789,7 +49789,7 @@ var AddNewMeeting = function (_Component) {
       longitude: "",
       stopLat: "",
       stopLng: "",
-      limit: "Wybierz",
+      limit: "2",
       date: "",
       lat: 40.73061,
       lng: -73.935242,
@@ -49811,7 +49811,10 @@ var AddNewMeeting = function (_Component) {
       var storeData = __WEBPACK_IMPORTED_MODULE_4__store__["b" /* store */].getState();
 
       if (storeData.user.user.userNickName) {
-        this.setState({ author: storeData.user.user.userNickName, currentUserId: storeData.user.user.userId });
+        this.setState({
+          author: storeData.user.user.userNickName,
+          currentUserId: storeData.user.user.userId
+        });
       }
     }
   }, {
@@ -50100,11 +50103,6 @@ var AddNewMeeting = function (_Component) {
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                     "option",
                     null,
-                    "Wybierz"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "option",
-                    null,
                     "2"
                   ),
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -50116,11 +50114,6 @@ var AddNewMeeting = function (_Component) {
                     "option",
                     null,
                     "4"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "option",
-                    null,
-                    "Bez limitu"
                   )
                 )
               )
@@ -50897,6 +50890,7 @@ var SingleMeetingDetails = function (_Component) {
       displayTakPartBtn: false,
       displayResignBtn: false,
       displayCommentsContainer: false,
+      checkIfUserTakePartInMeeting: false,
       startLat: "",
       currentUserId: 0,
       currentUserNickName: "",
@@ -50916,8 +50910,9 @@ var SingleMeetingDetails = function (_Component) {
     _this.loggedInUserInfo = _this.loggedInUserInfo.bind(_this);
     _this.getCurrentMeetingLimit = _this.getCurrentMeetingLimit.bind(_this);
     _this.getResignedUsersList = _this.getResignedUsersList.bind(_this);
-    _this.getCurrentMeetingAuthor = _this.getCurrentMeetingAuthor.bind(_this);
+    //this.getCurrentMeetingAuthor = this.getCurrentMeetingAuthor.bind(this);
     _this.getCurrentMeetingComments = _this.getCurrentMeetingComments.bind(_this);
+    _this.checkIfUserTakePartInMeeting = _this.checkIfUserTakePartInMeeting.bind(_this);
     return _this;
   }
 
@@ -51013,52 +51008,30 @@ var SingleMeetingDetails = function (_Component) {
 
       return getCurrentMeetingLimit;
     }()
+
+    /*async getCurrentMeetingAuthor() {
+      const getCurrentMeetingInfo = await axios.get(
+        `http://127.0.0.1:8000/api/events/${this.props.meetingId}`
+      );
+       return getCurrentMeetingInfo.data[0].authorNickName;
+    }*/
+
   }, {
-    key: "getCurrentMeetingAuthor",
+    key: "getResignedUsersList",
     value: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-        var getCurrentMeetingInfo;
+        var _this2 = this;
+
+        var allDeleted;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events/" + this.props.meetingId);
-
-              case 2:
-                getCurrentMeetingInfo = _context3.sent;
-                return _context3.abrupt("return", getCurrentMeetingInfo.data[0].authorNickName);
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function getCurrentMeetingAuthor() {
-        return _ref3.apply(this, arguments);
-      }
-
-      return getCurrentMeetingAuthor;
-    }()
-  }, {
-    key: "getResignedUsersList",
-    value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
-        var _this2 = this;
-
-        var allDeleted;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/deleteUserFromMeeting/" + this.props.meetingId);
 
               case 2:
-                allDeleted = _context4.sent;
+                allDeleted = _context3.sent;
 
 
                 allDeleted.data.map(function (singleDeletedUserFromMeeting, i) {
@@ -51071,14 +51044,14 @@ var SingleMeetingDetails = function (_Component) {
 
               case 4:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee3, this);
       }));
 
       function getResignedUsersList() {
-        return _ref4.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       }
 
       return getResignedUsersList;
@@ -51086,19 +51059,19 @@ var SingleMeetingDetails = function (_Component) {
   }, {
     key: "getCurrentMeetingComments",
     value: function () {
-      var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
         var _this3 = this;
 
         var allComments;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context5.next = 2;
+                _context4.next = 2;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/comments");
 
               case 2:
-                allComments = _context5.sent;
+                allComments = _context4.sent;
 
 
                 allComments.data.map(function (comment, i) {
@@ -51120,17 +51093,71 @@ var SingleMeetingDetails = function (_Component) {
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee4, this);
       }));
 
       function getCurrentMeetingComments() {
-        return _ref5.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       }
 
       return getCurrentMeetingComments;
+    }()
+  }, {
+    key: "checkIfUserTakePartInMeeting",
+    value: function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+        var response, _response;
+
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = void 0;
+                _context5.prev = 1;
+                _context5.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserTakePartInMeeting", {
+                  userId: this.state.currentUserId,
+                  meetingId: this.props.meetingId
+                });
+
+              case 4:
+                _response = _context5.sent;
+
+
+                console.log(_response.data);
+
+                if (_response.data == 1) {
+                  this.setState({
+                    displayTakPartBtn: false,
+                    displayCommentsContainer: true,
+                    displayResignBtn: true
+                  });
+                }
+                _context5.next = 12;
+                break;
+
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](1);
+
+                console.log(_context5.t0);
+
+              case 12:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[1, 9]]);
+      }));
+
+      function checkIfUserTakePartInMeeting() {
+        return _ref5.apply(this, arguments);
+      }
+
+      return checkIfUserTakePartInMeeting;
     }()
   }, {
     key: "takePartClick",
@@ -51381,7 +51408,7 @@ var SingleMeetingDetails = function (_Component) {
                 storeData = __WEBPACK_IMPORTED_MODULE_6__store__["b" /* store */].getState();
 
                 if (!storeData.user.user.userId) {
-                  _context10.next = 5;
+                  _context10.next = 11;
                   break;
                 }
 
@@ -51389,32 +51416,45 @@ var SingleMeetingDetails = function (_Component) {
                 return this.setState({
                   currentUserId: storeData.user.user.userId,
                   currentUserEmail: storeData.user.user.userEmail,
-                  currentUserNickName: storeData.user.user.userNickName
-                });
-
-              case 5:
-
-                this.setState({
+                  currentUserNickName: storeData.user.user.userNickName,
                   startLat: this.props.startPlaceLattitude,
                   startLng: this.props.startPlaceLongitude,
                   stopLat: this.props.stopPlaceLattitude,
                   stopLng: this.props.stopPlaceLongitude
                 });
 
-                _context10.next = 8;
+              case 5:
+                _context10.next = 7;
+                return this.checkIfUserTakePartInMeeting();
+
+              case 7:
+                _context10.next = 9;
                 return this.loggedInUserInfo();
 
-              case 8:
-                _context10.next = 10;
+              case 9:
+                _context10.next = 13;
+                break;
+
+              case 11:
+                _context10.next = 13;
+                return this.setState({
+                  startLat: this.props.startPlaceLattitude,
+                  startLng: this.props.startPlaceLongitude,
+                  stopLat: this.props.stopPlaceLattitude,
+                  stopLng: this.props.stopPlaceLongitude
+                });
+
+              case 13:
+                _context10.next = 15;
                 return this.getCurrentMeetingLimit();
 
-              case 10:
+              case 15:
                 meetingLimit = _context10.sent;
                 usersIDs = [];
-                _context10.next = 14;
+                _context10.next = 19;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
 
-              case 14:
+              case 19:
                 allMatches = _context10.sent;
                 meetingMatched = 0;
 
@@ -51424,7 +51464,7 @@ var SingleMeetingDetails = function (_Component) {
                     usersIDs.push(singleMatch.userId);
                     meetingMatched++;
 
-                    if (singleMatch.userId == _this6.state.currentUserId && _this6.state.loggedInUserEmail != _this6.getCurrentMeetingAuthor()) {
+                    if (singleMatch.userId == _this6.state.currentUserId && _this6.state.currentUserNickName != _this6.props.author) {
                       _this6.setState({ displayTakPartBtn: false });
                       _this6.setState({ displayCommentsContainer: true });
                       _this6.setState({ displayResignBtn: true });
@@ -51443,10 +51483,11 @@ var SingleMeetingDetails = function (_Component) {
                       while (1) {
                         switch (_context9.prev = _context9.next) {
                           case 0:
-                            _context9.next = 2;
+                            console.log(userId);
+                            _context9.next = 3;
                             return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
 
-                          case 2:
+                          case 3:
                             allUsers = _context9.sent;
 
 
@@ -51467,7 +51508,7 @@ var SingleMeetingDetails = function (_Component) {
                               }
                             });
 
-                          case 4:
+                          case 5:
                           case "end":
                             return _context9.stop();
                         }
@@ -51480,18 +51521,18 @@ var SingleMeetingDetails = function (_Component) {
                   };
                 }());
 
-                _context10.next = 21;
+                _context10.next = 26;
                 return this.getResignedUsersList();
 
-              case 21:
-                _context10.next = 23;
+              case 26:
+                _context10.next = 28;
                 return this.getCurrentMeetingComments();
 
-              case 23:
+              case 28:
 
                 this.props.switchLoader(false);
 
-              case 24:
+              case 29:
               case "end":
                 return _context10.stop();
             }
@@ -51595,7 +51636,7 @@ var SingleMeetingDetails = function (_Component) {
               user.email
             );
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.resignedUsersEmails.length > 0 && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "p",
             null,
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -51611,17 +51652,17 @@ var SingleMeetingDetails = function (_Component) {
               userEmail
             );
           }),
-          this.state.displayTakPartBtn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.displayTakPartBtn && this.props.author != this.state.currentUserNickName ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             { className: "btn btn-default", onClick: this.takePartClick },
             "We\u017A udzia\u0142"
           ) : "",
-          this.state.displayResignBtn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.displayResignBtn && this.props.author != this.state.currentUserNickName ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             { className: "btn btn-default", onClick: this.resignClick },
             "Zrezygnuj"
           ) : "",
-          this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.displayCommentsContainer && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "p",
             null,
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -51629,23 +51670,23 @@ var SingleMeetingDetails = function (_Component) {
               null,
               "Komentarze"
             )
-          ) : "",
+          ),
           this.state.displayCommentsContainer ? this.state.comments.map(function (comment, i) {
             return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleMeetingComponents_Comment__["a" /* default */], {
               key: i,
-              userNickname: _this7.state.loggedInUserNickname,
+              userNickname: comment.userEmail,
               date: comment.date,
               commentBody: comment.commentBody
             });
           }) : "",
-          this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_CommentForm__["a" /* default */], {
+          this.state.displayCommentsContainer && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_CommentForm__["a" /* default */], {
             loggedInUserEmail: this.state.loggedInUserEmail,
             loggedInUserNickname: this.state.loggedInUserNickname,
             meetingId: this.props.meetingId,
             addCommentToState: this.addCommentToState,
             showAlertSuccess: this.props.showAlertSuccess,
             showAlertWarning: this.props.showAlertWarning
-          }) : ""
+          })
         ),
         __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
@@ -51689,43 +51730,6 @@ var Comment = function Comment(props) {
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
       { className: "panel-body" },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "dropdown" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "button",
-          {
-            className: "btn btn-secondary dropdown-toggle",
-            type: "button",
-            id: "dropdownMenuButton",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          },
-          "Szczego\u0142y"
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          {
-            className: "dropdown-menu userCommentInfoBox",
-            "aria-labelledby": "dropdownMenuButton"
-          },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            props.userNickname
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "li",
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-              { to: "/profile/" + props.userNickname },
-              "Profil u\u017Cytkownika"
-            )
-          )
-        )
-      ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "p",
         null,
@@ -52150,7 +52154,8 @@ var MainPoints = function (_Component) {
                 return this.setState({
                   filter: "theOldest",
                   currentPageResult: 1,
-                  pointsData: []
+                  pointsData: [],
+                  markersData: []
                 });
 
               case 2:
@@ -52183,7 +52188,8 @@ var MainPoints = function (_Component) {
                 return this.setState({
                   filter: "theLatest",
                   currentPageResult: 1,
-                  pointsData: []
+                  pointsData: [],
+                  markersData: []
                 });
 
               case 2:
@@ -52216,7 +52222,8 @@ var MainPoints = function (_Component) {
                 return this.setState({
                   filter: "bestVoted",
                   currentPageResult: 1,
-                  pointsData: []
+                  pointsData: [],
+                  markersData: []
                 });
 
               case 2:
@@ -52249,7 +52256,8 @@ var MainPoints = function (_Component) {
                 return this.setState({
                   filter: "worstVoted",
                   currentPageResult: 1,
-                  pointsData: []
+                  pointsData: [],
+                  markersData: []
                 });
 
               case 2:
@@ -52282,7 +52290,8 @@ var MainPoints = function (_Component) {
                 return this.setState({
                   filter: "mostTimeVoted",
                   currentPageResult: 1,
-                  pointsData: []
+                  pointsData: [],
+                  markersData: []
                 });
 
               case 2:

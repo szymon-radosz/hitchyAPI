@@ -17,6 +17,7 @@ class SingleMeetingDetails extends Component {
       displayTakPartBtn: false,
       displayResignBtn: false,
       displayCommentsContainer: false,
+      checkIfUserTakePartInMeeting: false,
       startLat: "",
       currentUserId: 0,
       currentUserNickName: "",
@@ -36,8 +37,11 @@ class SingleMeetingDetails extends Component {
     this.loggedInUserInfo = this.loggedInUserInfo.bind(this);
     this.getCurrentMeetingLimit = this.getCurrentMeetingLimit.bind(this);
     this.getResignedUsersList = this.getResignedUsersList.bind(this);
-    this.getCurrentMeetingAuthor = this.getCurrentMeetingAuthor.bind(this);
+    //this.getCurrentMeetingAuthor = this.getCurrentMeetingAuthor.bind(this);
     this.getCurrentMeetingComments = this.getCurrentMeetingComments.bind(this);
+    this.checkIfUserTakePartInMeeting = this.checkIfUserTakePartInMeeting.bind(
+      this
+    );
   }
 
   handleChange(event) {
@@ -78,13 +82,13 @@ class SingleMeetingDetails extends Component {
     return getCurrentMeetingInfo.data[0].limit;
   }
 
-  async getCurrentMeetingAuthor() {
+  /*async getCurrentMeetingAuthor() {
     const getCurrentMeetingInfo = await axios.get(
       `http://127.0.0.1:8000/api/events/${this.props.meetingId}`
     );
 
     return getCurrentMeetingInfo.data[0].authorNickName;
-  }
+  }*/
 
   async getResignedUsersList() {
     const allDeleted = await axios.get(
@@ -118,6 +122,32 @@ class SingleMeetingDetails extends Component {
         }));
       }
     });
+  }
+
+  async checkIfUserTakePartInMeeting() {
+    let response;
+
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/checkIfUserTakePartInMeeting`,
+        {
+          userId: this.state.currentUserId,
+          meetingId: this.props.meetingId
+        }
+      );
+
+      console.log(response.data);
+
+      if (response.data == 1) {
+        this.setState({
+          displayTakPartBtn: false,
+          displayCommentsContainer: true,
+          displayResignBtn: true
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async takePartClick() {
@@ -279,23 +309,29 @@ class SingleMeetingDetails extends Component {
     this.props.switchLoader(true);
 
     let storeData = store.getState();
-  
+
     if (storeData.user.user.userId) {
       await this.setState({
-        currentUserId: storeData.user.user.userId, 
-        currentUserEmail: storeData.user.user.userEmail, 
-        currentUserNickName: storeData.user.user.userNickName
+        currentUserId: storeData.user.user.userId,
+        currentUserEmail: storeData.user.user.userEmail,
+        currentUserNickName: storeData.user.user.userNickName,
+        startLat: this.props.startPlaceLattitude,
+        startLng: this.props.startPlaceLongitude,
+        stopLat: this.props.stopPlaceLattitude,
+        stopLng: this.props.stopPlaceLongitude
+      });
+
+      await this.checkIfUserTakePartInMeeting();
+
+      await this.loggedInUserInfo();
+    } else {
+      await this.setState({
+        startLat: this.props.startPlaceLattitude,
+        startLng: this.props.startPlaceLongitude,
+        stopLat: this.props.stopPlaceLattitude,
+        stopLng: this.props.stopPlaceLongitude
       });
     }
-
-    this.setState({
-      startLat: this.props.startPlaceLattitude,
-      startLng: this.props.startPlaceLongitude,
-      stopLat: this.props.stopPlaceLattitude,
-      stopLng: this.props.stopPlaceLongitude
-    });
-
-    await this.loggedInUserInfo();
 
     let meetingLimit = await this.getCurrentMeetingLimit();
 
@@ -314,7 +350,7 @@ class SingleMeetingDetails extends Component {
 
         if (
           singleMatch.userId == this.state.currentUserId &&
-          this.state.loggedInUserEmail != this.getCurrentMeetingAuthor()
+          this.state.currentUserNickName != this.props.author
         ) {
           this.setState({ displayTakPartBtn: false });
           this.setState({ displayCommentsContainer: true });
@@ -328,6 +364,7 @@ class SingleMeetingDetails extends Component {
     }
 
     usersIDs.map(async (userId, i) => {
+      console.log(userId);
       const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
       allUsers.data.map((singleUser, i) => {
@@ -360,6 +397,7 @@ class SingleMeetingDetails extends Component {
           <h2>
             {this.props.title} - {this.props.date}{" "}
           </h2>
+
           <div
             className="btn btn-default"
             onClick={() => {
@@ -368,6 +406,7 @@ class SingleMeetingDetails extends Component {
           >
             Punkt Startowy
           </div>
+
           <div
             className="btn btn-default"
             onClick={() => {
@@ -376,31 +415,42 @@ class SingleMeetingDetails extends Component {
           >
             Punkt Końcowy
           </div>
+
           <p>
             <strong>Opis:</strong> {this.props.description}
           </p>
+
           <p>
             <strong>Stworzone przez:</strong> {this.props.author}
           </p>
+
           <p>
             <strong>Limit uczestników:</strong> {this.props.limit}{" "}
             {this.state.usersEmails.length == this.props.limit
               ? " (osiągnięto limit)"
               : ""}
           </p>
+
           <p>
             <strong>Wezmą udział:</strong>
           </p>
+
           {this.state.usersEmails.map((user, i) => {
             return <p key={i}>{user.email}</p>;
           })}
-          <p>
-            <strong>Użytkownicy, którzy zrezygnowali:</strong>
-          </p>
+
+          {this.state.resignedUsersEmails.length > 0 && (
+            <p>
+              <strong>Użytkownicy, którzy zrezygnowali:</strong>
+            </p>
+          )}
+
           {this.state.resignedUsersEmails.map((userEmail, i) => {
             return <p key={i}>{userEmail}</p>;
           })}
-          {this.state.displayTakPartBtn ? (
+
+          {this.state.displayTakPartBtn &&
+          this.props.author != this.state.currentUserNickName ? (
             <div className="btn btn-default" onClick={this.takePartClick}>
               Weź udział
             </div>
@@ -408,19 +458,19 @@ class SingleMeetingDetails extends Component {
             ""
           )}
 
-          {this.state.displayResignBtn ? (
+          {this.state.displayResignBtn &&
+          this.props.author != this.state.currentUserNickName ? (
             <div className="btn btn-default" onClick={this.resignClick}>
               Zrezygnuj
             </div>
           ) : (
             ""
           )}
-          {this.state.displayCommentsContainer ? (
+
+          {this.state.displayCommentsContainer && (
             <p>
               <strong>Komentarze</strong>
             </p>
-          ) : (
-            ""
           )}
 
           {this.state.displayCommentsContainer
@@ -428,7 +478,7 @@ class SingleMeetingDetails extends Component {
                 return (
                   <Comment
                     key={i}
-                    userNickname={this.state.loggedInUserNickname}
+                    userNickname={comment.userEmail}
                     date={comment.date}
                     commentBody={comment.commentBody}
                   />
@@ -436,7 +486,7 @@ class SingleMeetingDetails extends Component {
               })
             : ""}
 
-          {this.state.displayCommentsContainer ? (
+          {this.state.displayCommentsContainer && (
             <CommentForm
               loggedInUserEmail={this.state.loggedInUserEmail}
               loggedInUserNickname={this.state.loggedInUserNickname}
@@ -445,8 +495,6 @@ class SingleMeetingDetails extends Component {
               showAlertSuccess={this.props.showAlertSuccess}
               showAlertWarning={this.props.showAlertWarning}
             />
-          ) : (
-            ""
           )}
         </div>
 

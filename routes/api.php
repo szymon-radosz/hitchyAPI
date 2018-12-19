@@ -33,6 +33,7 @@ Route::post('eventComments', 'EventCommentsController@store');
 Route::get('eventComments', 'EventCommentsController@index');
 Route::get('eventComments/{id}', array('uses' => 'EventCommentsController@commentsForID'));
 
+Route::post('checkIfUserTakePartInMeeting', 'MatchUserWithMeetingController@checkIfUserTakePartInMeeting');
 Route::post('matchUserWithMeeting', 'MatchUserWithMeetingController@store');
 Route::get('matchUserWithMeetings', 'MatchUserWithMeetingController@index');
 Route::delete('deleteMatchUserWithMeeting/{id}', 'MatchUserWithMeetingController@matchUserWithMeeting');

@@ -38,7 +38,8 @@ class MainPoints extends Component {
     await this.setState({
       filter: "theOldest",
       currentPageResult: 1,
-      pointsData: []
+      pointsData: [],
+      markersData: []
     });
 
     await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
@@ -48,7 +49,8 @@ class MainPoints extends Component {
     await this.setState({
       filter: "theLatest",
       currentPageResult: 1,
-      pointsData: []
+      pointsData: [],
+      markersData: []
     });
 
     await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
@@ -58,7 +60,8 @@ class MainPoints extends Component {
     await this.setState({
       filter: "bestVoted",
       currentPageResult: 1,
-      pointsData: []
+      pointsData: [],
+      markersData: []
     });
 
     await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
@@ -68,7 +71,8 @@ class MainPoints extends Component {
     await this.setState({
       filter: "worstVoted",
       currentPageResult: 1,
-      pointsData: []
+      pointsData: [],
+      markersData: []
     });
 
     await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
@@ -78,7 +82,8 @@ class MainPoints extends Component {
     await this.setState({
       filter: "mostTimeVoted",
       currentPageResult: 1,
-      pointsData: []
+      pointsData: [],
+      markersData: []
     });
 
     await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
@@ -217,7 +222,7 @@ class MainPoints extends Component {
     let storeData = store.getState();
 
     if (storeData.user.user.userId) {
-      await this.setState({currentUserId: storeData.user.user.userId});
+      await this.setState({ currentUserId: storeData.user.user.userId });
     }
 
     await this.loadAllSpots(this.state.currentPageResult);

@@ -33,4 +33,18 @@ class MatchUserWithMeetingController extends Controller
         $deleteMatch->delete();
         //$allUsers = DB::table('match_user_with_event')->where('id', $id)->delete();
     }
+
+    public function checkIfUserTakePartInMeeting(Request $request){
+        $userId = intval($request->userId);
+        $meetingId = $request->meetingId;
+
+        $checkIfUserTakePartInMeeting = DB::table('match_user_with_event')->where([['userId', '=', $userId], ['eventId', '=', $meetingId]])->count();
+        //var_dump($checkIfUserTakePartInMeeting);
+
+        if($checkIfUserTakePartInMeeting > 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
