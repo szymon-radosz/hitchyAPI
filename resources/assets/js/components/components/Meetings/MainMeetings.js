@@ -57,7 +57,7 @@ class MainMeetings extends Component {
         `http://127.0.0.1:8000/api/events?page=${page}`
       );
 
-      console.log(allMeetings);
+      //console.log(allMeetings);
 
       this.setState({ paginationPageLimit: allMeetings.data.last_page });
 
@@ -102,15 +102,15 @@ class MainMeetings extends Component {
     this.props.switchLoader(false);
   }
 
-  async componentDidMount() {
-    await this.loadAllMeetings(this.state.currentPageResult);
-  }
-
   setCoordinates(childLat, childLng) {
     this.setState({
       lat: childLat,
       lng: childLng
     });
+  }
+
+  async componentDidMount() {
+    await this.loadAllMeetings(this.state.currentPageResult);
   }
 
   render() {

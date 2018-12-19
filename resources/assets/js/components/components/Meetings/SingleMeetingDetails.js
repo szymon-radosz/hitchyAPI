@@ -60,7 +60,7 @@ class SingleMeetingDetails extends Component {
       commentBody: commentBody
     };
 
-    console.log(commentObject);
+    //console.log(commentObject);
 
     this.setState(prevState => ({
       comments: [...prevState.comments, commentObject]
@@ -138,7 +138,7 @@ class SingleMeetingDetails extends Component {
         }
       );
 
-      console.log(response.data);
+      //console.log(response.data);
 
       if (response.data == 1) {
         this.setState({
@@ -261,7 +261,7 @@ class SingleMeetingDetails extends Component {
               ...this.state.resignedUsersEmails
             ];
 
-            console.log(updatedResignedUsersEmailsList);
+            //console.log(updatedResignedUsersEmailsList);
 
             if (updatedResignedUsersEmailsList.length == 0) {
               this.setState(prevState => ({
@@ -272,7 +272,7 @@ class SingleMeetingDetails extends Component {
               }));
             } else {
               updatedResignedUsersEmailsList.map((email, i) => {
-                console.log(email);
+                //console.log(email);
                 if (email != this.state.currentUserId) {
                   this.setState(prevState => ({
                     resignedUsersEmails: [
@@ -366,7 +366,7 @@ class SingleMeetingDetails extends Component {
     }
 
     usersIDs.map(async (userId, i) => {
-      console.log(userId);
+      //console.log(userId);
       const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
       allUsers.data.map((singleUser, i) => {

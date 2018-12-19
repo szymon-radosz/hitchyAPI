@@ -19,14 +19,6 @@ class SinglePointOnList extends Component {
     this.saveNewSpotVote = this.saveNewSpotVote.bind(this);
   }
 
-  componentDidMount(){
-    let storeData = store.getState();
-
-    if (storeData.user.user.userId) {
-      this.setState({currentUserId: storeData.user.user.userId});
-    }
-  }
-
   changeCurrentVote(event) {
     this.setState({ currentVote: event.target.value });
   }
@@ -69,6 +61,14 @@ class SinglePointOnList extends Component {
       }
     } else {
       this.props.showAlertWarning("Wybierz wartosc liczbowa.");
+    }
+  }
+
+  componentDidMount() {
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({ currentUserId: storeData.user.user.userId });
     }
   }
 

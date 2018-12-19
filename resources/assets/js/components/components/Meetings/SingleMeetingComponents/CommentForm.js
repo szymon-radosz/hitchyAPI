@@ -17,20 +17,6 @@ class CommentForm extends Component {
     this.submitComment = this.submitComment.bind(this);
   }
 
-  componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user.userId) {
-      this.setState({
-        currentUserId: storeData.user.user.userId
-      });
-    }
-    this.setState({
-      loggedInUserNickname: this.props.loggedInUserNickname,
-      meetingId: this.props.meetingId
-    });
-  }
-
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -46,7 +32,7 @@ class CommentForm extends Component {
       commentBody: this.state.commentBody
     });
 
-    console.log([savedComment.data, savedComment.status]);
+    //console.log([savedComment.data, savedComment.status]);
 
     if (savedComment.status == "201") {
       this.props.addCommentToState(
@@ -55,11 +41,25 @@ class CommentForm extends Component {
         savedComment.data.commentBody
       );
 
-      console.log(savedComment.data.userEmail);
+      //console.log(savedComment.data.userEmail);
       this.props.showAlertSuccess("Dodałeś komentarz.");
     } else {
       this.props.showAlertWarning("Nie udało się dodać komentarza.");
     }
+  }
+
+  componentDidMount() {
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({
+        currentUserId: storeData.user.user.userId
+      });
+    }
+    this.setState({
+      loggedInUserNickname: this.props.loggedInUserNickname,
+      meetingId: this.props.meetingId
+    });
   }
 
   render() {

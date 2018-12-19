@@ -126,23 +126,33 @@ class MainPoints extends Component {
 
       if (filter == "theOldest") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheOldestPoints?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getTheOldestPoints/${
+            this.state.centerCoord[0]
+          }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
       } else if (filter == "theLatest") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheNewestPoints?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getTheNewestPoints/${
+            this.state.centerCoord[0]
+          }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
       } else if (filter == "bestVoted") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheBestVoted?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getTheBestVoted/${
+            this.state.centerCoord[0]
+          }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
       } else if (filter == "worstVoted") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheWorstVoted?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getTheWorstVoted/${
+            this.state.centerCoord[0]
+          }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
       } else if (filter == "mostTimeVoted") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/getTheMostTimeVoted?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getTheMostTimeVoted/${
+            this.state.centerCoord[0]
+          }/${this.state.centerCoord[1]}?page=${pageNumber}`
         );
       } else {
         allPoints = await axios.get(
@@ -173,10 +183,6 @@ class MainPoints extends Component {
         } catch (error) {
           console.log(error);
         }
-
-        console.log(checkIfUserVoteExists.data);
-        console.log(this.state.currentUserId);
-        console.log(item.id);
 
         let checkIfUserVote;
         if (checkIfUserVoteExists.data == 1) {
@@ -218,16 +224,6 @@ class MainPoints extends Component {
     }
   }
 
-  async componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user.userId) {
-      await this.setState({ currentUserId: storeData.user.user.userId });
-    }
-
-    await this.loadAllSpots(this.state.currentPageResult);
-  }
-
   disableVoteSelect(pointId, voteValue) {
     let newPointsData = [...this.state.pointsData];
 
@@ -238,8 +234,18 @@ class MainPoints extends Component {
         elem.countVotes = elem.countVotes + 1;
       }
     });
-    console.log(newPointsData);
+    //console.log(newPointsData);
     this.setState({ pointsData: newPointsData });
+  }
+
+  async componentDidMount() {
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      await this.setState({ currentUserId: storeData.user.user.userId });
+    }
+
+    await this.loadAllSpots(this.state.currentPageResult);
   }
 
   render() {

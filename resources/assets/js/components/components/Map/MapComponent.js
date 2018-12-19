@@ -79,9 +79,6 @@ const MyMapComponent = compose(
     defaultZoom={13}
     defaultOptions={defaultMapOptions}
     ref={map => (this._map = map)}
-    /*onDragEnd={map => {
-      props.getMapCoords(this._map);
-    }}*/
     center={{ lat: Number(props.lat), lng: Number(props.lng) }}
   >
     {!props.hideSearchBox && (
@@ -93,6 +90,7 @@ const MyMapComponent = compose(
             this._searchBox.getPlaces()[0].geometry.location.lat(),
             this._searchBox.getPlaces()[0].geometry.location.lng()
           );
+          //console.log(this._searchBox.getPlaces()[0].geometry.location.lat());
         }}
       >
         <input
@@ -129,7 +127,7 @@ const MyMapComponent = compose(
             this._marker1.getPosition().lat(),
             this._marker1.getPosition().lng()
           );
-          console.log(this._marker1.getPosition().lat());
+          // console.log(this._marker1.getPosition().lat());
         }}
       />
     ) : (
@@ -171,7 +169,7 @@ const MyMapComponent = compose(
 
     {props.markersData &&
       props.markersData.map((singleMarker, i) => {
-        console.log(singleMarker);
+        //console.log(singleMarker);
         return (
           <Marker
             key={i}
@@ -224,7 +222,6 @@ export default class MapComponent extends Component {
   }
 
   async loadPoints(lat, lng) {
-    let response;
     let lattitude = "";
     let longitude = "";
 
@@ -236,22 +233,9 @@ export default class MapComponent extends Component {
       longitude = lng;
     }
 
-    try {
-      response = await axios.get(
-        `/getPointsNearCoords/${lattitude}/${longitude}`,
-        {
-          headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-          }
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    console.log([lattitude, longitude]);
 
-    console.log(response.data);
-
-    //await this.setState({ markersList: response.data.location });
+    this.props.setNewCenterCoords(lattitude, longitude);
   }
 
   async componentDidMount() {

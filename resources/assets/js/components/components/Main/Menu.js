@@ -29,28 +29,6 @@ class Menu extends Component {
     );
   }
 
-  async componentDidMount() {
-    store.subscribe(() => {
-      console.log(store.getState());
-
-      let storeData = store.getState();
-
-      if (storeData.user.user.userId) {
-        this.setState({ userIsLoggedIn: true });
-      }else if (storeData.user.user == ""){
-        this.setState({ userIsLoggedIn: false });
-      }
-    });
-
-    let storeData = store.getState();
-
-    if (storeData.user.user.userId) {
-      this.setState({ userIsLoggedIn: true });
-    }else if (storeData.user.user == ""){
-      this.setState({ userIsLoggedIn: false });
-    }
-  }
-
   changeStateOfSearchInLocation(value) {
     this.setState({
       searchInLocation: value
@@ -61,6 +39,28 @@ class Menu extends Component {
     this.setState({
       searchInLocation: ""
     });
+  }
+
+  async componentDidMount() {
+    store.subscribe(() => {
+      console.log(store.getState());
+
+      let storeData = store.getState();
+
+      if (storeData.user.user.userId) {
+        this.setState({ userIsLoggedIn: true });
+      } else if (storeData.user.user == "") {
+        this.setState({ userIsLoggedIn: false });
+      }
+    });
+
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({ userIsLoggedIn: true });
+    } else if (storeData.user.user == "") {
+      this.setState({ userIsLoggedIn: false });
+    }
   }
 
   render() {

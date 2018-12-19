@@ -22,14 +22,6 @@ class AddNewMeeting extends Component {
     this.setNewCoords = this.setNewCoords.bind(this);
   }
 
-  componentDidMount(){
-    let storeData = store.getState();
-
-    if (storeData.user.user.userNickName) {
-      this.setState({author: storeData.user.user.userNickName});
-    }
-  }
-
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -74,6 +66,14 @@ class AddNewMeeting extends Component {
       lat: newLat,
       lng: newLng
     });
+  }
+
+  componentDidMount() {
+    let storeData = store.getState();
+
+    if (storeData.user.user.userNickName) {
+      this.setState({ author: storeData.user.user.userNickName });
+    }
   }
 
   render() {

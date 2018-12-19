@@ -31,17 +31,6 @@ class AddNewMeeting extends Component {
     this.setNewSecondCoords = this.setNewSecondCoords.bind(this);
   }
 
-  componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user.userNickName) {
-      this.setState({
-        author: storeData.user.user.userNickName,
-        currentUserId: storeData.user.user.userId
-      });
-    }
-  }
-
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -86,7 +75,7 @@ class AddNewMeeting extends Component {
         console.log(error);
       }
 
-      console.log(savedMeeting);
+      //console.log(savedMeeting);
 
       if (savedMeeting.status == "201") {
         try {
@@ -125,6 +114,17 @@ class AddNewMeeting extends Component {
       secondLat: newLat,
       secondLng: newLng
     });
+  }
+
+  componentDidMount() {
+    let storeData = store.getState();
+
+    if (storeData.user.user.userNickName) {
+      this.setState({
+        author: storeData.user.user.userNickName,
+        currentUserId: storeData.user.user.userId
+      });
+    }
   }
 
   render() {

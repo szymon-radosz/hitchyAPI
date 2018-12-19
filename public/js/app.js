@@ -1618,11 +1618,8 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
       defaultOptions: defaultMapOptions,
       ref: function ref(map) {
         return _this._map = map;
-      }
-      /*onDragEnd={map => {
-        props.getMapCoords(this._map);
-      }}*/
-      , center: { lat: Number(props.lat), lng: Number(props.lng) }
+      },
+      center: { lat: Number(props.lat), lng: Number(props.lng) }
     },
     !props.hideSearchBox && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default.a,
@@ -1633,6 +1630,7 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
         controlPosition: google.maps.ControlPosition.TOP_CENTER,
         onPlacesChanged: function onPlacesChanged(map) {
           props.changeStateCoords(_this._searchBox.getPlaces()[0].geometry.location.lat(), _this._searchBox.getPlaces()[0].geometry.location.lng());
+          //console.log(this._searchBox.getPlaces()[0].geometry.location.lat());
         }
       },
       __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
@@ -1666,7 +1664,7 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
       },
       onDragEnd: function onDragEnd() {
         props.setNewCoords(_this._marker1.getPosition().lat(), _this._marker1.getPosition().lng());
-        console.log(_this._marker1.getPosition().lat());
+        // console.log(this._marker1.getPosition().lat());
       }
     }) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"], {
       draggable: false,
@@ -1695,7 +1693,7 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
       }
     }),
     props.markersData && props.markersData.map(function (singleMarker, i) {
-      console.log(singleMarker);
+      //console.log(singleMarker);
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["Marker"],
         {
@@ -1787,12 +1785,11 @@ var MapComponent = function (_Component) {
     key: "loadPoints",
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(lat, lng) {
-        var response, lattitude, longitude;
+        var lattitude, longitude;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                response = void 0;
                 lattitude = "";
                 longitude = "";
 
@@ -1805,37 +1802,16 @@ var MapComponent = function (_Component) {
                   longitude = lng;
                 }
 
-                _context2.prev = 4;
-                _context2.next = 7;
-                return __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get("/getPointsNearCoords/" + lattitude + "/" + longitude, {
-                  headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                  }
-                });
+                console.log([lattitude, longitude]);
 
-              case 7:
-                response = _context2.sent;
-                _context2.next = 13;
-                break;
+                this.props.setNewCenterCoords(lattitude, longitude);
 
-              case 10:
-                _context2.prev = 10;
-                _context2.t0 = _context2["catch"](4);
-
-                console.log(_context2.t0);
-
-              case 13:
-
-                console.log(response.data);
-
-                //await this.setState({ markersList: response.data.location });
-
-              case 14:
+              case 5:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[4, 10]]);
+        }, _callee2, this);
       }));
 
       function loadPoints(_x3, _x4) {
@@ -7735,11 +7711,11 @@ var MainMeetings = function (_Component) {
                 allMeetings = _context3.sent;
 
 
-                console.log(allMeetings);
+                //console.log(allMeetings);
 
                 this.setState({ paginationPageLimit: allMeetings.data.last_page });
 
-                _context3.next = 9;
+                _context3.next = 8;
                 return allMeetings.data.data.map(function (item, i) {
                   var meetingObject = {
                     id: item.id,
@@ -7780,25 +7756,25 @@ var MainMeetings = function (_Component) {
                   });
                 });
 
-              case 9:
-                _context3.next = 14;
+              case 8:
+                _context3.next = 13;
                 break;
 
-              case 11:
-                _context3.prev = 11;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](1);
 
                 console.log(_context3.t0);
 
-              case 14:
+              case 13:
                 this.props.switchLoader(false);
 
-              case 15:
+              case 14:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[1, 11]]);
+        }, _callee3, this, [[1, 10]]);
       }));
 
       function loadAllMeetings(_x) {
@@ -7807,6 +7783,14 @@ var MainMeetings = function (_Component) {
 
       return loadAllMeetings;
     }()
+  }, {
+    key: "setCoordinates",
+    value: function setCoordinates(childLat, childLng) {
+      this.setState({
+        lat: childLat,
+        lng: childLng
+      });
+    }
   }, {
     key: "componentDidMount",
     value: function () {
@@ -7832,14 +7816,6 @@ var MainMeetings = function (_Component) {
 
       return componentDidMount;
     }()
-  }, {
-    key: "setCoordinates",
-    value: function setCoordinates(childLat, childLng) {
-      this.setState({
-        lat: childLat,
-        lng: childLng
-      });
-    }
   }, {
     key: "render",
     value: function render() {
@@ -31472,6 +31448,20 @@ var Menu = function (_Component) {
   }
 
   _createClass(Menu, [{
+    key: "changeStateOfSearchInLocation",
+    value: function changeStateOfSearchInLocation(value) {
+      this.setState({
+        searchInLocation: value
+      });
+    }
+  }, {
+    key: "cleanStateOfSearchInLocation",
+    value: function cleanStateOfSearchInLocation() {
+      this.setState({
+        searchInLocation: ""
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -31517,20 +31507,6 @@ var Menu = function (_Component) {
 
       return componentDidMount;
     }()
-  }, {
-    key: "changeStateOfSearchInLocation",
-    value: function changeStateOfSearchInLocation(value) {
-      this.setState({
-        searchInLocation: value
-      });
-    }
-  }, {
-    key: "cleanStateOfSearchInLocation",
-    value: function cleanStateOfSearchInLocation() {
-      this.setState({
-        searchInLocation: ""
-      });
-    }
   }, {
     key: "render",
     value: function render() {
@@ -49806,18 +49782,6 @@ var AddNewMeeting = function (_Component) {
   }
 
   _createClass(AddNewMeeting, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var storeData = __WEBPACK_IMPORTED_MODULE_4__store__["b" /* store */].getState();
-
-      if (storeData.user.user.userNickName) {
-        this.setState({
-          author: storeData.user.user.userNickName,
-          currentUserId: storeData.user.user.userId
-        });
-      }
-    }
-  }, {
     key: "handleChange",
     value: function handleChange(event) {
       var _event$target = event.target,
@@ -49846,7 +49810,7 @@ var AddNewMeeting = function (_Component) {
                 }
 
                 this.props.showAlertWarning("Wybierz limit użytkowników.");
-                _context.next = 37;
+                _context.next = 36;
                 break;
 
               case 8:
@@ -49856,7 +49820,7 @@ var AddNewMeeting = function (_Component) {
                 }
 
                 this.props.showAlertWarning("Wszystkie pola muszą być uzupełnione.");
-                _context.next = 37;
+                _context.next = 36;
                 break;
 
               case 12:
@@ -49890,52 +49854,49 @@ var AddNewMeeting = function (_Component) {
                 console.log(_context.t0);
 
               case 21:
-
-                console.log(savedMeeting);
-
                 if (!(savedMeeting.status == "201")) {
-                  _context.next = 36;
+                  _context.next = 35;
                   break;
                 }
 
-                _context.prev = 23;
-                _context.next = 26;
+                _context.prev = 22;
+                _context.next = 25;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
                   userId: this.state.currentUserId,
                   eventId: savedMeeting.data.id
                 });
 
-              case 26:
+              case 25:
                 savedMatchUserWithMeeting = _context.sent;
-                _context.next = 33;
+                _context.next = 32;
                 break;
 
-              case 29:
-                _context.prev = 29;
-                _context.t1 = _context["catch"](23);
+              case 28:
+                _context.prev = 28;
+                _context.t1 = _context["catch"](22);
 
                 console.log(_context.t1);
                 this.props.showAlertWarning("Nie udało się zapisać spotkania.");
 
-              case 33:
+              case 32:
 
                 if (savedMatchUserWithMeeting.status == "200") {
                   this.props.showAlertSuccess("Dodałeś nowe spotkanie");
                 } else {
                   this.props.showAlertWarning("Nie udało się zapisać spotkania.");
                 }
-                _context.next = 37;
+                _context.next = 36;
                 break;
 
-              case 36:
+              case 35:
                 this.props.showAlertWarning("Nie udało się zapisać spotkania.");
 
-              case 37:
+              case 36:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[12, 18], [23, 29]]);
+        }, _callee, this, [[12, 18], [22, 28]]);
       }));
 
       function handleSubmit(_x) {
@@ -49959,6 +49920,18 @@ var AddNewMeeting = function (_Component) {
         secondLat: newLat,
         secondLng: newLng
       });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var storeData = __WEBPACK_IMPORTED_MODULE_4__store__["b" /* store */].getState();
+
+      if (storeData.user.user.userNickName) {
+        this.setState({
+          author: storeData.user.user.userNickName,
+          currentUserId: storeData.user.user.userId
+        });
+      }
     }
   }, {
     key: "render",
@@ -50939,7 +50912,7 @@ var SingleMeetingDetails = function (_Component) {
         commentBody: commentBody
       };
 
-      console.log(commentObject);
+      //console.log(commentObject);
 
       this.setState(function (prevState) {
         return {
@@ -51129,7 +51102,7 @@ var SingleMeetingDetails = function (_Component) {
                 _response = _context5.sent;
 
 
-                console.log(_response.data);
+                //console.log(response.data);
 
                 if (_response.data == 1) {
                   this.setState({
@@ -51138,21 +51111,21 @@ var SingleMeetingDetails = function (_Component) {
                     displayResignBtn: true
                   });
                 }
-                _context5.next = 12;
+                _context5.next = 11;
                 break;
 
-              case 9:
-                _context5.prev = 9;
+              case 8:
+                _context5.prev = 8;
                 _context5.t0 = _context5["catch"](1);
 
                 console.log(_context5.t0);
 
-              case 12:
+              case 11:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, this, [[1, 9]]);
+        }, _callee5, this, [[1, 8]]);
       }));
 
       function checkIfUserTakePartInMeeting() {
@@ -51326,8 +51299,7 @@ var SingleMeetingDetails = function (_Component) {
 
                               updatedResignedUsersEmailsList = [].concat(_toConsumableArray(_this5.state.resignedUsersEmails));
 
-
-                              console.log(updatedResignedUsersEmailsList);
+                              //console.log(updatedResignedUsersEmailsList);
 
                               if (updatedResignedUsersEmailsList.length == 0) {
                                 _this5.setState(function (prevState) {
@@ -51337,7 +51309,7 @@ var SingleMeetingDetails = function (_Component) {
                                 });
                               } else {
                                 updatedResignedUsersEmailsList.map(function (email, i) {
-                                  console.log(email);
+                                  //console.log(email);
                                   if (email != _this5.state.currentUserId) {
                                     _this5.setState(function (prevState) {
                                       return {
@@ -51485,11 +51457,10 @@ var SingleMeetingDetails = function (_Component) {
                       while (1) {
                         switch (_context9.prev = _context9.next) {
                           case 0:
-                            console.log(userId);
-                            _context9.next = 3;
+                            _context9.next = 2;
                             return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
 
-                          case 3:
+                          case 2:
                             allUsers = _context9.sent;
 
 
@@ -51510,7 +51481,7 @@ var SingleMeetingDetails = function (_Component) {
                               }
                             });
 
-                          case 5:
+                          case 4:
                           case "end":
                             return _context9.stop();
                         }
@@ -51803,21 +51774,6 @@ var CommentForm = function (_Component) {
   }
 
   _createClass(CommentForm, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var storeData = __WEBPACK_IMPORTED_MODULE_3__store__["b" /* store */].getState();
-
-      if (storeData.user.user.userId) {
-        this.setState({
-          currentUserId: storeData.user.user.userId
-        });
-      }
-      this.setState({
-        loggedInUserNickname: this.props.loggedInUserNickname,
-        meetingId: this.props.meetingId
-      });
-    }
-  }, {
     key: "handleChange",
     value: function handleChange(event) {
       var _event$target = event.target,
@@ -51849,18 +51805,18 @@ var CommentForm = function (_Component) {
                 savedComment = _context.sent;
 
 
-                console.log([savedComment.data, savedComment.status]);
+                //console.log([savedComment.data, savedComment.status]);
 
                 if (savedComment.status == "201") {
                   this.props.addCommentToState(savedComment.data.userEmail, savedComment.data.created_at, savedComment.data.commentBody);
 
-                  console.log(savedComment.data.userEmail);
+                  //console.log(savedComment.data.userEmail);
                   this.props.showAlertSuccess("Dodałeś komentarz.");
                 } else {
                   this.props.showAlertWarning("Nie udało się dodać komentarza.");
                 }
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -51874,6 +51830,21 @@ var CommentForm = function (_Component) {
 
       return submitComment;
     }()
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var storeData = __WEBPACK_IMPORTED_MODULE_3__store__["b" /* store */].getState();
+
+      if (storeData.user.user.userId) {
+        this.setState({
+          currentUserId: storeData.user.user.userId
+        });
+      }
+      this.setState({
+        loggedInUserNickname: this.props.loggedInUserNickname,
+        meetingId: this.props.meetingId
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -52446,7 +52417,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 6;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheOldestPoints?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheOldestPoints/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 6:
                 allPoints = _context10.sent;
@@ -52460,7 +52431,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 12;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheNewestPoints?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheNewestPoints/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 12:
                 allPoints = _context10.sent;
@@ -52474,7 +52445,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 18;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheBestVoted?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheBestVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 18:
                 allPoints = _context10.sent;
@@ -52488,7 +52459,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 24;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheWorstVoted?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheWorstVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 24:
                 allPoints = _context10.sent;
@@ -52502,7 +52473,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 30;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheMostTimeVoted?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheMostTimeVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 30:
                 allPoints = _context10.sent;
@@ -52553,11 +52524,6 @@ var MainPoints = function (_Component) {
                             console.log(_context9.t0);
 
                           case 10:
-
-                            console.log(checkIfUserVoteExists.data);
-                            console.log(_this2.state.currentUserId);
-                            console.log(item.id);
-
                             checkIfUserVote = void 0;
 
                             if (checkIfUserVoteExists.data == 1) {
@@ -52595,7 +52561,7 @@ var MainPoints = function (_Component) {
                             });
                             _this2.props.switchLoader(false);
 
-                          case 19:
+                          case 16:
                           case "end":
                             return _context9.stop();
                         }
@@ -52634,6 +52600,21 @@ var MainPoints = function (_Component) {
       return loadAllSpots;
     }()
   }, {
+    key: "disableVoteSelect",
+    value: function disableVoteSelect(pointId, voteValue) {
+      var newPointsData = [].concat(_toConsumableArray(this.state.pointsData));
+
+      newPointsData.map(function (elem) {
+        if (elem.id == pointId) {
+          elem.checkIfUserVote = true;
+          elem.sumOfVotes = elem.sumOfVotes + parseInt(voteValue);
+          elem.countVotes = elem.countVotes + 1;
+        }
+      });
+      //console.log(newPointsData);
+      this.setState({ pointsData: newPointsData });
+    }
+  }, {
     key: "componentDidMount",
     value: function () {
       var _ref11 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11() {
@@ -52670,21 +52651,6 @@ var MainPoints = function (_Component) {
 
       return componentDidMount;
     }()
-  }, {
-    key: "disableVoteSelect",
-    value: function disableVoteSelect(pointId, voteValue) {
-      var newPointsData = [].concat(_toConsumableArray(this.state.pointsData));
-
-      newPointsData.map(function (elem) {
-        if (elem.id == pointId) {
-          elem.checkIfUserVote = true;
-          elem.sumOfVotes = elem.sumOfVotes + parseInt(voteValue);
-          elem.countVotes = elem.countVotes + 1;
-        }
-      });
-      console.log(newPointsData);
-      this.setState({ pointsData: newPointsData });
-    }
   }, {
     key: "render",
     value: function render() {
@@ -52834,15 +52800,6 @@ var SinglePointOnList = function (_Component) {
   }
 
   _createClass(SinglePointOnList, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var storeData = __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */].getState();
-
-      if (storeData.user.user.userId) {
-        this.setState({ currentUserId: storeData.user.user.userId });
-      }
-    }
-  }, {
     key: "changeCurrentVote",
     value: function changeCurrentVote(event) {
       this.setState({ currentVote: event.target.value });
@@ -52918,6 +52875,15 @@ var SinglePointOnList = function (_Component) {
 
       return saveNewSpotVote;
     }()
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var storeData = __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */].getState();
+
+      if (storeData.user.user.userId) {
+        this.setState({ currentUserId: storeData.user.user.userId });
+      }
+    }
   }, {
     key: "render",
     value: function render() {
@@ -53128,15 +53094,6 @@ var AddNewMeeting = function (_Component) {
   }
 
   _createClass(AddNewMeeting, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var storeData = __WEBPACK_IMPORTED_MODULE_4__store__["b" /* store */].getState();
-
-      if (storeData.user.user.userNickName) {
-        this.setState({ author: storeData.user.user.userNickName });
-      }
-    }
-  }, {
     key: "handleChange",
     value: function handleChange(event) {
       var _event$target = event.target,
@@ -53213,6 +53170,15 @@ var AddNewMeeting = function (_Component) {
         lat: newLat,
         lng: newLng
       });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var storeData = __WEBPACK_IMPORTED_MODULE_4__store__["b" /* store */].getState();
+
+      if (storeData.user.user.userNickName) {
+        this.setState({ author: storeData.user.user.userNickName });
+      }
     }
   }, {
     key: "render",

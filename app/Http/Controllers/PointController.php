@@ -11,6 +11,9 @@ use App\Http\Resources\Point as PointResource;
 
 class PointController extends Controller
 {
+    private $latDifference = 1;
+    private $lngDifference = 1;
+
     public function index()
     {
         $points = DB::table('points')->paginate(3);
@@ -22,16 +25,17 @@ class PointController extends Controller
                 $point->rating = 0;
             }
         }
+
         return $points;
     }
 
     public function getPointsNearCoords(Request $request)
     {
-        $minLat = $request->lattitude - 1;
-        $minLng = $request->longitude - 1;
+        $minLat = $request->lattitude - $this->latDifference;
+        $minLng = $request->longitude - $this->lngDifference;
 
-        $maxLat = $request->lattitude + 1;
-        $maxLng = $request->longitude + 1;
+        $maxLat = $request->lattitude + $this->latDifference;
+        $maxLng = $request->longitude + $this->lngDifference;
 
         $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->paginate(3);
 
@@ -43,18 +47,20 @@ class PointController extends Controller
                     $point->rating = 0;
                 }
             }
-
-            return $points;
-        }else{
-            return "no points";
         }
         
-        
+        return $points;
     }
 
-    public function getTheNewestPoints()
+    public function getTheNewestPoints(Request $request)
     {
-        $points = DB::table('points')->orderByRaw('created_at DESC')->paginate(3);
+        $minLat = $request->lattitude - $this->latDifference;
+        $minLng = $request->longitude - $this->lngDifference;
+
+        $maxLat = $request->lattitude + $this->latDifference;
+        $maxLng = $request->longitude + $this->lngDifference;
+
+        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('created_at DESC')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){
@@ -66,9 +72,15 @@ class PointController extends Controller
         return $points;
     }
 
-    public function getTheOldestPoints()
+    public function getTheOldestPoints(Request $request)
     {
-        $points = DB::table('points')->orderByRaw('created_at ASC')->paginate(3);
+        $minLat = $request->lattitude - $this->latDifference;
+        $minLng = $request->longitude - $this->lngDifference;
+
+        $maxLat = $request->lattitude + $this->latDifference;
+        $maxLng = $request->longitude + $this->lngDifference;
+
+        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('created_at ASC')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){
@@ -80,9 +92,15 @@ class PointController extends Controller
         return $points;
     }
 
-    public function getTheBestVoted()
+    public function getTheBestVoted(Request $request)
     {
-        $points = DB::table('points')->orderByRaw('sum_of_votes/amount_of_votes DESC')->paginate(3);
+        $minLat = $request->lattitude - $this->latDifference;
+        $minLng = $request->longitude - $this->lngDifference;
+
+        $maxLat = $request->lattitude + $this->latDifference;
+        $maxLng = $request->longitude + $this->lngDifference;
+
+        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('sum_of_votes/amount_of_votes DESC')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){
@@ -94,9 +112,15 @@ class PointController extends Controller
         return $points;
     }
 
-    public function getTheWorstVoted()
+    public function getTheWorstVoted(Request $request)
     {
-        $points = DB::table('points')->orderByRaw('sum_of_votes/amount_of_votes ASC')->paginate(3);
+        $minLat = $request->lattitude - $this->latDifference;
+        $minLng = $request->longitude - $this->lngDifference;
+
+        $maxLat = $request->lattitude + $this->latDifference;
+        $maxLng = $request->longitude + $this->lngDifference;
+
+        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('sum_of_votes/amount_of_votes ASC')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){
@@ -108,9 +132,15 @@ class PointController extends Controller
         return $points;
     }
 
-    public function getTheMostTimeVoted()
+    public function getTheMostTimeVoted(Request $request)
     {
-        $points = DB::table('points')->orderBy('amount_of_votes', 'desc')->paginate(3);
+        $minLat = $request->lattitude - $this->latDifference;
+        $minLng = $request->longitude - $this->lngDifference;
+
+        $maxLat = $request->lattitude + $this->latDifference;
+        $maxLng = $request->longitude + $this->lngDifference;
+
+        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderBy('amount_of_votes', 'desc')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){
