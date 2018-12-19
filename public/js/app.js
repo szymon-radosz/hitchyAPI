@@ -50934,10 +50934,12 @@ var SingleMeetingDetails = function (_Component) {
     key: "addCommentToState",
     value: function addCommentToState(userNickname, commentDate, commentBody) {
       var commentObject = {
-        userNickname: userNickname,
+        userEmail: userNickname,
         date: commentDate,
         commentBody: commentBody
       };
+
+      console.log(commentObject);
 
       this.setState(function (prevState) {
         return {
@@ -51847,14 +51849,18 @@ var CommentForm = function (_Component) {
                 savedComment = _context.sent;
 
 
-                if (savedComment.status == "200") {
-                  this.props.addCommentToState(this.props.loggedInUserEmail, savedComment.data.created_at, this.state.commentBody);
+                console.log([savedComment.data, savedComment.status]);
+
+                if (savedComment.status == "201") {
+                  this.props.addCommentToState(savedComment.data.userEmail, savedComment.data.created_at, savedComment.data.commentBody);
+
+                  console.log(savedComment.data.userEmail);
                   this.props.showAlertSuccess("Dodałeś komentarz.");
                 } else {
                   this.props.showAlertWarning("Nie udało się dodać komentarza.");
                 }
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }

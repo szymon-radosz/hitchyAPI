@@ -24,5 +24,7 @@ class CommentController extends Controller
         $comment->meetingId = $request->meetingId;
 
         $comment->save();
+
+        return $comment;
     }
 }

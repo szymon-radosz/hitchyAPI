@@ -55,10 +55,12 @@ class SingleMeetingDetails extends Component {
 
   addCommentToState(userNickname, commentDate, commentBody) {
     let commentObject = {
-      userNickname: userNickname,
+      userEmail: userNickname,
       date: commentDate,
       commentBody: commentBody
     };
+
+    console.log(commentObject);
 
     this.setState(prevState => ({
       comments: [...prevState.comments, commentObject]

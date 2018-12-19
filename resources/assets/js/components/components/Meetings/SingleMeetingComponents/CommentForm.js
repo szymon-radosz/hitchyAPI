@@ -18,13 +18,13 @@ class CommentForm extends Component {
   }
 
   componentDidMount() {
-      let storeData = store.getState();
-    
-      if (storeData.user.user.userId) {
-        this.setState({
-          currentUserId: storeData.user.user.userId
-        });
-      }
+    let storeData = store.getState();
+
+    if (storeData.user.user.userId) {
+      this.setState({
+        currentUserId: storeData.user.user.userId
+      });
+    }
     this.setState({
       loggedInUserNickname: this.props.loggedInUserNickname,
       meetingId: this.props.meetingId
@@ -46,17 +46,19 @@ class CommentForm extends Component {
       commentBody: this.state.commentBody
     });
 
-    if (savedComment.status == "200") {
+    console.log([savedComment.data, savedComment.status]);
+
+    if (savedComment.status == "201") {
       this.props.addCommentToState(
-        this.props.loggedInUserEmail,
+        savedComment.data.userEmail,
         savedComment.data.created_at,
-        this.state.commentBody
+        savedComment.data.commentBody
       );
+
+      console.log(savedComment.data.userEmail);
       this.props.showAlertSuccess("Dodałeś komentarz.");
     } else {
-      this.props.showAlertWarning(
-        "Nie udało się dodać komentarza."
-      );
+      this.props.showAlertWarning("Nie udało się dodać komentarza.");
     }
   }
 
