@@ -52460,7 +52460,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 12;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/points?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheNewestPoints?page=" + pageNumber);
 
               case 12:
                 allPoints = _context10.sent;

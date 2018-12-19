@@ -130,7 +130,7 @@ class MainPoints extends Component {
         );
       } else if (filter == "theLatest") {
         allPoints = await axios.get(
-          `http://127.0.0.1:8000/api/points?page=${pageNumber}`
+          `http://127.0.0.1:8000/api/getTheNewestPoints?page=${pageNumber}`
         );
       } else if (filter == "bestVoted") {
         allPoints = await axios.get(

@@ -12,6 +12,7 @@ Route::post('user','UserController@store');
 Route::get('points', 'PointController@index');
 Route::get('getPointsNearCoords/{lattitude}/{longitude}', 'PointController@getPointsNearCoords');
 Route::get('getTheOldestPoints', 'PointController@getTheOldestPoints');
+Route::get('getTheNewestPoints', 'PointController@getTheNewestPoints');
 Route::get('getTheBestVoted', 'PointController@getTheBestVoted');
 Route::get('getTheMostTimeVoted', 'PointController@getTheMostTimeVoted');
 Route::get('getTheWorstVoted', 'PointController@getTheWorstVoted');

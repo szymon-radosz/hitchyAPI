@@ -52,9 +52,23 @@ class PointController extends Controller
         
     }
 
+    public function getTheNewestPoints()
+    {
+        $points = DB::table('points')->orderByRaw('created_at DESC')->paginate(3);
+
+        foreach($points as $point){
+            if($point->amount_of_votes > 0){
+                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
+            }else{
+                $point->rating = 0;
+            }
+        }
+        return $points;
+    }
+
     public function getTheOldestPoints()
     {
-        $points = DB::table('points')->orderBy('created_at', 'asc')->paginate(3);
+        $points = DB::table('points')->orderByRaw('created_at ASC')->paginate(3);
 
         foreach($points as $point){
             if($point->amount_of_votes > 0){
