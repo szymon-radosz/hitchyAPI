@@ -76,12 +76,12 @@ const MyMapComponent = compose(
   withGoogleMap
 )(props => (
   <GoogleMap
-    defaultZoom={13}
+    defaultZoom={props.mapZoom}
     defaultOptions={defaultMapOptions}
     ref={map => (this._map = map)}
     center={{ lat: Number(props.lat), lng: Number(props.lng) }}
   >
-    {!props.hideSearchBox && (
+    {props.showSearchBox && (
       <SearchBox
         ref={searchBox => (this._searchBox = searchBox)}
         controlPosition={google.maps.ControlPosition.TOP_CENTER}
@@ -235,7 +235,7 @@ export default class MapComponent extends Component {
 
     console.log([lattitude, longitude]);
 
-    this.props.setNewCenterCoords(lattitude, longitude);
+    this.props.setNewCenterCoords(lattitude, longitude, true);
   }
 
   async componentDidMount() {
@@ -265,13 +265,14 @@ export default class MapComponent extends Component {
           lngCenter={this.props.lngCenter}
           secondLatCenter={this.props.secondLatCenter}
           secondLngCenter={this.props.secondLngCenter}
-          hideSearchBox={this.props.hideSearchBox}
+          showSearchBox={this.props.showSearchBox}
           allowDragableMarker={this.props.allowDragableMarker}
           allowDragableSecondMarker={this.props.allowDragableSecondMarker}
           setNewCoords={this.props.setNewCoords}
           setNewSecondCoords={this.props.setNewSecondCoords}
           displayFirstMarker={this.props.displayFirstMarker}
           displaySecondMarker={this.props.displaySecondMarker}
+          mapZoom={this.props.mapZoom ? this.props.mapZoom : 13}
         />
       </div>
     );

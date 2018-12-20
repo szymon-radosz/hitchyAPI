@@ -14,19 +14,47 @@ class MainProfile extends Component {
       description: "",
       nickName: "",
       location: "",
-      userExist: false
+      userExist: false,
+      userEventsHistory: []
     };
+
+    this.getUserEventsHistory = this.getUserEventsHistory.bind(this);
+  }
+
+  async getUserEventsHistory(userId) {
+    let response;
+
+    try {
+      response = await axios.post(
+        `http://127.0.0.1:8000/api/findUserEventsHistory`,
+        {
+          id: userId
+        },
+        {
+          headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+          }
+        }
+      );
+
+      this.setState({ userEventsHistory: response.data });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async componentDidMount() {
     let nickname;
+    let userId;
 
     let storeData = store.getState();
 
     if (storeData.user.user.userNickName) {
       nickname = storeData.user.user.userNickName;
-    }else if (storeData.user.user == ""){
-      nickname = '';
+      userId = storeData.user.user.userId;
+    } else if (storeData.user.user == "") {
+      nickname = "";
+      userId = "";
     }
 
     const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
@@ -44,14 +72,23 @@ class MainProfile extends Component {
         });
       }
     }
+
+    await this.getUserEventsHistory(userId);
   }
 
   render() {
     return (
       <div className="col-sm-6 col-sm-offset-3">
-        {this.state.userExist &&
-          <UserInfo nickName={this.state.nickName} firstName={this.state.firstName} lastName={this.state.lastName} age={this.state.age} location={this.state.location} />
-         }
+        {this.state.userExist && (
+          <UserInfo
+            nickName={this.state.nickName}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            age={this.state.age}
+            location={this.state.location}
+            userEventsHistory={this.state.userEventsHistory}
+          />
+        )}
       </div>
     );
   }

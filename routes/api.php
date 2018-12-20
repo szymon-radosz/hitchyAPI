@@ -8,6 +8,7 @@ Route::get('user/{id}','UserController@findById');
 Route::delete('user/{id}','UserController@destroy');
 Route::put('user','UserController@store');
 Route::post('user','UserController@store');
+Route::post('findUserEventsHistory','UserController@findUserEventsHistory');
 
 Route::get('points', 'PointController@index');
 Route::get('getPointsNearCoords/{lattitude}/{longitude}', 'PointController@getPointsNearCoords');

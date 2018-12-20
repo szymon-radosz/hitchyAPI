@@ -62,12 +62,22 @@ class UserController extends Controller
         }catch(\Exception $e) {
             return $e->getMessage();
         }
-      
     }
 
     public function findById($id)
     {
         $singleUser = DB::table('users')->where('id', $id)->get();
         return $singleUser;
+    }
+
+    public function findUserEventsHistory(Request $request){
+        $id = $request->id;
+
+        $userData = DB::table('match_user_with_event')->where('userId', $id)
+        ->join('events', 'events.id', '=', 'match_user_with_event.eventId')
+        ->select('events.title', 'events.startDate', 'events.authorNickName')
+        ->get();
+
+        return $userData;
     }
 }

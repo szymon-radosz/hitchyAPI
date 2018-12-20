@@ -107,7 +107,7 @@ class SinglePointOnList extends Component {
             <div
               className="btn btn-default"
               onClick={() => {
-                this.props.setNewCenterCoords(
+                this.props.centerMapLocation(
                   this.props.item.lattitude,
                   this.props.item.longitude
                 );

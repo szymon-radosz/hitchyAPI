@@ -26,7 +26,7 @@ class MainPoints extends Component {
     this.loadAllSpots = this.loadAllSpots.bind(this);
     this.prevPointsPage = this.prevPointsPage.bind(this);
     this.nextPointsPage = this.nextPointsPage.bind(this);
-
+    this.centerMapLocation = this.centerMapLocation.bind(this);
     this.loadTheOldestPoint = this.loadTheOldestPoint.bind(this);
     this.loadTheLatestPoint = this.loadTheLatestPoint.bind(this);
     this.loadTheBestVoted = this.loadTheBestVoted.bind(this);
@@ -117,6 +117,12 @@ class MainPoints extends Component {
     });
 
     await this.loadAllSpots(1, "");
+  }
+
+  centerMapLocation(lat, lng) {
+    this.setState({
+      centerCoord: [lat, lng]
+    });
   }
 
   async loadAllSpots(pageNumber, filter) {
@@ -286,11 +292,12 @@ class MainPoints extends Component {
                 showAlertSuccess={this.props.showAlertSuccess}
                 showAlertWarning={this.props.showAlertWarning}
                 disableVoteSelect={this.disableVoteSelect}
+                centerMapLocation={this.centerMapLocation}
               />
             );
           })}
 
-          {this.state.pointsData.length > 2 && (
+          {this.state.paginationPageLimit > 1 && (
             <div>
               <div
                 className="btn btn-default paginateBtn"
@@ -316,6 +323,7 @@ class MainPoints extends Component {
             displayFirstMarker={false}
             centerCoord={this.state.centerCoord}
             setNewCenterCoords={this.setNewCenterCoords}
+            showSearchBox={true}
           />
         </div>
       </div>

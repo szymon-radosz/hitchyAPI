@@ -1614,14 +1614,14 @@ var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(
   return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_5_react_google_maps__["GoogleMap"],
     {
-      defaultZoom: 13,
+      defaultZoom: props.mapZoom,
       defaultOptions: defaultMapOptions,
       ref: function ref(map) {
         return _this._map = map;
       },
       center: { lat: Number(props.lat), lng: Number(props.lng) }
     },
-    !props.hideSearchBox && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+    props.showSearchBox && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_6_react_google_maps_lib_components_places_SearchBox___default.a,
       {
         ref: function ref(searchBox) {
@@ -1804,7 +1804,7 @@ var MapComponent = function (_Component) {
 
                 console.log([lattitude, longitude]);
 
-                this.props.setNewCenterCoords(lattitude, longitude);
+                this.props.setNewCenterCoords(lattitude, longitude, true);
 
               case 5:
               case "end":
@@ -1872,13 +1872,14 @@ var MapComponent = function (_Component) {
           lngCenter: this.props.lngCenter,
           secondLatCenter: this.props.secondLatCenter,
           secondLngCenter: this.props.secondLngCenter,
-          hideSearchBox: this.props.hideSearchBox,
+          showSearchBox: this.props.showSearchBox,
           allowDragableMarker: this.props.allowDragableMarker,
           allowDragableSecondMarker: this.props.allowDragableSecondMarker,
           setNewCoords: this.props.setNewCoords,
           setNewSecondCoords: this.props.setNewSecondCoords,
           displayFirstMarker: this.props.displayFirstMarker,
-          displaySecondMarker: this.props.displaySecondMarker
+          displaySecondMarker: this.props.displaySecondMarker,
+          mapZoom: this.props.mapZoom ? this.props.mapZoom : 13
         })
       );
     }
@@ -7711,8 +7712,6 @@ var MainMeetings = function (_Component) {
                 allMeetings = _context3.sent;
 
 
-                //console.log(allMeetings);
-
                 this.setState({ paginationPageLimit: allMeetings.data.last_page });
 
                 _context3.next = 8;
@@ -7873,7 +7872,8 @@ var MainMeetings = function (_Component) {
               latCenter: this.state.lat,
               lngCenter: this.state.lng,
               markersData: this.state.markersData,
-              centerCoord: this.state.centerCoord
+              centerCoord: this.state.centerCoord,
+              showSearchBox: true
             })
           )
         )
@@ -51932,35 +51932,89 @@ var MainProfile = function (_Component) {
       description: "",
       nickName: "",
       location: "",
-      userExist: false
+      userExist: false,
+      userEventsHistory: []
     };
+
+    _this.getUserEventsHistory = _this.getUserEventsHistory.bind(_this);
     return _this;
   }
 
   _createClass(MainProfile, [{
-    key: "componentDidMount",
+    key: "getUserEventsHistory",
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var nickname, storeData, allUsers, i;
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(userId) {
+        var response;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                response = void 0;
+                _context.prev = 1;
+                _context.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/findUserEventsHistory", {
+                  id: userId
+                }, {
+                  headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                  }
+                });
+
+              case 4:
+                response = _context.sent;
+
+
+                this.setState({ userEventsHistory: response.data });
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+
+                console.log(_context.t0);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 8]]);
+      }));
+
+      function getUserEventsHistory(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return getUserEventsHistory;
+    }()
+  }, {
+    key: "componentDidMount",
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+        var nickname, userId, storeData, allUsers, i;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
                 nickname = void 0;
+                userId = void 0;
                 storeData = __WEBPACK_IMPORTED_MODULE_4__store__["b" /* store */].getState();
 
 
                 if (storeData.user.user.userNickName) {
                   nickname = storeData.user.user.userNickName;
+                  userId = storeData.user.user.userId;
                 } else if (storeData.user.user == "") {
-                  nickname = '';
+                  nickname = "";
+                  userId = "";
                 }
 
-                _context.next = 5;
+                _context2.next = 6;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
 
-              case 5:
-                allUsers = _context.sent;
+              case 6:
+                allUsers = _context2.sent;
 
 
                 for (i = 0; i < allUsers.data.length; i++) {
@@ -51977,16 +52031,19 @@ var MainProfile = function (_Component) {
                   }
                 }
 
-              case 7:
+                _context2.next = 10;
+                return this.getUserEventsHistory(userId);
+
+              case 10:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function componentDidMount() {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       }
 
       return componentDidMount;
@@ -51997,7 +52054,14 @@ var MainProfile = function (_Component) {
       return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
         "div",
         { className: "col-sm-6 col-sm-offset-3" },
-        this.state.userExist && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__UserInfo__["a" /* default */], { nickName: this.state.nickName, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, location: this.state.location })
+        this.state.userExist && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__UserInfo__["a" /* default */], {
+          nickName: this.state.nickName,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          age: this.state.age,
+          location: this.state.location,
+          userEventsHistory: this.state.userEventsHistory
+        })
       );
     }
   }]);
@@ -52017,35 +52081,102 @@ var MainProfile = function (_Component) {
 
 
 var UserInfo = function UserInfo(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    "div",
+    null,
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "p",
+      null,
+      "Profil ",
+      props.nickName
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "p",
+      null,
+      props.firstName,
+      " ",
+      props.lastName
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "p",
+      null,
+      props.description
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "p",
+      null,
+      props.age,
+      ", ",
+      props.location
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "h3",
+      null,
+      "Lista Twoich wyjazd\xF3w"
+    ),
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "table",
+      { "class": "table" },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "thead",
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            "Profil ",
-            props.nickName
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            props.firstName,
-            " ",
-            props.lastName
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            props.description
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            props.age,
-            ", ",
-            props.location
+          "tr",
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "th",
+            { scope: "col" },
+            "L.P"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "th",
+            { scope: "col" },
+            "Nazwa"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "th",
+            { scope: "col" },
+            "Data rozpocz\u0119cia"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "th",
+            { scope: "col" },
+            "Autor wydarzenia"
+          )
         )
-    );
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "tbody",
+        null,
+        props.userEventsHistory.map(function (event, i) {
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "tr",
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "th",
+              null,
+              i
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "th",
+              null,
+              event.title
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "th",
+              null,
+              event.startDate
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "th",
+              null,
+              event.authorNickName
+            )
+          );
+        })
+      )
+    )
+  );
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (UserInfo);
@@ -52110,7 +52241,7 @@ var MainPoints = function (_Component) {
     _this.loadAllSpots = _this.loadAllSpots.bind(_this);
     _this.prevPointsPage = _this.prevPointsPage.bind(_this);
     _this.nextPointsPage = _this.nextPointsPage.bind(_this);
-
+    _this.centerMapLocation = _this.centerMapLocation.bind(_this);
     _this.loadTheOldestPoint = _this.loadTheOldestPoint.bind(_this);
     _this.loadTheLatestPoint = _this.loadTheLatestPoint.bind(_this);
     _this.loadTheBestVoted = _this.loadTheBestVoted.bind(_this);
@@ -52396,6 +52527,13 @@ var MainPoints = function (_Component) {
 
       return setNewCenterCoords;
     }()
+  }, {
+    key: "centerMapLocation",
+    value: function centerMapLocation(lat, lng) {
+      this.setState({
+        centerCoord: [lat, lng]
+      });
+    }
   }, {
     key: "loadAllSpots",
     value: function () {
@@ -52702,10 +52840,11 @@ var MainPoints = function (_Component) {
               setNewCenterCoords: _this3.setNewCenterCoords,
               showAlertSuccess: _this3.props.showAlertSuccess,
               showAlertWarning: _this3.props.showAlertWarning,
-              disableVoteSelect: _this3.disableVoteSelect
+              disableVoteSelect: _this3.disableVoteSelect,
+              centerMapLocation: _this3.centerMapLocation
             });
           }),
-          this.state.pointsData.length > 2 && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.paginationPageLimit > 1 && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
             null,
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -52735,7 +52874,8 @@ var MainPoints = function (_Component) {
             markersData: this.state.markersData,
             displayFirstMarker: false,
             centerCoord: this.state.centerCoord,
-            setNewCenterCoords: this.setNewCenterCoords
+            setNewCenterCoords: this.setNewCenterCoords,
+            showSearchBox: true
           })
         )
       );
@@ -52956,7 +53096,7 @@ var SinglePointOnList = function (_Component) {
               {
                 className: "btn btn-default",
                 onClick: function onClick() {
-                  _this2.props.setNewCenterCoords(_this2.props.item.lattitude, _this2.props.item.longitude);
+                  _this2.props.centerMapLocation(_this2.props.item.lattitude, _this2.props.item.longitude);
                 }
               },
               "Lokalizuj"

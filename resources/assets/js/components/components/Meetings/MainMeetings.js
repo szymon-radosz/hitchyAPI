@@ -57,8 +57,6 @@ class MainMeetings extends Component {
         `http://127.0.0.1:8000/api/events?page=${page}`
       );
 
-      //console.log(allMeetings);
-
       this.setState({ paginationPageLimit: allMeetings.data.last_page });
 
       await allMeetings.data.data.map((item, i) => {
@@ -163,6 +161,7 @@ class MainMeetings extends Component {
                 lngCenter={this.state.lng}
                 markersData={this.state.markersData}
                 centerCoord={this.state.centerCoord}
+                showSearchBox={true}
               />
             </div>
           </div>
