@@ -3,6 +3,7 @@ import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import SinglePointOnList from "./PointsListComponent/SinglePointOnList";
 import { store } from "./../../store";
+import Animate from "react-smooth";
 
 class MainPoints extends Component {
   constructor(props) {
@@ -258,30 +259,38 @@ class MainPoints extends Component {
     return (
       <div className="row listOfPointsRow">
         <div className="col-sm-6 listOfPointsCol">
-          <div className="mainPointsButtonPanel">
-            <div className="btn btn-default" onClick={this.loadTheLatestPoint}>
-              Najnowsze
-            </div>
+          <Animate steps={this.props.animationSteps}>
+            <div className="mainPointsButtonPanel">
+              <div
+                className="btn btn-default"
+                onClick={this.loadTheLatestPoint}
+              >
+                Najnowsze
+              </div>
 
-            <div className="btn btn-default" onClick={this.loadTheOldestPoint}>
-              Najstarsze
-            </div>
+              <div
+                className="btn btn-default"
+                onClick={this.loadTheOldestPoint}
+              >
+                Najstarsze
+              </div>
 
-            <div className="btn btn-default" onClick={this.loadTheBestVoted}>
-              Najlepiej oceniane
-            </div>
+              <div className="btn btn-default" onClick={this.loadTheBestVoted}>
+                Najlepiej oceniane
+              </div>
 
-            <div className="btn btn-default" onClick={this.loadTheWorstVoted}>
-              Najgorzej oceniane
-            </div>
+              <div className="btn btn-default" onClick={this.loadTheWorstVoted}>
+                Najgorzej oceniane
+              </div>
 
-            <div
-              className="btn btn-default"
-              onClick={this.loadTheMostTimeVoted}
-            >
-              Najczęściej oceniane
+              <div
+                className="btn btn-default"
+                onClick={this.loadTheMostTimeVoted}
+              >
+                Najczęściej oceniane
+              </div>
             </div>
-          </div>
+          </Animate>
           {this.state.pointsData.map((item, i) => {
             return (
               <SinglePointOnList
@@ -293,25 +302,28 @@ class MainPoints extends Component {
                 showAlertWarning={this.props.showAlertWarning}
                 disableVoteSelect={this.disableVoteSelect}
                 centerMapLocation={this.centerMapLocation}
+                animationSteps={this.props.animationSteps}
               />
             );
           })}
 
           {this.state.paginationPageLimit > 1 && (
-            <div>
-              <div
-                className="btn btn-default paginateBtn"
-                onClick={this.prevPointsPage}
-              >
-                Poprzednie
+            <Animate steps={this.props.animationSteps}>
+              <div>
+                <div
+                  className="btn btn-default paginateBtn"
+                  onClick={this.prevPointsPage}
+                >
+                  Poprzednie
+                </div>
+                <div
+                  className="btn btn-default paginateBtn"
+                  onClick={this.nextPointsPage}
+                >
+                  Nastepne
+                </div>
               </div>
-              <div
-                className="btn btn-default paginateBtn"
-                onClick={this.nextPointsPage}
-              >
-                Nastepne
-              </div>
-            </div>
+            </Animate>
           )}
         </div>
 

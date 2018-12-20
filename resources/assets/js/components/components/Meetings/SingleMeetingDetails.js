@@ -4,6 +4,7 @@ import Comment from "./SingleMeetingComponents/Comment";
 import CommentForm from "./SingleMeetingComponents/CommentForm";
 import MapComponent from "./../Map/MapComponent.js";
 import { store } from "./../../store";
+import Animate from "react-smooth";
 
 class SingleMeetingDetails extends Component {
   constructor(props) {
@@ -396,108 +397,118 @@ class SingleMeetingDetails extends Component {
     return (
       <div className="register row singleMeetingDetailsDataRow">
         <div className="col-sm-6 singleMeetingDetailsDataCol">
-          <h2>
-            {this.props.title} - {this.props.date}{" "}
-          </h2>
+          <Animate steps={this.props.animationSteps}>
+            <div>
+              <h2>
+                {this.props.title} - {this.props.date}{" "}
+              </h2>
 
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.setNewCenterCoords(this.state.startLat, this.state.startLng);
-            }}
-          >
-            Punkt Startowy
-          </div>
+              <div
+                className="btn btn-default"
+                onClick={() => {
+                  this.setNewCenterCoords(
+                    this.state.startLat,
+                    this.state.startLng
+                  );
+                }}
+              >
+                Punkt Startowy
+              </div>
 
-          <div
-            className="btn btn-default"
-            onClick={() => {
-              this.setNewCenterCoords(this.state.stopLat, this.state.stopLng);
-            }}
-          >
-            Punkt Końcowy
-          </div>
+              <div
+                className="btn btn-default"
+                onClick={() => {
+                  this.setNewCenterCoords(
+                    this.state.stopLat,
+                    this.state.stopLng
+                  );
+                }}
+              >
+                Punkt Końcowy
+              </div>
 
-          <p>
-            <strong>Opis:</strong> {this.props.description}
-          </p>
+              <p>
+                <strong>Opis:</strong> {this.props.description}
+              </p>
 
-          <p>
-            <strong>Stworzone przez:</strong> {this.props.author}
-          </p>
+              <p>
+                <strong>Stworzone przez:</strong> {this.props.author}
+              </p>
 
-          <p>
-            <strong>Limit uczestników:</strong> {this.props.limit}{" "}
-            {this.state.usersEmails.length == this.props.limit
-              ? " (osiągnięto limit)"
-              : ""}
-          </p>
+              <p>
+                <strong>Limit uczestników:</strong> {this.props.limit}{" "}
+                {this.state.usersEmails.length == this.props.limit
+                  ? " (osiągnięto limit)"
+                  : ""}
+              </p>
 
-          <p>
-            <strong>Wezmą udział:</strong>
-          </p>
+              <p>
+                <strong>Wezmą udział:</strong>
+              </p>
 
-          {this.state.usersEmails.map((user, i) => {
-            return <p key={i}>{user.email}</p>;
-          })}
+              {this.state.usersEmails.map((user, i) => {
+                return <p key={i}>{user.email}</p>;
+              })}
 
-          {this.state.resignedUsersEmails.length > 0 && (
-            <p>
-              <strong>Użytkownicy, którzy zrezygnowali:</strong>
-            </p>
-          )}
+              {this.state.resignedUsersEmails.length > 0 && (
+                <p>
+                  <strong>Użytkownicy, którzy zrezygnowali:</strong>
+                </p>
+              )}
 
-          {this.state.resignedUsersEmails.map((userEmail, i) => {
-            return <p key={i}>{userEmail}</p>;
-          })}
+              {this.state.resignedUsersEmails.map((userEmail, i) => {
+                return <p key={i}>{userEmail}</p>;
+              })}
 
-          {this.state.displayTakPartBtn &&
-          this.props.author != this.state.currentUserNickName ? (
-            <div className="btn btn-default" onClick={this.takePartClick}>
-              Weź udział
+              {this.state.displayTakPartBtn &&
+              this.props.author != this.state.currentUserNickName ? (
+                <div className="btn btn-default" onClick={this.takePartClick}>
+                  Weź udział
+                </div>
+              ) : (
+                ""
+              )}
+
+              {this.state.displayResignBtn &&
+              this.props.author != this.state.currentUserNickName ? (
+                <div className="btn btn-default" onClick={this.resignClick}>
+                  Zrezygnuj
+                </div>
+              ) : (
+                ""
+              )}
+
+              {this.state.displayCommentsContainer && (
+                <p>
+                  <strong>Komentarze</strong>
+                </p>
+              )}
+
+              {this.state.displayCommentsContainer
+                ? this.state.comments.map((comment, i) => {
+                    return (
+                      <Comment
+                        key={i}
+                        userNickname={comment.userEmail}
+                        date={comment.date}
+                        commentBody={comment.commentBody}
+                      />
+                    );
+                  })
+                : ""}
+
+              {this.state.displayCommentsContainer && (
+                <CommentForm
+                  loggedInUserEmail={this.state.loggedInUserEmail}
+                  loggedInUserNickname={this.state.loggedInUserNickname}
+                  meetingId={this.props.meetingId}
+                  addCommentToState={this.addCommentToState}
+                  showAlertSuccess={this.props.showAlertSuccess}
+                  showAlertWarning={this.props.showAlertWarning}
+                />
+              )}
             </div>
-          ) : (
-            ""
-          )}
-
-          {this.state.displayResignBtn &&
-          this.props.author != this.state.currentUserNickName ? (
-            <div className="btn btn-default" onClick={this.resignClick}>
-              Zrezygnuj
-            </div>
-          ) : (
-            ""
-          )}
-
-          {this.state.displayCommentsContainer && (
-            <p>
-              <strong>Komentarze</strong>
-            </p>
-          )}
-
-          {this.state.displayCommentsContainer
-            ? this.state.comments.map((comment, i) => {
-                return (
-                  <Comment
-                    key={i}
-                    userNickname={comment.userEmail}
-                    date={comment.date}
-                    commentBody={comment.commentBody}
-                  />
-                );
-              })
-            : ""}
-
-          {this.state.displayCommentsContainer && (
-            <CommentForm
-              loggedInUserEmail={this.state.loggedInUserEmail}
-              loggedInUserNickname={this.state.loggedInUserNickname}
-              meetingId={this.props.meetingId}
-              addCommentToState={this.addCommentToState}
-              showAlertSuccess={this.props.showAlertSuccess}
-              showAlertWarning={this.props.showAlertWarning}
-            />
-          )}
+          </Animate>
         </div>
 
         <div className="col-sm-6 meetingMapContainer">

@@ -64,6 +64,7 @@ class MeetingDetails extends Component {
               showAlertSuccess={this.props.showAlertSuccess}
               showAlertWarning={this.props.showAlertWarning}
               switchLoader={this.props.switchLoader}
+              animationSteps={this.props.animationSteps}
             />
           );
         })}

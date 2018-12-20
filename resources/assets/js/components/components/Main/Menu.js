@@ -226,6 +226,7 @@ class Menu extends Component {
                   loginUser={this.loginUser}
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}
@@ -238,6 +239,7 @@ class Menu extends Component {
                 <Register
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}
@@ -251,6 +253,7 @@ class Menu extends Component {
                 <MainMeetings
                   searchInLocation={this.state.searchInLocation}
                   switchLoader={this.props.switchLoader}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}
@@ -266,6 +269,7 @@ class Menu extends Component {
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                   switchLoader={this.props.switchLoader}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}
@@ -281,11 +285,18 @@ class Menu extends Component {
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                   switchLoader={this.props.switchLoader}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}
           />
-          <Route path="/profile" component={MainProfile} />
+          <Route
+            exact
+            path="/profile"
+            render={() => {
+              return <MainProfile animationSteps={this.props.animationSteps} />;
+            }}
+          />
 
           <Route
             exact
@@ -295,6 +306,7 @@ class Menu extends Component {
                 <AddNewMeeting
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}
@@ -308,6 +320,7 @@ class Menu extends Component {
                 <AddNewPoint
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  animationSteps={this.props.animationSteps}
                 />
               );
             }}

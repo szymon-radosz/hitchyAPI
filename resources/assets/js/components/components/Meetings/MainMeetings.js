@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import SingleMeetingOnList from "./MeetingsListComponents/SingleMeetingOnList.js";
 import MapComponent from "./../Map/MapComponent.js";
+import Animate from "react-smooth";
 
 const uuidv1 = require("uuid/v1");
 
@@ -137,22 +138,27 @@ class MainMeetings extends Component {
                     date={item.date}
                     time={item.time}
                     setCoordinates={this.setCoordinates}
+                    animationSteps={this.props.animationSteps}
                   />
                 );
               })}
 
-              <div
-                className="btn btn-default paginateBtn"
-                onClick={this.prevPointsPage}
-              >
-                Poprzednie
-              </div>
-              <div
-                className="btn btn-default paginateBtn"
-                onClick={this.nextPointsPage}
-              >
-                Nastepne
-              </div>
+              <Animate steps={this.props.animationSteps}>
+                <div>
+                  <div
+                    className="btn btn-default paginateBtn"
+                    onClick={this.prevPointsPage}
+                  >
+                    Poprzednie
+                  </div>
+                  <div
+                    className="btn btn-default paginateBtn"
+                    onClick={this.nextPointsPage}
+                  >
+                    Nastepne
+                  </div>
+                </div>
+              </Animate>
             </div>
 
             <div className="col-sm-6 meetingMapContainer">

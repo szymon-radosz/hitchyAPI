@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "./../../actions/userActions";
+import Animate from "react-smooth";
 
 class Login extends Component {
   constructor(props) {
@@ -34,41 +35,45 @@ class Login extends Component {
     return (
       <div className="login row loginRow">
         <div className="col-sm-6 col-sm-offset-3 loginCol">
-          <h2>Logowanie</h2>
+          <Animate steps={this.props.animationSteps}>
+            <div>
+              <h2>Logowanie</h2>
 
-          <form>
-            <div className="form-group">
-              <label htmlFor="emailOrNickname">Email lub nick:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="emailOrNickname"
-                name="emailOrNickname"
-                onChange={this.handleChange}
-                required
-              />
-            </div>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="emailOrNickname">Email lub nick:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="emailOrNickname"
+                    name="emailOrNickname"
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
 
-            <div className="form-group">
-              <label htmlFor="password">Hasło:</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                onChange={this.handleChange}
-                required
-              />
-            </div>
+                <div className="form-group">
+                  <label htmlFor="password">Hasło:</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
 
-            <div
-              onClick={this.handleSubmit}
-              className="btn btn-default defaultBtn"
-              id="loginBtn"
-            >
-              Login
+                <div
+                  onClick={this.handleSubmit}
+                  className="btn btn-default defaultBtn"
+                  id="loginBtn"
+                >
+                  Login
+                </div>
+              </form>
             </div>
-          </form>
+          </Animate>
         </div>
       </div>
     );

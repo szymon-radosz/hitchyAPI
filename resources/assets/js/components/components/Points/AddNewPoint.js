@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import { store } from "./../../store";
+import Animate from "react-smooth";
 
 class AddNewMeeting extends Component {
   constructor(props) {
@@ -80,63 +81,67 @@ class AddNewMeeting extends Component {
     return (
       <div className="addNewPoint row addNewPointRow">
         <div className="col-sm-6 addNewPointCol">
-          <h2>Dodaj nowy punkt</h2>
+          <Animate steps={this.props.animationSteps}>
+            <div>
+              <h2>Dodaj nowy punkt</h2>
 
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">Tytuł:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                name="title"
-                onChange={this.handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Opis:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                name="description"
-                onChange={this.handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lattitude">Szerokość geograficzna:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="lattitude"
-                name="lattitude"
-                value={this.state.lat}
-                onChange={this.handleChange}
-                disabled
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="longitude">Wysokość geograficzna:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="longitude"
-                name="longitude"
-                value={this.state.lng}
-                onChange={this.handleChange}
-                disabled
-              />
-            </div>
+              <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="title">Tytuł:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    name="title"
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Opis:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="lattitude">Szerokość geograficzna:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="lattitude"
+                    name="lattitude"
+                    value={this.state.lat}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="longitude">Wysokość geograficzna:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="longitude"
+                    name="longitude"
+                    value={this.state.lng}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+                </div>
 
-            <input
-              type="submit"
-              className="btn btn-default"
-              id="addNewMeetingBtn"
-              value="Dodaj"
-            />
-          </form>
+                <input
+                  type="submit"
+                  className="btn btn-default"
+                  id="addNewMeetingBtn"
+                  value="Dodaj"
+                />
+              </form>
+            </div>
+          </Animate>
         </div>
 
         <div

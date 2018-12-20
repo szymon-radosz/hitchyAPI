@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import { store } from "./../../store";
+import Animate from "react-smooth";
 
 class AddNewMeeting extends Component {
   constructor(props) {
@@ -131,118 +132,122 @@ class AddNewMeeting extends Component {
     return (
       <div className="addNewMeeting row addNewMeetingRow">
         <div className="col-sm-6 addNewMeetingCol">
-          <h2>Dodaj nowy wyjazd/wydarzenie</h2>
+          <Animate steps={this.props.animationSteps}>
+            <div>
+              <h2>Dodaj nowy wyjazd/wydarzenie</h2>
 
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">Tytuł:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                name="title"
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Opis:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                name="description"
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lattitude">
-                Szerokość geograficzna punktu startowego:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="lattitude"
-                name="lattitude"
-                value={this.state.lat}
-                onChange={this.handleChange}
-                disabled
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="longitude">
-                Wysokość geograficzna punktu startowego:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="longitude"
-                name="longitude"
-                value={this.state.lng}
-                onChange={this.handleChange}
-                disabled
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lattitude">
-                Szerokość geograficzna punktu końcowego:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="stopLat"
-                name="stopLat"
-                value={this.state.secondLat}
-                onChange={this.handleChange}
-                disabled
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="longitude">
-                Wysokość geograficzna punktu startowego:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="stopLng"
-                name="stopLng"
-                value={this.state.secondLng}
-                onChange={this.handleChange}
-                disabled
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="limit">Limit uczestników:</label>
-              <div className="form-group">
-                <select
-                  className="form-control"
-                  name="limit"
-                  id="limit"
-                  onChange={this.handleChange}
-                >
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-              </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="date">Data:</label>
-              <input
-                type="date"
-                className="form-control"
-                id="date"
-                name="date"
-                onChange={this.handleChange}
-              />
-            </div>
+              <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="title">Tytuł:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    name="title"
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Opis:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="lattitude">
+                    Szerokość geograficzna punktu startowego:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="lattitude"
+                    name="lattitude"
+                    value={this.state.lat}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="longitude">
+                    Wysokość geograficzna punktu startowego:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="longitude"
+                    name="longitude"
+                    value={this.state.lng}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="lattitude">
+                    Szerokość geograficzna punktu końcowego:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="stopLat"
+                    name="stopLat"
+                    value={this.state.secondLat}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="longitude">
+                    Wysokość geograficzna punktu startowego:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="stopLng"
+                    name="stopLng"
+                    value={this.state.secondLng}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="limit">Limit uczestników:</label>
+                  <div className="form-group">
+                    <select
+                      className="form-control"
+                      name="limit"
+                      id="limit"
+                      onChange={this.handleChange}
+                    >
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="date">Data:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="date"
+                    name="date"
+                    onChange={this.handleChange}
+                  />
+                </div>
 
-            <input
-              type="submit"
-              className="btn btn-default"
-              id="addNewMeetingBtn"
-              value="Dodaj"
-            />
-          </form>
+                <input
+                  type="submit"
+                  className="btn btn-default"
+                  id="addNewMeetingBtn"
+                  value="Dodaj"
+                />
+              </form>
+            </div>
+          </Animate>
         </div>
 
         <div

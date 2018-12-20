@@ -1,6 +1,21 @@
 import React, { Component } from "react";
 import Menu from "./Menu.js";
 
+const animationSteps = [
+  {
+    style: {
+      opacity: 0
+    },
+    duration: 100
+  },
+  {
+    style: {
+      opacity: 1
+    },
+    duration: 600
+  }
+];
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +113,7 @@ class Main extends Component {
           showAlertSuccess={this.showAlertSuccess}
           showAlertWarning={this.showAlertWarning}
           store={this.props.store}
+          animationSteps={animationSteps}
         />
       </div>
     );

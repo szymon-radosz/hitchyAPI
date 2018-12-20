@@ -87,6 +87,7 @@ class MainProfile extends Component {
             age={this.state.age}
             location={this.state.location}
             userEventsHistory={this.state.userEventsHistory}
+            animationSteps={this.props.animationSteps}
           />
         )}
       </div>
