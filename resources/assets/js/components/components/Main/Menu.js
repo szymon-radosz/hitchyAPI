@@ -12,6 +12,7 @@ import MainPoints from "./../Points/MainPoints.js";
 import AddNewPoint from "./../Points/AddNewPoint";
 import { store } from "./../../store";
 import LogoutBtn from "./LogoutBtn";
+import Joyride from "react-joyride";
 
 class Menu extends Component {
   constructor(props) {
@@ -19,7 +20,9 @@ class Menu extends Component {
 
     this.state = {
       userIsLoggedIn: false,
-      searchInLocation: ""
+      searchInLocation: "",
+      showGuideBtn: true,
+      run: false
     };
     this.changeStateOfSearchInLocation = this.changeStateOfSearchInLocation.bind(
       this
@@ -27,7 +30,17 @@ class Menu extends Component {
     this.cleanStateOfSearchInLocation = this.cleanStateOfSearchInLocation.bind(
       this
     );
+    this.handleClickStart = this.handleClickStart.bind(this);
   }
+
+  handleClickStart = e => {
+    e.preventDefault();
+
+    this.setState({
+      run: true,
+      showGuideBtn: false
+    });
+  };
 
   changeStateOfSearchInLocation(value) {
     this.setState({
@@ -40,6 +53,10 @@ class Menu extends Component {
       searchInLocation: ""
     });
   }
+
+  callback = data => {
+    const { action, index, type } = data;
+  };
 
   async componentDidMount() {
     store.subscribe(() => {
@@ -67,9 +84,148 @@ class Menu extends Component {
     return (
       <Router>
         <div>
+          {this.state.showGuideBtn && (
+            <button className="guideBtn" onClick={this.handleClickStart}>
+              Jak to działa?
+            </button>
+          )}
+          <div className="userGuide">
+            <Joyride
+              continuous
+              scrollToFirstStep
+              showProgress
+              showSkipButton
+              run={this.state.run}
+              styles={{
+                options: {
+                  primaryColor: "#6a8ad4"
+                }
+              }}
+              steps={[
+                {
+                  content:
+                    "Autostart to aplikacja dla autostopowiczów ułatwiająca im podrózowanie.",
+                  placement: "center",
+                  disableBeacon: true,
+                  styles: {
+                    options: {
+                      zIndex: 10000
+                    }
+                  },
+                  locale: {
+                    skip: "Pomiń",
+                    back: "Wróć",
+                    close: "Zamknij",
+                    last: "Ostatni",
+                    next: "Następny"
+                  },
+                  target: "body"
+                },
+                {
+                  content:
+                    "W zakładce Wydarzenia mozesz oglądać zaplanowane wyjazdy. Jeśli znajdziesz interesujące Cię wydarzenie, mozesz wziąć w nim udział, jeśli są jeszcze wolne miejsca.",
+                  placement: "bottom",
+                  styles: {
+                    options: {
+                      width: 400,
+                      height: 70
+                    }
+                  },
+                  target: ".eventsMenuLink",
+                  locale: {
+                    skip: "Pomiń",
+                    back: "Wróć",
+                    close: "Zamknij",
+                    last: "Ostatni",
+                    next: "Następny"
+                  },
+                  title: "Wydarzenia"
+                },
+                {
+                  content:
+                    "W zakładce Punkty mozesz oglądać dodane spoty przez innych uzytkowników. Jeśli znajdziesz punkty, z których korzystałeś w przeszłości mozesz dodać im ocenę, aby pomóc innym uzytkownikom w wybraniu najlepszego punktu w okolicy w ich przyszłych wyjazdach.",
+                  placement: "bottom",
+                  styles: {
+                    options: {
+                      width: 400
+                    }
+                  },
+                  target: ".pointsMenuLink",
+                  locale: {
+                    skip: "Pomiń",
+                    back: "Wróć",
+                    close: "Zamknij",
+                    last: "Ostatni",
+                    next: "Następny"
+                  },
+                  title: "Punkty"
+                },
+
+                {
+                  content:
+                    "W zakładce Dodaj Wydarzenie mozesz dodać nowy wydarzenie, określając lokalizację miejsca startowego i docelowego, limit uczestników, datę rozpoczęcia etc.",
+                  placement: "right",
+                  styles: {
+                    options: {
+                      width: 400
+                    }
+                  },
+                  target: ".addMeetingMenuLink",
+                  locale: {
+                    skip: "Pomiń",
+                    back: "Wróć",
+                    close: "Zamknij",
+                    last: "Ostatni",
+                    next: "Następny"
+                  },
+                  title: "Dodaj wydarzenie"
+                },
+                {
+                  content:
+                    "W zakładce Dodaj Punkt mozesz dodać nowy spot, określając lokalizację miejsca, jego opis etc.",
+                  placement: "right",
+                  styles: {
+                    options: {
+                      width: 400
+                    }
+                  },
+                  target: ".addPointMenuLink",
+                  locale: {
+                    skip: "Pomiń",
+                    back: "Wróć",
+                    close: "Zamknij",
+                    last: "Ostatni",
+                    next: "Następny"
+                  },
+                  title: "Dodaj punkt"
+                },
+                {
+                  content:
+                    "W zakładce Konto masz moliwość przejścia do zakładki Mój profil oraz Wylogowania się z aplikacji. W zakładce Mój profil mozesz zobaczyć swoje dane oraz historię swoich wyjazdów.",
+                  placement: "right",
+                  styles: {
+                    options: {
+                      width: 400
+                    }
+                  },
+                  target: ".userAccountLink",
+                  locale: {
+                    skip: "Pomiń",
+                    back: "Wróć",
+                    close: "Zamknij",
+                    last: "Ostatni",
+                    next: "Następny"
+                  },
+                  title: "Konto"
+                }
+              ]}
+              //callback={this.handleJoyrideCallback}
+            />
+          </div>
+
           <nav className="navbar navbar-default">
             <div className="container-fluid">
-              <div className="navbar-header">
+              <div className="navbar-headesr">
                 <button
                   type="button"
                   className="navbar-toggle collapsed"
@@ -94,7 +250,7 @@ class Menu extends Component {
               <div id="navbar" className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
                   {this.state.userIsLoggedIn ? (
-                    <li>
+                    <li className="eventsMenuLink">
                       <Link
                         to="/meetings"
                         onClick={this.cleanStateOfSearchInLocation}
@@ -107,7 +263,7 @@ class Menu extends Component {
                   )}
 
                   {this.state.userIsLoggedIn ? (
-                    <li>
+                    <li className="pointsMenuLink">
                       <Link
                         to="/points"
                         onClick={this.cleanStateOfSearchInLocation}
@@ -120,7 +276,20 @@ class Menu extends Component {
                   )}
 
                   {this.state.userIsLoggedIn ? (
-                    <li>
+                    <li className="addMeetingMenuLink">
+                      <Link
+                        to="/add-meeting"
+                        onClick={this.cleanStateOfSearchInLocation}
+                      >
+                        Dodaj wydarzenie
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+
+                  {this.state.userIsLoggedIn ? (
+                    <li className="addPointMenuLink">
                       <Link
                         to="/add-point"
                         onClick={this.cleanStateOfSearchInLocation}
@@ -132,18 +301,6 @@ class Menu extends Component {
                     ""
                   )}
 
-                  {this.state.userIsLoggedIn ? (
-                    <li>
-                      <Link
-                        to="/add-meeting"
-                        onClick={this.cleanStateOfSearchInLocation}
-                      >
-                        Dodaj wydarzenie
-                      </Link>
-                    </li>
-                  ) : (
-                    ""
-                  )}
                   {!this.state.userIsLoggedIn ? (
                     <li>
                       <Link
@@ -172,7 +329,7 @@ class Menu extends Component {
                     <li>
                       <div className="dropdown">
                         <button
-                          className="btn btn-secondary dropdown-toggle"
+                          className="btn btnBlue btnCircled userAccountLink"
                           type="button"
                           id="dropdownMenuButton"
                           data-toggle="dropdown"
@@ -202,7 +359,6 @@ class Menu extends Component {
               </div>
             </div>
           </nav>
-
           <Route
             exact
             path="/"
@@ -244,7 +400,6 @@ class Menu extends Component {
               );
             }}
           />
-
           <Route
             exact
             path="/meetings"
@@ -258,7 +413,6 @@ class Menu extends Component {
               );
             }}
           />
-
           <Route
             exact
             path="/points"
@@ -274,7 +428,6 @@ class Menu extends Component {
               );
             }}
           />
-
           <Route
             exact
             path="/events/:id"
@@ -297,7 +450,6 @@ class Menu extends Component {
               return <MainProfile animationSteps={this.props.animationSteps} />;
             }}
           />
-
           <Route
             exact
             path="/add-meeting"
@@ -311,7 +463,6 @@ class Menu extends Component {
               );
             }}
           />
-
           <Route
             exact
             path="/add-point"

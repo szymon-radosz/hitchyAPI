@@ -241,7 +241,7 @@ class AddNewMeeting extends Component {
 
                 <input
                   type="submit"
-                  className="btn btn-default"
+                  className="btn btn-default btnBlue btnCircled"
                   id="addNewMeetingBtn"
                   value="Dodaj"
                 />
@@ -254,6 +254,12 @@ class AddNewMeeting extends Component {
           className="col-sm-6 mainMeetingsMap"
           style={{ height: "calc(100vh - 60px)" }}
         >
+          <div className="mapHint">
+            <p>
+              Ustaw markery w interesujących Cię lokalizacjach, żeby zmienić
+              współrzędne punktu startowego i końcowego.
+            </p>
+          </div>
           <MapComponent
             latCenter={this.state.lat}
             lngCenter={this.state.lng}

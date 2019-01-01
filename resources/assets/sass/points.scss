@@ -6,6 +6,7 @@
 
 .listOfPointsRow {
   margin: 0 !important;
+  position: relative;
 
   .pointMapContainer {
     height: calc(100vh - 52px);
@@ -40,10 +41,11 @@
     overflow-y: scroll;
 
     .addVoteSelect {
-      margin: 15px 0 5px 0;
+      margin: 15px 0 10px 0;
     }
 
     .mainPointsButtonPanel {
+      margin-bottom: 10px;
       .btn {
         margin: 0 10px 10px 0;
       }
@@ -51,6 +53,23 @@
 
     .paginateBtn {
       margin-right: 10px;
+    }
+  }
+}
+
+.mainMeetingsMap {
+  border-left: 1px solid #ddd;
+  padding: 0;
+  .mapHint {
+    p {
+      position: absolute;
+      z-index: 100;
+      margin: 30px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
     }
   }
 }

@@ -262,29 +262,55 @@ class MainPoints extends Component {
           <Animate steps={this.props.animationSteps}>
             <div className="mainPointsButtonPanel">
               <div
-                className="btn btn-default"
+                className={
+                  this.state.filter == "theLatest"
+                    ? "btn btn-default btnCircled btnDarkGray"
+                    : "btn btn-default btnCircled btnGray"
+                }
                 onClick={this.loadTheLatestPoint}
               >
                 Najnowsze
               </div>
 
               <div
-                className="btn btn-default"
+                className={
+                  this.state.filter == "theOldest"
+                    ? "btn btn-default btnCircled btnDarkGray"
+                    : "btn btn-default btnCircled btnGray"
+                }
                 onClick={this.loadTheOldestPoint}
               >
                 Najstarsze
               </div>
 
-              <div className="btn btn-default" onClick={this.loadTheBestVoted}>
+              <div
+                className={
+                  this.state.filter == "bestVoted"
+                    ? "btn btn-default btnCircled btnDarkGray"
+                    : "btn btn-default btnCircled btnGray"
+                }
+                onClick={this.loadTheBestVoted}
+              >
                 Najlepiej oceniane
               </div>
 
-              <div className="btn btn-default" onClick={this.loadTheWorstVoted}>
+              <div
+                className={
+                  this.state.filter == "worstVoted"
+                    ? "btn btn-default btnCircled btnDarkGray"
+                    : "btn btn-default btnCircled btnGray"
+                }
+                onClick={this.loadTheWorstVoted}
+              >
                 Najgorzej oceniane
               </div>
 
               <div
-                className="btn btn-default"
+                className={
+                  this.state.filter == "mostTimeVoted"
+                    ? "btn btn-default btnCircled btnDarkGray"
+                    : "btn btn-default btnCircled btnGray"
+                }
                 onClick={this.loadTheMostTimeVoted}
               >
                 Najczęściej oceniane
@@ -311,13 +337,13 @@ class MainPoints extends Component {
             <Animate steps={this.props.animationSteps}>
               <div>
                 <div
-                  className="btn btn-default paginateBtn"
+                  className="btn btn-default paginateBtn btnCircled btnGray"
                   onClick={this.prevPointsPage}
                 >
                   Poprzednie
                 </div>
                 <div
-                  className="btn btn-default paginateBtn"
+                  className="btn btn-default paginateBtn btnCircled btnGray"
                   onClick={this.nextPointsPage}
                 >
                   Nastepne
@@ -327,7 +353,7 @@ class MainPoints extends Component {
           )}
         </div>
 
-        <div className="col-sm-6 pointMapContainer">
+        <div className="col-sm-6 order-first order-sm-last pointMapContainer">
           <MapComponent
             latCenter={this.state.lat}
             lngCenter={this.state.lng}

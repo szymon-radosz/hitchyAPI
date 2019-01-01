@@ -3,6 +3,61 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.btnCircled {
+  border-radius: 40px;
+  padding: 5px 20px;
+}
+
+.btnBlue {
+  border: 2px solid $lightBlue !important;
+  background-color: #fff;
+}
+
+.btnBlue:hover {
+  border: 2px solid $darkBlue !important;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.btnGray {
+  border: 2px solid $lightGray !important;
+}
+
+.btnGray:hover {
+  border: 2px solid $darkGray !important;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  background-color: transparent !important;
+}
+
+.btnDarkGray {
+  border: 2px solid $darkGray !important;
+}
+
+.panel-default > .panel-heading {
+  background-color: #6d8fcf26 !important;
+}
+
+.shadowPanel:hover {
+  -webkit-box-shadow: 0px 0px 18px 0px rgb(240, 240, 240);
+  -moz-box-shadow: 0px 0px 18px 0px rgb(240, 240, 240);
+  box-shadow: 0px 0px 18px 0px rgb(240, 240, 240);
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
 textarea {
   resize: none;
 }
@@ -16,9 +71,6 @@ textarea {
 
 .defaultBtn {
   padding: 6px 30px;
-  /*-webkit-box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);
-  -moz-box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);
-  box-shadow: 0px 0px 13px 1px rgba(200, 200, 200, 1);*/
 }
 
 .loginCol,
@@ -29,7 +81,7 @@ textarea {
 
 .addNewMeetingCol {
   overflow: scroll;
-  height: 90vh;
+  height: calc(100vh - 60px);
 
   form {
     margin-bottom: 30px;
@@ -117,7 +169,7 @@ input[type="color"]:focus,
 
 .loaderContainer {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   z-index: 10000;
@@ -127,10 +179,13 @@ input[type="color"]:focus,
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: url("./../js/components/images/loader.gif");
     height: 100px;
     width: 100px;
     background-repeat: no-repeat;
     background-position: 50%;
+
+    img {
+      width: 100%;
+    }
   }
 }

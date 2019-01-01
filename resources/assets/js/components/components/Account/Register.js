@@ -228,9 +228,9 @@ class Register extends Component {
 
                 <input
                   type="submit"
-                  className="btn btn-default defaultBtn"
+                  className="btn btn-default btnBlue btnCircled"
                   id="registerBtn"
-                  value="Register"
+                  value="Zatwierdź"
                 />
               </form>
             </div>

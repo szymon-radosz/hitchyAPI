@@ -25,8 +25,25 @@
   }
 }
 
+.mainMeetingsMap {
+  border-left: 1px solid #ddd;
+  .mapHint {
+    p {
+      position: absolute;
+      z-index: 100;
+      margin: 30px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+  }
+}
+
 .listOfMeetingsRow {
   margin: 0;
+  position: relative;
 
   .listOfMeetingsCol {
     padding: 20px;
@@ -34,13 +51,14 @@
     overflow-y: scroll;
 
     .btn {
-      margin: 0 10px 10px 0;
+      margin: 10px 10px 5px 0;
     }
   }
 }
 
 .singleMeetingDetailsDataRow {
   margin: 0;
+  position: relative;
 
   .btn {
     margin: 0 10px 10px 0;

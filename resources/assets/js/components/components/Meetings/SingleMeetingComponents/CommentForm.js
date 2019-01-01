@@ -32,16 +32,12 @@ class CommentForm extends Component {
       commentBody: this.state.commentBody
     });
 
-    //console.log([savedComment.data, savedComment.status]);
-
     if (savedComment.status == "201") {
       this.props.addCommentToState(
         savedComment.data.userEmail,
         savedComment.data.created_at,
         savedComment.data.commentBody
       );
-
-      //console.log(savedComment.data.userEmail);
       this.props.showAlertSuccess("Dodałeś komentarz.");
     } else {
       this.props.showAlertWarning("Nie udało się dodać komentarza.");
@@ -68,7 +64,7 @@ class CommentForm extends Component {
         <form onSubmit={this.submitComment}>
           <div className="form-group">
             <label htmlFor="commentBody">
-              Napisz komentarz jako {this.props.loggedInUserEmail}
+              Napisz komentarz jako {this.props.loggedInUserEmail}:
             </label>
             <textarea
               maxLength="150"
@@ -80,7 +76,7 @@ class CommentForm extends Component {
             />
           </div>
 
-          <button type="submit" className="btn btn-default">
+          <button type="submit" className="btn btn-default btnBlue btnCircled">
             Dodaj
           </button>
         </form>

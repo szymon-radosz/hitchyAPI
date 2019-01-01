@@ -404,7 +404,7 @@ class SingleMeetingDetails extends Component {
               </h2>
 
               <div
-                className="btn btn-default"
+                className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.setNewCenterCoords(
                     this.state.startLat,
@@ -416,7 +416,7 @@ class SingleMeetingDetails extends Component {
               </div>
 
               <div
-                className="btn btn-default"
+                className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.setNewCenterCoords(
                     this.state.stopLat,
@@ -462,7 +462,10 @@ class SingleMeetingDetails extends Component {
 
               {this.state.displayTakPartBtn &&
               this.props.author != this.state.currentUserNickName ? (
-                <div className="btn btn-default" onClick={this.takePartClick}>
+                <div
+                  className="btn btn-default btnBlue btnCircled"
+                  onClick={this.takePartClick}
+                >
                   Weź udział
                 </div>
               ) : (
@@ -471,7 +474,10 @@ class SingleMeetingDetails extends Component {
 
               {this.state.displayResignBtn &&
               this.props.author != this.state.currentUserNickName ? (
-                <div className="btn btn-default" onClick={this.resignClick}>
+                <div
+                  className="btn btn-default btnBlue btnCircled"
+                  onClick={this.resignClick}
+                >
                   Zrezygnuj
                 </div>
               ) : (
@@ -480,7 +486,7 @@ class SingleMeetingDetails extends Component {
 
               {this.state.displayCommentsContainer && (
                 <p>
-                  <strong>Komentarze</strong>
+                  <strong>Komentarze:</strong>
                 </p>
               )}
 

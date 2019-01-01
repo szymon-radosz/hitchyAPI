@@ -78,7 +78,7 @@ class MainProfile extends Component {
 
   render() {
     return (
-      <div className="col-sm-6 col-sm-offset-3">
+      <div className="col-sm-8 col-sm-offset-2">
         {this.state.userExist && (
           <UserInfo
             nickName={this.state.nickName}

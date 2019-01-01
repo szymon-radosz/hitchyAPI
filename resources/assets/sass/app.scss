@@ -2,12 +2,29 @@
 @import url("https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.css");
 @import "variables";
 @import "global";
-@import "landing";
+@import "LandingPage";
 @import "points";
 @import "meetings";
+@import "UserInfo";
+@import "AddNewMeeting";
+@import "AddNewPoint";
+@import "mobile";
 
 .hitchyMapComponent {
   height: calc(100vh - 52px) !important;
+}
+
+.guideBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid $darkBlue;
+  background-color: #fff;
+  font-weight: 700;
 }
 
 .leaflet-left {

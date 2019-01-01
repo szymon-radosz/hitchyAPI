@@ -1,0 +1,22 @@
+@media screen and (max-width: 767px) {
+  .addNewPointRow {
+    .addNewPointCol {
+      margin-top: 310px;
+      padding-bottom: 30px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .mainMeetingsMap {
+      position: absolute;
+      top: 0;
+      padding: 0;
+      width: 100%;
+      max-height: 300px !important;
+
+      div {
+        max-height: 300px !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@media screen and (max-width: 767px) {
+  .singleMeetingDetailsDataRow {
+    .singleMeetingDetailsDataCol {
+      margin-top: 295px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .meetingMapContainer {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      max-height: 300px !important;
+
+      div {
+        max-height: 300px !important;
+      }
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SpotVotes from "./SpotVotes";
 import axios from "axios";
 import { store } from "./../../../store";
@@ -95,7 +94,7 @@ class SinglePointOnList extends Component {
                 {this.props.item.author}
               </p>
               <p>
-                Ocena:{" "}
+                <span className="bold">Ocena:</span>{" "}
                 {this.props.item.sumOfVotes
                   ? (
                       this.props.item.sumOfVotes / this.props.item.countVotes
@@ -103,11 +102,11 @@ class SinglePointOnList extends Component {
                   : "---"}
               </p>
               <p>
-                Ilosc glosow:{" "}
+                <span className="bold">Ilosc glosow:</span>{" "}
                 {this.props.item.countVotes ? this.props.item.countVotes : "0"}
               </p>
               <div
-                className="btn btn-default"
+                className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.props.centerMapLocation(
                     this.props.item.lattitude,

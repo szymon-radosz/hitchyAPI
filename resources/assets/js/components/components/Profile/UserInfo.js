@@ -1,43 +1,64 @@
 import React from "react";
 import Animate from "react-smooth";
+import userImage from "./../../images/user.png";
 
 const UserInfo = props => {
   return (
     <Animate steps={props.animationSteps}>
-      <div>
-        <p>Profil {props.nickName}</p>
-        <p>
-          {props.firstName} {props.lastName}
-        </p>
-        <p>{props.description}</p>
-        <p>
-          {props.age}, {props.location}
-        </p>
+      <div className="panel-group userContainer">
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <img className="userImage" src={userImage} />
+            <div className="userData">
+              <p>
+                <strong>Profil {props.nickName}</strong>
+              </p>
+              <p>
+                {props.firstName} {props.lastName}
+              </p>
+              <p>{props.description}</p>
+              <p>
+                {props.age}, {props.location}
+              </p>
+            </div>
+          </div>
+        </div>
 
-        <h3>Lista Twoich wyjazdów</h3>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">L.P</th>
-              <th scope="col">Nazwa</th>
-              <th scope="col">Data rozpoczęcia</th>
-              <th scope="col">Autor wydarzenia</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.userEventsHistory.map((event, i) => {
-              return (
-                <tr>
-                  <th>{i}</th>
-                  <th>{event.title}</th>
-                  <th>{event.startDate}</th>
-                  <th>{event.authorNickName}</th>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="panel-group userEventTable">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h4 className="panel-title bold">Lista Twoich wyjazdów</h4>
+            </div>
+            <div className="panel-body">
+              <table className="table ">
+                <thead>
+                  <tr>
+                    <th scope="col" className="text-center">
+                      Nazwa
+                    </th>
+                    <th scope="col" className="text-center">
+                      Data rozpoczęcia
+                    </th>
+                    <th scope="col" className="text-center">
+                      Autor wydarzenia
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {props.userEventsHistory.map((event, i) => {
+                    return (
+                      <tr key={i}>
+                        <th className="text-center">{event.title}</th>
+                        <th className="text-center">{event.startDate}</th>
+                        <th className="text-center">{event.authorNickName}</th>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </Animate>
   );

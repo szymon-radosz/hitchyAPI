@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { compose, withProps, withStateHandlers } from "recompose";
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
-import axios from "axios";
+import { compose, withProps } from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
@@ -10,31 +8,191 @@ import {
   InfoWindow
 } from "react-google-maps";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
+import markerIcon from "./../../images/marker.png";
 
 const defaultMapOptions = {
   fullscreenControl: false,
   disableDefaultUI: true,
   styles: [
     {
+      featureType: "administrative",
+      elementType: "labels.text.fill",
       stylers: [
         {
-          hue: "#007fff"
+          color: "#737373"
+        }
+      ]
+    },
+    {
+      featureType: "landscape",
+      elementType: "all",
+      stylers: [
+        {
+          color: "#f2f2f2"
+        }
+      ]
+    },
+    {
+      featureType: "landscape",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          visibility: "on"
         },
         {
-          saturation: 89
+          hue: "#ff0000"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.man_made",
+      elementType: "geometry",
+      stylers: [
+        {
+          lightness: "100"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.man_made",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.natural",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          lightness: "100"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.natural",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.natural.landcover",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          visibility: "on"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.natural.terrain",
+      elementType: "geometry",
+      stylers: [
+        {
+          lightness: "100"
+        }
+      ]
+    },
+    {
+      featureType: "landscape.natural.terrain",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          visibility: "off"
+        },
+        {
+          lightness: "23"
+        }
+      ]
+    },
+    {
+      featureType: "poi",
+      elementType: "all",
+      stylers: [
+        {
+          visibility: "off"
+        }
+      ]
+    },
+    {
+      featureType: "road",
+      elementType: "all",
+      stylers: [
+        {
+          saturation: -100
+        },
+        {
+          lightness: 45
+        }
+      ]
+    },
+    {
+      featureType: "road.highway",
+      elementType: "all",
+      stylers: [
+        {
+          visibility: "simplified"
+        }
+      ]
+    },
+    {
+      featureType: "road.highway",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          color: "#6a8ad4"
+        }
+      ]
+    },
+    {
+      featureType: "road.arterial",
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off"
+        }
+      ]
+    },
+    {
+      featureType: "transit",
+      elementType: "all",
+      stylers: [
+        {
+          visibility: "off"
         }
       ]
     },
     {
       featureType: "water",
+      elementType: "all",
       stylers: [
         {
-          color: "#ffffff"
+          color: "#ffd900"
+        },
+        {
+          visibility: "on"
         }
       ]
     },
     {
-      featureType: "administrative.country",
+      featureType: "water",
+      elementType: "geometry.fill",
+      stylers: [
+        {
+          visibility: "on"
+        },
+        {
+          color: "#e6e6e6"
+        }
+      ]
+    },
+    {
+      featureType: "water",
       elementType: "labels",
       stylers: [
         {
@@ -116,6 +274,10 @@ const MyMapComponent = compose(
     {props.latCenter && props.lngCenter && props.allowDragableMarker ? (
       <Marker
         draggable={true}
+        icon={{
+          url: markerIcon,
+          scaledSize: { width: 32, height: 32 }
+        }}
         position={{
           lat: Number(props.latCenter),
           lng: Number(props.lngCenter)
@@ -133,6 +295,10 @@ const MyMapComponent = compose(
     ) : (
       <Marker
         draggable={false}
+        icon={{
+          url: markerIcon,
+          scaledSize: { width: 32, height: 32 }
+        }}
         position={{
           lat: Number(props.latCenter),
           lng: Number(props.lngCenter)
@@ -145,6 +311,10 @@ const MyMapComponent = compose(
     props.allowDragableSecondMarker ? (
       <Marker
         draggable={true}
+        icon={{
+          url: markerIcon,
+          scaledSize: { width: 32, height: 32 }
+        }}
         position={{
           lat: Number(props.secondLatCenter),
           lng: Number(props.secondLngCenter)
@@ -160,6 +330,10 @@ const MyMapComponent = compose(
       />
     ) : (
       <Marker
+        icon={{
+          url: markerIcon,
+          scaledSize: { width: 32, height: 32 }
+        }}
         position={{
           lat: Number(props.secondLatCenter),
           lng: Number(props.secondLngCenter)
@@ -172,6 +346,10 @@ const MyMapComponent = compose(
         //console.log(singleMarker);
         return (
           <Marker
+            icon={{
+              url: markerIcon,
+              scaledSize: { width: 32, height: 32 }
+            }}
             key={i}
             position={{
               lat: Number(singleMarker.position[0]),

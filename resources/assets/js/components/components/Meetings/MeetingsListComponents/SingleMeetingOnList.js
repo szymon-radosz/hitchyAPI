@@ -24,7 +24,7 @@ class SingleMeetingOnList extends Component {
     return (
       <div className="panel-group">
         <Animate steps={this.props.animationSteps}>
-          <div className="panel panel-default">
+          <div className="panel panel-default shadowPanel">
             <div className="panel-heading">
               <h4 className="panel-title bold">
                 {this.props.title} - {this.props.category}
@@ -48,10 +48,12 @@ class SingleMeetingOnList extends Component {
                 {this.props.limit}
               </p>
               <Link to={`/events/${this.props.id}`}>
-                <div className="btn btn-default">Szczegóły</div>
+                <div className="btn btn-default btnBlue btnCircled">
+                  Szczegóły
+                </div>
               </Link>
               <div
-                className="btn btn-default"
+                className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.props.setNewCenterCoords(
                     this.props.startPlaceLattitude,
@@ -62,7 +64,7 @@ class SingleMeetingOnList extends Component {
                 Punkt Początkowy
               </div>
               <div
-                className="btn btn-default"
+                className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.props.setNewCenterCoords(
                     this.props.stopPlaceLattitude,

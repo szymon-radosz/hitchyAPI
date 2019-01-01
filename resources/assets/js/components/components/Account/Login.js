@@ -41,7 +41,7 @@ class Login extends Component {
 
               <form>
                 <div className="form-group">
-                  <label htmlFor="emailOrNickname">Email lub nick:</label>
+                  <label htmlFor="emailOrNickname">Email lub Nick:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -66,10 +66,10 @@ class Login extends Component {
 
                 <div
                   onClick={this.handleSubmit}
-                  className="btn btn-default defaultBtn"
+                  className="btn btn-default btnBlue btnCircled"
                   id="loginBtn"
                 >
-                  Login
+                  Zatwierdź
                 </div>
               </form>
             </div>

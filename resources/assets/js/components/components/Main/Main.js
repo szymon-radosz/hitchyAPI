@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Menu from "./Menu.js";
+import loader from "./../../images/loader.svg";
 
 const animationSteps = [
   {
@@ -104,7 +105,9 @@ class Main extends Component {
 
         {this.state.loader && (
           <div className="loaderContainer">
-            <div className="loader" />
+            <div className="loader">
+              <img src={loader} />
+            </div>
           </div>
         )}
 

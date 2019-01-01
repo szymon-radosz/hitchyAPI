@@ -37,21 +37,25 @@ class LandingPage extends Component {
           <MainMeetings searchInLocation={this.props.searchInLocation} />
         ) : (
           <div className="row landing">
-            <div className="col-sm-6 col-sm-offset-3 landingForm">
-              <h1>AutoStop app</h1>
+            <div className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 landingForm">
+              <h1>Autostart</h1>
 
               <h4>Dołącz do społeczności autostopowiczów.</h4>
 
               <div className="landingButtons">
                 <Link to="/login" onClick={this.cleanStateOfSearchInLocation}>
-                  <div className="btn btn-default defaultBtn">Logowanie</div>
+                  <div className="btn btn-default defaultBtn btnBlue btnCircled loginBtn">
+                    Logowanie
+                  </div>
                 </Link>
 
                 <Link
                   to="/register"
                   onClick={this.cleanStateOfSearchInLocation}
                 >
-                  <div className="btn btn-default defaultBtn">Rejestracja</div>
+                  <div className="btn btn-default defaultBtn btnBlue btnCircled">
+                    Rejestracja
+                  </div>
                 </Link>
               </div>
             </div>

@@ -15,7 +15,10 @@ const SpotVotes = props => {
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <div className="btn btn-default" onClick={props.saveNewSpotVote}>
+      <div
+        className="btn btn-default btnBlue btnCircled"
+        onClick={props.saveNewSpotVote}
+      >
         Dodaj głos
       </div>
     </div>

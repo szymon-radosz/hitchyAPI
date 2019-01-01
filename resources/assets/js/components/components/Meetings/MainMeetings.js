@@ -146,13 +146,13 @@ class MainMeetings extends Component {
               <Animate steps={this.props.animationSteps}>
                 <div>
                   <div
-                    className="btn btn-default paginateBtn"
+                    className="btn btn-default paginateBtn btnCircled btnGray"
                     onClick={this.prevPointsPage}
                   >
                     Poprzednie
                   </div>
                   <div
-                    className="btn btn-default paginateBtn"
+                    className="btn btn-default paginateBtn btnCircled btnGray"
                     onClick={this.nextPointsPage}
                   >
                     Nastepne
