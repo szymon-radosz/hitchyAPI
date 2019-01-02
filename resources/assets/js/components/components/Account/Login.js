@@ -28,7 +28,11 @@ class Login extends Component {
       password: this.state.password
     };
 
-    this.props.loginUser(userCredentials);
+    if (!this.state.emailOrNickname || !this.state.password) {
+      this.props.showAlertWarning("Proszę wypełnić wszystkie pola");
+    } else {
+      this.props.loginUser(userCredentials);
+    }
   }
 
   render() {

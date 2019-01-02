@@ -6024,12 +6024,12 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
 var loginUser = function loginUser(userData) {
   return function (dispatch) {
-    console.log(userData.password);
+    //console.log(userData.password);
     var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://127.0.0.1:8000/api/login", {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     }).then(function (user) {
-      console.log(user);
+      //console.log(user);
       dispatch({
         type: __WEBPACK_IMPORTED_MODULE_0__types__["a" /* GET_USER_DATA */],
         payload: user.data
@@ -6043,7 +6043,7 @@ var loginUser = function loginUser(userData) {
         type: __WEBPACK_IMPORTED_MODULE_0__types__["a" /* GET_USER_DATA */],
         payload: login.data
       });
-      console.log(test);
+      //console.log(test);
     }
   };
 };
@@ -6052,7 +6052,7 @@ var logoutUser = function logoutUser() {
   return function (dispatch) {
     dispatch({
       type: __WEBPACK_IMPORTED_MODULE_0__types__["b" /* LOGOUT_USER */],
-      payload: ''
+      payload: ""
     });
   };
 };
@@ -52563,7 +52563,11 @@ var Login = function (_Component) {
         password: this.state.password
       };
 
-      this.props.loginUser(userCredentials);
+      if (!this.state.emailOrNickname || !this.state.password) {
+        this.props.showAlertWarning("Proszę wypełnić wszystkie pola");
+      } else {
+        this.props.loginUser(userCredentials);
+      }
     }
   }, {
     key: "render",

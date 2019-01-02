@@ -2,14 +2,14 @@ import { GET_USER_DATA, LOGOUT_USER } from "./types";
 import axios from "axios";
 
 export const loginUser = userData => dispatch => {
-  console.log(userData.password);
+  //console.log(userData.password);
   const login = axios
     .post(`http://127.0.0.1:8000/api/login`, {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     })
     .then(user => {
-      console.log(user);
+      //console.log(user);
       dispatch({
         type: GET_USER_DATA,
         payload: user.data
@@ -23,13 +23,13 @@ export const loginUser = userData => dispatch => {
       type: GET_USER_DATA,
       payload: login.data
     });
-    console.log(test);
+    //console.log(test);
   }
 };
 
 export const logoutUser = () => dispatch => {
   dispatch({
     type: LOGOUT_USER,
-    payload: ''
+    payload: ""
   });
-}
+};
