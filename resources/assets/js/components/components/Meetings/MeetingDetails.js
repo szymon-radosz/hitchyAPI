@@ -18,7 +18,7 @@ class MeetingDetails extends Component {
     this.setState({ meetingID: meetingId });
 
     const getMeeting = await axios.get(
-      `http://127.0.0.1:8000/api/events/${meetingId}`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${meetingId}`
     );
 
     //console.log(getMeeting);

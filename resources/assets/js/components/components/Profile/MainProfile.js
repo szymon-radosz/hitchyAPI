@@ -26,7 +26,7 @@ class MainProfile extends Component {
 
     try {
       response = await axios.post(
-        `http://127.0.0.1:8000/api/findUserEventsHistory`,
+        `http://phplaravel-226937-693336.cloudwaysapps.com/api/findUserEventsHistory`,
         {
           id: userId
         },
@@ -57,7 +57,9 @@ class MainProfile extends Component {
       userId = "";
     }
 
-    const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
+    const allUsers = await axios.get(
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/users`
+    );
 
     for (var i = 0; i < allUsers.data.length; i++) {
       if (allUsers.data[i].nickName == nickname) {

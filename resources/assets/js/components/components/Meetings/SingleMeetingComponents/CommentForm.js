@@ -25,12 +25,15 @@ class CommentForm extends Component {
   async submitComment(event) {
     event.preventDefault();
 
-    const savedComment = await axios.post(`http://127.0.0.1:8000/api/comment`, {
-      userId: this.state.currentUserId,
-      userEmail: this.props.loggedInUserEmail,
-      meetingId: this.props.meetingId,
-      commentBody: this.state.commentBody
-    });
+    const savedComment = await axios.post(
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/comment`,
+      {
+        userId: this.state.currentUserId,
+        userEmail: this.props.loggedInUserEmail,
+        meetingId: this.props.meetingId,
+        commentBody: this.state.commentBody
+      }
+    );
 
     if (savedComment.status == "201") {
       this.props.addCommentToState(

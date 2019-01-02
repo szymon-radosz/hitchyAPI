@@ -6025,7 +6025,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 var loginUser = function loginUser(userData) {
   return function (dispatch) {
     //console.log(userData.password);
-    var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://127.0.0.1:8000/api/login", {
+    var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/login", {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     }).then(function (user) {
@@ -8338,7 +8338,7 @@ var MainMeetings = function (_Component) {
                 this.props.switchLoader(true);
                 _context3.prev = 1;
                 _context3.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events?page=" + page);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/events?page=" + page);
 
               case 4:
                 allMeetings = _context3.sent;
@@ -53572,7 +53572,7 @@ var Register = function (_Component) {
                 }
 
                 _context.next = 10;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/users");
 
               case 10:
                 allUsers = _context.sent;
@@ -53605,7 +53605,7 @@ var Register = function (_Component) {
 
               case 20:
                 _context.next = 22;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/user", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/user", {
                   firstName: this.state.firstName,
                   lastName: this.state.lastName,
                   city: this.state.city,
@@ -53987,7 +53987,7 @@ var AddNewMeeting = function (_Component) {
               case 12:
                 _context.prev = 12;
                 _context.next = 15;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/events", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/events", {
                   title: this.state.title,
                   description: this.state.description,
                   authorNickName: this.state.author,
@@ -54022,7 +54022,7 @@ var AddNewMeeting = function (_Component) {
 
                 _context.prev = 22;
                 _context.next = 25;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeeting", {
                   userId: this.state.currentUserId,
                   eventId: savedMeeting.data.id
                 });
@@ -54908,7 +54908,7 @@ var MeetingDetails = function (_Component) {
                 this.setState({ meetingID: meetingId });
 
                 _context.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events/" + meetingId);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/events/" + meetingId);
 
               case 4:
                 getMeeting = _context.sent;
@@ -55987,7 +55987,7 @@ var CommentForm = function (_Component) {
                 event.preventDefault();
 
                 _context.next = 3;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/comment", {
                   userId: this.state.currentUserId,
                   userEmail: this.props.loggedInUserEmail,
                   meetingId: this.props.meetingId,
@@ -56142,7 +56142,7 @@ var MainProfile = function (_Component) {
                 response = void 0;
                 _context.prev = 1;
                 _context.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/findUserEventsHistory", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/findUserEventsHistory", {
                   id: userId
                 }, {
                   headers: {
@@ -56201,7 +56201,7 @@ var MainProfile = function (_Component) {
                 }
 
                 _context2.next = 6;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/users");
 
               case 6:
                 allUsers = _context2.sent;
@@ -56786,7 +56786,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 6;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheOldestPoints/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheOldestPoints/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 6:
                 allPoints = _context10.sent;
@@ -56800,7 +56800,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 12;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheNewestPoints/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheNewestPoints/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 12:
                 allPoints = _context10.sent;
@@ -56814,7 +56814,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 18;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheBestVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheBestVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 18:
                 allPoints = _context10.sent;
@@ -56828,7 +56828,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 24;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheWorstVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheWorstVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 24:
                 allPoints = _context10.sent;
@@ -56842,7 +56842,7 @@ var MainPoints = function (_Component) {
                 }
 
                 _context10.next = 30;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getTheMostTimeVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheMostTimeVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 30:
                 allPoints = _context10.sent;
@@ -56851,7 +56851,7 @@ var MainPoints = function (_Component) {
 
               case 33:
                 _context10.next = 35;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/getPointsNearCoords/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/getPointsNearCoords/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 35:
                 allPoints = _context10.sent;
@@ -56872,7 +56872,7 @@ var MainPoints = function (_Component) {
                             checkIfUserVoteExists = void 0;
                             _context9.prev = 1;
                             _context9.next = 4;
-                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserVoteExists", {
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/checkIfUserVoteExists", {
                               user_id: _this2.state.currentUserId,
                               point_id: item.id
                             }, {
@@ -57215,7 +57215,7 @@ var SinglePointOnList = function (_Component) {
                 savedNewSpotVote = void 0;
                 _context.prev = 3;
                 _context.next = 6;
-                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post("http://127.0.0.1:8000/api/saveVote", {
+                return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/saveVote", {
                   spot_id: this.props.item.id,
                   user_id: this.state.currentUserId,
                   vote_value: this.state.currentVote
@@ -57524,7 +57524,7 @@ var AddNewMeeting = function (_Component) {
                 savedPoint = void 0;
                 _context.prev = 2;
                 _context.next = 5;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/point", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/point", {
                   name: this.state.title,
                   description: this.state.description,
                   authorNickName: this.state.author,
