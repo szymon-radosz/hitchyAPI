@@ -70,7 +70,9 @@ class SingleMeetingDetails extends Component {
 
   async loggedInUserInfo() {
     const getUser = await axios.get(
-      `http://127.0.0.1:8000/api/user/${this.state.currentUserId}`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/user/${
+        this.state.currentUserId
+      }`
     );
 
     this.setState({ loggedInUserEmail: getUser.data[0].email });
@@ -79,7 +81,9 @@ class SingleMeetingDetails extends Component {
 
   async getCurrentMeetingLimit() {
     const getCurrentMeetingInfo = await axios.get(
-      `http://127.0.0.1:8000/api/events/${this.props.meetingId}`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${
+        this.props.meetingId
+      }`
     );
 
     return getCurrentMeetingInfo.data[0].limit;
@@ -87,7 +91,7 @@ class SingleMeetingDetails extends Component {
 
   /*async getCurrentMeetingAuthor() {
     const getCurrentMeetingInfo = await axios.get(
-      `http://127.0.0.1:8000/api/events/${this.props.meetingId}`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${this.props.meetingId}`
     );
 
     return getCurrentMeetingInfo.data[0].authorNickName;
@@ -95,7 +99,9 @@ class SingleMeetingDetails extends Component {
 
   async getResignedUsersList() {
     const allDeleted = await axios.get(
-      `http://127.0.0.1:8000/api/deleteUserFromMeeting/${this.props.meetingId}`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteUserFromMeeting/${
+        this.props.meetingId
+      }`
     );
 
     allDeleted.data.map((singleDeletedUserFromMeeting, i) => {
@@ -109,7 +115,9 @@ class SingleMeetingDetails extends Component {
   }
 
   async getCurrentMeetingComments() {
-    const allComments = await axios.get(`http://127.0.0.1:8000/api/comments`);
+    const allComments = await axios.get(
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/comments`
+    );
 
     allComments.data.map((comment, i) => {
       if (comment.meetingId == this.props.meetingId) {
@@ -132,7 +140,7 @@ class SingleMeetingDetails extends Component {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/checkIfUserTakePartInMeeting`,
+        `http://phplaravel-226937-693336.cloudwaysapps.com/api/checkIfUserTakePartInMeeting`,
         {
           userId: this.state.currentUserId,
           meetingId: this.props.meetingId
@@ -157,7 +165,7 @@ class SingleMeetingDetails extends Component {
     let takePart = true;
 
     const allMatches = await axios.get(
-      `http://127.0.0.1:8000/api/matchUserWithMeetings`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings`
     );
 
     allMatches.data.map(singleMatchUserWithMeeting => {
@@ -175,7 +183,7 @@ class SingleMeetingDetails extends Component {
       );
     } else {
       const savedMatchUserWithMeeting = await axios.post(
-        `http://127.0.0.1:8000/api/matchUserWithMeeting`,
+        `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeeting`,
         {
           userId: this.state.currentUserId,
           eventId: this.props.meetingId
@@ -184,7 +192,9 @@ class SingleMeetingDetails extends Component {
 
       if (savedMatchUserWithMeeting.status == "200") {
         const user = await axios.get(
-          `http://127.0.0.1:8000/api/user/${this.state.currentUserId}`
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/user/${
+            this.state.currentUserId
+          }`
         );
 
         if (user.status == 200) {
@@ -221,7 +231,7 @@ class SingleMeetingDetails extends Component {
 
   async resignClick() {
     const allMatches = await axios.get(
-      `http://127.0.0.1:8000/api/matchUserWithMeetings`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings`
     );
 
     allMatches.data.map(async (singleMatchUserWithMeeting, i) => {
@@ -230,7 +240,7 @@ class SingleMeetingDetails extends Component {
         singleMatchUserWithMeeting.eventId == this.props.meetingId
       ) {
         const deletedUserFromMatchUserWithEventTable = await axios.delete(
-          `http://127.0.0.1:8000/api/deleteMatchUserWithMeeting/${
+          `http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteMatchUserWithMeeting/${
             singleMatchUserWithMeeting.id
           }`,
           {
@@ -242,7 +252,7 @@ class SingleMeetingDetails extends Component {
 
         if (deletedUserFromMatchUserWithEventTable.status == "200") {
           const savedDeleteUserFromMeeting = await axios.post(
-            `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
+            `http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteUserFromMeeting`,
             {
               userId: this.state.currentUserId,
               meetingId: this.props.meetingId
@@ -341,7 +351,7 @@ class SingleMeetingDetails extends Component {
     let usersIDs = [];
 
     const allMatches = await axios.get(
-      `http://127.0.0.1:8000/api/matchUserWithMeetings`
+      `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings`
     );
 
     let meetingMatched = 0;
@@ -368,7 +378,9 @@ class SingleMeetingDetails extends Component {
 
     usersIDs.map(async (userId, i) => {
       //console.log(userId);
-      const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
+      const allUsers = await axios.get(
+        `http://phplaravel-226937-693336.cloudwaysapps.com/api/users`
+      );
 
       allUsers.data.map((singleUser, i) => {
         if (singleUser.id == parseInt(userId)) {

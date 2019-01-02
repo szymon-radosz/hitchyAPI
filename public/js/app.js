@@ -55111,7 +55111,7 @@ var SingleMeetingDetails = function (_Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + this.state.currentUserId);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/user/" + this.state.currentUserId);
 
               case 2:
                 getUser = _context.sent;
@@ -55144,7 +55144,7 @@ var SingleMeetingDetails = function (_Component) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/events/" + this.props.meetingId);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/events/" + this.props.meetingId);
 
               case 2:
                 getCurrentMeetingInfo = _context2.sent;
@@ -55167,7 +55167,7 @@ var SingleMeetingDetails = function (_Component) {
 
     /*async getCurrentMeetingAuthor() {
       const getCurrentMeetingInfo = await axios.get(
-        `http://127.0.0.1:8000/api/events/${this.props.meetingId}`
+        `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${this.props.meetingId}`
       );
        return getCurrentMeetingInfo.data[0].authorNickName;
     }*/
@@ -55184,7 +55184,7 @@ var SingleMeetingDetails = function (_Component) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/deleteUserFromMeeting/" + this.props.meetingId);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteUserFromMeeting/" + this.props.meetingId);
 
               case 2:
                 allDeleted = _context3.sent;
@@ -55224,7 +55224,7 @@ var SingleMeetingDetails = function (_Component) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/comments");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/comments");
 
               case 2:
                 allComments = _context4.sent;
@@ -55274,7 +55274,7 @@ var SingleMeetingDetails = function (_Component) {
                 response = void 0;
                 _context5.prev = 1;
                 _context5.next = 4;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/checkIfUserTakePartInMeeting", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/checkIfUserTakePartInMeeting", {
                   userId: this.state.currentUserId,
                   meetingId: this.props.meetingId
                 });
@@ -55328,7 +55328,7 @@ var SingleMeetingDetails = function (_Component) {
               case 0:
                 takePart = true;
                 _context6.next = 3;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings");
 
               case 3:
                 allMatches = _context6.sent;
@@ -55351,7 +55351,7 @@ var SingleMeetingDetails = function (_Component) {
 
               case 9:
                 _context6.next = 11;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeeting", {
                   userId: this.state.currentUserId,
                   eventId: this.props.meetingId
                 });
@@ -55365,7 +55365,7 @@ var SingleMeetingDetails = function (_Component) {
                 }
 
                 _context6.next = 15;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + this.state.currentUserId);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/user/" + this.state.currentUserId);
 
               case 15:
                 user = _context6.sent;
@@ -55426,7 +55426,7 @@ var SingleMeetingDetails = function (_Component) {
             switch (_context8.prev = _context8.next) {
               case 0:
                 _context8.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings");
 
               case 2:
                 allMatches = _context8.sent;
@@ -55445,7 +55445,7 @@ var SingleMeetingDetails = function (_Component) {
                             }
 
                             _context7.next = 3;
-                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete("http://127.0.0.1:8000/api/deleteMatchUserWithMeeting/" + singleMatchUserWithMeeting.id, {
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete("http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteMatchUserWithMeeting/" + singleMatchUserWithMeeting.id, {
                               headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                               }
@@ -55460,7 +55460,7 @@ var SingleMeetingDetails = function (_Component) {
                             }
 
                             _context7.next = 7;
-                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/deleteUserFromMeeting", {
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteUserFromMeeting", {
                               userId: _this5.state.currentUserId,
                               meetingId: _this5.props.meetingId
                             });
@@ -55607,7 +55607,7 @@ var SingleMeetingDetails = function (_Component) {
                 meetingLimit = _context10.sent;
                 usersIDs = [];
                 _context10.next = 19;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings");
 
               case 19:
                 allMatches = _context10.sent;
@@ -55639,7 +55639,7 @@ var SingleMeetingDetails = function (_Component) {
                         switch (_context9.prev = _context9.next) {
                           case 0:
                             _context9.next = 2;
-                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
+                            return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://phplaravel-226937-693336.cloudwaysapps.com/api/users");
 
                           case 2:
                             allUsers = _context9.sent;
