@@ -17,6 +17,8 @@ const animationSteps = [
   }
 ];
 
+const appPath = "http://127.0.0.1:8000";
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -117,6 +119,7 @@ class Main extends Component {
           showAlertWarning={this.showAlertWarning}
           store={this.props.store}
           animationSteps={animationSteps}
+          appPath={appPath}
         />
       </div>
     );

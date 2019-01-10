@@ -18,28 +18,15 @@ class MeetingDetails extends Component {
     this.setState({ meetingID: meetingId });
 
     const getMeeting = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${meetingId}`
+      `${this.props.appPath}/api/events/${meetingId}`
     );
 
     //console.log(getMeeting);
 
     const meeting = getMeeting.data[0];
 
-    let meetingObject = {
-      id: meeting.id,
-      title: meeting.title,
-      description: meeting.description,
-      author: meeting.authorNickName,
-      startPlaceLattitude: meeting.startPlaceLattitude,
-      startPlaceLongitude: meeting.startPlaceLongitude,
-      stopPlaceLattitude: meeting.stopPlaceLattitude,
-      stopPlaceLongitude: meeting.stopPlaceLongitude,
-      limit: meeting.limit,
-      date: meeting.startDate
-    };
-
     this.setState(prevState => ({
-      meetingData: [...prevState.meetingData, meetingObject]
+      meetingData: [...prevState.meetingData, meeting]
     }));
   }
 
@@ -50,17 +37,7 @@ class MeetingDetails extends Component {
           return (
             <SingleMeetingDetails
               key={i}
-              id={item.id}
-              title={item.title}
-              description={item.description}
-              author={item.author}
-              startPlaceLattitude={item.startPlaceLattitude}
-              startPlaceLongitude={item.startPlaceLongitude}
-              stopPlaceLattitude={item.stopPlaceLattitude}
-              stopPlaceLongitude={item.stopPlaceLongitude}
-              limit={item.limit}
-              date={item.date}
-              meetingId={this.state.meetingID}
+              item={item}
               showAlertSuccess={this.props.showAlertSuccess}
               showAlertWarning={this.props.showAlertWarning}
               switchLoader={this.props.switchLoader}

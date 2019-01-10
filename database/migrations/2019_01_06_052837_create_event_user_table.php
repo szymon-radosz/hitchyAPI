@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMatchUserWithEventTable extends Migration
+class CreateEventUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateMatchUserWithEventTable extends Migration
      */
     public function up()
     {
-        Schema::create('match_user_with_event', function (Blueprint $table) {
+        Schema::create('event_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('userId');
-            $table->integer('eventId');
+
+            $table->integer('event_id');
+            $table->integer('user_id');
+
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateMatchUserWithEventTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('match_user_with_event');
+        Schema::dropIfExists('event_user');
     }
 }

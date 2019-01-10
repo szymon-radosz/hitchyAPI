@@ -47,47 +47,48 @@ class MainMeetings extends Component {
     }
   }
 
-  setNewCenterCoords(lat, lng) {
-    this.setState({ centerCoord: [lat, lng] });
+  async setNewCenterCoords(lat, lng) {
+    await this.setState({ centerCoord: [lat, lng] });
+
+    await this.loadAllMeetings(1);
   }
 
   async loadAllMeetings(page) {
     this.props.switchLoader(true);
     try {
       const allMeetings = await axios.get(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/events?page=${page}`
+        `${this.props.appPath}/api/events/${this.state.centerCoord[0]}/${
+          this.state.centerCoord[1]
+        }?page=${page}`
       );
 
-      this.setState({ paginationPageLimit: allMeetings.data.last_page });
+      await this.setState({
+        paginationPageLimit: allMeetings.data.last_page,
+        meetingsData: [],
+        markersData: []
+      });
 
       await allMeetings.data.data.map((item, i) => {
-        let meetingObject = {
-          id: item.id,
-          title: item.title,
-          description: item.description,
-          author: item.authorNickName,
-          startPlaceLattitude: item.startPlaceLattitude,
-          startPlaceLongitude: item.startPlaceLongitude,
-          stopPlaceLattitude: item.stopPlaceLattitude,
-          stopPlaceLongitude: item.stopPlaceLongitude,
-          limit: item.limit,
-          date: item.startDate
-        };
+        console.log(item);
 
         let singleStartMarkerData = {
           key: uuidv1(),
           position: [item.startPlaceLattitude, item.startPlaceLongitude],
-          text: item.title
+          text: item.title,
+          limit: item.limit,
+          countUsers: item.users.length
         };
 
         let singleStopMarkerData = {
           key: uuidv1(),
           position: [item.stopPlaceLattitude, item.stopPlaceLongitude],
-          text: item.title
+          text: item.title,
+          limit: item.limit,
+          countUsers: item.users.length
         };
 
         this.setState(prevState => ({
-          meetingsData: [...prevState.meetingsData, meetingObject],
+          meetingsData: [...prevState.meetingsData, item],
           markersData: [...prevState.markersData, singleStartMarkerData]
         }));
 
@@ -126,17 +127,7 @@ class MainMeetings extends Component {
                     key={i}
                     changeMarker={this.changeMarker}
                     setNewCenterCoords={this.setNewCenterCoords}
-                    id={item.id}
-                    title={item.title}
-                    description={item.description}
-                    author={item.author}
-                    startPlaceLattitude={item.startPlaceLattitude}
-                    startPlaceLongitude={item.startPlaceLongitude}
-                    stopPlaceLattitude={item.stopPlaceLattitude}
-                    stopPlaceLongitude={item.stopPlaceLongitude}
-                    limit={item.limit}
-                    date={item.date}
-                    time={item.time}
+                    item={item}
                     setCoordinates={this.setCoordinates}
                     animationSteps={this.props.animationSteps}
                   />
@@ -167,6 +158,7 @@ class MainMeetings extends Component {
                 lngCenter={this.state.lng}
                 markersData={this.state.markersData}
                 centerCoord={this.state.centerCoord}
+                setNewCenterCoords={this.setNewCenterCoords}
                 showSearchBox={true}
               />
             </div>

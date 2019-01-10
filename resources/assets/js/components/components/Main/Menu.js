@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import axios from "axios";
 import LandingPage from "./LandingPage.js";
 import Login from "./../Account/Login.js";
 import Register from "./../Account/Register.js";
@@ -249,7 +248,7 @@ class Menu extends Component {
               </div>
               <div id="navbar" className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
-                  {this.state.userIsLoggedIn ? (
+                  {this.state.userIsLoggedIn && (
                     <li className="eventsMenuLink">
                       <Link
                         to="/meetings"
@@ -258,11 +257,9 @@ class Menu extends Component {
                         Wydarzenia
                       </Link>
                     </li>
-                  ) : (
-                    ""
                   )}
 
-                  {this.state.userIsLoggedIn ? (
+                  {this.state.userIsLoggedIn && (
                     <li className="pointsMenuLink">
                       <Link
                         to="/points"
@@ -271,11 +268,9 @@ class Menu extends Component {
                         Punkty
                       </Link>
                     </li>
-                  ) : (
-                    ""
                   )}
 
-                  {this.state.userIsLoggedIn ? (
+                  {this.state.userIsLoggedIn && (
                     <li className="addMeetingMenuLink">
                       <Link
                         to="/add-meeting"
@@ -284,11 +279,9 @@ class Menu extends Component {
                         Dodaj wydarzenie
                       </Link>
                     </li>
-                  ) : (
-                    ""
                   )}
 
-                  {this.state.userIsLoggedIn ? (
+                  {this.state.userIsLoggedIn && (
                     <li className="addPointMenuLink">
                       <Link
                         to="/add-point"
@@ -297,8 +290,6 @@ class Menu extends Component {
                         Dodaj punkt
                       </Link>
                     </li>
-                  ) : (
-                    ""
                   )}
 
                   {!this.state.userIsLoggedIn ? (
@@ -313,7 +304,7 @@ class Menu extends Component {
                   ) : (
                     ""
                   )}
-                  {!this.state.userIsLoggedIn ? (
+                  {!this.state.userIsLoggedIn && (
                     <li>
                       <Link
                         to="/register"
@@ -322,10 +313,8 @@ class Menu extends Component {
                         Rejestracja
                       </Link>
                     </li>
-                  ) : (
-                    ""
                   )}
-                  {this.state.userIsLoggedIn ? (
+                  {this.state.userIsLoggedIn && (
                     <li>
                       <div className="dropdown">
                         <button
@@ -352,8 +341,6 @@ class Menu extends Component {
                         </div>
                       </div>
                     </li>
-                  ) : (
-                    ""
                   )}
                 </ul>
               </div>
@@ -383,6 +370,7 @@ class Menu extends Component {
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}
@@ -396,6 +384,7 @@ class Menu extends Component {
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}
@@ -409,6 +398,7 @@ class Menu extends Component {
                   searchInLocation={this.state.searchInLocation}
                   switchLoader={this.props.switchLoader}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}
@@ -424,6 +414,7 @@ class Menu extends Component {
                   showAlertWarning={this.props.showAlertWarning}
                   switchLoader={this.props.switchLoader}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}
@@ -439,6 +430,7 @@ class Menu extends Component {
                   showAlertWarning={this.props.showAlertWarning}
                   switchLoader={this.props.switchLoader}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}
@@ -447,7 +439,12 @@ class Menu extends Component {
             exact
             path="/profile"
             render={() => {
-              return <MainProfile animationSteps={this.props.animationSteps} />;
+              return (
+                <MainProfile
+                  animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
+                />
+              );
             }}
           />
           <Route
@@ -459,6 +456,7 @@ class Menu extends Component {
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}
@@ -472,6 +470,7 @@ class Menu extends Component {
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
                   animationSteps={this.props.animationSteps}
+                  appPath={this.props.appPath}
                 />
               );
             }}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
+use App\Comment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Response;
@@ -22,7 +23,7 @@ class UserController extends Controller
         $nickName = $request->emailOrNickname;
         $password = $request->password;
 
-        $user = DB::table('users')->where('nickName', $nickName)->orWhere('email', $nickName)->first();
+        $user = User::where('nickName', $nickName)->orWhere('email', $nickName)->first();
 
         $passwordMatched = Hash::check($request->password, $user->password);
 
@@ -64,18 +65,13 @@ class UserController extends Controller
         }
     }
 
-    public function findById($id)
-    {
-        $singleUser = DB::table('users')->where('id', $id)->get();
-        return $singleUser;
-    }
-
     public function findUserEventsHistory(Request $request){
         $id = $request->id;
 
-        $userData = DB::table('match_user_with_event')->where('userId', $id)
-        ->join('events', 'events.id', '=', 'match_user_with_event.eventId')
-        ->select('events.title', 'events.startDate', 'events.authorNickName')
+        $userData = DB::table('event_user')->where('user_id', $id)
+        ->join('events', 'events.id', '=', 'event_user.event_id')
+        ->join('users', 'users.id', '=', 'event_user.user_id')
+        ->select('events.title', 'events.created_at', 'users.nickName')
         ->get();
 
         return $userData;

@@ -28,66 +28,18 @@ class MainPoints extends Component {
     this.prevPointsPage = this.prevPointsPage.bind(this);
     this.nextPointsPage = this.nextPointsPage.bind(this);
     this.centerMapLocation = this.centerMapLocation.bind(this);
-    this.loadTheOldestPoint = this.loadTheOldestPoint.bind(this);
-    this.loadTheLatestPoint = this.loadTheLatestPoint.bind(this);
-    this.loadTheBestVoted = this.loadTheBestVoted.bind(this);
-    this.loadTheMostTimeVoted = this.loadTheMostTimeVoted.bind(this);
-    this.loadTheWorstVoted = this.loadTheWorstVoted.bind(this);
+    this.filterResults = this.filterResults.bind(this);
   }
 
-  async loadTheOldestPoint() {
+  async filterResults(filterName) {
     await this.setState({
-      filter: "theOldest",
+      filter: filterName,
       currentPageResult: 1,
       pointsData: [],
       markersData: []
     });
 
-    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
-  }
-
-  async loadTheLatestPoint() {
-    await this.setState({
-      filter: "theLatest",
-      currentPageResult: 1,
-      pointsData: [],
-      markersData: []
-    });
-
-    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
-  }
-
-  async loadTheBestVoted() {
-    await this.setState({
-      filter: "bestVoted",
-      currentPageResult: 1,
-      pointsData: [],
-      markersData: []
-    });
-
-    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
-  }
-
-  async loadTheWorstVoted() {
-    await this.setState({
-      filter: "worstVoted",
-      currentPageResult: 1,
-      pointsData: [],
-      markersData: []
-    });
-
-    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
-  }
-
-  async loadTheMostTimeVoted() {
-    await this.setState({
-      filter: "mostTimeVoted",
-      currentPageResult: 1,
-      pointsData: [],
-      markersData: []
-    });
-
-    await this.loadAllSpots(this.state.currentPageResult, this.state.filter);
+    await this.loadAllSpots(1, this.state.filter);
   }
 
   async prevPointsPage() {
@@ -131,100 +83,69 @@ class MainPoints extends Component {
     try {
       let allPoints;
 
-      if (filter == "theOldest") {
-        allPoints = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheOldestPoints/${
-            this.state.centerCoord[0]
-          }/${this.state.centerCoord[1]}?page=${pageNumber}`
-        );
-      } else if (filter == "theLatest") {
-        allPoints = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheNewestPoints/${
-            this.state.centerCoord[0]
-          }/${this.state.centerCoord[1]}?page=${pageNumber}`
-        );
-      } else if (filter == "bestVoted") {
-        allPoints = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheBestVoted/${
-            this.state.centerCoord[0]
-          }/${this.state.centerCoord[1]}?page=${pageNumber}`
-        );
-      } else if (filter == "worstVoted") {
-        allPoints = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheWorstVoted/${
-            this.state.centerCoord[0]
-          }/${this.state.centerCoord[1]}?page=${pageNumber}`
-        );
-      } else if (filter == "mostTimeVoted") {
-        allPoints = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getTheMostTimeVoted/${
-            this.state.centerCoord[0]
-          }/${this.state.centerCoord[1]}?page=${pageNumber}`
-        );
-      } else {
-        allPoints = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/getPointsNearCoords/${
-            this.state.centerCoord[0]
-          }/${this.state.centerCoord[1]}?page=${pageNumber}`
-        );
+      switch (filter) {
+        case "theOldest":
+          allPoints = await axios.get(
+            `${this.props.appPath}/api/getTheOldestPoints/${
+              this.state.centerCoord[0]
+            }/${this.state.centerCoord[1]}?page=${pageNumber}`
+          );
+          break;
+
+        case "theLatest":
+          allPoints = await axios.get(
+            `${this.props.appPath}/api/getTheNewestPoints/${
+              this.state.centerCoord[0]
+            }/${this.state.centerCoord[1]}?page=${pageNumber}`
+          );
+          break;
+
+        case "worstVoted":
+          allPoints = await axios.get(
+            `${this.props.appPath}/api/getTheWorstVoted/${
+              this.state.centerCoord[0]
+            }/${this.state.centerCoord[1]}?page=${pageNumber}`
+          );
+          break;
+
+        case "mostTimeVoted":
+          allPoints = await axios.get(
+            `${this.props.appPath}/api/getTheMostTimeVoted/${
+              this.state.centerCoord[0]
+            }/${this.state.centerCoord[1]}?page=${pageNumber}`
+          );
+          break;
+
+        default:
+          allPoints = await axios.get(
+            `${this.props.appPath}/api/getPointsNearCoords/${
+              this.state.centerCoord[0]
+            }/${this.state.centerCoord[1]}?page=${pageNumber}`
+          );
       }
 
-      await this.setState({ paginationPageLimit: allPoints.data.last_page });
+      await this.setState({
+        paginationPageLimit: allPoints.data.last_page,
+        pointsData: [],
+        markersData: []
+      });
 
       await allPoints.data.data.map(async (item, i) => {
-        let checkIfUserVoteExists;
-
-        try {
-          checkIfUserVoteExists = await axios.post(
-            `http://phplaravel-226937-693336.cloudwaysapps.com/api/checkIfUserVoteExists`,
-            {
-              user_id: this.state.currentUserId,
-              point_id: item.id
-            },
-            {
-              headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-              }
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-
-        let checkIfUserVote;
-        if (checkIfUserVoteExists.data == 1) {
-          checkIfUserVote = true;
-        } else {
-          checkIfUserVote = false;
-        }
-        //console.log(checkIfUserVoteExists.data);
-
-        let pointObject = {
-          id: item.id,
-          title: item.name,
-          description: item.description,
-          author: item.authorNickName,
-          lattitude: item.lattitude,
-          longitude: item.longitude,
-          sumOfVotes: item.sum_of_votes,
-          countVotes: item.amount_of_votes,
-          date: item.created_at,
-          checkIfUserVote: checkIfUserVote,
-          rating: item.rating
-        };
-
         let singleMarkerData = {
           key: item.name,
           position: [item.lattitude, item.longitude],
-          text: item.name
+          text: item.name,
+          desc: item.description,
+          sumOfVotes: item.sum_of_votes,
+          votesCount: item.votes_count
         };
 
         this.setState(prevState => ({
-          pointsData: [...prevState.pointsData, pointObject],
+          pointsData: [...prevState.pointsData, item],
           markersData: [...prevState.markersData, singleMarkerData]
         }));
-        this.props.switchLoader(false);
       });
+      this.props.switchLoader(false);
     } catch (error) {
       console.log(error);
       this.props.switchLoader(false);
@@ -267,7 +188,7 @@ class MainPoints extends Component {
                     ? "btn btn-default btnCircled btnDarkGray"
                     : "btn btn-default btnCircled btnGray"
                 }
-                onClick={this.loadTheLatestPoint}
+                onClick={() => this.filterResults("theLatest")}
               >
                 Najnowsze
               </div>
@@ -278,7 +199,7 @@ class MainPoints extends Component {
                     ? "btn btn-default btnCircled btnDarkGray"
                     : "btn btn-default btnCircled btnGray"
                 }
-                onClick={this.loadTheOldestPoint}
+                onClick={() => this.filterResults("theOldest")}
               >
                 Najstarsze
               </div>
@@ -289,7 +210,7 @@ class MainPoints extends Component {
                     ? "btn btn-default btnCircled btnDarkGray"
                     : "btn btn-default btnCircled btnGray"
                 }
-                onClick={this.loadTheBestVoted}
+                onClick={() => this.filterResults("bestVoted")}
               >
                 Najlepiej oceniane
               </div>
@@ -300,7 +221,7 @@ class MainPoints extends Component {
                     ? "btn btn-default btnCircled btnDarkGray"
                     : "btn btn-default btnCircled btnGray"
                 }
-                onClick={this.loadTheWorstVoted}
+                onClick={() => this.filterResults("worstVoted")}
               >
                 Najgorzej oceniane
               </div>
@@ -311,7 +232,7 @@ class MainPoints extends Component {
                     ? "btn btn-default btnCircled btnDarkGray"
                     : "btn btn-default btnCircled btnGray"
                 }
-                onClick={this.loadTheMostTimeVoted}
+                onClick={() => this.filterResults("mostTimeVoted")}
               >
                 Najczęściej oceniane
               </div>

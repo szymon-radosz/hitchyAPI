@@ -15,6 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('title');
             $table->text('description');
             $table->double('startPlaceLattitude');
@@ -23,7 +24,7 @@ class CreateEventsTable extends Migration
             $table->double('stopPlaceLongitude');
             $table->date('startDate');
             $table->string('limit');
-            $table->string('authorNickName');
+
             $table->timestamps();
         });
     }

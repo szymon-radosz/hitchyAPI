@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import MainMeetings from "./../Meetings/MainMeetings";
-import Main from "./Main";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -22,8 +21,6 @@ class LandingPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    console.log(this.state.userLocationPrompt);
 
     if (this.state.userLocationPrompt) {
       this.props.changeStateOfSearchInLocation(this.state.userLocationPrompt);

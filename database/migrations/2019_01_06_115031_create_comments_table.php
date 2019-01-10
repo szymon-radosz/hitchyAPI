@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDeleteUserFromMeetingTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateDeleteUserFromMeetingTable extends Migration
      */
     public function up()
     {
-        Schema::create('delete_user_from_meeting', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('userId')->default(0);
-            $table->integer('eventId')->default(0);
+
+            $table->text('comment_body');
+            $table->integer('user_id');
+            $table->string('user_email');
+            $table->integer('event_id');
+            
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateDeleteUserFromMeetingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delete_user_from_meeting');
+        Schema::dropIfExists('comments');
     }
 }

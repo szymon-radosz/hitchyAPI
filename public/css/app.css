@@ -222,6 +222,20 @@ input[type="color"]:focus,
   z-index: 1000;
 }
 
+.mapInfoWindow p {
+  margin: 0 0 5px 0;
+}
+
+.mapInfoWindow .mapInfoWindowTitle {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+}
+
+.mapInfoWindowTitleAlone {
+  margin: 0;
+}
+
 .listOfPointsRow {
   margin: 0 !important;
   position: relative;
@@ -259,7 +273,11 @@ input[type="color"]:focus,
 }
 
 .listOfPointsRow .listOfPointsCol .addVoteSelect {
-  margin: 15px 0 10px 0;
+  margin: 0 0 10px 0;
+}
+
+.listOfPointsRow .listOfPointsCol .locatePointBtn {
+  margin-top: 10px;
 }
 
 .listOfPointsRow .listOfPointsCol .mainPointsButtonPanel {

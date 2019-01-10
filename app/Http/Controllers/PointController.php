@@ -11,20 +11,12 @@ use App\Http\Resources\Point as PointResource;
 
 class PointController extends Controller
 {
-    private $latDifference = 1;
-    private $lngDifference = 1;
+    private $latDifference = 8;
+    private $lngDifference = 8;
 
     public function index()
     {
-        $points = DB::table('points')->paginate(3);
-
-        foreach($points as $point){
-            if($point->amount_of_votes > 0){
-                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-            }else{
-                $point->rating = 0;
-            }
-        }
+        $points = Point::with('users')->paginate(3);
 
         return $points;
     }
@@ -37,17 +29,12 @@ class PointController extends Controller
         $maxLat = $request->lattitude + $this->latDifference;
         $maxLng = $request->longitude + $this->lngDifference;
 
-        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->paginate(3);
-
-        if(count($points) > 0){
-            foreach($points as $point){
-                if($point->amount_of_votes > 0){
-                    $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-                }else{
-                    $point->rating = 0;
-                }
-            }
-        }
+        $points = Point::with('users')
+                        ->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])
+                        ->join('point_user', 'points.id', '=', 'point_user.point_id')
+                        ->selectRaw('points.*, SUM(point_user.vote) AS sum_of_votes, COUNT(*) AS votes_count')
+                        ->groupBy('points.id')
+                        ->paginate(3);
         
         return $points;
     }
@@ -60,15 +47,8 @@ class PointController extends Controller
         $maxLat = $request->lattitude + $this->latDifference;
         $maxLng = $request->longitude + $this->lngDifference;
 
-        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('created_at DESC')->paginate(3);
+        $points = Point::with('users')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('created_at DESC')->paginate(3);
 
-        foreach($points as $point){
-            if($point->amount_of_votes > 0){
-                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-            }else{
-                $point->rating = 0;
-            }
-        }
         return $points;
     }
 
@@ -80,15 +60,8 @@ class PointController extends Controller
         $maxLat = $request->lattitude + $this->latDifference;
         $maxLng = $request->longitude + $this->lngDifference;
 
-        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('created_at ASC')->paginate(3);
+        $points = Point::with('users')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('created_at ASC')->paginate(3);
 
-        foreach($points as $point){
-            if($point->amount_of_votes > 0){
-                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-            }else{
-                $point->rating = 0;
-            }
-        }
         return $points;
     }
 
@@ -100,15 +73,14 @@ class PointController extends Controller
         $maxLat = $request->lattitude + $this->latDifference;
         $maxLng = $request->longitude + $this->lngDifference;
 
-        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('sum_of_votes/amount_of_votes DESC')->paginate(3);
+        $points = Point::with('users')
+                        ->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])
+                        ->join('point_user', 'points.id', '=', 'point_user.point_id')
+                        ->selectRaw('points.*, SUM(point_user.vote)/COUNT(*) AS average')
+                        ->groupBy('points.id')
+                        ->orderBy('average', 'desc')
+                        ->paginate(3);
 
-        foreach($points as $point){
-            if($point->amount_of_votes > 0){
-                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-            }else{
-                $point->rating = 0;
-            }
-        }
         return $points;
     }
 
@@ -120,15 +92,14 @@ class PointController extends Controller
         $maxLat = $request->lattitude + $this->latDifference;
         $maxLng = $request->longitude + $this->lngDifference;
 
-        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderByRaw('sum_of_votes/amount_of_votes ASC')->paginate(3);
+        $points = Point::with('users')
+                        ->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])
+                        ->join('point_user', 'points.id', '=', 'point_user.point_id')
+                        ->selectRaw('points.*, SUM(point_user.vote)/COUNT(*) AS average')
+                        ->groupBy('points.id')
+                        ->orderBy('average', 'asc')
+                        ->paginate(3);
 
-        foreach($points as $point){
-            if($point->amount_of_votes > 0){
-                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-            }else{
-                $point->rating = 0;
-            }
-        }
         return $points;
     }
 
@@ -140,15 +111,14 @@ class PointController extends Controller
         $maxLat = $request->lattitude + $this->latDifference;
         $maxLng = $request->longitude + $this->lngDifference;
 
-        $points = DB::table('points')->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])->orderBy('amount_of_votes', 'desc')->paginate(3);
+        $points = Point::with('users')
+                        ->where([['lattitude', '>', $minLat], ['longitude', '>', $minLng], ['lattitude', '<', $maxLat], ['longitude', '<', $maxLng]])
+                        ->join('point_user', 'points.id', '=', 'point_user.point_id')
+                        ->selectRaw('points.*, COUNT(*) AS count')
+                        ->groupBy('points.id')
+                        ->orderBy('count', 'desc')
+                        ->paginate(3);
 
-        foreach($points as $point){
-            if($point->amount_of_votes > 0){
-                $point->rating = (int)$point->sum_of_votes/$point->amount_of_votes;
-            }else{
-                $point->rating = 0;
-            }
-        }
         return $points;
     }
 
@@ -160,42 +130,24 @@ class PointController extends Controller
         $point->description = $request->description;
         $point->lattitude = $request->lattitude;
         $point->longitude = $request->longitude;
-        $point->authorNickName = $request->authorNickName;
+        $point->user_id = $request->user_id;
 
         $point->save();
+
+        $vote = $request->vote;
+
+        $saveVote = Point::find($point->id);
+        $saveVote->users()->attach(1, ['point_id' => $point->id, 'user_id' => $point->user_id, 'vote' => $vote]);
 
         return $point;
     }
 
-    public function saveVote(Request $request){
-        $vote = new SpotVote;
+    public function addPointVote(Request $request){
+        $user_id = $request->userId;
+        $point_id = $request->pointId;
+        $vote = $request->vote;
 
-        $vote->spot_id = (int)$request->spot_id ? (int)$request->spot_id : "";
-        $vote->user_id = (int)$request->user_id ? (int)$request->user_id : "";
-        $vote->vote_value = (int)$request->vote_value ? (int)$request->vote_value : "";
-
-        $vote->save();
-
-        $point = Point::find($vote->spot_id);
-
-        $point->sum_of_votes = $point->sum_of_votes + (int)$request->vote_value;
-        $point->amount_of_votes = $point->amount_of_votes + 1;
-
-        $point->save();
-
-        return $vote;
-    }
-
-    public function checkIfUserVoteExists(Request $request){
-        $user_id = $request->user_id;
-        $point_id = $request->point_id;
-        
-        $exist = DB::table('spot_votes')->where([['user_id', $user_id],['spot_id',$point_id]])->get();
-
-        if(count($exist) > 0){
-            return 1;
-        }else{
-            return 0;
-        }
+        $saveVote = Point::find($point_id);
+        return $saveVote->users()->attach(1, ['point_id' => $point_id, 'user_id' => $user_id, 'vote' => $vote]);
     }
 }

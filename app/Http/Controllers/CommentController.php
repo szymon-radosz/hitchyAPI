@@ -18,10 +18,10 @@ class CommentController extends Controller
     {
         $comment = new Comment;
 
-        $comment->commentBody = $request->input('commentBody');
-        $comment->userId = $request->userId;
-        $comment->userEmail = $request->userEmail;
-        $comment->meetingId = $request->meetingId;
+        $comment->comment_body = $request->input('commentBody');
+        $comment->user_id = $request->userId;
+        $comment->user_email = $request->userEmail;
+        $comment->event_id = $request->eventId;
 
         $comment->save();
 

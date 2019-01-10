@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 const SpotVotes = props => {
   return (
@@ -8,8 +8,9 @@ const SpotVotes = props => {
         className="form-control addVoteSelect"
         onChange={props.changeCurrentVote}
       >
-        <option defaultValue>Wybierz</option>
-        <option value="1">1</option>
+        <option defaultValue value="1">
+          1
+        </option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>

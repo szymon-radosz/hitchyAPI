@@ -238,6 +238,12 @@ const MyMapComponent = compose(
     defaultOptions={defaultMapOptions}
     ref={map => (this._map = map)}
     center={{ lat: Number(props.lat), lng: Number(props.lng) }}
+    onDragEnd={map => {
+      props.changeStateCoords(
+        this._map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.center.lat(),
+        this._map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.center.lng()
+      );
+    }}
   >
     {props.showSearchBox && (
       <SearchBox
@@ -271,7 +277,7 @@ const MyMapComponent = compose(
         />
       </SearchBox>
     )}
-    {props.latCenter && props.lngCenter && props.allowDragableMarker ? (
+    {props.latCenter && props.lngCenter && props.allowDragableMarker && (
       <Marker
         draggable={true}
         icon={{
@@ -290,18 +296,6 @@ const MyMapComponent = compose(
             this._marker1.getPosition().lng()
           );
           // console.log(this._marker1.getPosition().lat());
-        }}
-      />
-    ) : (
-      <Marker
-        draggable={false}
-        icon={{
-          url: markerIcon,
-          scaledSize: { width: 32, height: 32 }
-        }}
-        position={{
-          lat: Number(props.latCenter),
-          lng: Number(props.lngCenter)
         }}
       />
     )}
@@ -363,7 +357,34 @@ const MyMapComponent = compose(
           >
             {i === props.activeKey && (
               <InfoWindow>
-                <div>{singleMarker.text}</div>
+                <div className="mapInfoWindow">
+                  <p className={"mapInfoWindowTitle"}>{singleMarker.text}</p>
+                  {singleMarker.desc && <p>{singleMarker.desc}</p>}
+                  {singleMarker.sumOfVotes && (
+                    <p>
+                      Ocena:{" "}
+                      {(
+                        Number(singleMarker.sumOfVotes) /
+                        Number(singleMarker.votesCount)
+                      ).toFixed(2)}
+                    </p>
+                  )}
+                  {singleMarker.votesCount && (
+                    <p>Ilość głosów: {singleMarker.votesCount}</p>
+                  )}
+                  {singleMarker.limit && (
+                    <p>Limit uczestników: {singleMarker.limit}</p>
+                  )}
+                  {singleMarker.countUsers && (
+                    <p>Wzięło udział: {singleMarker.countUsers}</p>
+                  )}
+                  {singleMarker.limit &&
+                    singleMarker.countUsers == singleMarker.limit && (
+                      <p>
+                        <strong>Osiągnięto limit</strong>
+                      </p>
+                    )}
+                </div>
               </InfoWindow>
             )}
           </Marker>
@@ -450,7 +471,7 @@ export default class MapComponent extends Component {
           setNewSecondCoords={this.props.setNewSecondCoords}
           displayFirstMarker={this.props.displayFirstMarker}
           displaySecondMarker={this.props.displaySecondMarker}
-          mapZoom={this.props.mapZoom ? this.props.mapZoom : 13}
+          mapZoom={this.props.mapZoom ? this.props.mapZoom : 6}
         />
       </div>
     );

@@ -17,4 +17,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function events()
+    {
+        return $this->belongsToMany('App\Event', 'event_user', 
+        'event_id', 'user_id');
+    }
+
+    function comments() {
+
+        return $this->hasMany('App\Comment');
+    }
 }

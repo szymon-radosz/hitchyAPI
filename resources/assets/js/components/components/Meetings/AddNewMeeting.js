@@ -11,7 +11,7 @@ class AddNewMeeting extends Component {
     this.state = {
       title: "",
       description: "",
-      author: "",
+      userId: "",
       currentUserId: 0,
       lattitude: "",
       longitude: "",
@@ -41,7 +41,7 @@ class AddNewMeeting extends Component {
     event.preventDefault();
     let savedMeeting;
     let savedMatchUserWithMeeting;
-    let savedMeetingId;
+    //let savedMeetingId;
 
     if (this.state.limit == "Wybierz") {
       this.props.showAlertWarning("Wybierz limit użytkowników.");
@@ -54,11 +54,11 @@ class AddNewMeeting extends Component {
     } else {
       try {
         savedMeeting = await axios.post(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/events`,
+          `${this.props.appPath}/api/events`,
           {
             title: this.state.title,
             description: this.state.description,
-            authorNickName: this.state.author,
+            user_id: this.state.userId,
             startPlaceLattitude: this.state.lat,
             startPlaceLongitude: this.state.lng,
             stopPlaceLattitude: this.state.secondLat,
@@ -79,24 +79,7 @@ class AddNewMeeting extends Component {
       //console.log(savedMeeting);
 
       if (savedMeeting.status == "201") {
-        try {
-          savedMatchUserWithMeeting = await axios.post(
-            `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeeting`,
-            {
-              userId: this.state.currentUserId,
-              eventId: savedMeeting.data.id
-            }
-          );
-        } catch (error) {
-          console.log(error);
-          this.props.showAlertWarning("Nie udało się zapisać spotkania.");
-        }
-
-        if (savedMatchUserWithMeeting.status == "200") {
-          this.props.showAlertSuccess("Dodałeś nowe spotkanie");
-        } else {
-          this.props.showAlertWarning("Nie udało się zapisać spotkania.");
-        }
+        this.props.showAlertSuccess("Dodałeś nowe spotkanie");
       } else {
         this.props.showAlertWarning("Nie udało się zapisać spotkania.");
       }
@@ -122,7 +105,7 @@ class AddNewMeeting extends Component {
 
     if (storeData.user.user.userNickName) {
       this.setState({
-        author: storeData.user.user.userNickName,
+        userId: storeData.user.user.userId,
         currentUserId: storeData.user.user.userId
       });
     }
@@ -267,7 +250,7 @@ class AddNewMeeting extends Component {
             secondLngCenter={this.state.secondLng}
             allowDragableMarker={true}
             allowDragableSecondMarker={true}
-            setNewCoords={this.setNewCoords}
+            setNewCenterCoords={this.setNewCoords}
             setNewSecondCoords={this.setNewSecondCoords}
             displayFirstMarker={true}
             displaySecondMarker={true}

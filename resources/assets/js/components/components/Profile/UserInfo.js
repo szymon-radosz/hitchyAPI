@@ -49,8 +49,8 @@ const UserInfo = props => {
                     return (
                       <tr key={i}>
                         <th className="text-center">{event.title}</th>
-                        <th className="text-center">{event.startDate}</th>
-                        <th className="text-center">{event.authorNickName}</th>
+                        <th className="text-center">{event.created_at}</th>
+                        <th className="text-center">{event.nickName}</th>
                       </tr>
                     );
                   })}

@@ -25,21 +25,18 @@ class CommentForm extends Component {
   async submitComment(event) {
     event.preventDefault();
 
-    const savedComment = await axios.post(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/comment`,
-      {
-        userId: this.state.currentUserId,
-        userEmail: this.props.loggedInUserEmail,
-        meetingId: this.props.meetingId,
-        commentBody: this.state.commentBody
-      }
-    );
+    const savedComment = await axios.post(`${this.props.appPath}/api/comment`, {
+      userId: this.state.currentUserId,
+      userEmail: this.props.loggedInUserEmail,
+      eventId: this.props.meetingId,
+      commentBody: this.state.commentBody
+    });
 
     if (savedComment.status == "201") {
       this.props.addCommentToState(
-        savedComment.data.userEmail,
+        savedComment.data.user_email,
         savedComment.data.created_at,
-        savedComment.data.commentBody
+        savedComment.data.comment_body
       );
       this.props.showAlertSuccess("Dodałeś komentarz.");
     } else {

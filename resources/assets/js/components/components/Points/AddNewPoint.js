@@ -10,11 +10,12 @@ class AddNewMeeting extends Component {
     this.state = {
       title: "",
       description: "",
-      author: "",
+      userId: "",
       lattitude: "",
       longitude: "",
       lat: 40.73061,
       lng: -73.935242,
+      vote: 1,
       centerCoord: []
     };
 
@@ -34,13 +35,14 @@ class AddNewMeeting extends Component {
 
     try {
       savedPoint = await axios.post(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/point`,
+        `${this.props.appPath}/api/point`,
         {
           name: this.state.title,
           description: this.state.description,
-          authorNickName: this.state.author,
+          user_id: this.state.userId,
           lattitude: this.state.lat,
-          longitude: this.state.lng
+          longitude: this.state.lng,
+          vote: this.state.vote
         },
         {
           headers: {
@@ -53,7 +55,6 @@ class AddNewMeeting extends Component {
     }
 
     if (savedPoint.status == "201") {
-      console.log("zapisano punkt");
       this.props.showAlertSuccess("Zapisałeś punkt.");
     } else {
       this.props.showAlertWarning("Nie udało się zapisać punktu.");
@@ -70,8 +71,8 @@ class AddNewMeeting extends Component {
   componentDidMount() {
     let storeData = store.getState();
 
-    if (storeData.user.user.userNickName) {
-      this.setState({ author: storeData.user.user.userNickName });
+    if (storeData.user.user.userId) {
+      this.setState({ userId: storeData.user.user.userId });
     }
   }
 
@@ -105,6 +106,23 @@ class AddNewMeeting extends Component {
                     onChange={this.handleChange}
                     required
                   />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="vote">Ocena:</label>
+                  <div className="form-group">
+                    <select
+                      className="form-control"
+                      name="vote"
+                      id="vote"
+                      onChange={this.handleChange}
+                    >
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="lattitude">Szerokość geograficzna:</label>

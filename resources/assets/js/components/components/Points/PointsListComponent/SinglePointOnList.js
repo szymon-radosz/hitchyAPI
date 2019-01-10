@@ -12,7 +12,10 @@ class SinglePointOnList extends Component {
       lat: "",
       lng: "",
       currentUserId: 0,
-      currentVote: "Wybierz"
+      currentVote: 1,
+      userCanVote: true,
+      pointVote: 0,
+      voteAmount: 0
     };
 
     this.changeCurrentVote = this.changeCurrentVote.bind(this);
@@ -26,50 +29,67 @@ class SinglePointOnList extends Component {
   async saveNewSpotVote(event) {
     event.preventDefault();
 
-    if (this.state.currentVote != "Wybierz") {
-      let savedNewSpotVote;
+    let savedNewSpotVote;
 
-      try {
-        savedNewSpotVote = await axios.post(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/saveVote`,
-          {
-            spot_id: this.props.item.id,
-            user_id: this.state.currentUserId,
-            vote_value: this.state.currentVote
-          },
-          {
-            headers: {
-              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-            }
+    try {
+      savedNewSpotVote = await axios.post(
+        `${this.props.appPath}/api/addPointVote`,
+        {
+          pointId: this.props.item.id,
+          userId: this.state.currentUserId,
+          vote: this.state.currentVote
+        },
+        {
+          headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
           }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
 
-      console.log(savedNewSpotVote);
+    if (savedNewSpotVote.status == 200) {
+      let sumOfVotes =
+        Number(this.state.pointVote) + Number(this.state.currentVote);
+      let voteAmount = Number(this.state.voteAmount) + 1;
+      let calculatedPointVote = sumOfVotes / voteAmount;
 
-      if (savedNewSpotVote.status == "201") {
-        console.log("zapisano glos");
-        this.props.disableVoteSelect(
-          this.props.item.id,
-          this.state.currentVote
-        );
-        this.props.showAlertSuccess("zapisano glos.");
-      } else {
-        this.props.showAlertWarning("Nie udało się zapisać glosu.");
-      }
+      await this.setState({
+        pointVote: calculatedPointVote,
+        voteAmount: voteAmount,
+        userCanVote: false
+      });
+
+      this.props.showAlertSuccess("zapisano glos.");
     } else {
-      this.props.showAlertWarning("Wybierz wartosc liczbowa.");
+      this.props.showAlertWarning("Nie udało się zapisać glosu.");
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let storeData = store.getState();
 
     if (storeData.user.user.userId) {
-      this.setState({ currentUserId: storeData.user.user.userId });
+      await this.setState({ currentUserId: storeData.user.user.userId });
     }
+
+    let sumOfVotes = 0;
+
+    this.props.item.users.map((user, i) => {
+      console.log(user);
+      if (user.pivot.user_id == this.state.currentUserId) {
+        this.setState({ userCanVote: false });
+      }
+      sumOfVotes += user.pivot.vote;
+    });
+
+    let calculatedPointVote = sumOfVotes / this.props.item.users.length;
+
+    await this.setState({
+      pointVote: calculatedPointVote,
+      voteAmount: this.props.item.users.length
+    });
   }
 
   render() {
@@ -78,12 +98,12 @@ class SinglePointOnList extends Component {
         <Animate steps={this.props.animationSteps}>
           <div className="panel panel-default">
             <div className="panel-heading">
-              <h4 className="panel-title bold">{this.props.item.title}</h4>
+              <h4 className="panel-title bold">{this.props.item.name}</h4>
             </div>
             <div className="panel-body">
               <p>
                 <span className="bold">Data: </span>
-                {this.props.item.date}
+                {this.props.item.created_at}
               </p>
               <p>
                 <span className="bold">Opis: </span>
@@ -91,22 +111,31 @@ class SinglePointOnList extends Component {
               </p>
               <p>
                 <span className="bold">Autor: </span>
-                {this.props.item.author}
+                {this.props.item.users[0].nickName}
               </p>
               <p>
                 <span className="bold">Ocena:</span>{" "}
-                {this.props.item.sumOfVotes
-                  ? (
-                      this.props.item.sumOfVotes / this.props.item.countVotes
-                    ).toFixed(2)
-                  : "---"}
+                {this.state.pointVote ? this.state.pointVote.toFixed(2) : "---"}
               </p>
               <p>
                 <span className="bold">Ilosc glosow:</span>{" "}
-                {this.props.item.countVotes ? this.props.item.countVotes : "0"}
+                {this.state.voteAmount ? this.state.voteAmount : "---"}
               </p>
+
+              {this.state.userCanVote && (
+                <p>
+                  <span className="bold">Dodaj ocenę:</span>
+                </p>
+              )}
+              {this.state.userCanVote && (
+                <SpotVotes
+                  changeCurrentVote={this.changeCurrentVote}
+                  saveNewSpotVote={this.saveNewSpotVote}
+                />
+              )}
+
               <div
-                className="btn btn-default btnBlue btnCircled"
+                className="btn btn-default btnBlue btnCircled locatePointBtn"
                 onClick={() => {
                   this.props.centerMapLocation(
                     this.props.item.lattitude,
@@ -116,14 +145,6 @@ class SinglePointOnList extends Component {
               >
                 Lokalizuj
               </div>
-              {!this.props.item.checkIfUserVote ? (
-                <SpotVotes
-                  changeCurrentVote={this.changeCurrentVote}
-                  saveNewSpotVote={this.saveNewSpotVote}
-                />
-              ) : (
-                ""
-              )}
             </div>
           </div>
         </Animate>

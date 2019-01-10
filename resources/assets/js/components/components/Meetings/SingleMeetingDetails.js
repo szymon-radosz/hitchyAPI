@@ -10,39 +10,45 @@ class SingleMeetingDetails extends Component {
   constructor(props) {
     super(props);
 
+    console.log(this.props);
+
     this.state = {
-      usersEmails: [],
-      resignedUsersEmails: [],
-      loggedInUserEmail: "",
-      loggedInUserNickname: "",
-      displayTakPartBtn: false,
+      displayTakePartBtn: true,
       displayResignBtn: false,
-      displayCommentsContainer: false,
-      checkIfUserTakePartInMeeting: false,
-      startLat: "",
+      isAuthor: false,
+      isLimit: false,
       currentUserId: 0,
       currentUserNickName: "",
       currentUserEmail: "",
-      startLng: "",
-      stopLat: "",
-      stopLng: "",
+      startLat: this.props.item.startPlaceLattitude,
+      startLng: this.props.item.startPlaceLongitude,
+      stopLat: this.props.item.stopPlaceLattitude,
+      stopLng: this.props.item.stopPlaceLongitude,
       comments: [],
       commentBody: "",
-      centerCoord: []
+      centerCoord: [
+        this.props.item.startPlaceLattitude,
+        this.props.item.startPlaceLongitude
+      ],
+      users: this.props.item.users,
+      comments: this.props.item.comments
     };
 
     this.setNewCenterCoords = this.setNewCenterCoords.bind(this);
     this.takePartClick = this.takePartClick.bind(this);
     this.resignClick = this.resignClick.bind(this);
     this.addCommentToState = this.addCommentToState.bind(this);
-    this.loggedInUserInfo = this.loggedInUserInfo.bind(this);
-    this.getCurrentMeetingLimit = this.getCurrentMeetingLimit.bind(this);
-    this.getResignedUsersList = this.getResignedUsersList.bind(this);
-    //this.getCurrentMeetingAuthor = this.getCurrentMeetingAuthor.bind(this);
-    this.getCurrentMeetingComments = this.getCurrentMeetingComments.bind(this);
-    this.checkIfUserTakePartInMeeting = this.checkIfUserTakePartInMeeting.bind(
-      this
-    );
+    this.checkTakePart = this.checkTakePart.bind(this);
+    this.isAuthor = this.isAuthor.bind(this);
+    this.isLimit = this.isLimit.bind(this);
+  }
+
+  checkTakePart() {
+    this.state.users.map((user, i) => {
+      if (user.id == this.state.currentUserId) {
+        this.setState({ displayTakePartBtn: false, displayResignBtn: true });
+      }
+    });
   }
 
   handleChange(event) {
@@ -56,9 +62,9 @@ class SingleMeetingDetails extends Component {
 
   addCommentToState(userNickname, commentDate, commentBody) {
     let commentObject = {
-      userEmail: userNickname,
-      date: commentDate,
-      commentBody: commentBody
+      user_email: userNickname,
+      created_at: commentDate,
+      comment_body: commentBody
     };
 
     //console.log(commentObject);
@@ -68,254 +74,80 @@ class SingleMeetingDetails extends Component {
     }));
   }
 
-  async loggedInUserInfo() {
-    const getUser = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/user/${
-        this.state.currentUserId
-      }`
-    );
-
-    this.setState({ loggedInUserEmail: getUser.data[0].email });
-    this.setState({ loggedInUserNickname: getUser.data[0].nickName });
-  }
-
-  async getCurrentMeetingLimit() {
-    const getCurrentMeetingInfo = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${
-        this.props.meetingId
-      }`
-    );
-
-    return getCurrentMeetingInfo.data[0].limit;
-  }
-
-  /*async getCurrentMeetingAuthor() {
-    const getCurrentMeetingInfo = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/events/${this.props.meetingId}`
-    );
-
-    return getCurrentMeetingInfo.data[0].authorNickName;
-  }*/
-
-  async getResignedUsersList() {
-    const allDeleted = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteUserFromMeeting/${
-        this.props.meetingId
-      }`
-    );
-
-    allDeleted.data.map((singleDeletedUserFromMeeting, i) => {
-      this.setState(prevState => ({
-        resignedUsersEmails: [
-          ...prevState.resignedUsersEmails,
-          singleDeletedUserFromMeeting[0].email
-        ]
-      }));
-    });
-  }
-
-  async getCurrentMeetingComments() {
-    const allComments = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/comments`
-    );
-
-    allComments.data.map((comment, i) => {
-      if (comment.meetingId == this.props.meetingId) {
-        let commentObject = {
-          userID: comment.userId,
-          userEmail: comment.userEmail,
-          date: comment.created_at,
-          commentBody: comment.commentBody
-        };
-
-        this.setState(prevState => ({
-          comments: [...prevState.comments, commentObject]
-        }));
-      }
-    });
-  }
-
-  async checkIfUserTakePartInMeeting() {
-    let response;
-
-    try {
-      const response = await axios.post(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/checkIfUserTakePartInMeeting`,
-        {
-          userId: this.state.currentUserId,
-          meetingId: this.props.meetingId
-        }
-      );
-
-      //console.log(response.data);
-
-      if (response.data == 1) {
-        this.setState({
-          displayTakPartBtn: false,
-          displayCommentsContainer: true,
-          displayResignBtn: true
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   async takePartClick() {
-    let takePart = true;
-
-    const allMatches = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings`
+    const takePart = await axios.post(
+      `${this.props.appPath}/api/addEventUserRelation`,
+      {
+        userId: this.state.currentUserId,
+        eventId: this.props.item.id
+      }
     );
 
-    allMatches.data.map(singleMatchUserWithMeeting => {
-      if (
-        singleMatchUserWithMeeting.userId == this.state.currentUserId &&
-        singleMatchUserWithMeeting.eventId == this.props.meetingID
-      ) {
-        takePart = false;
-      }
-    });
+    if (takePart.status == 200) {
+      this.setState({ displayTakePartBtn: false, displayResignBtn: true });
 
-    if (takePart == false) {
-      this.props.showAlertWarning(
-        "Użytkownik " + this.state.loggedInUserEmail + " wziął już udział!"
-      );
+      let newUser = {
+        email: this.state.currentUserEmail,
+        id: this.state.currentUserId
+      };
+
+      this.setState(prevState => ({
+        users: [...prevState.users, newUser]
+      }));
+
+      this.props.showAlertSuccess("Dodano uzytkownika do spotkania");
     } else {
-      const savedMatchUserWithMeeting = await axios.post(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeeting`,
-        {
-          userId: this.state.currentUserId,
-          eventId: this.props.meetingId
-        }
+      this.props.showAlertWarning(
+        "Nie udało się zapisać uzytkownika do wydarzenia."
       );
-
-      if (savedMatchUserWithMeeting.status == "200") {
-        const user = await axios.get(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/user/${
-            this.state.currentUserId
-          }`
-        );
-
-        if (user.status == 200) {
-          let userObject = {
-            email: user.data[0].email,
-            id: user.data[0].id
-          };
-
-          this.setState(prevState => ({
-            usersEmails: [...prevState.usersEmails, userObject]
-          }));
-
-          this.setState({
-            displayTakPartBtn: false,
-            displayResignBtn: true,
-            displayCommentsContainer: true
-          });
-
-          this.props.showAlertSuccess(
-            "Wziąłeś udział w wydarzeniu. Możesz dodawać komentarze."
-          );
-        } else {
-          this.props.showAlertWarning(
-            "Nie można dodać użytkownika do spotkania."
-          );
-        }
-      } else {
-        this.props.showAlertWarning(
-          "Błąd. Nie można dodać użytkownika do spotkania."
-        );
-      }
     }
   }
 
   async resignClick() {
-    const allMatches = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings`
+    const resign = await axios.post(
+      `${this.props.appPath}/api/removeEventUserRelation`,
+      {
+        userId: this.state.currentUserId,
+        eventId: this.props.item.id
+      }
     );
 
-    allMatches.data.map(async (singleMatchUserWithMeeting, i) => {
-      if (
-        singleMatchUserWithMeeting.userId == this.state.currentUserId &&
-        singleMatchUserWithMeeting.eventId == this.props.meetingId
+    if (resign.status == 200) {
+      this.setState({ displayTakePartBtn: true, displayResignBtn: false });
+
+      let currentUserId = this.state.currentUserId;
+
+      const usersArrayWithoutDeletedUser = this.state.users.filter(function(
+        user
       ) {
-        const deletedUserFromMatchUserWithEventTable = await axios.delete(
-          `http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteMatchUserWithMeeting/${
-            singleMatchUserWithMeeting.id
-          }`,
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            }
-          }
-        );
+        return user.id != currentUserId;
+      });
 
-        if (deletedUserFromMatchUserWithEventTable.status == "200") {
-          const savedDeleteUserFromMeeting = await axios.post(
-            `http://phplaravel-226937-693336.cloudwaysapps.com/api/deleteUserFromMeeting`,
-            {
-              userId: this.state.currentUserId,
-              meetingId: this.props.meetingId
-            }
-          );
+      this.setState({ users: usersArrayWithoutDeletedUser });
+      console.log(usersArrayWithoutDeletedUser);
 
-          if (savedDeleteUserFromMeeting.status == "200") {
-            this.props.showAlertSuccess("Szkoda, że rezygnujesz.");
+      this.props.showAlertSuccess("Usunięto uzytkownika do spotkania");
+    } else {
+      this.props.showAlertWarning(
+        "Nie udało się usunąć uzytkownika do wydarzenia."
+      );
+    }
+  }
 
-            this.setState({
-              displayTakPartBtn: true,
-              displayResignBtn: false,
-              displayCommentsContainer: false
-            });
+  isAuthor() {
+    if (this.props.item.users[0].id == this.state.currentUserId) {
+      this.setState({
+        isAuthor: true,
+        displayTakePartBtn: false,
+        displayResignBtn: false
+      });
+    }
+  }
 
-            const updatedResignedUsersEmailsList = [
-              ...this.state.resignedUsersEmails
-            ];
-
-            //console.log(updatedResignedUsersEmailsList);
-
-            if (updatedResignedUsersEmailsList.length == 0) {
-              this.setState(prevState => ({
-                resignedUsersEmails: [
-                  ...prevState.resignedUsersEmails,
-                  this.state.currentUserEmail
-                ]
-              }));
-            } else {
-              updatedResignedUsersEmailsList.map((email, i) => {
-                //console.log(email);
-                if (email != this.state.currentUserId) {
-                  this.setState(prevState => ({
-                    resignedUsersEmails: [
-                      ...prevState.resignedUsersEmails,
-                      this.state.currentUserEmail
-                    ]
-                  }));
-                }
-              });
-            }
-
-            const updatedUsersList = [...this.state.usersEmails];
-
-            updatedUsersList.map((emailElement, i) => {
-              if (emailElement.email == this.state.currentUserEmail) {
-                updatedUsersList.splice(i, 1);
-              }
-            });
-
-            this.setState({ usersEmails: updatedUsersList });
-          } else {
-            this.props.showAlertWarning(
-              "Problem z usunięciem użytkownika ze spotkania."
-            );
-          }
-        } else {
-          this.props.showAlertWarning(
-            "Problem z usunięciem użytkownika z tabeli match_user_with_meeting."
-          );
-        }
-      }
-    });
+  isLimit() {
+    if (this.props.item.users.length == this.props.item.limit) {
+      this.setState({ isLimit: true });
+    }
   }
 
   async componentDidMount() {
@@ -327,80 +159,23 @@ class SingleMeetingDetails extends Component {
       await this.setState({
         currentUserId: storeData.user.user.userId,
         currentUserEmail: storeData.user.user.userEmail,
-        currentUserNickName: storeData.user.user.userNickName,
-        startLat: this.props.startPlaceLattitude,
-        startLng: this.props.startPlaceLongitude,
-        stopLat: this.props.stopPlaceLattitude,
-        stopLng: this.props.stopPlaceLongitude
+        currentUserNickName: storeData.user.user.userNickName
       });
 
-      await this.checkIfUserTakePartInMeeting();
-
-      await this.loggedInUserInfo();
+      await this.isAuthor();
+      await this.isLimit();
     } else {
       await this.setState({
-        startLat: this.props.startPlaceLattitude,
-        startLng: this.props.startPlaceLongitude,
-        stopLat: this.props.stopPlaceLattitude,
-        stopLng: this.props.stopPlaceLongitude
+        startLat: this.props.item.startPlaceLattitude,
+        startLng: this.props.item.startPlaceLongitude,
+        stopLat: this.props.item.stopPlaceLattitude,
+        stopLng: this.props.item.stopPlaceLongitude
       });
     }
 
-    let meetingLimit = await this.getCurrentMeetingLimit();
-
-    let usersIDs = [];
-
-    const allMatches = await axios.get(
-      `http://phplaravel-226937-693336.cloudwaysapps.com/api/matchUserWithMeetings`
-    );
-
-    let meetingMatched = 0;
-
-    allMatches.data.map((singleMatch, i) => {
-      if (singleMatch.eventId == this.props.meetingId) {
-        usersIDs.push(singleMatch.userId);
-        meetingMatched++;
-
-        if (
-          singleMatch.userId == this.state.currentUserId &&
-          this.state.currentUserNickName != this.props.author
-        ) {
-          this.setState({ displayTakPartBtn: false });
-          this.setState({ displayCommentsContainer: true });
-          this.setState({ displayResignBtn: true });
-        }
-      }
-    });
-
-    if (meetingMatched < meetingLimit) {
-      this.setState({ displayTakPartBtn: true });
+    if (!this.state.isAuthor) {
+      await this.checkTakePart();
     }
-
-    usersIDs.map(async (userId, i) => {
-      //console.log(userId);
-      const allUsers = await axios.get(
-        `http://phplaravel-226937-693336.cloudwaysapps.com/api/users`
-      );
-
-      allUsers.data.map((singleUser, i) => {
-        if (singleUser.id == parseInt(userId)) {
-          let userObject = {
-            email: singleUser.email,
-            id: singleUser.id
-          };
-
-          this.setState(prevState => ({
-            usersEmails: [...prevState.usersEmails, userObject]
-          }));
-        } else {
-          console.log("cant map user id");
-        }
-      });
-    });
-
-    await this.getResignedUsersList();
-
-    await this.getCurrentMeetingComments();
 
     this.props.switchLoader(false);
   }
@@ -411,16 +186,14 @@ class SingleMeetingDetails extends Component {
         <div className="col-sm-6 singleMeetingDetailsDataCol">
           <Animate steps={this.props.animationSteps}>
             <div>
-              <h2>
-                {this.props.title} - {this.props.date}{" "}
-              </h2>
+              <h2>{this.props.item.title}</h2>
 
               <div
                 className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.setNewCenterCoords(
-                    this.state.startLat,
-                    this.state.startLng
+                    this.props.item.startPlaceLattitude,
+                    this.props.item.startPlaceLongitude
                   );
                 }}
               >
@@ -431,8 +204,8 @@ class SingleMeetingDetails extends Component {
                 className="btn btn-default btnBlue btnCircled"
                 onClick={() => {
                   this.setNewCenterCoords(
-                    this.state.stopLat,
-                    this.state.stopLng
+                    this.props.item.stopPlaceLattitude,
+                    this.props.item.stopPlaceLongitude
                   );
                 }}
               >
@@ -440,106 +213,114 @@ class SingleMeetingDetails extends Component {
               </div>
 
               <p>
-                <strong>Opis:</strong> {this.props.description}
+                <strong>Opis:</strong> {this.props.item.description}
               </p>
 
               <p>
-                <strong>Stworzone przez:</strong> {this.props.author}
+                <strong>Stworzone przez:</strong>{" "}
+                {this.props.item.users[0].nickName}
               </p>
 
               <p>
-                <strong>Limit uczestników:</strong> {this.props.limit}{" "}
-                {this.state.usersEmails.length == this.props.limit
-                  ? " (osiągnięto limit)"
-                  : ""}
+                <strong>Limit uczestników:</strong> {this.props.item.limit} (
+                {this.state.users.length} bierze udział
+                {this.state.users.length == this.props.item.limit &&
+                  ", osiągnięto limit"}
+                )
               </p>
 
               <p>
                 <strong>Wezmą udział:</strong>
               </p>
 
-              {this.state.usersEmails.map((user, i) => {
-                return <p key={i}>{user.email}</p>;
+              {this.state.users.map((user, i) => {
+                return <p>{user.email}</p>;
               })}
 
-              {this.state.resignedUsersEmails.length > 0 && (
-                <p>
-                  <strong>Użytkownicy, którzy zrezygnowali:</strong>
-                </p>
-              )}
-
-              {this.state.resignedUsersEmails.map((userEmail, i) => {
-                return <p key={i}>{userEmail}</p>;
-              })}
-
-              {this.state.displayTakPartBtn &&
-              this.props.author != this.state.currentUserNickName ? (
-                <div
-                  className="btn btn-default btnBlue btnCircled"
-                  onClick={this.takePartClick}
-                >
-                  Weź udział
-                </div>
-              ) : (
-                ""
-              )}
+              {this.state.displayTakePartBtn &&
+                this.state.currentUserId &&
+                !this.state.isLimit && (
+                  <div
+                    className="btn btn-default btnBlue btnCircled"
+                    onClick={this.takePartClick}
+                  >
+                    Weź udział
+                  </div>
+                )}
 
               {this.state.displayResignBtn &&
-              this.props.author != this.state.currentUserNickName ? (
-                <div
-                  className="btn btn-default btnBlue btnCircled"
-                  onClick={this.resignClick}
-                >
-                  Zrezygnuj
-                </div>
-              ) : (
-                ""
-              )}
+                this.state.currentUserId &&
+                !this.state.isLimit && (
+                  <div
+                    className="btn btn-default btnBlue btnCircled"
+                    onClick={this.resignClick}
+                  >
+                    Zrezygnuj
+                  </div>
+                )}
 
-              {this.state.displayCommentsContainer && (
+              {this.state.displayResignBtn || this.state.isAuthor ? (
                 <p>
                   <strong>Komentarze:</strong>
                 </p>
+              ) : (
+                ""
               )}
 
-              {this.state.displayCommentsContainer
+              {this.state.displayResignBtn || this.state.isAuthor
                 ? this.state.comments.map((comment, i) => {
                     return (
                       <Comment
                         key={i}
                         userNickname={comment.userEmail}
-                        date={comment.date}
-                        commentBody={comment.commentBody}
+                        item={comment}
                       />
                     );
                   })
                 : ""}
 
-              {this.state.displayCommentsContainer && (
+              {this.state.displayResignBtn || this.state.isAuthor ? (
                 <CommentForm
-                  loggedInUserEmail={this.state.loggedInUserEmail}
-                  loggedInUserNickname={this.state.loggedInUserNickname}
-                  meetingId={this.props.meetingId}
+                  loggedInUserEmail={this.state.currentUserEmail}
+                  loggedInUserNickname={this.state.currentUserNickName}
+                  meetingId={this.props.item.id}
                   addCommentToState={this.addCommentToState}
                   showAlertSuccess={this.props.showAlertSuccess}
                   showAlertWarning={this.props.showAlertWarning}
+                  appPath={this.props.appPath}
                 />
+              ) : (
+                ""
               )}
             </div>
           </Animate>
         </div>
 
         <div className="col-sm-6 meetingMapContainer">
-          <MapComponent
-            latCenter={this.props.startPlaceLattitude}
-            lngCenter={this.props.startPlaceLongitude}
+          {/*<MapComponent
+            latCenter={this.state.startPlaceLattitude}
+            lngCenter={this.state.startPlaceLongitude}
+            secondLatCenter={this.state.stopPlaceLattitude}
+            secondLngCenter={this.state.stopPlaceLongitude}
             allowDragableMarker={false}
             displayFirstMarker={true}
             displaySecondMarker={true}
-            secondLatCenter={this.props.stopPlaceLattitude}
-            secondLngCenter={this.props.stopPlaceLongitude}
             centerCoord={this.state.centerCoord}
             hideSearchBox={true}
+          />*/}
+
+          <MapComponent
+            latCenter={this.state.startLat}
+            lngCenter={this.state.startLng}
+            secondLatCenter={this.state.stopLat}
+            secondLngCenter={this.state.stopLng}
+            //markersData={this.state.markersData}
+            mapZoom={10}
+            centerCoord={this.state.centerCoord}
+            hideSearchBox={true}
+            allowDragableMarker={false}
+            displayFirstMarker={true}
+            displaySecondMarker={true}
           />
         </div>
       </div>
