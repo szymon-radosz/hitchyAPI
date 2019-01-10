@@ -10,8 +10,6 @@ class SingleMeetingDetails extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props);
-
     this.state = {
       displayTakePartBtn: true,
       displayResignBtn: false,
@@ -66,8 +64,6 @@ class SingleMeetingDetails extends Component {
       created_at: commentDate,
       comment_body: commentBody
     };
-
-    //console.log(commentObject);
 
     this.setState(prevState => ({
       comments: [...prevState.comments, commentObject]
@@ -124,7 +120,6 @@ class SingleMeetingDetails extends Component {
       });
 
       this.setState({ users: usersArrayWithoutDeletedUser });
-      console.log(usersArrayWithoutDeletedUser);
 
       this.props.showAlertSuccess("Usunięto uzytkownika do spotkania");
     } else {
@@ -234,7 +229,7 @@ class SingleMeetingDetails extends Component {
               </p>
 
               {this.state.users.map((user, i) => {
-                return <p>{user.email}</p>;
+                return <p key={i}>{user.email}</p>;
               })}
 
               {this.state.displayTakePartBtn &&
@@ -267,8 +262,9 @@ class SingleMeetingDetails extends Component {
                 ""
               )}
 
-              {this.state.displayResignBtn || this.state.isAuthor
-                ? this.state.comments.map((comment, i) => {
+              {this.state.displayResignBtn ||
+                (this.state.isAuthor &&
+                  this.state.comments.map((comment, i) => {
                     return (
                       <Comment
                         key={i}
@@ -276,51 +272,35 @@ class SingleMeetingDetails extends Component {
                         item={comment}
                       />
                     );
-                  })
-                : ""}
+                  }))}
 
-              {this.state.displayResignBtn || this.state.isAuthor ? (
-                <CommentForm
-                  loggedInUserEmail={this.state.currentUserEmail}
-                  loggedInUserNickname={this.state.currentUserNickName}
-                  meetingId={this.props.item.id}
-                  addCommentToState={this.addCommentToState}
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  appPath={this.props.appPath}
-                />
-              ) : (
-                ""
-              )}
+              {this.state.displayResignBtn ||
+                (this.state.isAuthor && (
+                  <CommentForm
+                    loggedInUserEmail={this.state.currentUserEmail}
+                    loggedInUserNickname={this.state.currentUserNickName}
+                    meetingId={this.props.item.id}
+                    addCommentToState={this.addCommentToState}
+                    showAlertSuccess={this.props.showAlertSuccess}
+                    showAlertWarning={this.props.showAlertWarning}
+                    appPath={this.props.appPath}
+                  />
+                ))}
             </div>
           </Animate>
         </div>
 
         <div className="col-sm-6 meetingMapContainer">
-          {/*<MapComponent
-            latCenter={this.state.startPlaceLattitude}
-            lngCenter={this.state.startPlaceLongitude}
-            secondLatCenter={this.state.stopPlaceLattitude}
-            secondLngCenter={this.state.stopPlaceLongitude}
-            allowDragableMarker={false}
-            displayFirstMarker={true}
-            displaySecondMarker={true}
-            centerCoord={this.state.centerCoord}
-            hideSearchBox={true}
-          />*/}
-
           <MapComponent
             latCenter={this.state.startLat}
             lngCenter={this.state.startLng}
             secondLatCenter={this.state.stopLat}
             secondLngCenter={this.state.stopLng}
-            //markersData={this.state.markersData}
             mapZoom={10}
             centerCoord={this.state.centerCoord}
+            setNewCenterCoords={this.setNewCenterCoords}
             hideSearchBox={true}
             allowDragableMarker={false}
-            displayFirstMarker={true}
-            displaySecondMarker={true}
           />
         </div>
       </div>

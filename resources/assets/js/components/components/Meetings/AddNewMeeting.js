@@ -40,8 +40,6 @@ class AddNewMeeting extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     let savedMeeting;
-    let savedMatchUserWithMeeting;
-    //let savedMeetingId;
 
     if (this.state.limit == "Wybierz") {
       this.props.showAlertWarning("Wybierz limit użytkowników.");

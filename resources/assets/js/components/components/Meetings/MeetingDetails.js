@@ -21,9 +21,9 @@ class MeetingDetails extends Component {
       `${this.props.appPath}/api/events/${meetingId}`
     );
 
-    //console.log(getMeeting);
-
     const meeting = getMeeting.data[0];
+
+    console.log(meeting);
 
     this.setState(prevState => ({
       meetingData: [...prevState.meetingData, meeting]
@@ -42,6 +42,7 @@ class MeetingDetails extends Component {
               showAlertWarning={this.props.showAlertWarning}
               switchLoader={this.props.switchLoader}
               animationSteps={this.props.animationSteps}
+              appPath={this.props.appPath}
             />
           );
         })}

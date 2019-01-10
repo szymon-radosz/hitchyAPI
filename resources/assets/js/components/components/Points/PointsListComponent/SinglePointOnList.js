@@ -77,7 +77,6 @@ class SinglePointOnList extends Component {
     let sumOfVotes = 0;
 
     this.props.item.users.map((user, i) => {
-      console.log(user);
       if (user.pivot.user_id == this.state.currentUserId) {
         this.setState({ userCanVote: false });
       }

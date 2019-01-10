@@ -432,9 +432,12 @@ export default class MapComponent extends Component {
       longitude = lng;
     }
 
-    console.log([lattitude, longitude]);
+    //console.log([lattitude, longitude]);
 
-    this.props.setNewCenterCoords(lattitude, longitude, true);
+    {
+      this.props.setNewCenterCoords &&
+        this.props.setNewCenterCoords(lattitude, longitude, true);
+    }
   }
 
   async componentDidMount() {

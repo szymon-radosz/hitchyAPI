@@ -69,8 +69,6 @@ class MainMeetings extends Component {
       });
 
       await allMeetings.data.data.map((item, i) => {
-        console.log(item);
-
         let singleStartMarkerData = {
           key: uuidv1(),
           position: [item.startPlaceLattitude, item.startPlaceLongitude],
