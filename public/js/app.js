@@ -6250,7 +6250,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
 var loginUser = function loginUser(userData) {
   return function (dispatch) {
-    var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://127.0.0.1:8000/api/login", {
+    var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://auto.last-bee.com/api/login", {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     }).then(function (user) {
@@ -34110,7 +34110,7 @@ var animationSteps = [{
   duration: 600
 }];
 
-var appPath = "http://127.0.0.1:8000";
+var appPath = "http://auto.last-bee.com";
 
 var Main = function (_Component) {
   _inherits(Main, _Component);
