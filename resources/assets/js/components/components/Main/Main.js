@@ -17,7 +17,7 @@ const animationSteps = [
   }
 ];
 
-const appPath = "http://127.0.0.1:8000";
+const appPath = "http://auto.last-bee.com";
 
 class Main extends Component {
   constructor(props) {
