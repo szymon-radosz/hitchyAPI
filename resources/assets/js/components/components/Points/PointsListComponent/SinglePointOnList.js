@@ -70,7 +70,7 @@ class SinglePointOnList extends Component {
   async componentDidMount() {
     let storeData = store.getState();
 
-    if (storeData.user.user.userId) {
+    if (storeData.user.user && storeData.user.user.userId) {
       await this.setState({ currentUserId: storeData.user.user.userId });
     }
 

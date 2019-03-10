@@ -72,7 +72,7 @@ class AddNewMeeting extends Component {
   componentDidMount() {
     let storeData = store.getState();
 
-    if (storeData.user.user.userId) {
+    if (storeData.user.user && storeData.user.user.userId) {
       this.setState({ userId: storeData.user.user.userId });
     }
   }

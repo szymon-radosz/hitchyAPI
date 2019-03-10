@@ -47,7 +47,7 @@ class CommentForm extends Component {
   componentDidMount() {
     let storeData = store.getState();
 
-    if (storeData.user.user.userId) {
+    if (storeData.user.user && storeData.user.user.userId) {
       this.setState({
         currentUserId: storeData.user.user.userId
       });

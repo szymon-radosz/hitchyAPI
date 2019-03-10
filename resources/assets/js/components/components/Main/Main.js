@@ -12,7 +12,6 @@ import MainProfile from "./../Profile/MainProfile.js";
 import MainPoints from "./../Points/MainPoints.js";
 import AddNewPoint from "./../Points/AddNewPoint";
 import { store } from "./../../store";
-import LogoutBtn from "./LogoutBtn";
 import Joyride from "react-joyride";
 
 const animationSteps = [
@@ -95,18 +94,20 @@ class Main extends Component {
 
       let storeData = store.getState();
 
-      if (storeData.user.user.userId) {
+      if (storeData.user.user && storeData.user.user.userId) {
         this.setState({ userIsLoggedIn: true });
-      } else if (storeData.user.user == "") {
+      } else if (storeData.user.user && storeData.user.user == "") {
         this.setState({ userIsLoggedIn: false });
       }
     });
 
     let storeData = store.getState();
 
-    if (storeData.user.user.userId) {
+    console.log(storeData.user);
+
+    if (storeData.user.user && storeData.user.user.userId) {
       this.setState({ userIsLoggedIn: true });
-    } else if (storeData.user.user == "") {
+    } else if (storeData.user.user && storeData.user.user == "") {
       this.setState({ userIsLoggedIn: false });
     }
   }

@@ -177,7 +177,11 @@ class MainPoints extends Component {
   async componentDidMount() {
     let storeData = store.getState();
 
-    if (storeData.user.user.userId && !this.props.guestUser) {
+    if (
+      storeData.user.user &&
+      storeData.user.user.userId &&
+      !this.props.guestUser
+    ) {
       await this.setState({ currentUserId: storeData.user.user.userId });
     }
 
