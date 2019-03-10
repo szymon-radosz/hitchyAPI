@@ -5,6 +5,7 @@ import CommentForm from "./SingleMeetingComponents/CommentForm";
 import MapComponent from "./../Map/MapComponent.js";
 import { store } from "./../../store";
 import Animate from "react-smooth";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class SingleMeetingDetails extends Component {
   constructor(props) {
@@ -232,8 +233,18 @@ class SingleMeetingDetails extends Component {
                 return <p key={i}>{user.email}</p>;
               })}
 
+              {this.props.guestUser && (
+                <Link
+                  to="/login"
+                  className="btn btn-default btnBlue btnCircled"
+                >
+                  Zaloguj się, aby wziąć udział i dyskutować
+                </Link>
+              )}
+
               {this.state.displayTakePartBtn &&
                 this.state.currentUserId &&
+                !this.props.guestUser &&
                 !this.state.isLimit && (
                   <div
                     className="btn btn-default btnBlue btnCircled"
@@ -245,6 +256,7 @@ class SingleMeetingDetails extends Component {
 
               {this.state.displayResignBtn &&
                 this.state.currentUserId &&
+                !this.props.guestUser &&
                 !this.state.isLimit && (
                   <div
                     className="btn btn-default btnBlue btnCircled"

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const loginUser = userData => dispatch => {
   const login = axios
-    .post(`http://auto.last-bee.com/api/login`, {
+    .post(`http://127.0.0.1:8080/api/login`, {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     })

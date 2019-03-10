@@ -3,6 +3,7 @@ import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import { store } from "./../../store";
 import Animate from "react-smooth";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class AddNewMeeting extends Component {
   constructor(props) {
@@ -77,111 +78,130 @@ class AddNewMeeting extends Component {
   }
 
   render() {
-    return (
-      <div className="addNewPoint row addNewPointRow">
-        <div className="col-sm-6 addNewPointCol">
-          <Animate steps={this.props.animationSteps}>
-            <div>
-              <h2>Dodaj nowy punkt</h2>
+    if (this.props.userIsLoggedIn || this.props.guestUser) {
+      return (
+        <div className="addNewPoint row addNewPointRow">
+          <div className="col-sm-6 addNewPointCol">
+            <Animate steps={this.props.animationSteps}>
+              <div>
+                <h2>Dodaj nowy punkt</h2>
 
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="title">Tytuł:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    name="title"
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="description">Opis:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    name="description"
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="vote">Ocena:</label>
+                <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
-                    <select
+                    <label htmlFor="title">Tytuł:</label>
+                    <input
+                      type="text"
                       className="form-control"
-                      name="vote"
-                      id="vote"
+                      id="title"
+                      name="title"
                       onChange={this.handleChange}
-                    >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
+                      required
+                    />
                   </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="lattitude">Szerokość geograficzna:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="lattitude"
-                    name="lattitude"
-                    value={this.state.lat}
-                    onChange={this.handleChange}
-                    disabled
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="longitude">Wysokość geograficzna:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="longitude"
-                    name="longitude"
-                    value={this.state.lng}
-                    onChange={this.handleChange}
-                    disabled
-                  />
-                </div>
-
-                <input
-                  type="submit"
-                  className="btn btn-default btnBlue btnCircled"
-                  id="addNewMeetingBtn"
-                  value="Dodaj"
-                />
-              </form>
-            </div>
-          </Animate>
-        </div>
-
-        <div
-          className="col-sm-6 mainMeetingsMap"
-          style={{ height: "calc(100vh - 60px)" }}
-        >
-          <div className="mapHint">
-            <p>
-              Ustaw marker w interesującej Cię lokalizacji, żeby zmienić
-              współrzędne punktu.
-            </p>
+                  <div className="form-group">
+                    <label htmlFor="description">Opis:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="description"
+                      name="description"
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="vote">Ocena:</label>
+                    <div className="form-group">
+                      <select
+                        className="form-control"
+                        name="vote"
+                        id="vote"
+                        onChange={this.handleChange}
+                      >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="lattitude">Szerokość geograficzna:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="lattitude"
+                      name="lattitude"
+                      value={this.state.lat}
+                      onChange={this.handleChange}
+                      disabled
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="longitude">Wysokość geograficzna:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="longitude"
+                      name="longitude"
+                      value={this.state.lng}
+                      onChange={this.handleChange}
+                      disabled
+                    />
+                  </div>
+                  {this.props.guestUser ? (
+                    <Link
+                      to="/login"
+                      className="btn btn-default btnBlue btnCircled"
+                    >
+                      Zaloguj się, aby dodać wydarzenie
+                    </Link>
+                  ) : (
+                    <input
+                      type="submit"
+                      className="btn btn-default btnBlue btnCircled"
+                      id="addNewMeetingBtn"
+                      value="Dodaj"
+                    />
+                  )}
+                </form>
+              </div>
+            </Animate>
           </div>
-          <MapComponent
-            latCenter={this.state.lat}
-            lngCenter={this.state.lng}
-            allowDragableMarker={true}
-            setNewCoords={this.setNewCoords}
-            displayFirstMarker={true}
-            displaySecondMarker={false}
-            centerCoord={this.state.centerCoord}
-          />
+
+          <div
+            className="col-sm-6 mainMeetingsMap"
+            style={{ height: "calc(100vh - 60px)" }}
+          >
+            <div className="mapHint">
+              <p>
+                Ustaw marker w interesującej Cię lokalizacji, żeby zmienić
+                współrzędne punktu.
+              </p>
+            </div>
+            <MapComponent
+              latCenter={this.state.lat}
+              lngCenter={this.state.lng}
+              allowDragableMarker={true}
+              setNewCoords={this.setNewCoords}
+              displayFirstMarker={true}
+              displaySecondMarker={false}
+              centerCoord={this.state.centerCoord}
+            />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <h4 className="emptyHeader">
+            Musisz być zalogowany lub mieć status gościa poprzez odnośnik na
+            stronie głównej.
+          </h4>
+        </div>
+      );
+    }
   }
 }
 

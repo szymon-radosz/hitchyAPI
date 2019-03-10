@@ -23,8 +23,6 @@ class MeetingDetails extends Component {
 
     const meeting = getMeeting.data[0];
 
-    console.log(meeting);
-
     this.setState(prevState => ({
       meetingData: [...prevState.meetingData, meeting]
     }));

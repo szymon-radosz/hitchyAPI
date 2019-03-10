@@ -50,11 +50,13 @@ class SingleMeetingOnList extends Component {
                 {this.props.item.limit} (wzięło udział:{" "}
                 {this.props.item.users.length})
               </p>
+
               <Link to={`/events/${this.props.item.id}`}>
                 <div className="btn btn-default btnBlue btnCircled">
                   Szczegóły
                 </div>
               </Link>
+
               <div
                 className="btn btn-default btnBlue btnCircled"
                 onClick={() => {

@@ -6250,7 +6250,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
 var loginUser = function loginUser(userData) {
   return function (dispatch) {
-    var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://auto.last-bee.com/api/login", {
+    var login = __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://127.0.0.1:8080/api/login", {
       emailOrNickname: userData.emailOrNickname,
       password: userData.password
     }).then(function (user) {
@@ -7836,7 +7836,7 @@ var MainMeetings = function (_Component) {
       paginationPageLimit: 1,
       meetingsData: [],
       markersData: [],
-      centerCoord: [],
+      centerCoord: [40.73061, -73.935242],
       lat: 40.73061,
       lng: -73.935242
     };
@@ -8075,64 +8075,77 @@ var MainMeetings = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        "div",
-        { className: "row listOfMeetingsRow" },
-        this.props.searchInLocation ? "searchInLocation istnieje" : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      if (this.props.userIsLoggedIn || this.props.guestUser) {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          { className: "row listOfMeetingsRow" },
+          this.props.searchInLocation ? "searchInLocation istnieje" : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            null,
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "col-sm-6 listOfMeetingsCol" },
+              this.state.meetingsData.map(function (item, i) {
+                return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__["a" /* default */], {
+                  key: i,
+                  changeMarker: _this3.changeMarker,
+                  setNewCenterCoords: _this3.setNewCenterCoords,
+                  item: item,
+                  setCoordinates: _this3.setCoordinates,
+                  animationSteps: _this3.props.animationSteps,
+                  guestUser: _this3.props.guestUser
+                });
+              }),
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_5_react_smooth__["a" /* default */],
+                { steps: this.props.animationSteps },
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  null,
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    {
+                      className: "btn btn-default paginateBtn btnCircled btnGray",
+                      onClick: this.prevPointsPage
+                    },
+                    "Poprzednie"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    {
+                      className: "btn btn-default paginateBtn btnCircled btnGray",
+                      onClick: this.nextPointsPage
+                    },
+                    "Nastepne"
+                  )
+                )
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              "div",
+              { className: "col-sm-6 meetingMapContainer" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Map_MapComponent_js__["a" /* default */], {
+                latCenter: this.state.lat,
+                lngCenter: this.state.lng,
+                markersData: this.state.markersData,
+                centerCoord: this.state.centerCoord,
+                setNewCenterCoords: this.setNewCenterCoords,
+                showSearchBox: true
+              })
+            )
+          )
+        );
+      } else {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
           null,
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            { className: "col-sm-6 listOfMeetingsCol" },
-            this.state.meetingsData.map(function (item, i) {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__["a" /* default */], {
-                key: i,
-                changeMarker: _this3.changeMarker,
-                setNewCenterCoords: _this3.setNewCenterCoords,
-                item: item,
-                setCoordinates: _this3.setCoordinates,
-                animationSteps: _this3.props.animationSteps
-              });
-            }),
-            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_5_react_smooth__["a" /* default */],
-              { steps: this.props.animationSteps },
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                null,
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  {
-                    className: "btn btn-default paginateBtn btnCircled btnGray",
-                    onClick: this.prevPointsPage
-                  },
-                  "Poprzednie"
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  {
-                    className: "btn btn-default paginateBtn btnCircled btnGray",
-                    onClick: this.nextPointsPage
-                  },
-                  "Nastepne"
-                )
-              )
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "div",
-            { className: "col-sm-6 meetingMapContainer" },
-            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Map_MapComponent_js__["a" /* default */], {
-              latCenter: this.state.lat,
-              lngCenter: this.state.lng,
-              markersData: this.state.markersData,
-              centerCoord: this.state.centerCoord,
-              setNewCenterCoords: this.setNewCenterCoords,
-              showSearchBox: true
-            })
+            "h4",
+            { className: "emptyHeader" },
+            "Musisz by\u0107 zalogowany lub mie\u0107 status go\u015Bcia poprzez odno\u015Bnik na stronie g\u0142\xF3wnej."
           )
-        )
-      );
+        );
+      }
     }
   }]);
 
@@ -34086,6 +34099,21 @@ module.exports = "/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Menu_js__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__images_loader_svg__ = __webpack_require__(545);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__images_loader_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__images_loader_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LandingPage_js__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Account_Login_js__ = __webpack_require__(495);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Account_Register_js__ = __webpack_require__(508);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__ = __webpack_require__(509);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(522);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(526);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__ = __webpack_require__(529);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__ = __webpack_require__(532);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__store__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__LogoutBtn__ = __webpack_require__(533);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_react_joyride__ = __webpack_require__(534);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34093,6 +34121,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -34110,7 +34151,7 @@ var animationSteps = [{
   duration: 600
 }];
 
-var appPath = "http://auto.last-bee.com";
+var appPath = "http://127.0.0.1:8080";
 
 var Main = function (_Component) {
   _inherits(Main, _Component);
@@ -34120,23 +34161,100 @@ var Main = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
+    _this.handleClickStart = function (e) {
+      e.preventDefault();
+
+      _this.setState({
+        run: true,
+        showGuideBtn: false
+      });
+    };
+
+    _this.callback = function (data) {
+      var action = data.action,
+          index = data.index,
+          type = data.type;
+    };
+
     _this.state = {
       alertSuccess: false,
       alertSuccessDescription: "",
       alertWarning: false,
       alertWarningDescription: "",
-      loader: false
+      loader: false,
+      guestUser: false,
+      userIsLoggedIn: false,
+      searchInLocation: "",
+      showGuideBtn: true,
+      run: false
     };
-
+    _this.changeStateOfSearchInLocation = _this.changeStateOfSearchInLocation.bind(_this);
+    /*this.cleanStateOfSearchInLocation = this.cleanStateOfSearchInLocation.bind(
+      this
+    );*/
+    _this.handleClickStart = _this.handleClickStart.bind(_this);
     _this.showAlertSuccess = _this.showAlertSuccess.bind(_this);
     _this.showAlertWarning = _this.showAlertWarning.bind(_this);
     _this.hideAlertSuccess = _this.hideAlertSuccess.bind(_this);
     _this.hideAlertWarning = _this.hideAlertWarning.bind(_this);
     _this.switchLoader = _this.switchLoader.bind(_this);
+    _this.setGuestUser = _this.setGuestUser.bind(_this);
+    _this.hideGuestUser = _this.hideGuestUser.bind(_this);
     return _this;
   }
 
   _createClass(Main, [{
+    key: "changeStateOfSearchInLocation",
+    value: function changeStateOfSearchInLocation(value) {
+      this.setState({
+        searchInLocation: value
+      });
+    }
+
+    /*cleanStateOfSearchInLocation() {
+      this.setState({
+        searchInLocation: ""
+      });
+    }*/
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].subscribe(function () {
+        //console.log(store.getState());
+
+        var storeData = __WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].getState();
+
+        if (storeData.user.user.userId) {
+          _this2.setState({ userIsLoggedIn: true });
+        } else if (storeData.user.user == "") {
+          _this2.setState({ userIsLoggedIn: false });
+        }
+      });
+
+      var storeData = __WEBPACK_IMPORTED_MODULE_13__store__["b" /* store */].getState();
+
+      if (storeData.user.user.userId) {
+        this.setState({ userIsLoggedIn: true });
+      } else if (storeData.user.user == "") {
+        this.setState({ userIsLoggedIn: false });
+      }
+    }
+  }, {
+    key: "setGuestUser",
+    value: function setGuestUser() {
+      //console.log("setGuestUser");
+      this.setState({ guestUser: true });
+    }
+  }, {
+    key: "hideGuestUser",
+    value: function hideGuestUser() {
+      //console.log("hideGuestUser");
+      this.setState({ guestUser: false });
+    }
+  }, {
     key: "showAlertSuccess",
     value: function showAlertSuccess(info) {
       this.setState({
@@ -34184,229 +34302,23 @@ var Main = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        null,
-        this.state.alertSuccess && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "alert alert-success alert-dismissible", role: "alert" },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "a",
-            { href: "#", className: "close", onClick: this.hideAlertSuccess },
-            "\xD7"
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "strong",
-            null,
-            this.state.alertSuccessDescription
-          )
-        ),
-        this.state.alertWarning && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "alert alert-danger alert-dismissible", role: "alert" },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "a",
-            { href: "#", className: "close", onClick: this.hideAlertWarning },
-            "\xD7"
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "strong",
-            null,
-            this.state.alertWarningDescription
-          )
-        ),
-        this.state.loader && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "loaderContainer" },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "div",
-            { className: "loader" },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: __WEBPACK_IMPORTED_MODULE_2__images_loader_svg___default.a })
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], {
-          switchLoader: this.switchLoader,
-          showAlertSuccess: this.showAlertSuccess,
-          showAlertWarning: this.showAlertWarning,
-          store: this.props.store,
-          animationSteps: animationSteps,
-          appPath: appPath
-        })
-      );
-    }
-  }]);
-
-  return Main;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Main);
-
-/***/ }),
-/* 229 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LandingPage_js__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Account_Login_js__ = __webpack_require__(495);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Account_Register_js__ = __webpack_require__(508);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Meetings_MainMeetings_js__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Meetings_AddNewMeeting_js__ = __webpack_require__(509);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Meetings_MeetingDetails_js__ = __webpack_require__(522);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Profile_MainProfile_js__ = __webpack_require__(526);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Points_MainPoints_js__ = __webpack_require__(529);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Points_AddNewPoint__ = __webpack_require__(532);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__store__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__LogoutBtn__ = __webpack_require__(533);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_react_joyride__ = __webpack_require__(534);
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var Menu = function (_Component) {
-  _inherits(Menu, _Component);
-
-  function Menu(props) {
-    _classCallCheck(this, Menu);
-
-    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
-
-    _this.handleClickStart = function (e) {
-      e.preventDefault();
-
-      _this.setState({
-        run: true,
-        showGuideBtn: false
-      });
-    };
-
-    _this.callback = function (data) {
-      var action = data.action,
-          index = data.index,
-          type = data.type;
-    };
-
-    _this.state = {
-      userIsLoggedIn: false,
-      searchInLocation: "",
-      showGuideBtn: true,
-      run: false
-    };
-    _this.changeStateOfSearchInLocation = _this.changeStateOfSearchInLocation.bind(_this);
-    _this.cleanStateOfSearchInLocation = _this.cleanStateOfSearchInLocation.bind(_this);
-    _this.handleClickStart = _this.handleClickStart.bind(_this);
-    return _this;
-  }
-
-  _createClass(Menu, [{
-    key: "changeStateOfSearchInLocation",
-    value: function changeStateOfSearchInLocation(value) {
-      this.setState({
-        searchInLocation: value
-      });
-    }
-  }, {
-    key: "cleanStateOfSearchInLocation",
-    value: function cleanStateOfSearchInLocation() {
-      this.setState({
-        searchInLocation: ""
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var _this2 = this;
-
-        var storeData;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                __WEBPACK_IMPORTED_MODULE_12__store__["b" /* store */].subscribe(function () {
-                  console.log(__WEBPACK_IMPORTED_MODULE_12__store__["b" /* store */].getState());
-
-                  var storeData = __WEBPACK_IMPORTED_MODULE_12__store__["b" /* store */].getState();
-
-                  if (storeData.user.user.userId) {
-                    _this2.setState({ userIsLoggedIn: true });
-                  } else if (storeData.user.user == "") {
-                    _this2.setState({ userIsLoggedIn: false });
-                  }
-                });
-
-                storeData = __WEBPACK_IMPORTED_MODULE_12__store__["b" /* store */].getState();
-
-
-                if (storeData.user.user.userId) {
-                  this.setState({ userIsLoggedIn: true });
-                } else if (storeData.user.user == "") {
-                  this.setState({ userIsLoggedIn: false });
-                }
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function componentDidMount() {
-        return _ref.apply(this, arguments);
-      }
-
-      return componentDidMount;
-    }()
-  }, {
-    key: "render",
-    value: function render() {
       var _this3 = this;
 
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* BrowserRouter */],
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["a" /* BrowserRouter */],
         null,
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "div",
           null,
-          this.state.showGuideBtn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          this.state.showGuideBtn && this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "button",
             { className: "guideBtn", onClick: this.handleClickStart },
             "Jak to dzia\u0142a?"
           ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
             { className: "userGuide" },
-            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14_react_joyride__["a" /* default */], {
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_15_react_joyride__["a" /* default */], {
               continuous: true,
               scrollToFirstStep: true,
               showProgress: true,
@@ -34524,267 +34436,188 @@ var Menu = function (_Component) {
               //callback={this.handleJoyrideCallback}
             })
           ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            "nav",
-            { className: "navbar navbar-default" },
-            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            null,
+            this.state.alertSuccess && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
-              { className: "container-fluid" },
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                { className: "navbar-headesr" },
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "button",
-                  {
-                    type: "button",
-                    className: "navbar-toggle collapsed",
-                    "data-toggle": "collapse",
-                    "data-target": "#navbar",
-                    "aria-expanded": "false",
-                    "aria-controls": "navbar"
-                  },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "span",
-                    { className: "sr-only" },
-                    "Toggle navigation"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" }),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" }),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("span", { className: "icon-bar" })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                  {
-                    to: "/",
-                    className: "navbar-brand",
-                    onClick: this.cleanStateOfSearchInLocation
-                  },
-                  "Autostart"
-                )
+              {
+                className: "alert alert-success alert-dismissible",
+                role: "alert"
+              },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "a",
+                { href: "#", className: "close", onClick: this.hideAlertSuccess },
+                "\xD7"
               ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                { id: "navbar", className: "navbar-collapse collapse" },
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "ul",
-                  { className: "nav navbar-nav navbar-right" },
-                  this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    { className: "eventsMenuLink" },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                      {
-                        to: "/meetings",
-                        onClick: this.cleanStateOfSearchInLocation
-                      },
-                      "Wydarzenia"
-                    )
-                  ),
-                  this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    { className: "pointsMenuLink" },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                      {
-                        to: "/points",
-                        onClick: this.cleanStateOfSearchInLocation
-                      },
-                      "Punkty"
-                    )
-                  ),
-                  this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    { className: "addMeetingMenuLink" },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                      {
-                        to: "/add-meeting",
-                        onClick: this.cleanStateOfSearchInLocation
-                      },
-                      "Dodaj wydarzenie"
-                    )
-                  ),
-                  this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    { className: "addPointMenuLink" },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                      {
-                        to: "/add-point",
-                        onClick: this.cleanStateOfSearchInLocation
-                      },
-                      "Dodaj punkt"
-                    )
-                  ),
-                  !this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                      {
-                        to: "/login",
-                        onClick: this.cleanStateOfSearchInLocation
-                      },
-                      "Logowanie"
-                    )
-                  ) : "",
-                  !this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                      {
-                        to: "/register",
-                        onClick: this.cleanStateOfSearchInLocation
-                      },
-                      "Rejestracja"
-                    )
-                  ),
-                  this.state.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      "div",
-                      { className: "dropdown" },
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "button",
-                        {
-                          className: "btn btnBlue btnCircled userAccountLink",
-                          type: "button",
-                          id: "dropdownMenuButton",
-                          "data-toggle": "dropdown",
-                          "aria-haspopup": "true",
-                          "aria-expanded": "false"
-                        },
-                        "Konto"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "div",
-                        {
-                          className: "dropdown-menu",
-                          "aria-labelledby": "dropdownMenuButton"
-                        },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__LogoutBtn__["a" /* default */], null),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                          __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                          {
-                            to: "/profile",
-                            onClick: this.cleanStateOfSearchInLocation
-                          },
-                          "M\xF3j profil"
-                        )
-                      )
-                    )
-                  )
-                )
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "strong",
+                null,
+                this.state.alertSuccessDescription
               )
+            ),
+            this.state.alertWarning && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              {
+                className: "alert alert-danger alert-dismissible",
+                role: "alert"
+              },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "a",
+                { href: "#", className: "close", onClick: this.hideAlertWarning },
+                "\xD7"
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "strong",
+                null,
+                this.state.alertWarningDescription
+              )
+            ),
+            this.state.loader && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              { className: "loaderContainer" },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "loader" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: __WEBPACK_IMPORTED_MODULE_2__images_loader_svg___default.a })
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], {
+                switchLoader: this.switchLoader,
+                showAlertSuccess: this.showAlertSuccess,
+                showAlertWarning: this.showAlertWarning,
+                store: this.props.store,
+                animationSteps: animationSteps,
+                appPath: appPath,
+                setGuestUser: this.setGuestUser,
+                guestUser: this.state.guestUser
+                //cleanStateOfSearchInLocation={this.cleanStateOfSearchInLocation}
+                , userIsLoggedIn: this.state.userIsLoggedIn
+              })
             )
           ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__LandingPage_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__LandingPage_js__["a" /* default */], {
                 searchInLocation: _this3.state.searchInLocation,
-                changeStateOfSearchInLocation: _this3.changeStateOfSearchInLocation
+                changeStateOfSearchInLocation: _this3.props.changeStateOfSearchInLocation,
+                setGuestUser: _this3.setGuestUser,
+                guestUser: _this3.state.guestUser,
+                hideGuestUser: _this3.hideGuestUser
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/login",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Account_Login_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Login_js__["a" /* default */], {
                 loginUser: _this3.loginUser,
                 showAlertSuccess: _this3.props.showAlertSuccess,
                 showAlertWarning: _this3.props.showAlertWarning,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/register",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Register_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Account_Register_js__["a" /* default */], {
                 showAlertSuccess: _this3.props.showAlertSuccess,
                 showAlertWarning: _this3.props.showAlertWarning,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/meetings",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Meetings_MainMeetings_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Meetings_MainMeetings_js__["a" /* default */], {
                 searchInLocation: _this3.state.searchInLocation,
-                switchLoader: _this3.props.switchLoader,
+                switchLoader: _this3.switchLoader,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath,
+                guestUser: _this3.state.guestUser,
+                userIsLoggedIn: _this3.state.userIsLoggedIn
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/points",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__Points_MainPoints_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__Points_MainPoints_js__["a" /* default */], {
                 searchInLocation: _this3.state.searchInLocation,
                 showAlertSuccess: _this3.props.showAlertSuccess,
                 showAlertWarning: _this3.props.showAlertWarning,
-                switchLoader: _this3.props.switchLoader,
+                switchLoader: _this3.switchLoader,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath,
+                guestUser: _this3.state.guestUser,
+                userIsLoggedIn: _this3.state.userIsLoggedIn
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/events/:id",
             render: function render(props) {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_MeetingDetails_js__["a" /* default */], _extends({}, props, {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__["a" /* default */], _extends({}, props, {
                 showAlertSuccess: _this3.props.showAlertSuccess,
                 showAlertWarning: _this3.props.showAlertWarning,
-                switchLoader: _this3.props.switchLoader,
+                switchLoader: _this3.switchLoader,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath,
+                guestUser: _this3.state.guestUser,
+                userIsLoggedIn: _this3.state.userIsLoggedIn
               }));
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/profile",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Profile_MainProfile_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__["a" /* default */], {
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath,
+                userIsLoggedIn: _this3.state.userIsLoggedIn
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/add-meeting",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Meetings_AddNewMeeting_js__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
                 showAlertSuccess: _this3.props.showAlertSuccess,
                 showAlertWarning: _this3.props.showAlertWarning,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath,
+                guestUser: _this3.state.guestUser,
+                userIsLoggedIn: _this3.state.userIsLoggedIn
               });
             }
           }),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["c" /* Route */], {
             exact: true,
             path: "/add-point",
             render: function render() {
-              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__Points_AddNewPoint__["a" /* default */], {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__Points_AddNewPoint__["a" /* default */], {
                 showAlertSuccess: _this3.props.showAlertSuccess,
                 showAlertWarning: _this3.props.showAlertWarning,
                 animationSteps: _this3.props.animationSteps,
-                appPath: _this3.props.appPath
+                appPath: appPath,
+                guestUser: _this3.state.guestUser,
+                userIsLoggedIn: _this3.state.userIsLoggedIn
               });
             }
           })
@@ -34793,8 +34626,186 @@ var Menu = function (_Component) {
     }
   }]);
 
+  return Main;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Main);
+
+/***/ }),
+/* 229 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LogoutBtn__ = __webpack_require__(533);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var Menu = function (_Component) {
+  _inherits(Menu, _Component);
+
+  function Menu(props) {
+    _classCallCheck(this, Menu);
+
+    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(Menu, [{
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "nav",
+        { className: "navbar navbar-default" },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "container-fluid" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "navbar-headesr" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "button",
+              {
+                type: "button",
+                className: "navbar-toggle collapsed",
+                "data-toggle": "collapse",
+                "data-target": "#navbar",
+                "aria-expanded": "false",
+                "aria-controls": "navbar"
+              },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "span",
+                { className: "sr-only" },
+                "Toggle navigation"
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", { className: "icon-bar" }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", { className: "icon-bar" }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", { className: "icon-bar" })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+              { to: "/", className: "navbar-brand" },
+              "Autostart"
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { id: "navbar", className: "navbar-collapse collapse" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "ul",
+              { className: "nav navbar-nav navbar-right" },
+              this.props.userIsLoggedIn || this.props.guestUser ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                { className: "eventsMenuLink" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                  { to: "/meetings" },
+                  "Wydarzenia"
+                )
+              ) : null,
+              this.props.userIsLoggedIn || this.props.guestUser ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                { className: "pointsMenuLink" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                  { to: "/points" },
+                  "Punkty"
+                )
+              ) : null,
+              this.props.userIsLoggedIn || this.props.guestUser ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                { className: "addMeetingMenuLink" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                  { to: "/add-meeting" },
+                  "Dodaj wydarzenie"
+                )
+              ) : null,
+              this.props.userIsLoggedIn || this.props.guestUser ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                { className: "addPointMenuLink" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                  { to: "/add-point" },
+                  "Dodaj punkt"
+                )
+              ) : null,
+              !this.props.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                  { to: "/login" },
+                  "Logowanie"
+                )
+              ) : "",
+              !this.props.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                  { to: "/register" },
+                  "Rejestracja"
+                )
+              ),
+              this.props.userIsLoggedIn && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "li",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  "div",
+                  { className: "dropdown" },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    {
+                      className: "btn btnBlue btnCircled userAccountLink",
+                      type: "button",
+                      id: "dropdownMenuButton",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    },
+                    "Konto"
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                      className: "dropdown-menu",
+                      "aria-labelledby": "dropdownMenuButton"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__LogoutBtn__["a" /* default */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                      __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                      {
+                        to: "/profile",
+                        onClick: this.props.cleanStateOfSearchInLocation
+                      },
+                      "M\xF3j profil"
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
   return Menu;
-}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Menu);
 
@@ -38013,6 +38024,11 @@ var LandingPage = function (_Component) {
       }
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.hideGuestUser();
+    }
+  }, {
     key: "render",
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -38039,7 +38055,7 @@ var LandingPage = function (_Component) {
               { className: "landingButtons" },
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                { to: "/login", onClick: this.cleanStateOfSearchInLocation },
+                { to: "/login" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   "div",
                   { className: "btn btn-default defaultBtn btnBlue btnCircled loginBtn" },
@@ -38048,10 +38064,7 @@ var LandingPage = function (_Component) {
               ),
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                {
-                  to: "/register",
-                  onClick: this.cleanStateOfSearchInLocation
-                },
+                { to: "/register" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                   "div",
                   { className: "btn btn-default defaultBtn btnBlue btnCircled" },
@@ -38059,6 +38072,15 @@ var LandingPage = function (_Component) {
                 )
               )
             )
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+          { to: "/meetings", onClick: this.props.setGuestUser },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "btn btn-default defaultBtn btnBlue btnCircled loginBtn testBtn" },
+            "Przetestuj"
           )
         )
       );
@@ -53949,6 +53971,7 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_smooth__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_router_dom__ = __webpack_require__(73);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -53962,6 +53985,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -54074,8 +54098,6 @@ var AddNewMeeting = function (_Component) {
 
               case 19:
 
-                //console.log(savedMeeting);
-
                 if (savedMeeting.status == "201") {
                   this.props.showAlertSuccess("Dodałeś nowe spotkanie");
                 } else {
@@ -54127,223 +54149,242 @@ var AddNewMeeting = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        "div",
-        { className: "addNewMeeting row addNewMeetingRow" },
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      if (this.props.userIsLoggedIn || this.props.guestUser) {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 addNewMeetingCol" },
+          { className: "addNewMeeting row addNewMeetingRow" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_5_react_smooth__["a" /* default */],
-            { steps: this.props.animationSteps },
+            "div",
+            { className: "col-sm-6 addNewMeetingCol" },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              "div",
-              null,
+              __WEBPACK_IMPORTED_MODULE_5_react_smooth__["a" /* default */],
+              { steps: this.props.animationSteps },
               __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "h2",
+                "div",
                 null,
-                "Dodaj nowy wyjazd/wydarzenie"
-              ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "form",
-                { onSubmit: this.handleSubmit },
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "title" },
-                    "Tytu\u0142:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "title",
-                    name: "title",
-                    onChange: this.handleChange
-                  })
+                  "h2",
+                  null,
+                  "Dodaj nowy wyjazd/wydarzenie"
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
+                  "form",
+                  { onSubmit: this.handleSubmit },
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "description" },
-                    "Opis:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "description",
-                    name: "description",
-                    onChange: this.handleChange
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "lattitude" },
-                    "Szeroko\u015B\u0107 geograficzna punktu startowego:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "lattitude",
-                    name: "lattitude",
-                    value: this.state.lat,
-                    onChange: this.handleChange,
-                    disabled: true
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "longitude" },
-                    "Wysoko\u015B\u0107 geograficzna punktu startowego:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "longitude",
-                    name: "longitude",
-                    value: this.state.lng,
-                    onChange: this.handleChange,
-                    disabled: true
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "lattitude" },
-                    "Szeroko\u015B\u0107 geograficzna punktu ko\u0144cowego:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "stopLat",
-                    name: "stopLat",
-                    value: this.state.secondLat,
-                    onChange: this.handleChange,
-                    disabled: true
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "longitude" },
-                    "Wysoko\u015B\u0107 geograficzna punktu startowego:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "stopLng",
-                    name: "stopLng",
-                    value: this.state.secondLng,
-                    onChange: this.handleChange,
-                    disabled: true
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "limit" },
-                    "Limit uczestnik\xF3w:"
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "title" },
+                      "Tytu\u0142:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "title",
+                      name: "title",
+                      onChange: this.handleChange
+                    })
                   ),
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                     "div",
                     { className: "form-group" },
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      "select",
-                      {
-                        className: "form-control",
-                        name: "limit",
-                        id: "limit",
-                        onChange: this.handleChange
-                      },
+                      "label",
+                      { htmlFor: "description" },
+                      "Opis:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "description",
+                      name: "description",
+                      onChange: this.handleChange
+                    })
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "lattitude" },
+                      "Szeroko\u015B\u0107 geograficzna punktu startowego:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "lattitude",
+                      name: "lattitude",
+                      value: this.state.lat,
+                      onChange: this.handleChange,
+                      disabled: true
+                    })
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "longitude" },
+                      "Wysoko\u015B\u0107 geograficzna punktu startowego:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "longitude",
+                      name: "longitude",
+                      value: this.state.lng,
+                      onChange: this.handleChange,
+                      disabled: true
+                    })
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "lattitude" },
+                      "Szeroko\u015B\u0107 geograficzna punktu ko\u0144cowego:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "stopLat",
+                      name: "stopLat",
+                      value: this.state.secondLat,
+                      onChange: this.handleChange,
+                      disabled: true
+                    })
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "longitude" },
+                      "Wysoko\u015B\u0107 geograficzna punktu startowego:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "stopLng",
+                      name: "stopLng",
+                      value: this.state.secondLng,
+                      onChange: this.handleChange,
+                      disabled: true
+                    })
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "limit" },
+                      "Limit uczestnik\xF3w:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "div",
+                      { className: "form-group" },
                       __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "2"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "3"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "4"
+                        "select",
+                        {
+                          className: "form-control",
+                          name: "limit",
+                          id: "limit",
+                          onChange: this.handleChange
+                        },
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "2"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "3"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "4"
+                        )
                       )
                     )
-                  )
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "date" },
-                    "Data:"
                   ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "date",
-                    className: "form-control",
-                    id: "date",
-                    name: "date",
-                    onChange: this.handleChange
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "date" },
+                      "Data:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "date",
+                      className: "form-control",
+                      id: "date",
+                      name: "date",
+                      onChange: this.handleChange
+                    })
+                  ),
+                  this.props.guestUser ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_6_react_router_dom__["b" /* Link */],
+                    {
+                      to: "/login",
+                      className: "btn btn-default btnBlue btnCircled"
+                    },
+                    "Zaloguj si\u0119, aby doda\u0107 wydarzenie"
+                  ) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                    type: "submit",
+                    className: "btn btn-default btnBlue btnCircled",
+                    id: "addNewMeetingBtn",
+                    value: "Dodaj"
                   })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                  type: "submit",
-                  className: "btn btn-default btnBlue btnCircled",
-                  id: "addNewMeetingBtn",
-                  value: "Dodaj"
-                })
+                )
               )
             )
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-          "div",
-          {
-            className: "col-sm-6 mainMeetingsMap",
-            style: { height: "calc(100vh - 60px)" }
-          },
+          ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            { className: "mapHint" },
+            {
+              className: "col-sm-6 mainMeetingsMap",
+              style: { height: "calc(100vh - 60px)" }
+            },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              "p",
-              null,
-              "Ustaw markery w interesuj\u0105cych Ci\u0119 lokalizacjach, \u017Ceby zmieni\u0107 wsp\xF3\u0142rz\u0119dne punktu startowego i ko\u0144cowego."
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
-            latCenter: this.state.lat,
-            lngCenter: this.state.lng,
-            secondLatCenter: this.state.secondLat,
-            secondLngCenter: this.state.secondLng,
-            allowDragableMarker: true,
-            allowDragableSecondMarker: true,
-            setNewCenterCoords: this.setNewCoords,
-            setNewSecondCoords: this.setNewSecondCoords,
-            displayFirstMarker: true,
-            displaySecondMarker: true,
-            centerCoord: this.state.centerCoord
-          })
-        )
-      );
+              "div",
+              { className: "mapHint" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "p",
+                null,
+                "Ustaw markery w interesuj\u0105cych Ci\u0119 lokalizacjach, \u017Ceby zmieni\u0107 wsp\xF3\u0142rz\u0119dne punktu startowego i ko\u0144cowego."
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
+              latCenter: this.state.lat,
+              lngCenter: this.state.lng,
+              secondLatCenter: this.state.secondLat,
+              secondLngCenter: this.state.secondLng,
+              allowDragableMarker: true,
+              allowDragableSecondMarker: true,
+              setNewCenterCoords: this.setNewCoords,
+              setNewSecondCoords: this.setNewSecondCoords,
+              displayFirstMarker: true,
+              displaySecondMarker: true,
+              centerCoord: this.state.centerCoord
+            })
+          )
+        );
+      } else {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          null,
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "h4",
+            { className: "emptyHeader" },
+            "Musisz by\u0107 zalogowany lub mie\u0107 status go\u015Bcia poprzez odno\u015Bnik na stronie g\u0142\xF3wnej."
+          )
+        );
+      }
     }
   }]);
 
@@ -54945,15 +54986,13 @@ var MeetingDetails = function (_Component) {
                 meeting = getMeeting.data[0];
 
 
-                console.log(meeting);
-
                 this.setState(function (prevState) {
                   return {
                     meetingData: [].concat(_toConsumableArray(prevState.meetingData), [meeting])
                   };
                 });
 
-              case 8:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -55011,6 +55050,7 @@ var MeetingDetails = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Map_MapComponent_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_smooth__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_router_dom__ = __webpack_require__(73);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -55026,6 +55066,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -55400,7 +55441,15 @@ var SingleMeetingDetails = function (_Component) {
                   user.email
                 );
               }),
-              this.state.displayTakePartBtn && this.state.currentUserId && !this.state.isLimit && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              this.props.guestUser && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_8_react_router_dom__["b" /* Link */],
+                {
+                  to: "/login",
+                  className: "btn btn-default btnBlue btnCircled"
+                },
+                "Zaloguj si\u0119, aby wzi\u0105\u0107 udzia\u0142 i dyskutowa\u0107"
+              ),
+              this.state.displayTakePartBtn && this.state.currentUserId && !this.props.guestUser && !this.state.isLimit && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "div",
                 {
                   className: "btn btn-default btnBlue btnCircled",
@@ -55408,7 +55457,7 @@ var SingleMeetingDetails = function (_Component) {
                 },
                 "We\u017A udzia\u0142"
               ),
-              this.state.displayResignBtn && this.state.currentUserId && !this.state.isLimit && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              this.state.displayResignBtn && this.state.currentUserId && !this.props.guestUser && !this.state.isLimit && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "div",
                 {
                   className: "btn btn-default btnBlue btnCircled",
@@ -55578,9 +55627,7 @@ var CommentForm = function (_Component) {
               case 0:
                 event.preventDefault();
 
-                console.log(this.props.appPath);
-
-                _context.next = 4;
+                _context.next = 3;
                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.props.appPath + "/api/comment", {
                   userId: this.state.currentUserId,
                   userEmail: this.props.loggedInUserEmail,
@@ -55588,7 +55635,7 @@ var CommentForm = function (_Component) {
                   commentBody: this.state.commentBody
                 });
 
-              case 4:
+              case 3:
                 savedComment = _context.sent;
 
 
@@ -55599,7 +55646,7 @@ var CommentForm = function (_Component) {
                   this.props.showAlertWarning("Nie udało się dodać komentarza.");
                 }
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -55801,8 +55848,11 @@ var MainProfile = function (_Component) {
                 allUsers = _context2.sent;
 
 
+                //console.log([allUsers, nickname, userId]);
+
                 for (i = 0; i < allUsers.data.length; i++) {
-                  if (allUsers.data[i].nickName == nickname) {
+                  //console.log([allUsers.data[i].nickName, nickname]);
+                  if (allUsers.data[i].nickName == nickname || allUsers.data[i].email == nickname) {
                     this.setState({
                       userExist: true,
                       firstName: allUsers.data[i].firstName,
@@ -56234,7 +56284,7 @@ var MainPoints = function (_Component) {
                 _context6.prev = 1;
                 allPoints = void 0;
                 _context6.t0 = filter;
-                _context6.next = _context6.t0 === "theOldest" ? 6 : _context6.t0 === "theLatest" ? 10 : _context6.t0 === "worstVoted" ? 14 : _context6.t0 === "mostTimeVoted" ? 18 : 22;
+                _context6.next = _context6.t0 === "theOldest" ? 6 : _context6.t0 === "theLatest" ? 10 : _context6.t0 === "worstVoted" ? 14 : _context6.t0 === "bestVoted" ? 18 : _context6.t0 === "mostTimeVoted" ? 22 : 26;
                 break;
 
               case 6:
@@ -56243,7 +56293,7 @@ var MainPoints = function (_Component) {
 
               case 8:
                 allPoints = _context6.sent;
-                return _context6.abrupt("break", 25);
+                return _context6.abrupt("break", 29);
 
               case 10:
                 _context6.next = 12;
@@ -56251,7 +56301,7 @@ var MainPoints = function (_Component) {
 
               case 12:
                 allPoints = _context6.sent;
-                return _context6.abrupt("break", 25);
+                return _context6.abrupt("break", 29);
 
               case 14:
                 _context6.next = 16;
@@ -56259,33 +56309,40 @@ var MainPoints = function (_Component) {
 
               case 16:
                 allPoints = _context6.sent;
-                return _context6.abrupt("break", 25);
+                return _context6.abrupt("break", 29);
 
               case 18:
                 _context6.next = 20;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.props.appPath + "/api/getTheMostTimeVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.props.appPath + "/api/getTheBestVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 20:
                 allPoints = _context6.sent;
-                return _context6.abrupt("break", 25);
+                return _context6.abrupt("break", 29);
 
               case 22:
                 _context6.next = 24;
-                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.props.appPath + "/api/getPointsNearCoords/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.props.appPath + "/api/getTheMostTimeVoted/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
 
               case 24:
                 allPoints = _context6.sent;
+                return _context6.abrupt("break", 29);
 
-              case 25:
-                _context6.next = 27;
+              case 26:
+                _context6.next = 28;
+                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.props.appPath + "/api/getPointsNearCoords/" + this.state.centerCoord[0] + "/" + this.state.centerCoord[1] + "?page=" + pageNumber);
+
+              case 28:
+                allPoints = _context6.sent;
+
+              case 29:
+                _context6.next = 31;
                 return this.setState({
-                  paginationPageLimit: allPoints.data.last_page,
                   pointsData: [],
                   markersData: []
                 });
 
-              case 27:
-                _context6.next = 29;
+              case 31:
+                _context6.next = 33;
                 return allPoints.data.data.map(function () {
                   var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(item, i) {
                     var singleMarkerData;
@@ -56301,16 +56358,16 @@ var MainPoints = function (_Component) {
                               sumOfVotes: item.sum_of_votes,
                               votesCount: item.votes_count
                             };
-
-
-                            _this2.setState(function (prevState) {
+                            _context5.next = 3;
+                            return _this2.setState(function (prevState) {
                               return {
+                                paginationPageLimit: allPoints.data.last_page,
                                 pointsData: [].concat(_toConsumableArray(prevState.pointsData), [item]),
                                 markersData: [].concat(_toConsumableArray(prevState.markersData), [singleMarkerData])
                               };
                             });
 
-                          case 2:
+                          case 3:
                           case "end":
                             return _context5.stop();
                         }
@@ -56323,24 +56380,24 @@ var MainPoints = function (_Component) {
                   };
                 }());
 
-              case 29:
+              case 33:
                 this.props.switchLoader(false);
-                _context6.next = 36;
+                _context6.next = 40;
                 break;
 
-              case 32:
-                _context6.prev = 32;
+              case 36:
+                _context6.prev = 36;
                 _context6.t1 = _context6["catch"](1);
 
                 console.log(_context6.t1);
                 this.props.switchLoader(false);
 
-              case 36:
+              case 40:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, this, [[1, 32]]);
+        }, _callee6, this, [[1, 36]]);
       }));
 
       function loadAllSpots(_x4, _x5) {
@@ -56375,7 +56432,7 @@ var MainPoints = function (_Component) {
               case 0:
                 storeData = __WEBPACK_IMPORTED_MODULE_5__store__["b" /* store */].getState();
 
-                if (!storeData.user.user.userId) {
+                if (!(storeData.user.user.userId && !this.props.guestUser)) {
                   _context7.next = 4;
                   break;
                 }
@@ -56406,122 +56463,135 @@ var MainPoints = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        "div",
-        { className: "row listOfPointsRow" },
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      if (this.props.userIsLoggedIn || this.props.guestUser) {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 listOfPointsCol" },
+          { className: "row listOfPointsRow" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_6_react_smooth__["a" /* default */],
-            { steps: this.props.animationSteps },
+            "div",
+            { className: "col-sm-6 listOfPointsCol" },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              "div",
-              { className: "mainPointsButtonPanel" },
+              __WEBPACK_IMPORTED_MODULE_6_react_smooth__["a" /* default */],
+              { steps: this.props.animationSteps },
               __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "div",
-                {
-                  className: this.state.filter == "theLatest" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
-                  onClick: function onClick() {
-                    return _this3.filterResults("theLatest");
-                  }
-                },
-                "Najnowsze"
-              ),
+                { className: "mainPointsButtonPanel" },
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: this.state.filter == "theLatest" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
+                    onClick: function onClick() {
+                      return _this3.filterResults("theLatest");
+                    }
+                  },
+                  "Najnowsze"
+                ),
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: this.state.filter == "theOldest" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
+                    onClick: function onClick() {
+                      return _this3.filterResults("theOldest");
+                    }
+                  },
+                  "Najstarsze"
+                ),
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: this.state.filter == "bestVoted" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
+                    onClick: function onClick() {
+                      return _this3.filterResults("bestVoted");
+                    }
+                  },
+                  "Najlepiej oceniane"
+                ),
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: this.state.filter == "worstVoted" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
+                    onClick: function onClick() {
+                      return _this3.filterResults("worstVoted");
+                    }
+                  },
+                  "Najgorzej oceniane"
+                ),
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: this.state.filter == "mostTimeVoted" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
+                    onClick: function onClick() {
+                      return _this3.filterResults("mostTimeVoted");
+                    }
+                  },
+                  "Najcz\u0119\u015Bciej oceniane"
+                )
+              )
+            ),
+            this.state.pointsData.map(function (item, i) {
+              return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__["a" /* default */], {
+                key: i,
+                changeMarker: _this3.changeMarker,
+                item: item,
+                setNewCenterCoords: _this3.setNewCenterCoords,
+                showAlertSuccess: _this3.props.showAlertSuccess,
+                showAlertWarning: _this3.props.showAlertWarning,
+                disableVoteSelect: _this3.disableVoteSelect,
+                centerMapLocation: _this3.centerMapLocation,
+                animationSteps: _this3.props.animationSteps,
+                guestUser: _this3.props.guestUser
+              });
+            }),
+            this.state.paginationPageLimit > 1 && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_6_react_smooth__["a" /* default */],
+              { steps: this.props.animationSteps },
               __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "div",
-                {
-                  className: this.state.filter == "theOldest" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
-                  onClick: function onClick() {
-                    return _this3.filterResults("theOldest");
-                  }
-                },
-                "Najstarsze"
-              ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                {
-                  className: this.state.filter == "bestVoted" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
-                  onClick: function onClick() {
-                    return _this3.filterResults("bestVoted");
-                  }
-                },
-                "Najlepiej oceniane"
-              ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                {
-                  className: this.state.filter == "worstVoted" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
-                  onClick: function onClick() {
-                    return _this3.filterResults("worstVoted");
-                  }
-                },
-                "Najgorzej oceniane"
-              ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                {
-                  className: this.state.filter == "mostTimeVoted" ? "btn btn-default btnCircled btnDarkGray" : "btn btn-default btnCircled btnGray",
-                  onClick: function onClick() {
-                    return _this3.filterResults("mostTimeVoted");
-                  }
-                },
-                "Najcz\u0119\u015Bciej oceniane"
+                null,
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: "btn btn-default paginateBtn btnCircled btnGray",
+                    onClick: this.prevPointsPage
+                  },
+                  "Poprzednie"
+                ),
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                  "div",
+                  {
+                    className: "btn btn-default paginateBtn btnCircled btnGray",
+                    onClick: this.nextPointsPage
+                  },
+                  "Nastepne"
+                )
               )
             )
           ),
-          this.state.pointsData.map(function (item, i) {
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__PointsListComponent_SinglePointOnList__["a" /* default */], {
-              key: i,
-              changeMarker: _this3.changeMarker,
-              item: item,
-              setNewCenterCoords: _this3.setNewCenterCoords,
-              showAlertSuccess: _this3.props.showAlertSuccess,
-              showAlertWarning: _this3.props.showAlertWarning,
-              disableVoteSelect: _this3.disableVoteSelect,
-              centerMapLocation: _this3.centerMapLocation,
-              animationSteps: _this3.props.animationSteps
-            });
-          }),
-          this.state.paginationPageLimit > 1 && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_6_react_smooth__["a" /* default */],
-            { steps: this.props.animationSteps },
-            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              "div",
-              null,
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                {
-                  className: "btn btn-default paginateBtn btnCircled btnGray",
-                  onClick: this.prevPointsPage
-                },
-                "Poprzednie"
-              ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                {
-                  className: "btn btn-default paginateBtn btnCircled btnGray",
-                  onClick: this.nextPointsPage
-                },
-                "Nastepne"
-              )
-            )
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "div",
+            { className: "col-sm-6 order-first order-sm-last pointMapContainer" },
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
+              latCenter: this.state.lat,
+              lngCenter: this.state.lng,
+              markersData: this.state.markersData,
+              displayFirstMarker: false,
+              centerCoord: this.state.centerCoord,
+              setNewCenterCoords: this.setNewCenterCoords,
+              showSearchBox: true
+            })
           )
-        ),
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        );
+      } else {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 order-first order-sm-last pointMapContainer" },
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
-            latCenter: this.state.lat,
-            lngCenter: this.state.lng,
-            markersData: this.state.markersData,
-            displayFirstMarker: false,
-            centerCoord: this.state.centerCoord,
-            setNewCenterCoords: this.setNewCenterCoords,
-            showSearchBox: true
-          })
-        )
-      );
+          null,
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "h4",
+            { className: "emptyHeader" },
+            "Musisz by\u0107 zalogowany lub mie\u0107 status go\u015Bcia poprzez odno\u015Bnik na stronie g\u0142\xF3wnej."
+          )
+        );
+      }
     }
   }]);
 
@@ -56795,7 +56865,7 @@ var SinglePointOnList = function (_Component) {
                 " ",
                 this.state.voteAmount ? this.state.voteAmount : "---"
               ),
-              this.state.userCanVote && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+              this.state.userCanVote && !this.props.guestUser && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                 "p",
                 null,
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -56804,7 +56874,7 @@ var SinglePointOnList = function (_Component) {
                   "Dodaj ocen\u0119:"
                 )
               ),
-              this.state.userCanVote && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__SpotVotes__["a" /* default */], {
+              this.state.userCanVote && !this.props.guestUser && __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__SpotVotes__["a" /* default */], {
                 changeCurrentVote: this.changeCurrentVote,
                 saveNewSpotVote: this.saveNewSpotVote
               }),
@@ -56902,6 +56972,7 @@ var SpotVotes = function SpotVotes(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_smooth__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_router_dom__ = __webpack_require__(73);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -56915,6 +56986,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -57036,179 +57108,198 @@ var AddNewMeeting = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        "div",
-        { className: "addNewPoint row addNewPointRow" },
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      if (this.props.userIsLoggedIn || this.props.guestUser) {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
           "div",
-          { className: "col-sm-6 addNewPointCol" },
+          { className: "addNewPoint row addNewPointRow" },
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_5_react_smooth__["a" /* default */],
-            { steps: this.props.animationSteps },
+            "div",
+            { className: "col-sm-6 addNewPointCol" },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              "div",
-              null,
+              __WEBPACK_IMPORTED_MODULE_5_react_smooth__["a" /* default */],
+              { steps: this.props.animationSteps },
               __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "h2",
+                "div",
                 null,
-                "Dodaj nowy punkt"
-              ),
-              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "form",
-                { onSubmit: this.handleSubmit },
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "title" },
-                    "Tytu\u0142:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "title",
-                    name: "title",
-                    onChange: this.handleChange,
-                    required: true
-                  })
+                  "h2",
+                  null,
+                  "Dodaj nowy punkt"
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
+                  "form",
+                  { onSubmit: this.handleSubmit },
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "description" },
-                    "Opis:"
-                  ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "description",
-                    name: "description",
-                    onChange: this.handleChange,
-                    required: true
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "vote" },
-                    "Ocena:"
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "title" },
+                      "Tytu\u0142:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "title",
+                      name: "title",
+                      onChange: this.handleChange,
+                      required: true
+                    })
                   ),
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                     "div",
                     { className: "form-group" },
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                      "select",
-                      {
-                        className: "form-control",
-                        name: "vote",
-                        id: "vote",
-                        onChange: this.handleChange
-                      },
+                      "label",
+                      { htmlFor: "description" },
+                      "Opis:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "description",
+                      name: "description",
+                      onChange: this.handleChange,
+                      required: true
+                    })
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "vote" },
+                      "Ocena:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "div",
+                      { className: "form-group" },
                       __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "1"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "2"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "3"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "4"
-                      ),
-                      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "option",
-                        null,
-                        "5"
+                        "select",
+                        {
+                          className: "form-control",
+                          name: "vote",
+                          id: "vote",
+                          onChange: this.handleChange
+                        },
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "1"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "2"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "3"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "4"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                          "option",
+                          null,
+                          "5"
+                        )
                       )
                     )
-                  )
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "lattitude" },
-                    "Szeroko\u015B\u0107 geograficzna:"
                   ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "lattitude",
-                    name: "lattitude",
-                    value: this.state.lat,
-                    onChange: this.handleChange,
-                    disabled: true
-                  })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                  "div",
-                  { className: "form-group" },
                   __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "label",
-                    { htmlFor: "longitude" },
-                    "Wysoko\u015B\u0107 geograficzna:"
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "lattitude" },
+                      "Szeroko\u015B\u0107 geograficzna:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "lattitude",
+                      name: "lattitude",
+                      value: this.state.lat,
+                      onChange: this.handleChange,
+                      disabled: true
+                    })
                   ),
-                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                    type: "text",
-                    className: "form-control",
-                    id: "longitude",
-                    name: "longitude",
-                    value: this.state.lng,
-                    onChange: this.handleChange,
-                    disabled: true
+                  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "div",
+                    { className: "form-group" },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                      "label",
+                      { htmlFor: "longitude" },
+                      "Wysoko\u015B\u0107 geograficzna:"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                      type: "text",
+                      className: "form-control",
+                      id: "longitude",
+                      name: "longitude",
+                      value: this.state.lng,
+                      onChange: this.handleChange,
+                      disabled: true
+                    })
+                  ),
+                  this.props.guestUser ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_6_react_router_dom__["b" /* Link */],
+                    {
+                      to: "/login",
+                      className: "btn btn-default btnBlue btnCircled"
+                    },
+                    "Zaloguj si\u0119, aby doda\u0107 wydarzenie"
+                  ) : __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
+                    type: "submit",
+                    className: "btn btn-default btnBlue btnCircled",
+                    id: "addNewMeetingBtn",
+                    value: "Dodaj"
                   })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("input", {
-                  type: "submit",
-                  className: "btn btn-default btnBlue btnCircled",
-                  id: "addNewMeetingBtn",
-                  value: "Dodaj"
-                })
+                )
               )
             )
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-          "div",
-          {
-            className: "col-sm-6 mainMeetingsMap",
-            style: { height: "calc(100vh - 60px)" }
-          },
+          ),
           __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
             "div",
-            { className: "mapHint" },
+            {
+              className: "col-sm-6 mainMeetingsMap",
+              style: { height: "calc(100vh - 60px)" }
+            },
             __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-              "p",
-              null,
-              "Ustaw marker w interesuj\u0105cej Ci\u0119 lokalizacji, \u017Ceby zmieni\u0107 wsp\xF3\u0142rz\u0119dne punktu."
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
-            latCenter: this.state.lat,
-            lngCenter: this.state.lng,
-            allowDragableMarker: true,
-            setNewCoords: this.setNewCoords,
-            displayFirstMarker: true,
-            displaySecondMarker: false,
-            centerCoord: this.state.centerCoord
-          })
-        )
-      );
+              "div",
+              { className: "mapHint" },
+              __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "p",
+                null,
+                "Ustaw marker w interesuj\u0105cej Ci\u0119 lokalizacji, \u017Ceby zmieni\u0107 wsp\xF3\u0142rz\u0119dne punktu."
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Map_MapComponent_js__["a" /* default */], {
+              latCenter: this.state.lat,
+              lngCenter: this.state.lng,
+              allowDragableMarker: true,
+              setNewCoords: this.setNewCoords,
+              displayFirstMarker: true,
+              displaySecondMarker: false,
+              centerCoord: this.state.centerCoord
+            })
+          )
+        );
+      } else {
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          "div",
+          null,
+          __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            "h4",
+            { className: "emptyHeader" },
+            "Musisz by\u0107 zalogowany lub mie\u0107 status go\u015Bcia poprzez odno\u015Bnik na stronie g\u0142\xF3wnej."
+          )
+        );
+      }
     }
   }]);
 

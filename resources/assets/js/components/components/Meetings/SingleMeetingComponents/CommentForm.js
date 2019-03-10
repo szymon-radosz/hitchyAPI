@@ -25,8 +25,6 @@ class CommentForm extends Component {
   async submitComment(event) {
     event.preventDefault();
 
-    console.log(this.props.appPath);
-
     const savedComment = await axios.post(`${this.props.appPath}/api/comment`, {
       userId: this.state.currentUserId,
       userEmail: this.props.loggedInUserEmail,

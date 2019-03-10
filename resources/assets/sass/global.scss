@@ -8,6 +8,20 @@
   padding: 5px 20px;
 }
 
+.testBtn {
+  position: absolute;
+  bottom: 30px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 123px;
+}
+
+.emptyHeader {
+  text-align: center;
+  padding: 30px;
+}
+
 .btnBlue {
   border: 2px solid $lightBlue !important;
   background-color: #fff;

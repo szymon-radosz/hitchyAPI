@@ -59,8 +59,14 @@ class MainProfile extends Component {
 
     const allUsers = await axios.get(`${this.props.appPath}/api/users`);
 
-    for (var i = 0; i < allUsers.data.length; i++) {
-      if (allUsers.data[i].nickName == nickname) {
+    //console.log([allUsers, nickname, userId]);
+
+    for (let i = 0; i < allUsers.data.length; i++) {
+      //console.log([allUsers.data[i].nickName, nickname]);
+      if (
+        allUsers.data[i].nickName == nickname ||
+        allUsers.data[i].email == nickname
+      ) {
         this.setState({
           userExist: true,
           firstName: allUsers.data[i].firstName,

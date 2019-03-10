@@ -121,12 +121,12 @@ class SinglePointOnList extends Component {
                 {this.state.voteAmount ? this.state.voteAmount : "---"}
               </p>
 
-              {this.state.userCanVote && (
+              {this.state.userCanVote && !this.props.guestUser && (
                 <p>
                   <span className="bold">Dodaj ocenę:</span>
                 </p>
               )}
-              {this.state.userCanVote && (
+              {this.state.userCanVote && !this.props.guestUser && (
                 <SpotVotes
                   changeCurrentVote={this.changeCurrentVote}
                   saveNewSpotVote={this.saveNewSpotVote}

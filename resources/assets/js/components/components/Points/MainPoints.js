@@ -108,6 +108,14 @@ class MainPoints extends Component {
           );
           break;
 
+        case "bestVoted":
+          allPoints = await axios.get(
+            `${this.props.appPath}/api/getTheBestVoted/${
+              this.state.centerCoord[0]
+            }/${this.state.centerCoord[1]}?page=${pageNumber}`
+          );
+          break;
+
         case "mostTimeVoted":
           allPoints = await axios.get(
             `${this.props.appPath}/api/getTheMostTimeVoted/${
@@ -125,7 +133,6 @@ class MainPoints extends Component {
       }
 
       await this.setState({
-        paginationPageLimit: allPoints.data.last_page,
         pointsData: [],
         markersData: []
       });
@@ -140,7 +147,8 @@ class MainPoints extends Component {
           votesCount: item.votes_count
         };
 
-        this.setState(prevState => ({
+        await this.setState(prevState => ({
+          paginationPageLimit: allPoints.data.last_page,
           pointsData: [...prevState.pointsData, item],
           markersData: [...prevState.markersData, singleMarkerData]
         }));
@@ -169,7 +177,7 @@ class MainPoints extends Component {
   async componentDidMount() {
     let storeData = store.getState();
 
-    if (storeData.user.user.userId) {
+    if (storeData.user.user.userId && !this.props.guestUser) {
       await this.setState({ currentUserId: storeData.user.user.userId });
     }
 
@@ -177,116 +185,128 @@ class MainPoints extends Component {
   }
 
   render() {
-    return (
-      <div className="row listOfPointsRow">
-        <div className="col-sm-6 listOfPointsCol">
-          <Animate steps={this.props.animationSteps}>
-            <div className="mainPointsButtonPanel">
-              <div
-                className={
-                  this.state.filter == "theLatest"
-                    ? "btn btn-default btnCircled btnDarkGray"
-                    : "btn btn-default btnCircled btnGray"
-                }
-                onClick={() => this.filterResults("theLatest")}
-              >
-                Najnowsze
-              </div>
-
-              <div
-                className={
-                  this.state.filter == "theOldest"
-                    ? "btn btn-default btnCircled btnDarkGray"
-                    : "btn btn-default btnCircled btnGray"
-                }
-                onClick={() => this.filterResults("theOldest")}
-              >
-                Najstarsze
-              </div>
-
-              <div
-                className={
-                  this.state.filter == "bestVoted"
-                    ? "btn btn-default btnCircled btnDarkGray"
-                    : "btn btn-default btnCircled btnGray"
-                }
-                onClick={() => this.filterResults("bestVoted")}
-              >
-                Najlepiej oceniane
-              </div>
-
-              <div
-                className={
-                  this.state.filter == "worstVoted"
-                    ? "btn btn-default btnCircled btnDarkGray"
-                    : "btn btn-default btnCircled btnGray"
-                }
-                onClick={() => this.filterResults("worstVoted")}
-              >
-                Najgorzej oceniane
-              </div>
-
-              <div
-                className={
-                  this.state.filter == "mostTimeVoted"
-                    ? "btn btn-default btnCircled btnDarkGray"
-                    : "btn btn-default btnCircled btnGray"
-                }
-                onClick={() => this.filterResults("mostTimeVoted")}
-              >
-                Najczęściej oceniane
-              </div>
-            </div>
-          </Animate>
-          {this.state.pointsData.map((item, i) => {
-            return (
-              <SinglePointOnList
-                key={i}
-                changeMarker={this.changeMarker}
-                item={item}
-                setNewCenterCoords={this.setNewCenterCoords}
-                showAlertSuccess={this.props.showAlertSuccess}
-                showAlertWarning={this.props.showAlertWarning}
-                disableVoteSelect={this.disableVoteSelect}
-                centerMapLocation={this.centerMapLocation}
-                animationSteps={this.props.animationSteps}
-              />
-            );
-          })}
-
-          {this.state.paginationPageLimit > 1 && (
+    if (this.props.userIsLoggedIn || this.props.guestUser) {
+      return (
+        <div className="row listOfPointsRow">
+          <div className="col-sm-6 listOfPointsCol">
             <Animate steps={this.props.animationSteps}>
-              <div>
+              <div className="mainPointsButtonPanel">
                 <div
-                  className="btn btn-default paginateBtn btnCircled btnGray"
-                  onClick={this.prevPointsPage}
+                  className={
+                    this.state.filter == "theLatest"
+                      ? "btn btn-default btnCircled btnDarkGray"
+                      : "btn btn-default btnCircled btnGray"
+                  }
+                  onClick={() => this.filterResults("theLatest")}
                 >
-                  Poprzednie
+                  Najnowsze
                 </div>
+
                 <div
-                  className="btn btn-default paginateBtn btnCircled btnGray"
-                  onClick={this.nextPointsPage}
+                  className={
+                    this.state.filter == "theOldest"
+                      ? "btn btn-default btnCircled btnDarkGray"
+                      : "btn btn-default btnCircled btnGray"
+                  }
+                  onClick={() => this.filterResults("theOldest")}
                 >
-                  Nastepne
+                  Najstarsze
+                </div>
+
+                <div
+                  className={
+                    this.state.filter == "bestVoted"
+                      ? "btn btn-default btnCircled btnDarkGray"
+                      : "btn btn-default btnCircled btnGray"
+                  }
+                  onClick={() => this.filterResults("bestVoted")}
+                >
+                  Najlepiej oceniane
+                </div>
+
+                <div
+                  className={
+                    this.state.filter == "worstVoted"
+                      ? "btn btn-default btnCircled btnDarkGray"
+                      : "btn btn-default btnCircled btnGray"
+                  }
+                  onClick={() => this.filterResults("worstVoted")}
+                >
+                  Najgorzej oceniane
+                </div>
+
+                <div
+                  className={
+                    this.state.filter == "mostTimeVoted"
+                      ? "btn btn-default btnCircled btnDarkGray"
+                      : "btn btn-default btnCircled btnGray"
+                  }
+                  onClick={() => this.filterResults("mostTimeVoted")}
+                >
+                  Najczęściej oceniane
                 </div>
               </div>
             </Animate>
-          )}
-        </div>
+            {this.state.pointsData.map((item, i) => {
+              return (
+                <SinglePointOnList
+                  key={i}
+                  changeMarker={this.changeMarker}
+                  item={item}
+                  setNewCenterCoords={this.setNewCenterCoords}
+                  showAlertSuccess={this.props.showAlertSuccess}
+                  showAlertWarning={this.props.showAlertWarning}
+                  disableVoteSelect={this.disableVoteSelect}
+                  centerMapLocation={this.centerMapLocation}
+                  animationSteps={this.props.animationSteps}
+                  guestUser={this.props.guestUser}
+                />
+              );
+            })}
 
-        <div className="col-sm-6 order-first order-sm-last pointMapContainer">
-          <MapComponent
-            latCenter={this.state.lat}
-            lngCenter={this.state.lng}
-            markersData={this.state.markersData}
-            displayFirstMarker={false}
-            centerCoord={this.state.centerCoord}
-            setNewCenterCoords={this.setNewCenterCoords}
-            showSearchBox={true}
-          />
+            {this.state.paginationPageLimit > 1 && (
+              <Animate steps={this.props.animationSteps}>
+                <div>
+                  <div
+                    className="btn btn-default paginateBtn btnCircled btnGray"
+                    onClick={this.prevPointsPage}
+                  >
+                    Poprzednie
+                  </div>
+                  <div
+                    className="btn btn-default paginateBtn btnCircled btnGray"
+                    onClick={this.nextPointsPage}
+                  >
+                    Nastepne
+                  </div>
+                </div>
+              </Animate>
+            )}
+          </div>
+
+          <div className="col-sm-6 order-first order-sm-last pointMapContainer">
+            <MapComponent
+              latCenter={this.state.lat}
+              lngCenter={this.state.lng}
+              markersData={this.state.markersData}
+              displayFirstMarker={false}
+              centerCoord={this.state.centerCoord}
+              setNewCenterCoords={this.setNewCenterCoords}
+              showSearchBox={true}
+            />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <h4 className="emptyHeader">
+            Musisz być zalogowany lub mieć status gościa poprzez odnośnik na
+            stronie głównej.
+          </h4>
+        </div>
+      );
+    }
   }
 }
 

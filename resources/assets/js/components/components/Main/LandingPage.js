@@ -27,6 +27,10 @@ class LandingPage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.hideGuestUser();
+  }
+
   render() {
     return (
       <div>
@@ -40,16 +44,13 @@ class LandingPage extends Component {
               <h4>Dołącz do społeczności autostopowiczów.</h4>
 
               <div className="landingButtons">
-                <Link to="/login" onClick={this.cleanStateOfSearchInLocation}>
+                <Link to="/login">
                   <div className="btn btn-default defaultBtn btnBlue btnCircled loginBtn">
                     Logowanie
                   </div>
                 </Link>
 
-                <Link
-                  to="/register"
-                  onClick={this.cleanStateOfSearchInLocation}
-                >
+                <Link to="/register">
                   <div className="btn btn-default defaultBtn btnBlue btnCircled">
                     Rejestracja
                   </div>
@@ -58,6 +59,12 @@ class LandingPage extends Component {
             </div>
           </div>
         )}
+
+        <Link to="/meetings" onClick={this.props.setGuestUser}>
+          <div className="btn btn-default defaultBtn btnBlue btnCircled loginBtn testBtn">
+            Przetestuj
+          </div>
+        </Link>
       </div>
     );
   }

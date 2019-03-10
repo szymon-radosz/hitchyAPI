@@ -15,7 +15,7 @@ class MainMeetings extends Component {
       paginationPageLimit: 1,
       meetingsData: [],
       markersData: [],
-      centerCoord: [],
+      centerCoord: [40.73061, -73.935242],
       lat: 40.73061,
       lng: -73.935242
     };
@@ -112,58 +112,70 @@ class MainMeetings extends Component {
   }
 
   render() {
-    return (
-      <div className="row listOfMeetingsRow">
-        {this.props.searchInLocation ? (
-          "searchInLocation istnieje"
-        ) : (
-          <div>
-            <div className="col-sm-6 listOfMeetingsCol">
-              {this.state.meetingsData.map((item, i) => {
-                return (
-                  <SingleMeetingOnList
-                    key={i}
-                    changeMarker={this.changeMarker}
-                    setNewCenterCoords={this.setNewCenterCoords}
-                    item={item}
-                    setCoordinates={this.setCoordinates}
-                    animationSteps={this.props.animationSteps}
-                  />
-                );
-              })}
+    if (this.props.userIsLoggedIn || this.props.guestUser) {
+      return (
+        <div className="row listOfMeetingsRow">
+          {this.props.searchInLocation ? (
+            "searchInLocation istnieje"
+          ) : (
+            <div>
+              <div className="col-sm-6 listOfMeetingsCol">
+                {this.state.meetingsData.map((item, i) => {
+                  return (
+                    <SingleMeetingOnList
+                      key={i}
+                      changeMarker={this.changeMarker}
+                      setNewCenterCoords={this.setNewCenterCoords}
+                      item={item}
+                      setCoordinates={this.setCoordinates}
+                      animationSteps={this.props.animationSteps}
+                      guestUser={this.props.guestUser}
+                    />
+                  );
+                })}
 
-              <Animate steps={this.props.animationSteps}>
-                <div>
-                  <div
-                    className="btn btn-default paginateBtn btnCircled btnGray"
-                    onClick={this.prevPointsPage}
-                  >
-                    Poprzednie
+                <Animate steps={this.props.animationSteps}>
+                  <div>
+                    <div
+                      className="btn btn-default paginateBtn btnCircled btnGray"
+                      onClick={this.prevPointsPage}
+                    >
+                      Poprzednie
+                    </div>
+                    <div
+                      className="btn btn-default paginateBtn btnCircled btnGray"
+                      onClick={this.nextPointsPage}
+                    >
+                      Nastepne
+                    </div>
                   </div>
-                  <div
-                    className="btn btn-default paginateBtn btnCircled btnGray"
-                    onClick={this.nextPointsPage}
-                  >
-                    Nastepne
-                  </div>
-                </div>
-              </Animate>
-            </div>
+                </Animate>
+              </div>
 
-            <div className="col-sm-6 meetingMapContainer">
-              <MapComponent
-                latCenter={this.state.lat}
-                lngCenter={this.state.lng}
-                markersData={this.state.markersData}
-                centerCoord={this.state.centerCoord}
-                setNewCenterCoords={this.setNewCenterCoords}
-                showSearchBox={true}
-              />
+              <div className="col-sm-6 meetingMapContainer">
+                <MapComponent
+                  latCenter={this.state.lat}
+                  lngCenter={this.state.lng}
+                  markersData={this.state.markersData}
+                  centerCoord={this.state.centerCoord}
+                  setNewCenterCoords={this.setNewCenterCoords}
+                  showSearchBox={true}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    );
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h4 className="emptyHeader">
+            Musisz być zalogowany lub mieć status gościa poprzez odnośnik na
+            stronie głównej.
+          </h4>
+        </div>
+      );
+    }
   }
 }
 
