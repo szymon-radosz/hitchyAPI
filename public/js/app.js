@@ -32511,7 +32511,7 @@ var animationSteps = [{
   duration: 600
 }];
 
-var appPath = "http://127.0.0.1:8080";
+var appPath = "http://autostop.wyjechani.pl";
 
 var Main = function (_Component) {
   _inherits(Main, _Component);

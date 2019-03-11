@@ -28,7 +28,7 @@ const animationSteps = [
   }
 ];
 
-const appPath = "http://127.0.0.1:8080";
+const appPath = "http://autostop.wyjechani.pl";
 
 class Main extends Component {
   constructor(props) {
