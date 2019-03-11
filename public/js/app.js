@@ -1792,7 +1792,7 @@ var defaultMapOptions = {
 };
 
 var MyMapComponent = Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["compose"])(Object(__WEBPACK_IMPORTED_MODULE_2_recompose__["withProps"])({
-  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCE_A8CoQsymuTUwtLLdwt4IyIBBhGsu3Q&v=3.exp&libraries=geometry,drawing,places",
+  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCYUec7BGcNs1L98ZxQhxwt96tTIUPLYho&libraries=geometry,drawing,places",
   loadingElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", { style: { height: "100%" } }),
   containerElement: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
     style: {
