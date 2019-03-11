@@ -80,7 +80,7 @@ input[type="color"]:focus,
       rgba(0, 102, 255, 0.35),
       rgba(0, 126, 255, 0.31)
     ),
-    url("./images/main.jpg") no-repeat center center fixed;
+    url("./images/auto.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

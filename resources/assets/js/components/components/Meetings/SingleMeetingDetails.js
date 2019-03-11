@@ -3,7 +3,6 @@ import axios from "axios";
 import Comment from "./SingleMeetingComponents/Comment";
 import CommentForm from "./SingleMeetingComponents/CommentForm";
 import MapComponent from "./../Map/MapComponent.js";
-import { store } from "./../../store";
 import Animate from "react-smooth";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
@@ -145,8 +144,6 @@ class SingleMeetingDetails extends Component {
 
   async componentDidMount() {
     this.props.switchLoader(true);
-
-    let storeData = store.getState();
 
     if (this.props.userId) {
       await this.isAuthor();

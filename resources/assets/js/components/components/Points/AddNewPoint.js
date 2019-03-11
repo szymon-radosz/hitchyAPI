@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
-import { store } from "./../../store";
 import Animate from "react-smooth";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 

@@ -489,6 +489,9 @@ class Main extends Component {
                     animationSteps={animationSteps}
                     appPath={appPath}
                     userIsLoggedIn={this.state.userIsLoggedIn}
+                    userId={this.state.userId}
+                    userEmail={this.state.userEmail}
+                    userNick={this.state.userNick}
                   />
                 );
               }}

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
 import SinglePointOnList from "./PointsListComponent/SinglePointOnList";
-import { store } from "./../../store";
 import Animate from "react-smooth";
 
 class MainPoints extends Component {

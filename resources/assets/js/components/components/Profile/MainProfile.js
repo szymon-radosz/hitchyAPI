@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import UserInfo from "./UserInfo";
-import { store } from "./../../store";
 
 class MainProfile extends Component {
   constructor(props) {
@@ -44,28 +43,13 @@ class MainProfile extends Component {
   }
 
   async componentDidMount() {
-    let nickname;
-    let userId;
-
-    let storeData = store.getState();
-
-    if (storeData.user.user.userNickName) {
-      nickname = storeData.user.user.userNickName;
-      userId = storeData.user.user.userId;
-    } else if (storeData.user.user == "") {
-      nickname = "";
-      userId = "";
-    }
-
     const allUsers = await axios.get(`${this.props.appPath}/api/users`);
-
-    //console.log([allUsers, nickname, userId]);
 
     for (let i = 0; i < allUsers.data.length; i++) {
       //console.log([allUsers.data[i].nickName, nickname]);
       if (
-        allUsers.data[i].nickName == nickname ||
-        allUsers.data[i].email == nickname
+        allUsers.data[i].nickName == this.props.userNick ||
+        allUsers.data[i].email == this.props.userEmail
       ) {
         this.setState({
           userExist: true,
@@ -79,7 +63,7 @@ class MainProfile extends Component {
       }
     }
 
-    await this.getUserEventsHistory(userId);
+    this.getUserEventsHistory(this.props.userId);
   }
 
   render() {

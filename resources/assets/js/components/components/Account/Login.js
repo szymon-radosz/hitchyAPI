@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import Animate from "react-smooth";
 import axios from "axios";
 

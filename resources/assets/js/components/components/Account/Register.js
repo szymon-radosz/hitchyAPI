@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { connect } from "react-redux";
-import { loginUser } from "./../../actions/userActions";
 import Animate from "react-smooth";
 
 class Register extends Component {
