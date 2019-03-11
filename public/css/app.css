@@ -1,1 +1,628 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.css);.navbar-laravel{background-color:#fff;-webkit-box-shadow:0 2px 4px rgba(0,0,0,.04);box-shadow:0 2px 4px rgba(0,0,0,.04)}.btnCircled{border-radius:40px;padding:5px 20px}.testBtn{position:absolute;bottom:30px;margin:auto;left:0;right:0;width:123px}.emptyHeader{text-align:center;padding:30px}.btnBlue{border:2px solid #6a8ad4!important;background-color:#fff}.btnBlue:hover{border:2px solid #486dc3!important;-webkit-transition:.5s;transition:.5s}.btnGray{border:2px solid #e6e6e6!important}.btnGray:hover{border:2px solid #aaa!important;-webkit-transition:.5s;transition:.5s}.btn:hover{background-color:transparent!important}.btnDarkGray{border:2px solid #aaa!important}.panel-default>.panel-heading{background-color:#6d8fcf26!important}.shadowPanel:hover{-webkit-box-shadow:0 0 18px 0 #f0f0f0;box-shadow:0 0 18px 0 #f0f0f0;-webkit-transition:.5s;transition:.5s}textarea{resize:none}.alert{position:absolute;top:52px;z-index:10000;right:0}.defaultBtn{padding:6px 30px}.addNewPoint,.loginCol,.registerCol{margin-bottom:30px}.addNewMeetingCol{overflow:scroll;height:calc(100vh - 60px)}.addNewMeetingCol form{margin-bottom:30px}.dropdown-menu{z-index:10000}.leaflet-container{height:90vh;width:100%}.bold{font-weight:700}.navbar,.row{margin:0!important}.navbar{background-color:#fff!important}.navbar .dropdown{margin:9px}.navbar .dropdown .dropdown-toggle{background-color:#dedbdb;border:none}.navbar .dropdown .dropdown-menu{padding:15px;min-width:120px}.navbar .dropdown .dropdown-menu a{display:block;color:#333;text-align:right}.navbar .dropdown .dropdown-menu a:hover{cursor:pointer;text-decoration:none;color:#000}*{font-family:Open Sans,sans-serif!important}.form-control:focus,.uneditable-input:focus,button:focus,input[type=color]:focus,input[type=date]:focus,input[type=datetime-local]:focus,input[type=datetime]:focus,input[type=email]:focus,input[type=month]:focus,input[type=number]:focus,input[type=password]:focus,input[type=search]:focus,input[type=tel]:focus,input[type=text]:focus,input[type=time]:focus,input[type=url]:focus,input[type=week]:focus,select:focus,textarea:focus{border-color:hsla(0,1%,79%,.8)!important;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.075) inset,0 0 8px hsla(0,1%,79%,.8)!important;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px hsla(0,1%,79%,.8)!important;outline:0 none!important}.loaderContainer{width:100%;height:100vh;background-color:rgba(0,0,0,.5);position:absolute;z-index:10000}.loaderContainer .loader{position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);height:100px;width:100px;background-repeat:no-repeat;background-position:50%}.loaderContainer .loader img{width:100%}.landing{margin:0!important;height:calc(100vh - 52px);background:url(/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a) no-repeat 50% fixed;background-size:cover}.landing .landingForm{background-color:hsla(0,0%,100%,.9);border-radius:5px;padding:30px 10px!important;position:relative;text-align:center;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.landing .landingForm h1{margin:0;padding:0 0 15px;font-size:24px;font-weight:700}.landing .landingForm h4{padding-bottom:20px}.landing .landingForm .defaultBtn{margin:0 7px}.searchAreaBtn{position:absolute;top:100px;z-index:1000}.mapInfoWindow p{margin:0 0 5px}.mapInfoWindow .mapInfoWindowTitle{font-size:16px;margin:0 0 5px;font-weight:700}.mapInfoWindowTitleAlone{margin:0}.listOfPointsRow{margin:0!important;position:relative}.listOfPointsRow .pointMapContainer{height:calc(100vh - 52px);padding:0!important}.listOfPointsRow .pointMapContainer div .leaflet-container{height:calc(100vh - 52px)}.listOfPointsRow .pointMapContainer .leaflet-control-zoom{z-index:10000}.listOfPointsRow .pointMapContainer .leaflet-control-geosearch{width:100%;background:hsla(0,0%,100%,.7);margin:0;padding:10px 0}.listOfPointsRow .pointMapContainer .leaflet-control-geosearch form{text-align:center;width:100%}.listOfPointsRow .listOfPointsCol{padding:20px;height:calc(100vh - 52px);overflow-y:scroll}.listOfPointsRow .listOfPointsCol .addVoteSelect{margin:0 0 10px}.listOfPointsRow .listOfPointsCol .locatePointBtn{margin-top:10px}.listOfPointsRow .listOfPointsCol .mainPointsButtonPanel{margin-bottom:10px}.listOfPointsRow .listOfPointsCol .mainPointsButtonPanel .btn{margin:0 10px 10px 0}.listOfPointsRow .listOfPointsCol .paginateBtn{margin-right:10px}.mainMeetingsMap{padding:0}.meetingMapContainer{padding:0!important}.meetingMapContainer,.meetingMapContainer div .leaflet-container{height:calc(100vh - 52px)}.meetingMapContainer .leaflet-control-zoom{z-index:10000}.meetingMapContainer .leaflet-control-geosearch{width:100%!important;background:hsla(0,0%,100%,.7);margin:0!important;padding:10px 0}.meetingMapContainer .leaflet-control-geosearch form{text-align:center!important;width:100%}.mainMeetingsMap{border-left:1px solid #ddd}.mainMeetingsMap .mapHint p{position:absolute;z-index:100;margin:30px;background-color:#fff;border:1px solid #ddd;padding:20px;border-radius:5px;text-align:center}.listOfMeetingsRow{margin:0;position:relative}.listOfMeetingsRow .listOfMeetingsCol{padding:20px;height:calc(100vh - 52px);overflow-y:scroll}.listOfMeetingsRow .listOfMeetingsCol .btn{margin:10px 10px 5px 0}.singleMeetingDetailsDataRow{margin:0;position:relative}.singleMeetingDetailsDataRow .btn{margin:0 10px 10px 0}.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol{height:calc(100vh - 52px);overflow-y:scroll}.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol .userCommentInfoBox{text-align:center}.userContainer{margin-top:15px}.userContainer .userImage{float:left;width:70px;margin-right:30px}.userContainer .userEventTable{margin-top:15px;text-align:center}.addNewMeetingRow,.addNewPointRow{position:relative}@media screen and (max-width:767px){.listOfPointsRow .listOfPointsCol{margin-top:295px;height:100%;overflow:hidden}.listOfPointsRow .pointMapContainer{position:absolute;top:0;width:100%;max-height:300px!important}.listOfPointsRow .pointMapContainer div{max-height:300px!important}}@media screen and (max-width:767px){.listOfMeetingsRow .listOfMeetingsCol{height:100%;overflow:hidden;margin-top:295px}.listOfMeetingsRow .meetingMapContainer{position:absolute;top:0;width:100%;max-height:300px!important}.listOfMeetingsRow .meetingMapContainer div{max-height:300px!important}}@media screen and (max-width:767px){.addNewMeetingRow .addNewMeetingCol{margin-top:295px;height:100%;overflow:hidden}.addNewMeetingRow .mainMeetingsMap{position:absolute;top:0;padding:0;width:100%;max-height:300px!important}.addNewMeetingRow .mainMeetingsMap div{max-height:300px!important}}@media screen and (max-width:767px){.addNewPointRow .addNewPointCol{margin-top:310px;padding-bottom:30px;height:100%;overflow:hidden}.addNewPointRow .mainMeetingsMap{position:absolute;top:0;padding:0;width:100%;max-height:300px!important}.addNewPointRow .mainMeetingsMap div{max-height:300px!important}}@media screen and (max-width:767px){.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol{margin-top:295px;height:100%;overflow:hidden}.singleMeetingDetailsDataRow .meetingMapContainer{position:absolute;top:0;width:100%;max-height:300px!important}.singleMeetingDetailsDataRow .meetingMapContainer div{max-height:300px!important}}@media screen and (max-width:480px){.landingButtons .loginBtn{margin-bottom:10px!important}.__floater__open{width:80%}}.hitchyMapComponent{height:calc(100vh - 52px)!important}.guideBtn{position:fixed;bottom:20px;right:20px;z-index:100;width:90px;height:90px;border-radius:50%;border:3px solid #486dc3;background-color:#fff;font-weight:700}.leaflet-left{width:100%}.leaflet-left .geosearch{position:absolute;border:none!important;top:0;right:0;width:80%}.leaflet-left .geosearch .leaflet-bar-part-single{display:none}.leaflet-left .geosearch form{text-align:right}.leaflet-left .geosearch form .active{background-color:#fff}.leaflet-left .geosearch form .active>div{padding:10px;border-bottom:1px solid #ddd}.leaflet-left .geosearch form .glass,.leaflet-left .geosearch form .reset{display:inline-block}.App{text-align:center}.App-logo{-webkit-animation:App-logo-spin infinite 20s linear;animation:App-logo-spin infinite 20s linear;height:80px}.App-header{background-color:#222;height:150px;padding:20px;color:#fff}.App-title{font-size:1.5em}.App-intro{font-size:large}@-webkit-keyframes App-logo-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes App-logo-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://npmcdn.com/leaflet@1.0.0-rc.1/dist/leaflet.css);.navbar-laravel {
+  background-color: #fff;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.btnCircled {
+  border-radius: 40px;
+  padding: 5px 20px;
+}
+
+.testBtn {
+  position: absolute;
+  bottom: 30px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 123px;
+}
+
+.emptyHeader {
+  text-align: center;
+  padding: 30px;
+}
+
+.btnBlue {
+  border: 2px solid #6a8ad4 !important;
+  background-color: #fff;
+}
+
+.btnBlue:hover {
+  border: 2px solid #486dc3 !important;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.btnGray {
+  border: 2px solid #e6e6e6 !important;
+}
+
+.btnGray:hover {
+  border: 2px solid #aaaaaa !important;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  background-color: transparent !important;
+}
+
+.btnDarkGray {
+  border: 2px solid #aaaaaa !important;
+}
+
+.panel-default > .panel-heading {
+  background-color: #6d8fcf26 !important;
+}
+
+.shadowPanel:hover {
+  -webkit-box-shadow: 0px 0px 18px 0px #f0f0f0;
+  box-shadow: 0px 0px 18px 0px #f0f0f0;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+textarea {
+  resize: none;
+}
+
+.alert {
+  position: absolute;
+  top: 52px;
+  z-index: 10000;
+  right: 0;
+}
+
+.defaultBtn {
+  padding: 6px 30px;
+}
+
+.loginCol,
+.registerCol,
+.addNewPoint {
+  margin-bottom: 30px;
+}
+
+.addNewMeetingCol {
+  overflow: scroll;
+  height: calc(100vh - 60px);
+}
+
+.addNewMeetingCol form {
+  margin-bottom: 30px;
+}
+
+.dropdown-menu {
+  z-index: 10000;
+}
+
+.leaflet-container {
+  height: 90vh;
+  width: 100%;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.row {
+  margin: 0 !important;
+}
+
+.navbar {
+  margin: 0 !important;
+}
+
+.navbar {
+  background-color: #fff !important;
+}
+
+.navbar .dropdown {
+  margin: 9px;
+}
+
+.navbar .dropdown .dropdown-toggle {
+  background-color: #dedbdb;
+  border: none;
+}
+
+.navbar .dropdown .dropdown-menu {
+  padding: 15px;
+  min-width: 120px;
+}
+
+.navbar .dropdown .dropdown-menu a {
+  display: block;
+  color: #333;
+  text-align: right;
+}
+
+.navbar .dropdown .dropdown-menu a:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+
+* {
+  font-family: "Open Sans", sans-serif !important;
+}
+
+textarea:focus,
+.form-control:focus,
+button:focus,
+select:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: rgba(202, 201, 201, 0.8) !important;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(202, 201, 201, 0.8) !important;
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(202, 201, 201, 0.8) !important;
+  outline: 0 none !important;
+}
+
+.loaderContainer {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 10000;
+}
+
+.loaderContainer .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  height: 100px;
+  width: 100px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.loaderContainer .loader img {
+  width: 100%;
+}
+
+.landing {
+  margin: 0 !important;
+  height: calc(100vh - 52px);
+  background: url(/images/main.jpg?2b592e7b770e77539f29db38c3e3b89a) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.landing .landingForm {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  padding: 30px 10px !important;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.landing .landingForm h1 {
+  margin: 0;
+  padding: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.landing .landingForm h4 {
+  padding-bottom: 20px;
+}
+
+.landing .landingForm .defaultBtn {
+  margin: 0 7px;
+}
+
+.searchAreaBtn {
+  position: absolute;
+  top: 100px;
+  z-index: 1000;
+}
+
+.mapInfoWindow p {
+  margin: 0 0 5px 0;
+}
+
+.mapInfoWindow .mapInfoWindowTitle {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+}
+
+.mapInfoWindowTitleAlone {
+  margin: 0;
+}
+
+.listOfPointsRow {
+  margin: 0 !important;
+  position: relative;
+}
+
+.listOfPointsRow .pointMapContainer {
+  height: calc(100vh - 52px);
+  padding: 0 !important;
+}
+
+.listOfPointsRow .pointMapContainer div .leaflet-container {
+  height: calc(100vh - 52px);
+}
+
+.listOfPointsRow .pointMapContainer .leaflet-control-zoom {
+  z-index: 10000;
+}
+
+.listOfPointsRow .pointMapContainer .leaflet-control-geosearch {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  padding: 10px 0;
+}
+
+.listOfPointsRow .pointMapContainer .leaflet-control-geosearch form {
+  text-align: center;
+  width: 100%;
+}
+
+.listOfPointsRow .listOfPointsCol {
+  padding: 20px;
+  height: calc(100vh - 52px);
+  overflow-y: scroll;
+}
+
+.listOfPointsRow .listOfPointsCol .addVoteSelect {
+  margin: 0 0 10px 0;
+}
+
+.listOfPointsRow .listOfPointsCol .locatePointBtn {
+  margin-top: 10px;
+}
+
+.listOfPointsRow .listOfPointsCol .mainPointsButtonPanel {
+  margin-bottom: 10px;
+}
+
+.listOfPointsRow .listOfPointsCol .mainPointsButtonPanel .btn {
+  margin: 0 10px 10px 0;
+}
+
+.listOfPointsRow .listOfPointsCol .paginateBtn {
+  margin-right: 10px;
+}
+
+.mainMeetingsMap {
+  border-left: 1px solid #ddd;
+  padding: 0;
+}
+
+.mainMeetingsMap .mapHint p {
+  position: absolute;
+  z-index: 100;
+  margin: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.meetingMapContainer {
+  height: calc(100vh - 52px);
+  padding: 0 !important;
+}
+
+.meetingMapContainer div .leaflet-container {
+  height: calc(100vh - 52px);
+}
+
+.meetingMapContainer .leaflet-control-zoom {
+  z-index: 10000;
+}
+
+.meetingMapContainer .leaflet-control-geosearch {
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0 !important;
+  padding: 10px 0;
+}
+
+.meetingMapContainer .leaflet-control-geosearch form {
+  text-align: center !important;
+  width: 100%;
+}
+
+.mainMeetingsMap {
+  border-left: 1px solid #ddd;
+}
+
+.mainMeetingsMap .mapHint p {
+  position: absolute;
+  z-index: 100;
+  margin: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.listOfMeetingsRow {
+  margin: 0;
+  position: relative;
+}
+
+.listOfMeetingsRow .listOfMeetingsCol {
+  padding: 20px;
+  height: calc(100vh - 52px);
+  overflow-y: scroll;
+}
+
+.listOfMeetingsRow .listOfMeetingsCol .btn {
+  margin: 10px 10px 5px 0;
+}
+
+.singleMeetingDetailsDataRow {
+  margin: 0;
+  position: relative;
+}
+
+.singleMeetingDetailsDataRow .btn {
+  margin: 0 10px 10px 0;
+}
+
+.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol {
+  height: calc(100vh - 52px);
+  overflow-y: scroll;
+}
+
+.singleMeetingDetailsDataRow .singleMeetingDetailsDataCol .userCommentInfoBox {
+  text-align: center;
+}
+
+.userContainer {
+  margin-top: 15px;
+}
+
+.userContainer .userImage {
+  float: left;
+  width: 70px;
+  margin-right: 30px;
+}
+
+.userContainer .userEventTable {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.addNewMeetingRow {
+  position: relative;
+}
+
+.addNewPointRow {
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  .listOfPointsRow .listOfPointsCol {
+    margin-top: 295px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .listOfPointsRow .pointMapContainer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    max-height: 300px !important;
+  }
+
+  .listOfPointsRow .pointMapContainer div {
+    max-height: 300px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .listOfMeetingsRow .listOfMeetingsCol {
+    height: 100%;
+    overflow: hidden;
+    margin-top: 295px;
+  }
+
+  .listOfMeetingsRow .meetingMapContainer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    max-height: 300px !important;
+  }
+
+  .listOfMeetingsRow .meetingMapContainer div {
+    max-height: 300px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .addNewMeetingRow .addNewMeetingCol {
+    margin-top: 295px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .addNewMeetingRow .mainMeetingsMap {
+    position: absolute;
+    top: 0;
+    padding: 0;
+    width: 100%;
+    max-height: 300px !important;
+  }
+
+  .addNewMeetingRow .mainMeetingsMap div {
+    max-height: 300px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .addNewPointRow .addNewPointCol {
+    margin-top: 310px;
+    padding-bottom: 30px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .addNewPointRow .mainMeetingsMap {
+    position: absolute;
+    top: 0;
+    padding: 0;
+    width: 100%;
+    max-height: 300px !important;
+  }
+
+  .addNewPointRow .mainMeetingsMap div {
+    max-height: 300px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .singleMeetingDetailsDataRow .singleMeetingDetailsDataCol {
+    margin-top: 295px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .singleMeetingDetailsDataRow .meetingMapContainer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    max-height: 300px !important;
+  }
+
+  .singleMeetingDetailsDataRow .meetingMapContainer div {
+    max-height: 300px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .landingButtons .loginBtn {
+    margin-bottom: 10px !important;
+  }
+
+  .__floater__open {
+    width: 80%;
+  }
+}
+
+.hitchyMapComponent {
+  height: calc(100vh - 52px) !important;
+}
+
+.guideBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #486dc3;
+  background-color: #fff;
+  font-weight: 700;
+}
+
+.leaflet-left {
+  width: 100%;
+}
+
+.leaflet-left .geosearch {
+  position: absolute;
+  border: none !important;
+  top: 0;
+  right: 0;
+  width: 80%;
+}
+
+.leaflet-left .geosearch .leaflet-bar-part-single {
+  display: none;
+}
+
+.leaflet-left .geosearch form {
+  text-align: right;
+}
+
+.leaflet-left .geosearch form .active {
+  background-color: #fff;
+}
+
+.leaflet-left .geosearch form .active > div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.leaflet-left .geosearch form .glass,
+.leaflet-left .geosearch form .reset {
+  display: inline-block;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  -webkit-animation: App-logo-spin infinite 20s linear;
+          animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@-webkit-keyframes App-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+

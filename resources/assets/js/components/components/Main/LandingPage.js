@@ -9,22 +9,6 @@ class LandingPage extends Component {
     this.state = {
       userLocationPrompt: ""
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    if (this.state.userLocationPrompt) {
-      this.props.changeStateOfSearchInLocation(this.state.userLocationPrompt);
-    }
   }
 
   componentDidMount() {
@@ -34,31 +18,27 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        {this.props.searchInLocation ? (
-          <MainMeetings searchInLocation={this.props.searchInLocation} />
-        ) : (
-          <div className="row landing">
-            <div className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 landingForm">
-              <h1>Autostart</h1>
+        <div className="row landing">
+          <div className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 landingForm">
+            <h1>Autostart</h1>
 
-              <h4>Dołącz do społeczności autostopowiczów.</h4>
+            <h4>Dołącz do społeczności autostopowiczów.</h4>
 
-              <div className="landingButtons">
-                <Link to="/login">
-                  <div className="btn btn-default defaultBtn btnBlue btnCircled loginBtn">
-                    Logowanie
-                  </div>
-                </Link>
+            <div className="landingButtons">
+              <Link to="/login">
+                <div className="btn btn-default defaultBtn btnBlue btnCircled loginBtn">
+                  Logowanie
+                </div>
+              </Link>
 
-                <Link to="/register">
-                  <div className="btn btn-default defaultBtn btnBlue btnCircled">
-                    Rejestracja
-                  </div>
-                </Link>
-              </div>
+              <Link to="/register">
+                <div className="btn btn-default defaultBtn btnBlue btnCircled">
+                  Rejestracja
+                </div>
+              </Link>
             </div>
           </div>
-        )}
+        </div>
 
         <Link to="/meetings" onClick={this.props.setGuestUser}>
           <div className="btn btn-default defaultBtn btnBlue btnCircled loginBtn testBtn">

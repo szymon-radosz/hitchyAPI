@@ -11,7 +11,6 @@ import MeetingDetails from "./../Meetings/MeetingDetails.js";
 import MainProfile from "./../Profile/MainProfile.js";
 import MainPoints from "./../Points/MainPoints.js";
 import AddNewPoint from "./../Points/AddNewPoint";
-import { store } from "./../../store";
 import Joyride from "react-joyride";
 
 const animationSteps = [
@@ -29,7 +28,7 @@ const animationSteps = [
   }
 ];
 
-const appPath = "http://auto.last-bee.com";
+const appPath = "http://127.0.0.1:8080";
 
 class Main extends Component {
   constructor(props) {
@@ -42,10 +41,13 @@ class Main extends Component {
       alertWarningDescription: "",
       loader: false,
       guestUser: false,
-      userIsLoggedIn: false,
       searchInLocation: "",
       showGuideBtn: true,
-      run: false
+      run: false,
+      userIsLoggedIn: false,
+      userId: "",
+      userEmail: "",
+      userNick: ""
     };
     this.changeStateOfSearchInLocation = this.changeStateOfSearchInLocation.bind(
       this
@@ -61,6 +63,26 @@ class Main extends Component {
     this.switchLoader = this.switchLoader.bind(this);
     this.setGuestUser = this.setGuestUser.bind(this);
     this.hideGuestUser = this.hideGuestUser.bind(this);
+    this.setLoginUserInfo = this.setLoginUserInfo.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    this.setState({
+      userIsLoggedIn: false,
+      userId: "",
+      userEmail: "",
+      userNick: ""
+    });
+  }
+
+  setLoginUserInfo(id, email, nick) {
+    this.setState({
+      userId: id,
+      userEmail: email,
+      userNick: nick,
+      userIsLoggedIn: true
+    });
   }
 
   handleClickStart = e => {
@@ -88,7 +110,7 @@ class Main extends Component {
     const { action, index, type } = data;
   };
 
-  componentDidMount() {
+  /*componentDidMount() {
     store.subscribe(() => {
       //console.log(store.getState());
 
@@ -110,7 +132,8 @@ class Main extends Component {
     } else if (storeData.user.user && storeData.user.user == "") {
       this.setState({ userIsLoggedIn: false });
     }
-  }
+
+  }*/
 
   setGuestUser() {
     //console.log("setGuestUser");
@@ -355,153 +378,154 @@ class Main extends Component {
                 guestUser={this.state.guestUser}
                 //cleanStateOfSearchInLocation={this.cleanStateOfSearchInLocation}
                 userIsLoggedIn={this.state.userIsLoggedIn}
+                logout={this.logout}
               />
             </div>
           </div>
-
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return (
-                <LandingPage
-                  searchInLocation={this.state.searchInLocation}
-                  changeStateOfSearchInLocation={
-                    this.props.changeStateOfSearchInLocation
-                  }
-                  setGuestUser={this.setGuestUser}
-                  guestUser={this.state.guestUser}
-                  hideGuestUser={this.hideGuestUser}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/login"
-            render={() => {
-              return (
-                <Login
-                  loginUser={this.loginUser}
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/register"
-            render={() => {
-              return (
-                <Register
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/meetings"
-            render={() => {
-              return (
-                <MainMeetings
-                  searchInLocation={this.state.searchInLocation}
-                  switchLoader={this.switchLoader}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                  guestUser={this.state.guestUser}
-                  userIsLoggedIn={this.state.userIsLoggedIn}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/points"
-            render={() => {
-              return (
-                <MainPoints
-                  searchInLocation={this.state.searchInLocation}
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  switchLoader={this.switchLoader}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                  guestUser={this.state.guestUser}
-                  userIsLoggedIn={this.state.userIsLoggedIn}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/events/:id"
-            render={props => {
-              return (
-                <MeetingDetails
-                  {...props}
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  switchLoader={this.switchLoader}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                  guestUser={this.state.guestUser}
-                  userIsLoggedIn={this.state.userIsLoggedIn}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/profile"
-            render={() => {
-              return (
-                <MainProfile
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                  userIsLoggedIn={this.state.userIsLoggedIn}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/add-meeting"
-            render={() => {
-              return (
-                <AddNewMeeting
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                  guestUser={this.state.guestUser}
-                  userIsLoggedIn={this.state.userIsLoggedIn}
-                />
-              );
-            }}
-          />
-          <Route
-            exact
-            path="/add-point"
-            render={() => {
-              return (
-                <AddNewPoint
-                  showAlertSuccess={this.props.showAlertSuccess}
-                  showAlertWarning={this.props.showAlertWarning}
-                  animationSteps={this.props.animationSteps}
-                  appPath={appPath}
-                  guestUser={this.state.guestUser}
-                  userIsLoggedIn={this.state.userIsLoggedIn}
-                />
-              );
-            }}
-          />
+          <div className="appContainer">
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return (
+                  <LandingPage
+                    searchInLocation={this.state.searchInLocation}
+                    changeStateOfSearchInLocation={
+                      this.props.changeStateOfSearchInLocation
+                    }
+                    setGuestUser={this.setGuestUser}
+                    guestUser={this.state.guestUser}
+                    hideGuestUser={this.hideGuestUser}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/login"
+              render={() => {
+                return (
+                  <Login
+                    showAlertSuccess={this.showAlertSuccess}
+                    showAlertWarning={this.showAlertWarning}
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    setLoginUserInfo={this.setLoginUserInfo}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/register"
+              render={() => {
+                return (
+                  <Register
+                    showAlertSuccess={this.showAlertSuccess}
+                    showAlertWarning={this.showAlertWarning}
+                    animationSteps={this.props.animationSteps}
+                    appPath={appPath}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/meetings"
+              render={() => {
+                return (
+                  <MainMeetings
+                    searchInLocation={this.state.searchInLocation}
+                    switchLoader={this.switchLoader}
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    guestUser={this.state.guestUser}
+                    userIsLoggedIn={this.state.userIsLoggedIn}
+                    userId={this.state.userId}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/points"
+              render={() => {
+                return (
+                  <MainPoints
+                    searchInLocation={this.state.searchInLocation}
+                    showAlertSuccess={this.showAlertSuccess}
+                    showAlertWarning={this.showAlertWarning}
+                    switchLoader={this.switchLoader}
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    guestUser={this.state.guestUser}
+                    userIsLoggedIn={this.state.userIsLoggedIn}
+                    userId={this.state.userId}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/events/:id"
+              render={props => {
+                return (
+                  <MeetingDetails
+                    {...props}
+                    showAlertSuccess={this.showAlertSuccess}
+                    showAlertWarning={this.showAlertWarning}
+                    switchLoader={this.switchLoader}
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    guestUser={this.state.guestUser}
+                    userIsLoggedIn={this.state.userIsLoggedIn}
+                    userId={this.state.userId}
+                    userEmail={this.state.userEmail}
+                    userNick={this.state.userNick}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/profile"
+              render={() => {
+                return (
+                  <MainProfile
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    userIsLoggedIn={this.state.userIsLoggedIn}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/add-meeting"
+              render={() => {
+                return (
+                  <AddNewMeeting
+                    showAlertSuccess={this.showAlertSuccess}
+                    showAlertWarning={this.showAlertWarning}
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    guestUser={this.state.guestUser}
+                    userIsLoggedIn={this.state.userIsLoggedIn}
+                    userId={this.state.userId}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/add-point"
+              render={() => {
+                return (
+                  <AddNewPoint
+                    showAlertSuccess={this.showAlertSuccess}
+                    showAlertWarning={this.showAlertWarning}
+                    animationSteps={animationSteps}
+                    appPath={appPath}
+                    guestUser={this.state.guestUser}
+                    userIsLoggedIn={this.state.userIsLoggedIn}
+                    userId={this.state.userId}
+                  />
+                );
+              }}
+            />
+          </div>
         </div>
       </Router>
     );

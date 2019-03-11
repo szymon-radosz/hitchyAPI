@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import LogoutBtn from "./LogoutBtn";
 
 class Menu extends Component {
   constructor(props) {
@@ -86,13 +85,8 @@ class Menu extends Component {
                       className="dropdown-menu"
                       aria-labelledby="dropdownMenuButton"
                     >
-                      <LogoutBtn />
-                      <Link
-                        to={`/profile`}
-                        onClick={this.props.cleanStateOfSearchInLocation}
-                      >
-                        Mój profil
-                      </Link>
+                      <a onClick={this.props.logout}>Wyloguj się</a>
+                      <Link to={`/profile`}>Mój profil</Link>
                     </div>
                   </div>
                 </li>

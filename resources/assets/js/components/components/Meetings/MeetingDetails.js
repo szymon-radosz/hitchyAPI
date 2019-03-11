@@ -41,6 +41,10 @@ class MeetingDetails extends Component {
               switchLoader={this.props.switchLoader}
               animationSteps={this.props.animationSteps}
               appPath={this.props.appPath}
+              userId={this.props.userId}
+              userEmail={this.props.userEmail}
+              userNick={this.props.userNick}
+              guestUser={this.props.guestUser}
             />
           );
         })}

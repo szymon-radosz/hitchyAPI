@@ -24,21 +24,25 @@ class UserController extends Controller
         $password = $request->password;
 
         $user = User::where('nickName', $nickName)->orWhere('email', $nickName)->first();
+        if($user){
+            
+            $passwordMatched = Hash::check($request->password, $user->password);
+            
+            if($passwordMatched === true){
+                
+                $userId = $user->id;
+                $userNickName = $user->nickName;
+                $userEmail = $user->email;
 
-        $passwordMatched = Hash::check($request->password, $user->password);
-
-        if($passwordMatched){
-            $userId = $user->id;
-            $userNickName = $user->nickName;
-            $userEmail = $user->email;
-        }else{
-            $userId = null;
-            $userNickName = null;
+                $userInfo = (object) ['userId' => $userId, 'userNickName' => $nickName, 'userEmail' => $userEmail];
+    
+                return Response::json($userInfo);
+            }else{
+                return Response::json(["error" => "Nie można znaleźć użytkownika"]);
+            }
         }
-
-        $userInfo = (object) ['userId' => $userId, 'userNickName' => $nickName, 'userEmail' => $userEmail];
-
-        return Response::json($userInfo);
+        return Response::json(["error" => "Nie można znaleźć użytkownika"]);
+        
     }
 
     public function store(Request $request)

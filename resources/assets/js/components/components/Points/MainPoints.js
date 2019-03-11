@@ -14,7 +14,6 @@ class MainPoints extends Component {
       markersData: [],
       dateSortedBy: "",
       currentPageResult: 1,
-      currentUserId: 0,
       paginationPageLimit: 0,
       filter: "",
       lat: 40.73061,
@@ -174,18 +173,8 @@ class MainPoints extends Component {
     this.setState({ pointsData: newPointsData });
   }
 
-  async componentDidMount() {
-    let storeData = store.getState();
-
-    if (
-      storeData.user.user &&
-      storeData.user.user.userId &&
-      !this.props.guestUser
-    ) {
-      await this.setState({ currentUserId: storeData.user.user.userId });
-    }
-
-    await this.loadAllSpots(this.state.currentPageResult);
+  componentDidMount() {
+    this.loadAllSpots(this.state.currentPageResult);
   }
 
   render() {
@@ -264,6 +253,8 @@ class MainPoints extends Component {
                   centerMapLocation={this.centerMapLocation}
                   animationSteps={this.props.animationSteps}
                   guestUser={this.props.guestUser}
+                  userId={this.props.userId}
+                  appPath={this.props.appPath}
                 />
               );
             })}

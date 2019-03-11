@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import MapComponent from "./../Map/MapComponent.js";
-import { store } from "./../../store";
 import Animate from "react-smooth";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
@@ -12,8 +11,8 @@ class AddNewMeeting extends Component {
     this.state = {
       title: "",
       description: "",
-      userId: "",
-      currentUserId: 0,
+      //userId: "",
+      //currentUserId: 0,
       lattitude: "",
       longitude: "",
       stopLat: "",
@@ -57,7 +56,7 @@ class AddNewMeeting extends Component {
           {
             title: this.state.title,
             description: this.state.description,
-            user_id: this.state.userId,
+            user_id: this.props.userId,
             startPlaceLattitude: this.state.lat,
             startPlaceLongitude: this.state.lng,
             stopPlaceLattitude: this.state.secondLat,
@@ -95,17 +94,6 @@ class AddNewMeeting extends Component {
       secondLat: newLat,
       secondLng: newLng
     });
-  }
-
-  componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user && storeData.user.user.userNickName) {
-      this.setState({
-        userId: storeData.user.user.userId,
-        currentUserId: storeData.user.user.userId
-      });
-    }
   }
 
   render() {
@@ -219,21 +207,21 @@ class AddNewMeeting extends Component {
                       onChange={this.handleChange}
                     />
                   </div>
-                  {this.props.guestUser ? (
-                    <Link
-                      to="/login"
-                      className="btn btn-default btnBlue btnCircled"
-                    >
-                      Zaloguj się, aby dodać wydarzenie
-                    </Link>
-                  ) : (
+                  {this.props.userId ? (
                     <input
                       type="submit"
                       className="btn btn-default btnBlue btnCircled"
                       id="addNewMeetingBtn"
                       value="Dodaj"
                     />
-                  )}
+                  ) : this.props.guestUser ? (
+                    <Link
+                      to="/login"
+                      className="btn btn-default btnBlue btnCircled"
+                    >
+                      Zaloguj się, aby dodać wydarzenie
+                    </Link>
+                  ) : null}
                 </form>
               </div>
             </Animate>

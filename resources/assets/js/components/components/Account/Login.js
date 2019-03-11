@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loginUser } from "./../../actions/userActions";
 import Animate from "react-smooth";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
@@ -31,7 +31,36 @@ class Login extends Component {
     if (!this.state.emailOrNickname || !this.state.password) {
       this.props.showAlertWarning("Proszę wypełnić wszystkie pola");
     } else {
-      this.props.loginUser(userCredentials);
+      //this.props.loginUser(userCredentials);
+
+      axios
+        .post(
+          `${this.props.appPath}/api/login`,
+          {
+            emailOrNickname: this.state.emailOrNickname,
+            password: this.state.password
+          },
+          {
+            headers: {
+              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+            }
+          }
+        )
+        .then(response => {
+          console.log(response.data);
+
+          if (!response.data.error) {
+            this.props.setLoginUserInfo(
+              response.data.userId,
+              response.data.userEmail,
+              response.data.userNickName
+            );
+
+            this.props.showAlertSuccess("Poprawnie zalogowano użytkownika.");
+          } else {
+            this.props.showAlertWarning("Sprawdź swoje dane");
+          }
+        });
     }
   }
 
@@ -83,12 +112,4 @@ class Login extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  user: state.payload
-});
-
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(Login);
+export default Login;

@@ -11,7 +11,6 @@ class AddNewMeeting extends Component {
     this.state = {
       title: "",
       description: "",
-      userId: "",
       lattitude: "",
       longitude: "",
       lat: 40.73061,
@@ -40,7 +39,7 @@ class AddNewMeeting extends Component {
         {
           name: this.state.title,
           description: this.state.description,
-          user_id: this.state.userId,
+          user_id: this.props.userId,
           lattitude: this.state.lat,
           longitude: this.state.lng,
           vote: this.state.vote
@@ -67,14 +66,6 @@ class AddNewMeeting extends Component {
       lat: newLat,
       lng: newLng
     });
-  }
-
-  componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user && storeData.user.user.userId) {
-      this.setState({ userId: storeData.user.user.userId });
-    }
   }
 
   render() {

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import SpotVotes from "./SpotVotes";
 import axios from "axios";
-import { store } from "./../../../store";
 import Animate from "react-smooth";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class SinglePointOnList extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class SinglePointOnList extends Component {
         `${this.props.appPath}/api/addPointVote`,
         {
           pointId: this.props.item.id,
-          userId: this.state.currentUserId,
+          userId: this.props.userId,
           vote: this.state.currentVote
         },
         {
@@ -68,16 +68,10 @@ class SinglePointOnList extends Component {
   }
 
   async componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user && storeData.user.user.userId) {
-      await this.setState({ currentUserId: storeData.user.user.userId });
-    }
-
     let sumOfVotes = 0;
 
     this.props.item.users.map((user, i) => {
-      if (user.pivot.user_id == this.state.currentUserId) {
+      if (user.pivot.user_id == this.props.userId) {
         this.setState({ userCanVote: false });
       }
       sumOfVotes += user.pivot.vote;
@@ -131,6 +125,15 @@ class SinglePointOnList extends Component {
                   changeCurrentVote={this.changeCurrentVote}
                   saveNewSpotVote={this.saveNewSpotVote}
                 />
+              )}
+
+              {this.props.guestUser && (
+                <Link
+                  to="/login"
+                  className="btn btn-default btnBlue btnCircled"
+                >
+                  Zaloguj się, aby wziąć dodawać głosy
+                </Link>
               )}
 
               <div

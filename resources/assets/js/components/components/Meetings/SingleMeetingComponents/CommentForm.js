@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { store } from "./../../../store";
 
 class CommentForm extends Component {
   constructor(props) {
@@ -9,8 +8,7 @@ class CommentForm extends Component {
     this.state = {
       commentBody: "",
       loggedInUserNickname: "",
-      meetingId: "",
-      currentUserId: 0
+      meetingId: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +24,7 @@ class CommentForm extends Component {
     event.preventDefault();
 
     const savedComment = await axios.post(`${this.props.appPath}/api/comment`, {
-      userId: this.state.currentUserId,
+      userId: this.props.userId,
       userEmail: this.props.loggedInUserEmail,
       eventId: this.props.meetingId,
       commentBody: this.state.commentBody
@@ -45,13 +43,6 @@ class CommentForm extends Component {
   }
 
   componentDidMount() {
-    let storeData = store.getState();
-
-    if (storeData.user.user && storeData.user.user.userId) {
-      this.setState({
-        currentUserId: storeData.user.user.userId
-      });
-    }
     this.setState({
       loggedInUserNickname: this.props.loggedInUserNickname,
       meetingId: this.props.meetingId

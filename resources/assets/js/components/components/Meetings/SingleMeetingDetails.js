@@ -16,9 +16,6 @@ class SingleMeetingDetails extends Component {
       displayResignBtn: false,
       isAuthor: false,
       isLimit: false,
-      currentUserId: 0,
-      currentUserNickName: "",
-      currentUserEmail: "",
       startLat: this.props.item.startPlaceLattitude,
       startLng: this.props.item.startPlaceLongitude,
       stopLat: this.props.item.stopPlaceLattitude,
@@ -44,7 +41,7 @@ class SingleMeetingDetails extends Component {
 
   checkTakePart() {
     this.state.users.map((user, i) => {
-      if (user.id == this.state.currentUserId) {
+      if (user.id == this.props.userId) {
         this.setState({ displayTakePartBtn: false, displayResignBtn: true });
       }
     });
@@ -75,7 +72,7 @@ class SingleMeetingDetails extends Component {
     const takePart = await axios.post(
       `${this.props.appPath}/api/addEventUserRelation`,
       {
-        userId: this.state.currentUserId,
+        userId: this.props.userId,
         eventId: this.props.item.id
       }
     );
@@ -84,8 +81,8 @@ class SingleMeetingDetails extends Component {
       this.setState({ displayTakePartBtn: false, displayResignBtn: true });
 
       let newUser = {
-        email: this.state.currentUserEmail,
-        id: this.state.currentUserId
+        email: this.props.userEmail,
+        id: this.props.userId
       };
 
       this.setState(prevState => ({
@@ -104,7 +101,7 @@ class SingleMeetingDetails extends Component {
     const resign = await axios.post(
       `${this.props.appPath}/api/removeEventUserRelation`,
       {
-        userId: this.state.currentUserId,
+        userId: this.props.userId,
         eventId: this.props.item.id
       }
     );
@@ -112,7 +109,7 @@ class SingleMeetingDetails extends Component {
     if (resign.status == 200) {
       this.setState({ displayTakePartBtn: true, displayResignBtn: false });
 
-      let currentUserId = this.state.currentUserId;
+      let currentUserId = this.props.userId;
 
       const usersArrayWithoutDeletedUser = this.state.users.filter(function(
         user
@@ -131,7 +128,7 @@ class SingleMeetingDetails extends Component {
   }
 
   isAuthor() {
-    if (this.props.item.users[0].id == this.state.currentUserId) {
+    if (this.props.item.users[0].id == this.props.userId) {
       this.setState({
         isAuthor: true,
         displayTakePartBtn: false,
@@ -151,13 +148,7 @@ class SingleMeetingDetails extends Component {
 
     let storeData = store.getState();
 
-    if (storeData.user.user && storeData.user.user.userId) {
-      await this.setState({
-        currentUserId: storeData.user.user.userId,
-        currentUserEmail: storeData.user.user.userEmail,
-        currentUserNickName: storeData.user.user.userNickName
-      });
-
+    if (this.props.userId) {
       await this.isAuthor();
       await this.isLimit();
     } else {
@@ -243,7 +234,7 @@ class SingleMeetingDetails extends Component {
               )}
 
               {this.state.displayTakePartBtn &&
-                this.state.currentUserId &&
+                this.props.userId &&
                 !this.props.guestUser &&
                 !this.state.isLimit && (
                   <div
@@ -255,7 +246,7 @@ class SingleMeetingDetails extends Component {
                 )}
 
               {this.state.displayResignBtn &&
-                this.state.currentUserId &&
+                this.props.userId &&
                 !this.props.guestUser &&
                 !this.state.isLimit && (
                   <div
@@ -289,13 +280,14 @@ class SingleMeetingDetails extends Component {
               {this.state.displayResignBtn ||
                 (this.state.isAuthor && (
                   <CommentForm
-                    loggedInUserEmail={this.state.currentUserEmail}
-                    loggedInUserNickname={this.state.currentUserNickName}
+                    loggedInUserEmail={this.props.userEmail}
+                    loggedInUserNickname={this.props.userNick}
                     meetingId={this.props.item.id}
                     addCommentToState={this.addCommentToState}
                     showAlertSuccess={this.props.showAlertSuccess}
                     showAlertWarning={this.props.showAlertWarning}
                     appPath={this.props.appPath}
+                    userId={this.props.userId}
                   />
                 ))}
             </div>

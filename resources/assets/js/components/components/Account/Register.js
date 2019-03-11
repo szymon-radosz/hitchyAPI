@@ -75,12 +75,36 @@ class Register extends Component {
           });
 
           if (savedUser.status == "200") {
-            const userCredentials = {
-              emailOrNickname: savedUser.data.userNickName,
-              password: this.state.password
-            };
+            axios
+              .post(
+                `${this.props.appPath}/api/login`,
+                {
+                  emailOrNickname: savedUser.data.userNickName,
+                  password: this.state.password
+                },
+                {
+                  headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                  }
+                }
+              )
+              .then(response => {
+                console.log(response.data);
 
-            this.props.loginUser(userCredentials);
+                if (!response.data.error) {
+                  this.props.setLoginUserInfo(
+                    response.data.userId,
+                    response.data.userEmail,
+                    response.data.userNickName
+                  );
+
+                  this.props.showAlertSuccess(
+                    "Poprawnie zalogowano użytkownika."
+                  );
+                } else {
+                  this.props.showAlertWarning("Sprawdź swoje dane");
+                }
+              });
 
             this.props.showAlertSuccess("Poprawnie stworzono nowe konto.");
           } else {
@@ -240,12 +264,4 @@ class Register extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  user: state.payload
-});
-
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(Register);
+export default Register;

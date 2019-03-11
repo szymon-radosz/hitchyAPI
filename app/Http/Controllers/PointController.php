@@ -146,6 +146,7 @@ class PointController extends Controller
         $user_id = $request->userId;
         $point_id = $request->pointId;
         $vote = $request->vote;
+        
 
         $saveVote = Point::find($point_id);
         return $saveVote->users()->attach(1, ['point_id' => $point_id, 'user_id' => $user_id, 'vote' => $vote]);
