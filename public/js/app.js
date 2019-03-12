@@ -53854,7 +53854,7 @@ var SinglePointOnList = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_5_react_router_dom__["b" /* Link */],
                 {
                   to: "/login",
-                  className: "btn btn-default btnBlue btnCircled"
+                  className: "btn btn-default btnBlue btnCircled guestBtnCircled"
                 },
                 "Zaloguj si\u0119, aby wzi\u0105\u0107 dodawa\u0107 g\u0142osy"
               ),

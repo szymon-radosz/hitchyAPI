@@ -61,6 +61,11 @@
   background-color: #6d8fcf26 !important;
 }
 
+.guestBtnCircled {
+  display: block;
+  max-width: 290px;
+}
+
 .shadowPanel:hover {
   -webkit-box-shadow: 0px 0px 18px 0px #f0f0f0;
   box-shadow: 0px 0px 18px 0px #f0f0f0;

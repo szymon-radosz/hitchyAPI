@@ -130,7 +130,7 @@ class SinglePointOnList extends Component {
               {this.props.guestUser && (
                 <Link
                   to="/login"
-                  className="btn btn-default btnBlue btnCircled"
+                  className="btn btn-default btnBlue btnCircled guestBtnCircled"
                 >
                   Zaloguj się, aby wziąć dodawać głosy
                 </Link>
