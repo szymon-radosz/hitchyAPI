@@ -84,7 +84,11 @@
     p {
       position: absolute;
       z-index: 100;
-      margin: 30px;
+      margin: 30px auto 0 auto;
+      left: 0;
+      right: 0;
+      font-weight: 600;
+      max-width: 500px;
       background-color: #fff;
       border: 1px solid #ddd;
       padding: 20px;

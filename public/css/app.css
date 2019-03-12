@@ -58,7 +58,8 @@
 }
 
 .panel-default > .panel-heading {
-  background-color: #6d8fcf26 !important;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(white), to(#afc6f96e));
+  background-image: linear-gradient(to bottom right, white, #afc6f96e);
 }
 
 .guestBtnCircled {
@@ -324,7 +325,11 @@ input[type="color"]:focus,
 .mainMeetingsMap .mapHint p {
   position: absolute;
   z-index: 100;
-  margin: 30px;
+  margin: 30px auto 0 auto;
+  left: 0;
+  right: 0;
+  font-weight: 600;
+  max-width: 500px;
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
@@ -364,7 +369,11 @@ input[type="color"]:focus,
 .mainMeetingsMap .mapHint p {
   position: absolute;
   z-index: 100;
-  margin: 30px;
+  margin: 30px auto 0 auto;
+  left: 0;
+  right: 0;
+  font-weight: 600;
+  max-width: 500px;
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
